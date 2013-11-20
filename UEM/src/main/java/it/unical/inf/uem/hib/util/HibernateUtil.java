@@ -17,10 +17,9 @@ public class HibernateUtil {
 
 	static{
 		try{
-			URL systemResource = ClassLoader.getSystemResource("/media/luigi/Data/Dropbox/eclipseJob/repositoryGit/UEM/UEM/src/main/java/resources/hibernate.cfg.xml");
 			sessionFactory=new Configuration()
 			.addPackage("it.unical.inf.uem.hib.domain")
-			.configure(systemResource)
+			.configure()
 			.addAnnotatedClass(City.class)
 			.buildSessionFactory();
 		}catch(Exception e){
