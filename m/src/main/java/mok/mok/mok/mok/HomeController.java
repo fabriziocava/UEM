@@ -1,5 +1,6 @@
 package mok.mok.mok.mok;
 
+import java.awt.Point;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -32,6 +33,7 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("mio", new Point(1, 2));
 		
 		return "home";
 	}

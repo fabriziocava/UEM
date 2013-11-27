@@ -10,5 +10,11 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
+
+<div>
+<p>
+Miooo ${mio}
+</p></div>
 </body>
 </html>
