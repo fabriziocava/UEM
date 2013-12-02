@@ -75,18 +75,19 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 	@Override
-	public void listStudent() {
+	public List listStudent() {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Long id=null;
 		try{
 			List<Student>list=session.createQuery("from Student").list();
 			session.close();
-			
-			for (Student student : list) {
-				System.out.println(student.toString());
-			}
+			return list;
+//			for (Student student : list) {
+//				System.out.println(student.toString());
+//			}
 		}catch(Exception e){
 		}
+		return null;
 	}
 
 }

@@ -3,8 +3,10 @@ package it.unical.uniexam.mvc.controll;
 import it.unical.uniexam.hibernate.dao.StudentDao;
 import it.unical.uniexam.hibernate.dao.impl.StudentDaoImpl;
 import it.unical.uniexam.hibernate.domain.Address;
+import it.unical.uniexam.hibernate.domain.Student;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -15,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.sun.corba.se.impl.javax.rmi.CORBA.StubDelegateImpl;
 
 /**
  * Handles requests for the application home page.
@@ -41,10 +42,12 @@ public class HomeController {
 		
 		s.saveStudent("uigi",new Address(), "125222");
 		
-		s.listStudent();
-		
+		ArrayList<Student>list =(ArrayList<Student>) s.listStudent();
+//		ArrayList<String> a=new ArrayList<String>();
+//		a.add("how");a.add("are "); a.add("you");a.add("?");
 		
 		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("students",list);
 		
 		return "home";
 	}
