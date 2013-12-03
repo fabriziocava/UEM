@@ -48,6 +48,7 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("username") String username,
 			@RequestParam("password") String password,Model model){
+		model.addAttribute("user",username);
 		if(username.equals("s")){
 			return "student/home_student";
 		}else if(username.equals("p")){

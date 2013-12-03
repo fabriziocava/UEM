@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Ciao</title>
+<title>Insert title here</title>
 </head>
 <body>
-Si Si si prova si!
-<br>
-I am home student
 
 </body>
 </html>
