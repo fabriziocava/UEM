@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Ciao</title>
+<title>Insert title here</title>
 </head>
 <body>
-Si Si si prova si!
-<br>
-${q}
+I am home manager
 </body>
 </html>

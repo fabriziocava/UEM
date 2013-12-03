@@ -1,13 +1,5 @@
 package it.unical.uniexam.mvc.controll;
 
-import it.unical.uniexam.hibernate.dao.StudentDao;
-import it.unical.uniexam.hibernate.dao.impl.StudentDaoImpl;
-import it.unical.uniexam.hibernate.domain.Address;
-import it.unical.uniexam.hibernate.domain.Student;
-
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -16,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -33,22 +26,35 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+//		Date date = new Date();
+//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+//		
+//		String formattedDate = dateFormat.format(date);
+//		
+//		StudentDao s=new StudentDaoImpl();
+//		
+//		s.saveStudent("uigi",new Address(), "125222");
+//		
+//		ArrayList<Student>list =(ArrayList<Student>) s.listStudent();
+////		ArrayList<String> a=new ArrayList<String>();
+////		a.add("how");a.add("are "); a.add("you");a.add("?");
+//		
+//		model.addAttribute("serverTime", formattedDate );
+//		model.addAttribute("students",list);
 		
-		String formattedDate = dateFormat.format(date);
-		
-		StudentDao s=new StudentDaoImpl();
-		
-		s.saveStudent("uigi",new Address(), "125222");
-		
-		ArrayList<Student>list =(ArrayList<Student>) s.listStudent();
-//		ArrayList<String> a=new ArrayList<String>();
-//		a.add("how");a.add("are "); a.add("you");a.add("?");
-		
-		model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("students",list);
-		
+		return "home";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(@RequestParam("username") String username,
+			@RequestParam("password") String password,Model model){
+		if(username.equals("s")){
+			return "student/home_student";
+		}else if(username.equals("p")){
+			return "professor/home_professor";
+		}else if(username.equals("m")){
+			return "manager/home_manager";
+		}
 		return "home";
 	}
 	
