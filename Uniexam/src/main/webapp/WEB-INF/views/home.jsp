@@ -12,7 +12,7 @@
 
 <body>
 
-<form id="login">
+<form id="login" action="/login/">
     <h1>Uniexam</h1>
     <fieldset id="inputs">
         <input id="username" type="text" placeholder="Username" autofocus required>   
