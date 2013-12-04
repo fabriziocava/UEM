@@ -1,10 +1,74 @@
-@CHARSET "UTF-8"
-.header {
-background-color: #f3f3f3;
-border-radius: 3px;
-min-height: 20px
-min-width: 1000px;
+/* @CHARSET "UTF-8" */
+body {
+	background-color: #66FF00;
 }
-.logo-small{
-background: #f3f3f3 url(logo-small.png) no-repeat;
-};
+
+/*theme*/
+.container-up, .container-left,.container-right,.container-center,.container-down, .header, .foot{
+	border-radius: 4px;
+}
+
+.header {
+	vertical-align: bottom;
+	width: 100%;
+	height: 40px;
+	background-color: #f3f3f3;
+	z-index: 1;
+}
+
+
+.container{
+	width: 100%;
+	height: 60px;
+	margin: 10px 0px 10px 0px;
+	
+}
+
+.container-up {
+	background-color:yellow;
+	position: relative;
+	width: 100%;
+	height: 10%;
+	float: left;
+}
+.container-down {
+	background-color:blue;
+	position: relative;
+	width: 100%;
+	height: 10%;
+	float: left;
+}
+.container-left {
+	background-color:red;
+	position: relative;
+	width: 15%;
+	height: 80%;
+	float: left;
+}
+.container-right {
+	background-color:green;
+	position: relative;
+	width: 15%;
+	height: 80%;
+	float: left;
+}
+.container-center {
+	background-color:white;
+	width: 70%;
+	position: relative;
+	height: 80%;
+	float: left;
+	
+}
+
+.foot { 
+	width:80%;
+	right: 10%;
+	left: 10%;
+	position: relative;
+	height: 20px;
+	background-color: #f3f3f3;
+	z-index: 1;
+	margin: 20px 0px 10px 0px;
+}
+
