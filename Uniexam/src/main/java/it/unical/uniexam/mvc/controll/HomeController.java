@@ -49,10 +49,11 @@ public class HomeController {
 	public String login(@RequestParam("username") String username,
 			@RequestParam("password") String password,Model model){
 		model.addAttribute("user",username);
+		model.addAttribute("login","yes");
 		if(username.equals("s")){
 			return "student/home_student";
 		}else if(username.equals("p")){
-			return "professor/home_professor";
+			return "professor/home";
 		}else if(username.equals("m")){
 			return "manager/home_manager";
 		}

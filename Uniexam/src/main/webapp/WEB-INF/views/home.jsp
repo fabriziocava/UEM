@@ -1,6 +1,4 @@
 <%@page import="it.unical.uniexam.hibernate.domain.Student"%>
-<%@page import="java.util.ArrayList"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <!DOCTYPE html>
 
