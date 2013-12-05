@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js" type="text/javascript"></script>
-<link href="css/student.css" media="all" rel="stylesheet" type="text/css" />
-<link href="css/menu.css" media="all" rel="stylesheet" type="text/css" />
+<script src="/uniexam/res/jquery-2.0.3.js" type="text/javascript"></script>
+<link href="/uniexam/res/css/student.css" media="all" rel="stylesheet" type="text/css" />
+<link href="/uniexam/res/css/menu.css" media="all" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
 	var timeout         = 500;
@@ -43,7 +43,7 @@
 	<tbody>
 		<tr>
 			<td>
-				<img alt="" src="img/logo.png">
+				<img alt="" src="/uniexam/res/img/logo.png">
 			</td>
 			<td>
 				<font>Welcome ${user}</font>
