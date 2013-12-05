@@ -6,22 +6,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user}</title>
 
-<link href="css/professor.css" media="all" rel="stylesheet"
+<link href="res/css/professor.css" media="all" rel="stylesheet"
 	type="text/css" />
-<script src="jquery-2.0.3.js"> </script>
+<script src="res/jquery-2.0.3.js"> </script>
 <script type="text/javascript">
 
 </script>
 </head>
 <body>
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(document).ready(function(){
-		alert("Non puoi eliminare il dipendente perchè è l'unico.");
+		
 	});
 	</script>
-	<div class="header">
+	<header>
 	
-	</div>
+	</header>
 	<div class="container">
 		<div class="container-up"></div>
 		<div class="container-left"></div>
@@ -29,6 +29,6 @@
 		<div class="container-right"></div>
 		<div class="container-down"></div>
 	</div>
-	<div class="foot"></div>
+	<footer></footer>
 </body>
 </html>

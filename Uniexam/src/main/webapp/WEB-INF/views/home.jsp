@@ -7,7 +7,7 @@
 <html>
 <head>
 <title>Benvenuto in Uniexam</title>
-<link href="css/login.css" media="all" rel="stylesheet" type="text/css">
+<link href="res/css/login.css" media="all" rel="stylesheet" type="text/css">
 </head>
 
 <body>

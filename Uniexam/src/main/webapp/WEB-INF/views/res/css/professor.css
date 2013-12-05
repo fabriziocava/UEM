@@ -1,14 +1,13 @@
-/* @CHARSET "UTF-8" */
 body {
-	background-color: #66FF00;
+	background-image: 
 }
-
+/* .container-up, .container-left,.container-right,.container-center,.container-down, .header, footer */
 /*theme*/
-.container-up, .container-left,.container-right,.container-center,.container-down, .header, .foot{
+*{
 	border-radius: 4px;
 }
 
-.header {
+header {
 	vertical-align: bottom;
 	width: 100%;
 	height: 40px;
@@ -61,7 +60,8 @@ body {
 	
 }
 
-.foot { 
+footer { 
+	display: block;
 	width:80%;
 	right: 10%;
 	left: 10%;
