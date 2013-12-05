@@ -6,12 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user}</title>
 
-<link href="css/professor.css" media="all" rel="stylesheet"
-	type="text/css" />
+<link href="css/professor.css" media="all" rel="stylesheet"type="text/css" />
+<script src="res/jquery-2.0.3.js"> </script>
 </head>
 
 <body>
-	<div class="header"></div>
+	<header>
+	
+	</header>
 	<div class="container">
 		<div class="container-up"></div>
 		<div class="container-left"></div>
@@ -19,6 +21,6 @@
 		<div class="container-right"></div>
 		<div class="container-down"></div>
 	</div>
-	<div class="foot"></div>
+	<footer></footer>
 </body>
 </html>
