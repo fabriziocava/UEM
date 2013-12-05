@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js" type="text/javascript"></script>
-<link href="res/css/student.css" media="all" rel="stylesheet" type="text/css" />
-<link href="res/css/menu_manager.css" media="all" rel="stylesheet" type="text/css" />
-<link href="res/css/manager.css" media="all" rel="stylesheet"type="text/css" />
+<link href="css/student.css" media="all" rel="stylesheet" type="text/css" />
+<link href="css/menu.css" media="all" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
 	var timeout         = 500;
@@ -37,19 +36,14 @@
 	document.onclick = jsddm_close;
 </script>
 
-<title>Manager ${user}</title>
-
-
-<script src="res/jquery-2.0.3.js"> </script>
+<title>Student ${user}</title>
 </head>
-
 <body>
-	<header>
-			<table>
+<table>
 	<tbody>
 		<tr>
 			<td>
-				<img alt="" src="res/img/logo.png">
+				<img alt="" src="img/logo.png">
 			</td>
 			<td>
 				<font>Welcome ${user}</font>
@@ -74,29 +68,21 @@
 		</tr>
 	</tbody>
 </table>
-	
-	
-	</header>
-	<div class="container">
-		<div class="container-up">
-			<ul id="jsddm">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Regulations Management</a>
-					<ul>
-						<li><a href="#">Courses Management</a></li>
-						<li><a href="#">Courses Assignment</a></li>
-		    		</ul>
-				</li>
-				<li><a href="#">Management examination session</a></li>
-				<li><a href="#">Settings</a></li>
-				<li><a href="#">Help</a></li>
-			</ul>
-		</div>
-		<div class="container-left"></div>
-		<div class="container-center"></div>
-		<div class="container-right"></div>
-		<div class="container-down"></div>
-	</div>
-	<footer></footer>
+<br>
+
+<ul id="jsddm">
+	<li><a href="#">Home</a></li>
+	<li><a href="#">Exams</a>
+		<ul>
+			<li><a href="#">Sessions</a></li>
+			<li><a href="#">Acknowledgment result</a></li>
+		</ul>
+	</li>
+	<li><a href="#">Groups</a></li>
+	<li><a href="#">Career</a></li>
+	<li><a href="#">Settings</a></li>
+	<li><a href="#">Help</a></li>
+</ul>
+
 </body>
 </html>
