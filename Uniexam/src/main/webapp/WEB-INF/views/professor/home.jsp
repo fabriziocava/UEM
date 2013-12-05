@@ -26,7 +26,7 @@
 	</script>
 	<header>
 		<div class="header-logo">
-			<a href="/home"> <img alt="home" src="/uniexam/res/img/logo.png"
+			<a href="home"> <img alt="home" src="/uniexam/res/img/logo.png"
 				width="30" height="30">
 			</a>
 		</div>
