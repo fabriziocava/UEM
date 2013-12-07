@@ -2,6 +2,9 @@ package it.unical.uniexam.mvc.controll;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -47,12 +50,14 @@ public class HomeController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("username") String username,
-			@RequestParam("password") String password,Model model){
+			@RequestParam("password") String password,HttpServletRequest request,Model model){
 		model.addAttribute("user",username);
 		model.addAttribute("login","yes");
 		if(username.equals("s")){
 			return "student/home_student";
 		}else if(username.equals("p")){
+			HttpSession session = request.getSession(true);
+			session.setAttribute("user", username);
 			return "professor/home";
 		}else if(username.equals("m")){
 			return "manager/home_manager";

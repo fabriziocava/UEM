@@ -1,5 +1,8 @@
 package it.unical.uniexam.mvc.controll.professor;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +14,17 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 public class ProfessorController {
 
-	
-	
+
+
 	@RequestMapping(value="professor/home" , method=RequestMethod.GET)
-	public String home(@RequestParam("user") String username,Model model){
-		model.addAttribute("user",username);
-//		System.out.println(username);
-		
-		return "professor/home";
+	public String home(HttpServletRequest request,Model model){
+		HttpSession session = request.getSession(false);
+		if(session!=null){
+			model.addAttribute("user",session.getAttribute("user"));
+			//		System.out.println(username);
+			
+			return "professor/home";
+		}
+		return "home"; //error session
 	}
 }

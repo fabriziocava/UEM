@@ -1,9 +1,9 @@
 body {
-	background-image: 
+	margin:0px;
 }
 /* .container-up, .container-left,.container-right,.container-center,.container-down, .header, footer */
 /*theme*/
-*{
+* {
 	border-radius: 4px;
 }
 
@@ -13,56 +13,154 @@ header {
 	height: 40px;
 	background-color: #f3f3f3;
 	z-index: 1;
+	position: fixed;
+	top: 0px;
 }
 
+.button {
+  display: block;
+  width: 98%;
+  height: 98%;
+  background: #c7bebe;
+  background.image: linear-gradient(top,#c7bebe,#f3f3f3);
+  background-image: -webkit-linear-gradient(top,#c7bebe,#f3f3f3);
+  background-image: -moz-linear-gradient(top,#c7bebe,#f3f3f3);
+/*   margin: 10px; */
+  padding: 10px 0px 10px 0px;
+  text-align: center;
+  border-radius: 5px;
+  color: rgb(57, 142, 209); 
+  font-weight: bold;
+}
+a.button{
+ 	text-decoration: none;
+}
 
-.container{
+ul.dashboard{
+	position: relative;
+	width: 100%;
+	height: auto;
+	list-style: none;
+	padding: 3px 0px 22px 0px;
+	margin:	0px;
+}
+.dashboard>li{
+	position: relative;
+	float: left;
+}
+
+.links-user {
+	float: right;
+	position: relative;
+	list-style: none;
+	margin: 6px 0px 0px 0px;
+}
+
+.links-user>li {
+	position: relative;
+	float: left;
+	margin-left: 10px;
+}
+
+.header {
+	position: absolute;
+	vertical-align: bottom;
 	width: 70%;
-	height: 60px;
-	margin: 10px 15% 10px 15%;
-	
+	left: 15%;
+	right: 15%;
+	height: auto;
+
+	/* 	background-color: #f3f3f3; */
+	/* 	z-index: 1; */
+}
+
+.personalizzation-header {
+	background: url("../img/images.png") -79px 0px;
+	width: 20px;
+	height: 33px;
+	position: relative;
+	margin: 2px 0px 0px 0px;
+	float: left;
+}
+
+.header-logo {
+	background: url("../img/images.png") 0px 0px;
+	width: 35px;
+	height: 33px;
+	position: relative;
+	margin: 3px 0px 0px 0px;
+	float: left;
+}
+
+.logout-header {
+	background: url("../img/images.png") -50px 0px;
+	width: 23px;
+	height: 26px;
+}
+
+.container {
+	position:relative;
+	width: 70%;
+	height: auto;
+	margin: 50px 15% 10px 15%;
 }
 
 .container-up {
-	background-color:yellow;
+	background-color: yellow;
 	position: relative;
 	width: 100%;
-	height: 10%;
+	height: auto;
 	float: left;
-}
-.container-down {
-	background-color:blue;
-	position: relative;
-	width: 100%;
-	height: 10%;
-	float: left;
-}
-.container-left {
-	background-color:red;
-	position: relative;
-	width: 15%;
-	height: 80%;
-	float: left;
-}
-.container-right {
-	background-color:green;
-	position: relative;
-	width: 15%;
-	height: 80%;
-	float: left;
-}
-.container-center {
-	background-color:white;
-	width: 70%;
-	position: relative;
-	height: 80%;
-	float: left;
-	
+	margin: 2px;
 }
 
-footer { 
+.container-down {
+	background-color: blue;
+	position: relative;
+	width: 100%;
+	height: auto;
+	float: left;
+/* 	margin: 2px; */
+}
+
+.container-left {
+	background-color: red;
+	position: relative;
+	width: 14%;
+	height: auto;
+	float: left;
+/* 	margin: 2px; */
+}
+
+.container-right {
+	background-color: green;
+	position: relative;
+	width: 14%;
+	height: auto;
+	float: right;
+/* 	margin: 2px; */
+}
+
+.container-center {
+	background-color: white;
+	width: 70%;
+	position: relative;
+	height: auto;
+	float: left;
+	margin: 2px;
+}
+/* .header-hide{ */
+/* position: absolute; */
+/* top: 0px; */
+/* height: 40px; */
+/* background-color: transparent; */
+/* z-index: 0;	 */
+/* } */
+
+
+footer {
 	display: block;
-	width:80%;
+	width: 80%;
 	right: 10%;
 	left: 10%;
 	position: relative;
@@ -71,4 +169,3 @@ footer {
 	z-index: 1;
 	margin: 20px 0px 10px 0px;
 }
-

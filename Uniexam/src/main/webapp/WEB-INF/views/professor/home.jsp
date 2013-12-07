@@ -1,43 +1,90 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%if(request.getAttribute("login")!=null){
-	response.sendRedirect("professor/home?user="+request.getAttribute("user"));
-}
-	%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user}</title>
 
-<link href="/uniexam/res/css/professor.css" media="all" rel="stylesheet" type="text/css" />
-<script src="/uniexam/res/jquery-2.0.3.js">
-	
+<link href="${pageContext.request.contextPath}/res/css/professor.css"
+	media="all" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js">
 </script>
-<script type="text/javascript">
-	
+<script src="${pageContext.request.contextPath}/res/js/mok.js">
 </script>
+
 </head>
 <body>
 	<script type="text/javascript">
 		$(document).ready(function() {
-<%-- 			alert("path: "+"<%=request.getPathInfo()%>"); --%>
+// 			alert("path: ");
+			alineamentoContainer();
+			alingDashBoard();
 		});
+		$(window).bind("resize", resizeWindow);
+		function resizeWindow( e ) {
+			alineamentoContainer();
+		}
+
 	</script>
-	<header>
-		<div class="header-logo">
-			<a href="home"> <img alt="home" src="/uniexam/res/img/logo.png"
-				width="30" height="30">
-			</a>
-		</div>
-	</header>
+	<script type="text/javascript">
+	
+	</script>
+		<header>
+			<div class="header">
+				<div class="header-logo">
+					<a href="${pageContext.request.contextPath}/professor/home"
+						title="home"> <img
+						src="${pageContext.request.contextPath}/res/img/pixel.png"
+						width="30" height="30">
+					</a>
+				</div>
+				<div>
+					<ul class="links-user">
+						<li><img src="imageUser" />${user}</li>
+						<li><a
+							href="${pageContext.request.contextPath}/professor/personalizzation">
+								<img class="personalizzation-header"
+								src="${pageContext.request.contextPath}/res/img/pixel.png" />
+						</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/professor/logout"> <img
+								class="logout-header"
+								src="${pageContext.request.contextPath}/res/img/pixel.png" />
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</header>
 	<div class="container">
-		<div class="container-up"></div>
-		<div class="container-left"></div>
-		<div class="container-center"></div>
-		<div class="container-right"></div>
-		<div class="container-down"></div>
+		
+		<div class="container-up">
+			<ul class="dashboard">
+				<li><a class="button" href="/home">Ciao</a></li>
+				<li><a class="button" href="/home">Ciao</a></li>
+				<li><a class="button" href="/home">Ciao</a></li>
+				<li><a class="button" href="/home">Ciao</a></li>
+				<li><a class="button" href="/home">Ciao</a></li>
+				<li><a class="button" href="/home">Ciao</a></li>
+				<li><a class="button" href="/home">Ciao</a></li>
+				<li><a class="button" href="/home">Come</a></li>
+				<li><a class="button" href="/home">Stai</a></li>
+				<li><a class="button" href="/home">Bene</a></li>
+				<li><a class="button" href="/home">Ok</a></li>
+			</ul>
+		</div>
+		<div class="container-left">
+	
+		something asd asd asd asd asd asd
+			asd asds asd asd asd asd asd asd asds asd asd asd asd asd asd asds
+			asd asd asd asd asd asd asds asd asd asd asd asd asd asds asd asd asd
+			asd asd asd asds asd asd asd asd asd asd asds a dasd</div>
+		<div class="container-center">also here</div>
+		<div class="container-right">also here too</div>
+		<div class="container-down">basta</div>
 	</div>
-	<footer></footer>
+	<div>
+		<footer>Foooooooooooooooooooot</footer>
+	</div>
 </body>
 </html>
