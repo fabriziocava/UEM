@@ -1,4 +1,4 @@
 UEM
 ===
 
-University Exsam Management
+University Exam Management
