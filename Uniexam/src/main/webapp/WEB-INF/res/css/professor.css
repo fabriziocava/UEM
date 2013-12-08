@@ -7,6 +7,10 @@ body {
 	border-radius: 4px;
 }
 
+.dashboard > li.selected{
+	font-style: italic;
+}
+
 header {
 	vertical-align: bottom;
 	width: 100%;
@@ -26,7 +30,7 @@ header {
   background-image: -webkit-linear-gradient(top,#c7bebe,#f3f3f3);
   background-image: -moz-linear-gradient(top,#c7bebe,#f3f3f3);
 /*   margin: 10px; */
-  padding: 10px 0px 10px 0px;
+  padding: 8px 0px 8px 0px;
   text-align: center;
   border-radius: 5px;
   color: rgb(57, 142, 209); 
@@ -106,12 +110,13 @@ ul.dashboard{
 }
 
 .container-up {
-	background-color: yellow;
+	background-color: transparent;
 	position: relative;
 	width: 100%;
 	height: auto;
 	float: left;
 	margin: 2px;
+	padding-bottom: 10px;
 }
 
 .container-down {

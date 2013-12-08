@@ -1,5 +1,3 @@
-<%@page import="it.unical.uniexam.hibernate.domain.Student"%>
-<%@ page session="false" %>
 <!DOCTYPE html>
 
 <html>
@@ -10,7 +8,7 @@
 
 <body>
 
-<form id="login" action="./login" method="post">
+<form id="login" action="${pageContext.request.contextPath}/login" method="post">
     <h1>Uniexam</h1>
     <fieldset id="inputs">
         <input id="username" name="username" type="text" placeholder="Username" autofocus required>   

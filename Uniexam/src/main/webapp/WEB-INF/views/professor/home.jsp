@@ -48,7 +48,7 @@
 								src="${pageContext.request.contextPath}/res/img/pixel.png" />
 						</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/professor/logout"> <img
+							href="${pageContext.request.contextPath}/logout"> <img
 								class="logout-header"
 								src="${pageContext.request.contextPath}/res/img/pixel.png" />
 						</a></li>
@@ -60,17 +60,10 @@
 		
 		<div class="container-up">
 			<ul class="dashboard">
-				<li><a class="button" href="/home">Ciao</a></li>
-				<li><a class="button" href="/home">Ciao</a></li>
-				<li><a class="button" href="/home">Ciao</a></li>
-				<li><a class="button" href="/home">Ciao</a></li>
-				<li><a class="button" href="/home">Ciao</a></li>
-				<li><a class="button" href="/home">Ciao</a></li>
-				<li><a class="button" href="/home">Ciao</a></li>
-				<li><a class="button" href="/home">Come</a></li>
-				<li><a class="button" href="/home">Stai</a></li>
-				<li><a class="button" href="/home">Bene</a></li>
-				<li><a class="button" href="/home">Ok</a></li>
+				<li><a class="button" href="#" onclick="selectDashBoard(this.innerHTML)">Corsi</a></li>
+				<li><a class="button" href="#" onclick="selectDashBoard(this.innerHTML)" >Appelli</a></li>
+				<li><a class="button" href="#" onclick="selectDashBoard(this.innerHTML)" >Gruppi</a></li>
+				<li><a class="button" href="#" onclick="selectDashBoard(this.innerHTML)" >Firma</a></li>
 			</ul>
 		</div>
 		<div class="container-left">

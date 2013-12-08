@@ -78,3 +78,14 @@ function alingDashBoard(){
 //	}
 //	$(".dashboard li").css({"margin":"3px"});
 }	
+
+function selectDashBoard(item){
+	$(".dashboard > li.selected").attr("class","");
+	$(".dashboard > li > a").each(function(index,element){
+		var d=element.innerHTML;
+		if(d==item){
+			element.parentNode.setAttribute("class","selected");
+		}
+	});
+}
+
