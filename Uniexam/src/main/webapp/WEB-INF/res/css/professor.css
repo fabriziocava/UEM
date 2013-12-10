@@ -106,17 +106,20 @@ ul.dashboard{
 	position:relative;
 	width: 70%;
 	height: auto;
-	margin: 50px 15% 10px 15%;
+	margin: 70px 15% 10px 15%;
+	box-shadow: 0px 0px 20px 20px #d3d3d3;
+	background-color: #d3d3d3;
 }
 
 .container-up {
-	background-color: transparent;
+	background-color: #d3d3d3;
 	position: relative;
 	width: 100%;
 	height: auto;
 	float: left;
 	margin: 2px;
 	padding-bottom: 10px;
+	box-shadow: 0px 0px 0px 4px #d3d3d3;
 }
 
 .container-down {
@@ -147,8 +150,8 @@ ul.dashboard{
 }
 
 .container-center {
-	background-color: white;
-	width: 70%;
+	background-color: transparent;
+	width: 71%;
 	position: relative;
 	height: auto;
 	float: left;

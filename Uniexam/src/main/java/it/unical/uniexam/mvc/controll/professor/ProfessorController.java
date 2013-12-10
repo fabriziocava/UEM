@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-
 public class ProfessorController {
 
 
@@ -24,7 +24,7 @@ public class ProfessorController {
 		if(request.isRequestedSessionIdValid()){
 			model.addAttribute("user",session.getAttribute("user"));
 			//		System.out.println(username);
-			
+			System.out.println(request.getRequestedSessionId());
 			return "professor/home";
 		}
 		return "home"; //error session

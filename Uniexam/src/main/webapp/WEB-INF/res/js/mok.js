@@ -57,6 +57,7 @@ function justContainer(incr){
 	incr=incr.replace("px","");
 	incr=parseInt(incr, 0);
 	container=container+incr;
+	container=container+20;
 	$(".container").css({"height":container+"px"});
 
 //	$(".container-left").css({"width":"auto"});

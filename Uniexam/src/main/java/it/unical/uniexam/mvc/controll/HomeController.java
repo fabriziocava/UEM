@@ -57,6 +57,7 @@ public class HomeController {
 		}else if(username.equals("p")){
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", username);
+			System.out.println(request.getRequestedSessionId());
 			return "professor/home";
 		}else if(username.equals("m")){
 			return "manager/home_manager";
