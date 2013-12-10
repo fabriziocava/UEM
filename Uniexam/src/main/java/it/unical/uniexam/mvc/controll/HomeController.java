@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -27,7 +28,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+//		logger.info("Welcome home! The client locale is {}.", locale);
 
 		//		Date date = new Date();
 		//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -49,20 +50,22 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestParam("username") String username,
-			@RequestParam("password") String password,HttpServletRequest request,Model model){
+	public ModelAndView login(@RequestParam("username") String username,
+			@RequestParam("password") String password,
+			HttpServletRequest request,
+			Model model){
 		model.addAttribute("user",username);
 		if(username.equals("s")){
-			return "student/home_student";
+			return new ModelAndView("student/home_student", "model", "model");
 		}else if(username.equals("p")){
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", username);
 			System.out.println(request.getRequestedSessionId());
-			return "professor/home";
+			return new ModelAndView("professor/home", "model", "model");
 		}else if(username.equals("m")){
-			return "manager/home_manager";
+			return new ModelAndView("manager/home_manager", "model", "model");
 		}
-		return "home";
+		return new ModelAndView("home", "model", "model");
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
