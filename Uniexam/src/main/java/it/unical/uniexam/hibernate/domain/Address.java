@@ -12,10 +12,16 @@ public class Address {
 	
 	@Column(name="CITY")
 	private String city;
+	
 	@Column(name="STATE")
 	private String state;
+	
+	@Column(name="ZIP")
 	private String zip;
+	
+	@Column(name="STREET")
 	private String street;
+	
 	public String getCity() {
 		return city;
 	}

@@ -1,8 +1,10 @@
 package it.unical.uniexam.hibernate.util;
 
 
+import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.MatrDetails;
 import it.unical.uniexam.hibernate.domain.PhoneNumber;
+import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
 
 import org.hibernate.SessionFactory;
@@ -18,9 +20,8 @@ public class HibernateUtil {
 			sessionFactory=new Configuration()
 			.configure()
 			.addPackage("it.unical.uniexam.hibernate.domain")
-			.addAnnotatedClass(Student.class)
-			.addAnnotatedClass(PhoneNumber.class)
-			.addAnnotatedClass(MatrDetails.class)
+			.addAnnotatedClass(Department.class)
+			.addAnnotatedClass(Professor.class)
 			.buildSessionFactory();
 		}catch(Exception e){
 
