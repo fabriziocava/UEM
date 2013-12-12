@@ -43,17 +43,40 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	public List listDepartment() {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
+		List<Professor> arrayList = new ArrayList<Professor>();
 		Long id=null;
 		try{
 			transaction=session.beginTransaction();
-			
+			Department d=(Department) session.get(Department.class, new Long(1));
+			arrayList=d.getProfessors();
+			for (Professor professor : arrayList) {
+				System.out.println(professor.toString());
+			}
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
 		}finally{
 			session.close();
 		}
-		return new ArrayList<String>();
+		return arrayList;
+	}
+
+	@Override
+	public void removeDepartment(Long idDepartment) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		List<Professor> arrayList = new ArrayList<Professor>();
+		Long id=null;
+		try{
+			transaction=session.beginTransaction();
+			Department d=(Department) session.get(Department.class, new Long(idDepartment));
+			session.delete(d);
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
 	}
 
 }

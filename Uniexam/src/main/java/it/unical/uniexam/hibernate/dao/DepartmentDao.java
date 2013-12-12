@@ -8,4 +8,5 @@ import java.util.List;
 public interface DepartmentDao {
 public Long addDepartment(String code,String name,List<Professor> professors,Address address);
 public List listDepartment();
+public void removeDepartment(Long idDepartment);
 }

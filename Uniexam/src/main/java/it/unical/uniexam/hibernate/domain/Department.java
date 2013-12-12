@@ -1,6 +1,7 @@
 package it.unical.uniexam.hibernate.domain;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 
 
@@ -31,8 +34,8 @@ public class Department {
 	@Embedded
 	private Address address;
 	
-	@OneToMany(cascade={CascadeType.ALL})
-	private List<Professor> professors;
+	@OneToMany(mappedBy="department_assigned")
+	private Set<Professor> professors;
 
 	public Long getId() {
 		return id;
@@ -66,12 +69,16 @@ public class Department {
 		this.address = address;
 	}
 
-	public List<Professor> getProfessors() {
+	public Set<Professor> getProfessors() {
 		return professors;
 	}
 
-	public void setProfessors(List<Professor> professors) {
+	public void setProfessors(Set<Professor> professors) {
 		this.professors = professors;
+	}
+
+	public void addProfessor(Professor p) {
+		professors.add(p);
 	}
 	
 //	@Column(name="PRESIDENT")

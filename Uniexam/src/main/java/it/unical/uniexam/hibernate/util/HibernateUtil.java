@@ -18,7 +18,7 @@ public class HibernateUtil {
 		try{
 			//ClassLoader.getSystemResource("resources/hibernate.cfg.xml")
 			sessionFactory=new Configuration()
-			.configure()
+			.configure("resources/hibernate.cfg.xml")
 			.addPackage("it.unical.uniexam.hibernate.domain")
 			.addAnnotatedClass(Department.class)
 			.addAnnotatedClass(Professor.class)
