@@ -1,4 +1,4 @@
-package it.unical.uniexam.hibernate.domain;
+package it.unical.uniexam.hibernate.domain.utility;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

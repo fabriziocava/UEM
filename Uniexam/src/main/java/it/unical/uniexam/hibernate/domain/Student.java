@@ -1,5 +1,7 @@
 package it.unical.uniexam.hibernate.domain;
 
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
+import it.unical.uniexam.hibernate.domain.utility.Address;
 
 
 
@@ -40,9 +42,9 @@ public class Student {
 	private Address address;
 
 
-	@OneToOne(mappedBy="student", cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private MatrDetails matrDetails;
+//	@OneToOne(mappedBy="student", cascade=CascadeType.ALL)
+//	@PrimaryKeyJoinColumn
+//	private MatrDetails matrDetails;
 
 
 	@OneToMany(cascade=CascadeType.ALL)
@@ -83,16 +85,6 @@ public class Student {
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-
-	public MatrDetails getMatrDetails() {
-		return matrDetails;
-	}
-
-
-	public void setMatrDetails(MatrDetails matrDetails) {
-		this.matrDetails = matrDetails;
 	}
 
 

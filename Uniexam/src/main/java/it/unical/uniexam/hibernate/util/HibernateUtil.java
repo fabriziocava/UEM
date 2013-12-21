@@ -2,10 +2,9 @@ package it.unical.uniexam.hibernate.util;
 
 
 import it.unical.uniexam.hibernate.domain.Department;
-import it.unical.uniexam.hibernate.domain.MatrDetails;
-import it.unical.uniexam.hibernate.domain.PhoneNumber;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

@@ -1,6 +1,6 @@
 package it.unical.uniexam.hibernate.dao;
 
-import it.unical.uniexam.hibernate.domain.Address;
+import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.Professor;
 
 import java.util.List;

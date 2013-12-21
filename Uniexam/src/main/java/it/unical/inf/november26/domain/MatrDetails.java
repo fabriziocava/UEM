@@ -1,4 +1,4 @@
-package it.unical.uniexam.hibernate.domain;
+package it.unical.inf.november26.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

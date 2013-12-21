@@ -1,9 +1,9 @@
 package it.unical.uniexam.hibernate.domain;
 
-import java.util.List;
+import it.unical.uniexam.hibernate.domain.utility.Address;
+
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -12,9 +12,22 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
 
-
+/**
+ * @category Structure 
+ * 
+ * This class describe a Department
+ * each Department have a code, a name; 
+ * At each Department 	have a professor like a president (maybe, we don't need it)
+ * 						have a manager (!!!)
+ * 						have many DC,
+ * 			 			have many professors associated 
+ * 						
+ * 						something else?
+ * 	
+ * @author luigi
+ *
+ */
 
 @Entity
 @Table(name="DEPARTMENT")

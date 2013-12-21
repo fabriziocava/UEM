@@ -2,7 +2,7 @@ package it.unical.uniexam.hibernate.dao;
 
 import java.util.List;
 
-import it.unical.uniexam.hibernate.domain.Address;
+import it.unical.uniexam.hibernate.domain.utility.Address;
 
 public interface StudentDao {
 public Long saveStudent(String name,Address address,String matrNumber);

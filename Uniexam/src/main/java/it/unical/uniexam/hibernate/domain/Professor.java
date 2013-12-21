@@ -1,5 +1,7 @@
 package it.unical.uniexam.hibernate.domain;
 
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
+
 import java.util.HashSet;
 import java.util.Set;
 
