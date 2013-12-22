@@ -19,7 +19,20 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 
-
+/**
+ * @category Actor 
+ * 
+ * This class describe the actor Student
+ * each Student extend User class, in addition have a set of a phone numbers
+ * At each Student 		is associated with a Degree Course
+ * 						have a carrier (Carrier is a list of a course with a vote)
+ * 
+ * 					something else?
+ * 
+ * 
+ * @author luigi
+ *
+ */
 
 @Entity
 @Table(name="STUDENT")
@@ -33,18 +46,6 @@ public class Student {
 	@GeneratedValue
 	private Long id;
 
-	@Column(name="STUDENT_NAME",
-			nullable=false,
-			length=100)
-	private String name;
-
-	@Embedded
-	private Address address;
-
-
-//	@OneToOne(mappedBy="student", cascade=CascadeType.ALL)
-//	@PrimaryKeyJoinColumn
-//	private MatrDetails matrDetails;
 
 
 	@OneToMany(cascade=CascadeType.ALL)
@@ -57,62 +58,5 @@ public class Student {
 			})
 	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
 
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public Address getAddress() {
-		return address;
-	}
-
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-
-	public Set<PhoneNumber> getPhoneNumbers() {
-		return phoneNumbers;
-	}
-
-
-	public void setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
-		this.phoneNumbers = phoneNumbers;
-	}
-
-	@Override
-	public String toString() {
-//		StringBuilder sb=new StringBuilder("");
-//		
-//		sb.append(name+" "+address.getCity()+" "+ address.getState()+" "+matrDetails.getNumber());
-//		
-//		sb.append("\n");
-//		Set<PhoneNumber> phoneNumbers2 = getPhoneNumbers();
-//		if(phoneNumbers2!=null && phoneNumbers2.size()>0)
-//		for (PhoneNumber phone : phoneNumbers2) {
-//			sb.append(phone.getType()+" "+phone.getNumber()+"\n");
-//		}
-		
-		return name+" "+id;
-	
-	
-	}
 
 }
