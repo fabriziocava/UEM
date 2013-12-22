@@ -38,9 +38,6 @@ import it.unical.uniexam.hibernate.domain.utility.Address;
 @Table(name="STUDENT")
 public class Student {
 
-
-	public Student() {}
-
 	@Id
 	@Column(name="STUDENT_ID")
 	@GeneratedValue
@@ -59,4 +56,5 @@ public class Student {
 	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
 
 
+	public Student() {}
 }
