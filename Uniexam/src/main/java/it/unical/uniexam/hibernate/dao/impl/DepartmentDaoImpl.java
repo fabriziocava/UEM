@@ -16,6 +16,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 	@Override
 	public Long addDepartment(String code,String name,List<Professor> professors,Address address) {
+		try{
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long id=null;
@@ -35,7 +36,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
 			session.close();
 		}
 		
-		return id;
+		}catch(Exception e){e.printStackTrace();}
+		return null;
 	}
 
 	@Override
@@ -52,6 +54,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 			System.out.println("io");
 //			}
 			transaction.commit();
+			
 		}catch(Exception e){
 			transaction.rollback();
 		}finally{

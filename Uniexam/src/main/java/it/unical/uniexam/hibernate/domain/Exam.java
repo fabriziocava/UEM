@@ -1,5 +1,11 @@
 package it.unical.uniexam.hibernate.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @category Event 
  * 
@@ -21,6 +27,12 @@ package it.unical.uniexam.hibernate.domain;
  *
  */
 
+@Entity
+@Table(name="EXAM")
 public class Exam {
 
+	@Id
+	@GeneratedValue
+	@Column(name="EXAM_ID")
+	Long id;
 }

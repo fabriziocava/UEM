@@ -1,6 +1,9 @@
 package it.unical.uniexam.hibernate.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -25,5 +28,9 @@ import javax.persistence.Table;
 @Table(name="PROFESSOR")
 public class Professor {
 
+	@Id
+	@GeneratedValue
+	@Column(name="PROFESSOR_ID")
+	Long id;
 	
 }

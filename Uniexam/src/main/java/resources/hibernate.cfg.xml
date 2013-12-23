@@ -5,11 +5,11 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
-		<property name="connection.url">jdbc:hsqldb:file:./DB/mydb</property>
+		<property name="connection.url">jdbc:hsqldb:file:/home/luigi/DB/my</property>
 <!-- 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property> -->
 <!-- 		<property name="connection.url">jdbc:mysql://192.168.1.192:3306/uem</property> -->
-		<property name="connection.username">user</property>
-		<property name="connection.password">12345</property>
+		<property name="connection.username">1</property>
+		<property name="connection.password">q</property>
 		<property name="connection.pool_size">1</property>
 <!-- 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property> -->
 <!-- 		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property> -->
@@ -17,6 +17,6 @@
 		<property name="current_session_context_class">thread</property>
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 		<property name="show_sql">true</property>
-		<property name="hbm2ddl.auto">create</property>
+		<property name="hbm2ddl.auto">update</property>
 	</session-factory>
 </hibernate-configuration>

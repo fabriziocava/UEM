@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -51,7 +52,7 @@ public class Course {
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="COURSE_REQUESTCOURSE",
 	joinColumns={
-			@JoinColumn(name="COURSE")
+			@JoinColumn(name="COURSE_ID")
 			}, 
 	inverseJoinColumns={
 			@JoinColumn(name="REQUEST_COURSE_ID")
@@ -59,7 +60,8 @@ public class Course {
 	Set<RequestedCourse> requestedCourses=new HashSet<RequestedCourse>();
 	
 	// scrivere la relazione Many to One
-	@Column(name="HOLDER_PROFESSOR", nullable=false)
+//	@Column(name="HOLDER_PROFESSOR", nullable=false)
+	@ManyToOne(cascade=CascadeType.ALL)
 	Professor holder;
 	
 }

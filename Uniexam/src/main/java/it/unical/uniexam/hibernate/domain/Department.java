@@ -47,8 +47,8 @@ public class Department {
 	@Embedded
 	private Address address;
 	
-	@OneToMany(mappedBy="department_assigned")
-	private Set<Professor> professors;
+//	@OneToMany(mappedBy="department_assigned")
+//	private Set<Professor> professors;
 
 	public Long getId() {
 		return id;
@@ -81,19 +81,6 @@ public class Department {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
-	public Set<Professor> getProfessors() {
-		return professors;
-	}
-
-	public void setProfessors(Set<Professor> professors) {
-		this.professors = professors;
-	}
-
-	public void addProfessor(Professor p) {
-		professors.add(p);
-	}
-	
 //	@Column(name="PRESIDENT")
 //	@OneToOne(fetch=FetchType.LAZY)
 //	private Professor president;

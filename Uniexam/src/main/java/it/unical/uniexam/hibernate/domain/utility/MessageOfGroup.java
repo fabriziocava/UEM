@@ -1,5 +1,11 @@
 package it.unical.uniexam.hibernate.domain.utility;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @category Event 
  * 
@@ -15,6 +21,12 @@ package it.unical.uniexam.hibernate.domain.utility;
  *
  */
 
+@Entity
+@Table(name="MESSAGE_OF_GROUP")
 public class MessageOfGroup {
 
+	@Id
+	@Column(name="MESSAGE_OF_GROUP_ID")
+	@GeneratedValue
+	Long id;
 }

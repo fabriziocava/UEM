@@ -1,5 +1,11 @@
 package it.unical.uniexam.hibernate.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @category Structure 
  * 
@@ -11,6 +17,13 @@ package it.unical.uniexam.hibernate.domain;
  * @author luigi
  *
  */
-public class DC {
+@Entity
+@Table(name="DEGREE_COURSE")
+public class DegreeCourse {
 
+	@Id
+	@GeneratedValue
+	@Column(name="DEGREE_COURSE_ID")
+	Long id;
+	
 }
