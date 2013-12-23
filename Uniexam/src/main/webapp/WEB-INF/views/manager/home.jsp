@@ -14,6 +14,8 @@
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 </script>
 
+
+
 </head>
 <body>
 	<script type="text/javascript">
@@ -34,7 +36,7 @@
 	<header>
 		<div class="header">
 			<div class="header-logo">
-				<a href="${pageContext.request.contextPath}/professor/home"
+				<a href="${pageContext.request.contextPath}/manager/home"
 					title="home"> <img
 					src="${pageContext.request.contextPath}/res/img/pixel.png"
 					width="30" height="30">
@@ -47,7 +49,7 @@
 				<ul class="links-user">
 					<li><img src="imageUser" />${user}</li>
 					<li><a
-						href="${pageContext.request.contextPath}/manager/personalizzation">
+						href="${pageContext.request.contextPath}/professor/personalizzation">
 							<img class="personalizzation-header"
 							src="${pageContext.request.contextPath}/res/img/pixel.png" />
 					</a></li>
@@ -62,15 +64,17 @@
 	<div class="container">
 
 		<div class="container-up">
-			<ul class="dashboard">
+			<ul  id="jsddm" class="dashboard">
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">Corsi</a></li>
+					onclick="selectDashBoard(this.innerHTML)">Gestione ordinamenti</a></li>
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">Appelli</a></li>
+					onclick="selectDashBoard(this.innerHTML)">Gestione sessione esame</a></li>
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">Gruppi</a></li>
+					onclick="selectDashBoard(this.innerHTML)">Gestione corsi</a>
+				</li>
+								
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">Firma</a></li>
+					onclick="selectDashBoard(this.innerHTML)">Assegna corso</a></li>
 			</ul>
 		</div>
 		<div class="container-left">something asd asd asd asd asd asd
