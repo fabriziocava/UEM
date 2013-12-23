@@ -13,9 +13,9 @@ public interface CourseDAO {
 	/**
 	 * Adding a Course and return the your id
 	 */
-	public Long addCourse(Long idDepartment,String codeCourse,String nameCourse,Integer creditCourse,Long idProfessorHolder,Set<RequestedCourse>requestedCourses);
+	public Long addCourse(Long idDegreeCourse,String codeCourse,String nameCourse,Integer creditCourse,Long idProfessorHolder,Set<RequestedCourse>requestedCourses);
 	public Set<Course> getCourses();
-	public Set<Course> getCoursesFromDepartment(Long idDepartment);
+	public Set<Course> getCoursesFromDegreeCourse(Long idDepartment);
 	public Course getCourseFromId(Long idCourse);
 	public Course removeCourse(Long idCourse);
 

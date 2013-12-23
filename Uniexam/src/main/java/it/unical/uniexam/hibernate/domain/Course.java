@@ -58,10 +58,59 @@ public class Course {
 			@JoinColumn(name="REQUEST_COURSE_ID")
 			})
 	Set<RequestedCourse> requestedCourses=new HashSet<RequestedCourse>();
-	
-	// scrivere la relazione Many to One
-//	@Column(name="HOLDER_PROFESSOR", nullable=false)
-	@ManyToOne(cascade=CascadeType.ALL)
+
+	@ManyToOne
 	Professor holder;
+
+	/**
+	 * implementetion function part
+	 * 
+	 */
+	
+	/**
+	 * 
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getCredits() {
+		return credits;
+	}
+
+	public void setCredits(Integer credits) {
+		this.credits = credits;
+	}
+
+	public Set<RequestedCourse> getRequestedCourses() {
+		return requestedCourses;
+	}
+
+	public void setRequestedCourses(Set<RequestedCourse> requestedCourses) {
+		this.requestedCourses = requestedCourses;
+	}
+
+	public Professor getHolder() {
+		return holder;
+	}
+
+	public void setHolder(Professor holder) {
+		this.holder = holder;
+	}
+	
+	
+	
 	
 }

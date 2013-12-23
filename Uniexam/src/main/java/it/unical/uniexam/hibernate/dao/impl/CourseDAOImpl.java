@@ -16,14 +16,15 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class CourseDAOImpl implements CourseDAO{
 
 	@Override
-	public Long addCourse(Long idDepartment, String codeCourse,
+	public Long addCourse(Long idDegreeCourse, String codeCourse,
 			String nameCourse, Integer creditCourse, Long idProfessorHolder,
 			Set<RequestedCourse> requestedCourses) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		try{
 			transaction=session.beginTransaction();
-			
+			Course c=new Course();
+			c.setCode(codeCourse);
 			
 			transaction.commit();
 		}catch(Exception e){
@@ -41,7 +42,7 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
-	public Set<Course> getCoursesFromDepartment(Long idDepartment) {
+	public Set<Course> getCoursesFromDegreeCourse(Long idDepartment) {
 		// TODO Auto-generated method stub
 		return null;
 	}

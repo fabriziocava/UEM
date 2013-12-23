@@ -20,10 +20,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name="DEGREE_COURSE")
 public class DegreeCourse {
-
+	
 	@Id
 	@GeneratedValue
 	@Column(name="DEGREE_COURSE_ID")
 	Long id;
+	
+	
 	
 }
