@@ -1,9 +1,18 @@
 package it.unical.uniexam.hibernate.util;
 
 
+import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
+import it.unical.uniexam.hibernate.domain.Exam;
+import it.unical.uniexam.hibernate.domain.Group;
+import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.Session;
 import it.unical.uniexam.hibernate.domain.Student;
+import it.unical.uniexam.hibernate.domain.User;
+import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import org.hibernate.SessionFactory;
@@ -19,11 +28,22 @@ public class HibernateUtil {
 			sessionFactory=new Configuration()
 			.configure("resources/hibernate.cfg.xml")
 			.addPackage("it.unical.uniexam.hibernate.domain")
+			.addAnnotatedClass(User.class)
 			.addAnnotatedClass(Department.class)
+			.addAnnotatedClass(RequestedCourse.class)
+			.addAnnotatedClass(Course.class)
+			.addAnnotatedClass(DegreeCourse.class)
+			.addAnnotatedClass(Exam.class)
+			.addAnnotatedClass(Group.class)
+			.addAnnotatedClass(Session.class)
+			.addAnnotatedClass(PhoneNumber.class)
+			.addAnnotatedClass(MessageOfGroup.class)
 			.addAnnotatedClass(Professor.class)
+			.addAnnotatedClass(Manager.class)
+			.addAnnotatedClass(Student.class)
 			.buildSessionFactory();
 		}catch(Exception e){
-
+			e.printStackTrace();
 		}
 	}
 	//si devono aggiungere tutte le classi che vogliamo siano utilizzate nel db

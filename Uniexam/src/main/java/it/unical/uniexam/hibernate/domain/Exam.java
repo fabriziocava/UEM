@@ -1,15 +1,21 @@
 package it.unical.uniexam.hibernate.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @category Event 
  * 
  * This class describe a Exam
- * each Exam have a code, a date, many student inscribed; 
+ * each Exam have a code, a date, (many student inscribed ***); 
  * At each Exam 	have a professor like holder (titolare) same prof. that is holder in the course!,
- * 			 		have many professors like a 
- * 					have many other course as requested (propedeuticità)
- * 					possible have exam in pending (appelli)
- * 					possible appears in a carrier of students (carriera)
+ * 			 		have many professors like a commission
+ * 					refer exact a one course
+ * 					refer exact a one session of exam
+ *					have zero or many students inscribed ? *** 
  * 					
  * 					something else?
  * 
@@ -21,6 +27,12 @@ package it.unical.uniexam.hibernate.domain;
  *
  */
 
+@Entity
+@Table(name="EXAM")
 public class Exam {
 
+	@Id
+	@GeneratedValue
+	@Column(name="EXAM_ID")
+	Long id;
 }
