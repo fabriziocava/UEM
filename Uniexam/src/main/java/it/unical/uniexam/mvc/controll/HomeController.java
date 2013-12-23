@@ -63,7 +63,7 @@ public class HomeController {
 			System.out.println(request.getRequestedSessionId());
 			return new ModelAndView("professor/home", "model", "model");
 		}else if(username.equals("m")){
-			return new ModelAndView("manager/home_manager", "model", "model");
+			return new ModelAndView("manager/home", "model", "model");
 		}
 		return new ModelAndView("home", "model", "model");
 	}
