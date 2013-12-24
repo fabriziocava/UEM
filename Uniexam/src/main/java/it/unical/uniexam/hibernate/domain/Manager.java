@@ -1,7 +1,9 @@
 package it.unical.uniexam.hibernate.domain;
 
+import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,10 +35,19 @@ import javax.persistence.Table;
 @Table(name="MANAGER")
 public class Manager extends User{
 	
+	
+	
+	
+	public Manager(String name, String surname, URL webSite, String email,
+			String password, Address address, Set<PhoneNumber> phoneNumbers) {
+		super(name, surname, webSite, email, password, address);
+		this.phoneNumbers = phoneNumbers;
+	}
+
 	@Id
 	@Column(name="MANAGER_ID" , nullable=false)
 	@GeneratedValue
-	Long manager_id;
+	Long id;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="MANAGER_PHONE",
@@ -58,19 +69,19 @@ public class Manager extends User{
 	
 	
 	public Long getManager_id() {
-		return manager_id;
+		return id;
 	}
 
 	public Manager() {
 	}
 
 	public Manager(Long manager_id, Set<PhoneNumber> phoneNumbers) {
-		this.manager_id = manager_id;
+		this.id = manager_id;
 		this.phoneNumbers = phoneNumbers;
 	}
 
 	public void setManager_id(Long manager_id) {
-		this.manager_id = manager_id;
+		this.id = manager_id;
 	}
 
 	public Set<PhoneNumber> getPhoneNumbers() {

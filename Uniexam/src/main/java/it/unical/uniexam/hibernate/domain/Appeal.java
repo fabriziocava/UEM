@@ -40,16 +40,38 @@ import javax.persistence.Table;
 @Table(name="APPEAL")
 public class Appeal {
 
+	
+	
+	public Appeal() {
+	}
+
+	public Appeal(Course course, String name,
+			Integer maxNumberOfInscribed, String location, Date examDate,
+			Date openDate, Date closeDate, Professor creatorProfessor) {
+		this.course = course;
+		this.name = name;
+		this.currNumberOfInscribed = 0;
+		this.maxNumberOfInscribed = maxNumberOfInscribed;
+		this.location = location;
+		this.examDate = examDate;
+		this.openDate = openDate;
+		this.closeDate = closeDate;
+		this.creatorProfessor = creatorProfessor;
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name="APPEAL_ID")
 	Long id;
-	
+
 	@ManyToOne
 	Course course;
 	
 	@Column(name="NAME")
 	String name;
+	
+	@Column(name="CURR_INSCRIBED")
+	Integer currNumberOfInscribed;
 	
 	@Column(name="MAX_INSCRIBED")
 	Integer maxNumberOfInscribed;

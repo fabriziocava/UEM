@@ -8,22 +8,34 @@ import java.util.List;
 import java.util.Set;
 
 public interface DepartmentDAO {
-public Long addDepartment(String code,Professor president,
-		String name,Address address,List<Professor> professors);
 
-public Set<Department> getDepartment();
-public Department getDepartment(Long idDepartment);
-public void removeDepartment(Long idDepartment);
+	//standard
+	public Long addDepartment(String code,Professor president,
+			String name,Address address,List<Professor> professors);
+	public Long addDepartment(Department department);
 
-/**
- * @return id of the professor added
- */
-public Long addProfessorAtDepartment(Long idDepartment, Professor professor);
-/**
- * @return id of the professor removed
- */
-public Long removeProfessorAtDepartment(Long idDepartment, Long idProfessor);
+	public Set<Department> getDepartment();
+	public Department getDepartment(Long idDepartment);
+	
+	public Department removeDepartment(Long idDepartment);
+	public Department removeDepartment(Department department);
 
-public void moveProfessorFromDepartmentToDepartment(Long idProfessor, Long idDepartmentOld, Long idDepartmentNew);
+	public Department modifyDepartment(Long idDepartment,Department departmentNew);
+	
+	//advanced
+	/**
+	 * @return id of the professor added
+	 */
+	public Long addProfessorAtDepartment(Long idDepartment, Professor professor);
+	/**
+	 * @return id of the professor removed
+	 */
+	public Long removeProfessorAtDepartment(Long idDepartment, Long idProfessor);
 
+	public void moveProfessorFromDepartmentToDepartment(Long idProfessor, Long idDepartmentOld, Long idDepartmentNew);
+
+	
+	public Professor setPresident(Professor president);
+	public Professor setPresident(Long idProfessor);
+	
 }

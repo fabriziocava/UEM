@@ -41,14 +41,34 @@ import javax.persistence.Table;
 public class Group {
 
 	
+	public Group(String name, String object, String description,
+			Integer levelOfPolitic, Professor creator) {
+		this.name = name;
+		this.object = object;
+		this.description = description;
+		this.levelOfPolitic = levelOfPolitic;
+		this.creator = creator;
+	}
+
+	/**
+	 * only the professor can publish
+	 */
+	public static final Integer POLITIC_1=1;
+	/**
+	 * only the professor can publish and the student can comment
+	 */
+	public static final Integer POLITIC_2=2;
+	/**
+	 * both professor and student can publish, And of course comments 
+	 */
+	public static final Integer POLITIC_3=3;
+//	public static final Integer POLITIC_4=4;
+	
 	@Id
 	@GeneratedValue
 	@Column(name="GROUP_ID")
 	Long id;
 	
-	@ManyToOne
-	@JoinColumn(name="PROFESSOR_GRUOP")
-	Professor creator;
 	
 	@Column(name="NAME")
 	String name;
@@ -59,6 +79,13 @@ public class Group {
 	@Column(name="DESCRIPTION")
 	String description;
 	
+	@Column(name="POLITIC")
+	Integer levelOfPolitic;
+	
+	@ManyToOne
+	@JoinColumn(name="PROFESSOR_GRUOP")
+	Professor creator;
+
 	/**
 	 * per inserire un nuovo messaggio devo utilizzare 
 	 * messages.add(0,MessageOfGruop);

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,6 +37,24 @@ import javax.persistence.Table;
 @Table(name="COURSE")
 public class Course {
 	
+	
+	
+	public Course() {
+	}
+
+	public Course(String code, String name, URL webSite, Integer credits,
+			Set<RequestedCourse> requestedCourses,
+			Set<Professor> commissionProfessors, Professor holder) {
+		super();
+		this.code = code;
+		this.name = name;
+		this.webSite = webSite;
+		this.credits = credits;
+		this.requestedCourses = requestedCourses;
+		this.commissionProfessors = commissionProfessors;
+		this.holder = holder;
+	}
+
 	@Id
 	@Column(name="COURSE_ID")
 	@GeneratedValue
@@ -67,6 +86,9 @@ public class Course {
 			})
 	Set<RequestedCourse> requestedCourses=new HashSet<RequestedCourse>();
 
+	@ManyToMany(mappedBy="asCommission")
+	Set<Professor>commissionProfessors=new HashSet<Professor>();
+	
 	@ManyToOne
 	Professor holder;
 

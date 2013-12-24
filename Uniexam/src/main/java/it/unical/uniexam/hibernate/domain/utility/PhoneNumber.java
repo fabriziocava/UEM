@@ -12,6 +12,12 @@ public class PhoneNumber {
 
 	public PhoneNumber(){}
 	
+	public PhoneNumber(String type, String number) {
+		super();
+		this.type = type;
+		this.number = number;
+	}
+
 	@Id
 	@Column(name="PHONE_ID")
 	@GeneratedValue

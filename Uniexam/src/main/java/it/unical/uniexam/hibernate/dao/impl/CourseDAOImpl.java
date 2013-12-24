@@ -233,6 +233,43 @@ public class CourseDAOImpl implements CourseDAO{
 		return res;
 	}
 
+	@Override
+	public Long addCourse(Course course) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long addProfessorAtCommission(Long idCourse, Long idProfessor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long addProfessorAtCommission(Long idCourse, Professor professor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean setCommission(Long idCourse, Set<Professor> commission) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Professor removeProfessorFromCommission(Long idCourse,
+			Long idProfessor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Professor> removeCommission(Long idCourse) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
 //Session session =HibernateUtil.getSessionFactory().openSession();
