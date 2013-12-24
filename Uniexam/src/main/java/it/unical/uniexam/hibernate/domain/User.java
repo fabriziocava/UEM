@@ -5,21 +5,36 @@ import java.net.URL;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
 
-import javax.inject.Singleton;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
-
-import org.springframework.validation.annotation.Validated;
 
 
 @MappedSuperclass
 public abstract class User {
 
+	
+	
+public User() {
+	}
+
+public User(String name, String surname, URL webSite, String email,
+			String password, Address address) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.webSite = webSite;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+	}
+
 //	@Id
 //	@Column(name="USER_ID", nullable=false)
 //	@GeneratedValue
 //	String user_id;
+	
+	
 	
 	@Column(name="NAME", nullable=false)
 	String name;

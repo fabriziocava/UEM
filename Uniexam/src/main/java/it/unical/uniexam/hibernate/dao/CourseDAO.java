@@ -18,6 +18,9 @@ public interface CourseDAO {
 	public Long addCourse(Long idDegreeCourse,String codeCourse,String nameCourse,
 			Integer creditCourse,Long idProfessorHolder,
 			Set<RequestedCourse>requestedCourses,URL webSite);
+	
+	public Long addCourse(Course course);
+	
 	public Set<Course> getCourses();
 	public Set<Course> getCoursesFromDegreeCourse(Long idDegreeCourse);
 	public Course getCourse(Long idCourse);
@@ -37,4 +40,12 @@ public interface CourseDAO {
 	public boolean setHolderProfessor(Long idCourse,Long idProfessor);
 	public boolean setHolderProfessor(Long idCourse, Professor professor);
 	public Professor getHolderProfessor(Long idCourse);
+	
+	//commission
+	public Long addProfessorAtCommission(Long idCourse,Long idProfessor);
+	public Long addProfessorAtCommission(Long idCourse,Professor professor);
+	public boolean setCommission(Long idCourse,Set<Professor>commission);
+	public Professor removeProfessorFromCommission(Long idCourse,Long idProfessor);
+	public Set<Professor> removeCommission(Long idCourse);
+	
 }

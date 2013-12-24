@@ -39,6 +39,17 @@ import javax.persistence.Table;
 @Table(name="DEPARTMENT")
 public class Department {
 
+	
+	
+	public Department() {
+	}
+
+	public Department(String code, String name, Address address) {
+		this.code = code;
+		this.name = name;
+		this.address = address;
+	}
+
 	@Id
 	@Column(name="DEPARTMENT_ID")
 	@GeneratedValue

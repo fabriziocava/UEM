@@ -21,6 +21,11 @@ import javax.persistence.Table;
 @Table(name="DEGREE_COURSE")
 public class DegreeCourse {
 	
+	
+	
+	public DegreeCourse() {
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name="DEGREE_COURSE_ID")

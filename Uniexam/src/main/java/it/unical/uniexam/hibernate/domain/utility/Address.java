@@ -5,10 +5,25 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+
+	
+	
+	public Address() {
+	}
+	
+	public Address(String city, String state, String zip, String street) {
+		super();
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.street = street;
+	}
 /**
  * non sarà una  entità
  * ovvero non si crea una tabella per questa classe
  */
+	
+	
 	
 	@Column(name="CITY")
 	private String city;

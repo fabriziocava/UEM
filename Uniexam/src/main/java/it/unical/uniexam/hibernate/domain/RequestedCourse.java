@@ -11,6 +11,16 @@ import javax.persistence.Table;
 @Table(name="REQUESTED_COURSE")
 public class RequestedCourse {
 
+	
+	
+	public RequestedCourse(Course course, Integer degreeOfRequest) {
+		this.course = course;
+		this.degreeOfRequest = degreeOfRequest;
+	}
+
+	public RequestedCourse() {
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name="REQUESTED_COURSE_ID")

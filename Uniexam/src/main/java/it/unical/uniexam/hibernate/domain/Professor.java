@@ -1,7 +1,9 @@
 package it.unical.uniexam.hibernate.domain;
 
+import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,10 +41,31 @@ import javax.persistence.Table;
 @Table(name="PROFESSOR")
 public class Professor extends User{
 
+	
+	
+	public Professor() {
+	}
+
+	public Professor(String name, String surname, URL webSite, String email,
+			String password, Address address, Set<PhoneNumber> phoneNumbers,
+			Department department_associated) {
+		super(name, surname, webSite, email, password, address);
+		this.phoneNumbers = phoneNumbers;
+		this.department_associated = department_associated;
+	}
+
+	public Professor(String name, String surname, URL webSite, String email,
+			String password, Address address) {
+		super(name, surname, webSite, email, password, address);
+	}
+
+	
+	
 	@Id
 	@GeneratedValue
 	@Column(name="PROFESSOR_ID")
 	Long id;
+	
 	
 	
 	@OneToMany(cascade=CascadeType.ALL)
@@ -77,7 +101,7 @@ public class Professor extends User{
 			})
 	Set<Course>holder=new HashSet<Course>();
 	
-	@OneToMany
+	@ManyToMany
 	@JoinTable(name="PROFESSOR_COURSE_COMMISSION",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
