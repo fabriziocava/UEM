@@ -1,10 +1,16 @@
 package it.unical.uniexam.hibernate.domain;
 
 
+import java.net.URL;
+
 import it.unical.uniexam.hibernate.domain.utility.Address;
+
+import javax.inject.Singleton;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
+
+import org.springframework.validation.annotation.Validated;
 
 
 @MappedSuperclass
@@ -15,8 +21,17 @@ public abstract class User {
 //	@GeneratedValue
 //	String user_id;
 	
-	@Column(name="USERNAME", nullable=false)
-	String username;
+	@Column(name="NAME", nullable=false)
+	String name;
+	
+	@Column(name="SURNAME", nullable=false)
+	String surname;
+	
+	@Column(name="WEB_SITE",nullable=true)
+	URL webSite;
+	
+	@Column(name="EMAIL", nullable=false)
+	String email;
 	
 	@Column(name="PASSWORD", nullable=false)
 	String password;
@@ -41,14 +56,6 @@ public abstract class User {
 
 
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -63,6 +70,38 @@ public abstract class User {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public URL getWebSite() {
+		return webSite;
+	}
+
+	public void setWebSite(URL webSite) {
+		this.webSite = webSite;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

@@ -7,9 +7,9 @@ import java.util.Set;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import it.unical.uniexam.hibernate.dao.DepartmentDao;
-import it.unical.uniexam.hibernate.dao.ProfessorDao;
-import it.unical.uniexam.hibernate.dao.impl.DepartmentDaoImpl;
+import it.unical.uniexam.hibernate.dao.DepartmentDAO;
+import it.unical.uniexam.hibernate.dao.ProfessorDAO;
+import it.unical.uniexam.hibernate.dao.impl.DepartmentDAOImpl;
 //import it.unical.uniexam.hibernate.dao.impl.DepartmentDaoImpl;
 //import it.unical.uniexam.hibernate.dao.impl.ProfessorDaoImp;
 import it.unical.uniexam.hibernate.domain.utility.Address;
@@ -17,7 +17,7 @@ import it.unical.uniexam.hibernate.domain.Professor;
 import static org.junit.Assert.*;
 
 public class DBTest {
-	private static DepartmentDao departmentDao=new DepartmentDaoImpl();
+	private static DepartmentDAO departmentDao=new DepartmentDAOImpl();
 	//private static ProfessorDao professorDao=new ProfessorDaoImp();
 
 

@@ -1,16 +1,10 @@
 package it.unical.uniexam.hibernate.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,20 +19,42 @@ public class RequestedCourse {
 	@ManyToOne
 	Course course;
 	
-//	@OneToMany
-//	@JoinTable(name="STUDENT_PHONE",
-//	joinColumns={
-//			@JoinColumn(name="STUDENT_ID")
-//			}, 
-//	inverseJoinColumns={
-//			@JoinColumn(name="PHONE_ID")
-//			})
-//	Set<Course>requested_course=new HashSet<Course>();
-	
-//	@Column(name="REQUESTED_COURSE")
-//	Course requested_course;
-	
 	@Column(name="DEGREE_OF_REQUEST")
 	Integer degreeOfRequest;
+
+	
+	/**
+	 * Implementation
+	 */
+	
+	
+	/**
+	 * 
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public Integer getDegreeOfRequest() {
+		return degreeOfRequest;
+	}
+
+	public void setDegreeOfRequest(Integer degreeOfRequest) {
+		this.degreeOfRequest = degreeOfRequest;
+	}
+
+	
 	
 }

@@ -1,9 +1,15 @@
 package it.unical.uniexam.hibernate.domain.utility;
 
+import it.unical.uniexam.hibernate.domain.User;
+
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,4 +35,14 @@ public class MessageOfGroup {
 	@Column(name="MESSAGE_OF_GROUP_ID")
 	@GeneratedValue
 	Long id;
+	
+	@Column(name="USER_ID", nullable=false)
+	Long id_user;
+	
+	@Column(name="MESSAGE", nullable=false)
+	String message;
+	
+	@Column(name="DATE_OF_MESSAGE",nullable=false)
+	Date date_of_message;
+	
 }

@@ -1,5 +1,6 @@
 package it.unical.uniexam.hibernate.domain;
 
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,11 +41,18 @@ public class Course {
 	@GeneratedValue
 	Long id;
 	
+	//deve essere implemetnato il collegamento tra il cdl e il cdl all'ordinamento
+//	@ManyToOne
+//	DegreeCourse underDegreeCourse;
+	
 	@Column(name="CODE", nullable=false)
 	String code;
 	
 	@Column(name="NAME", nullable=false)
 	String name;
+	
+	@Column(name="URL_WEB_SITE", nullable=true)
+	URL webSite;
 	
 	@Column(name="CREDITS", nullable=false)
 	Integer credits;
@@ -108,6 +116,22 @@ public class Course {
 
 	public void setHolder(Professor holder) {
 		this.holder = holder;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public URL getUrlWebSite() {
+		return webSite;
+	}
+
+	public void setUrlWebSite(URL url_web_site) {
+		this.webSite = url_web_site;
 	}
 	
 	

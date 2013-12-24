@@ -1,7 +1,6 @@
 package it.unical.uniexam.hibernate.domain;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
-import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 
@@ -46,11 +47,16 @@ public class Department {
 	@Column(name="CODE")
 	private String code;
 	
+	@OneToOne(cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	Professor president;
+
 	@Column(name="NAME")
 	private String name;
 	
 	@Embedded
 	private Address address;
+	
 	
 	@OneToMany(cascade=CascadeType.ALL ,mappedBy="department_associated")
 	@JoinTable(name="DEPARTMENT_PROFESSOR",
@@ -62,7 +68,13 @@ public class Department {
 			})
 	private Set<Professor> professors=new HashSet<Professor>();
 
-
+	/**
+	 * Implementation
+	 */
+	
+	/**
+	 * 
+	 */
 	public Long getId() {
 		return id;
 	}

@@ -4,7 +4,7 @@ package it.unical.uniexam.hibernate.util;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
-import it.unical.uniexam.hibernate.domain.Exam;
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -33,7 +33,7 @@ public class HibernateUtil {
 			.addAnnotatedClass(RequestedCourse.class)
 			.addAnnotatedClass(Course.class)
 			.addAnnotatedClass(DegreeCourse.class)
-			.addAnnotatedClass(Exam.class)
+			.addAnnotatedClass(Appeal.class)
 			.addAnnotatedClass(Group.class)
 			.addAnnotatedClass(Session.class)
 			.addAnnotatedClass(PhoneNumber.class)
