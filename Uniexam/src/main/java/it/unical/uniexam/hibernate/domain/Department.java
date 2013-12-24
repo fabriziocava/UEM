@@ -1,14 +1,19 @@
 package it.unical.uniexam.hibernate.domain;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,7 +39,7 @@ import javax.persistence.Table;
 public class Department {
 
 	@Id
-	@Column(name="ID")
+	@Column(name="DEPARTMENT_ID")
 	@GeneratedValue
 	private Long id;
 	
@@ -47,8 +52,16 @@ public class Department {
 	@Embedded
 	private Address address;
 	
-//	@OneToMany(mappedBy="department_assigned")
-//	private Set<Professor> professors;
+	@OneToMany(cascade=CascadeType.ALL ,mappedBy="department_associated")
+	@JoinTable(name="DEPARTMENT_PROFESSOR",
+	joinColumns={
+			@JoinColumn(name="DEPARTMENT_ID")
+			}, 
+	inverseJoinColumns={
+			@JoinColumn(name="PROFESSOR_ID")
+			})
+	private Set<Professor> professors=new HashSet<Professor>();
+
 
 	public Long getId() {
 		return id;
