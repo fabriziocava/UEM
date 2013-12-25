@@ -56,7 +56,7 @@ public class HomeController {
 			Model model){
 		model.addAttribute("user",username);
 		if(username.equals("s")){
-			return new ModelAndView("student/home_student", "model", "model");
+			return new ModelAndView("student/home", "model", "model");
 		}else if(username.equals("p")){
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", username);

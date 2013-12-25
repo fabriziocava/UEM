@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%if(request.getAttribute("login")!=null){
+	response.sendRedirect("student/home?user="+request.getAttribute("user"));
+}
+	%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user}</title>
 
-<link href="res/css/manager.css" media="all" rel="stylesheet"
-	type="text/css" />
-<script src="res/jquery-2.0.3.js">
+<link href="/uniexam/res/css/student.css" media="all" rel="stylesheet" type="text/css" />
+<script src="/uniexam/res/jquery-2.0.3.js">
 	
 </script>
 <script type="text/javascript">
@@ -18,12 +21,12 @@
 <body>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			alert("path: "+"<%=request.getPathInfo()%>");
+<%-- 			alert("path: "+"<%=request.getPathInfo()%>"); --%>
 		});
 	</script>
 	<header>
 		<div class="header-logo">
-			<a href="/home"> <img alt="home" src="res/img/logo.png"
+			<a href="/home"> <img alt="home" src="/uniexam/res/img/logo.png"
 				width="30" height="30">
 			</a>
 		</div>

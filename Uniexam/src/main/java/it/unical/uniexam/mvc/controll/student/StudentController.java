@@ -13,10 +13,8 @@ public class StudentController {
 	
 	@RequestMapping(value="/student/home", method=RequestMethod.GET)
 	public String homeStudent(HttpServletRequest request,Model model){
-		
-		model.addAttribute("q",request.getQueryString() );
-		
-		return "home";
+			
+		return "/student/home";
 	}
 	
 }
