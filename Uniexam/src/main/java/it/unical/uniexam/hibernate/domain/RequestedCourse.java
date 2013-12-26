@@ -11,11 +11,20 @@ import javax.persistence.Table;
 @Table(name="REQUESTED_COURSE")
 public class RequestedCourse {
 
+	/**
+	 * the course can be take from any student
+	 */
+	public static final Integer POLICY_1=1;
+	/**
+	 * the course can be take only if the student have already take the requested course
+	 */
+	public static final Integer POLICY_2=2;
 	
+//	public static final Integer POLICY_3=3;
 	
 	public RequestedCourse(Course course, Integer degreeOfRequest) {
 		this.course = course;
-		this.degreeOfRequest = degreeOfRequest;
+		this.policyOfRequested = degreeOfRequest;
 	}
 
 	public RequestedCourse() {
@@ -29,8 +38,8 @@ public class RequestedCourse {
 	@ManyToOne
 	Course course;
 	
-	@Column(name="DEGREE_OF_REQUEST")
-	Integer degreeOfRequest;
+	@Column(name="POLICY")
+	Integer policyOfRequested;
 
 	
 	/**
@@ -57,12 +66,12 @@ public class RequestedCourse {
 		this.course = course;
 	}
 
-	public Integer getDegreeOfRequest() {
-		return degreeOfRequest;
+	public Integer getPolicyOfRequest() {
+		return policyOfRequested;
 	}
 
-	public void setDegreeOfRequest(Integer degreeOfRequest) {
-		this.degreeOfRequest = degreeOfRequest;
+	public void setPolicyOfRequest(Integer policyOfRequest) {
+		this.policyOfRequested = policyOfRequest;
 	}
 
 	

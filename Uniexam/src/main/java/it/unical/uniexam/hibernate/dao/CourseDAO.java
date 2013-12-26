@@ -48,4 +48,7 @@ public interface CourseDAO {
 	public Professor removeProfessorFromCommission(Long idCourse,Long idProfessor);
 	public Set<Professor> removeCommission(Long idCourse);
 	
+	public Set<RequestedCourse> getRequestedCourses(Long idCourse);
+	public Set<RequestedCourse> getRequestedCourses(Long idCourse,Integer degreeOdPolicy);
+	
 }

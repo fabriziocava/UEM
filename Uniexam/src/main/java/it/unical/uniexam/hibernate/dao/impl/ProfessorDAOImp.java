@@ -1,6 +1,8 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
 import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Query;
@@ -20,8 +22,24 @@ public class ProfessorDAOImp implements ProfessorDAO {
 	@Override
 	public Long addProfessor(String name, String surname, URL webSite,
 			String email, String password, Address address, Long idDepartment) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Long id=null;
+		try{
+			transaction=session.beginTransaction();
+			
+			Professor p=new Professor(name, surname, webSite, email, password, address);
+			/**
+			 * Aggiungere il dipartimento di appartenenza se non nullo
+			 */
+			id=(Long) session.save(p);
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return id;
 	}
 
 	@Override
@@ -55,13 +73,13 @@ public class ProfessorDAOImp implements ProfessorDAO {
 	}
 
 	@Override
-	public Set<Professor> listProfessors() {
+	public Set<Professor> getSetProfessors() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Professor> listProfessorsFromDepartment(Long idDepartment) {
+	public Set<Professor> getSetProfessorsFromDepartment(Long idDepartment) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -113,6 +131,36 @@ public class ProfessorDAOImp implements ProfessorDAO {
 	public Set<Course> getCourseCommission(Long idProfessor) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Set<Course> getSetCourseAsHolder(Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		HashSet<Course>res=null;
+		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			res=new HashSet<Course>(p.getSetHoldersCourse());
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Set<Course> getSetCourseAsCommission(Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		HashSet<Course>res=null;
+		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			res=new HashSet<Course>(p.getSetAsCommission());
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
 

@@ -41,18 +41,46 @@ public class CourseDAOImpl implements CourseDAO{
 			Professor p=(Professor) session.get(Professor.class, idProfessorHolder);
 			c.setHolder(p);
 			c.setRequestedCourses(requestedCourses);
-			c.setUrlWebSite(webSite);
+			c.setWebSite(webSite);
 
-			p.getHolder().add(c);
+			p.getSetHoldersCourse().add(c);
 			id=(Long) session.save(c);
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
 		return id;
 	}
+
+	@Override
+	public Long addCourse(Course course) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Long id=null;
+		try{
+			transaction=session.beginTransaction();
+			/**
+			 * will add degreeCourse
+			 */
+			Professor holder = course.getHolder();
+			if(holder!=null){
+				Professor p=(Professor) session.get(Professor.class, holder.getId());
+				p.getSetHoldersCourse().add(course);
+			}
+			id=(Long) session.save(course);
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return id;
+	}
+
 
 	@Override
 	public Set<Course> getCourses() {
@@ -64,6 +92,7 @@ public class CourseDAOImpl implements CourseDAO{
 			List<Course> list = q.list();
 			res=new HashSet<Course>(list);
 		}catch(Exception e){
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -81,6 +110,7 @@ public class CourseDAOImpl implements CourseDAO{
 			List<Course> list = q.list();
 			res=new HashSet<Course>(list);
 		}catch(Exception e){
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -95,6 +125,7 @@ public class CourseDAOImpl implements CourseDAO{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			res=c1;
 		}catch(Exception e){
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -114,6 +145,7 @@ public class CourseDAOImpl implements CourseDAO{
 			res=c1;
 		}catch(Exception e){
 			transaction.rollback();
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -132,13 +164,14 @@ public class CourseDAOImpl implements CourseDAO{
 			if(c1!=null && c2!=null){
 				RequestedCourse paramE=new RequestedCourse();
 				paramE.setCourse(c2);
-				paramE.setDegreeOfRequest(degree);
+				paramE.setPolicyOfRequest(degree);
 				c1.getRequestedCourses().add(paramE);
 				transaction.commit();
 				ok=true;			
 			}
 		}catch(Exception e){
 			transaction.rollback();
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -166,6 +199,7 @@ public class CourseDAOImpl implements CourseDAO{
 			}
 		}catch(Exception e){
 			transaction.rollback();
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -182,20 +216,23 @@ public class CourseDAOImpl implements CourseDAO{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			Professor p=(Professor) session.get(Professor.class, idProfessor);
 			if(c1!=null && p!=null){
+				if(c1.getHolder()!=null)
+					c1.getHolder().getSetHoldersCourse().remove(c1);
 				c1.setHolder(p);
-				p.getHolder().add(c1);
+				p.getSetHoldersCourse().add(c1);
 				transaction.commit();
 				ok=true;			
 			}
 		}catch(Exception e){
 			transaction.rollback();
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
 		if(!ok) return false;
 		else return true;
 	}
-	
+
 	@Override
 	public boolean setHolderProfessor(Long idCourse, Professor professor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -206,12 +243,13 @@ public class CourseDAOImpl implements CourseDAO{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			if(c1!=null){
 				c1.setHolder(professor);
-				professor.getHolder().add(c1);
+				professor.getSetHoldersCourse().add(c1);
 				transaction.commit();
 				ok=true;			
 			}
 		}catch(Exception e){
 			transaction.rollback();
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -227,6 +265,7 @@ public class CourseDAOImpl implements CourseDAO{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			res=c1.getHolder();
 		}catch(Exception e){
+			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -234,40 +273,158 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
-	public Long addCourse(Course course) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Long addProfessorAtCommission(Long idCourse, Long idProfessor) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Long id=null;
+		try{
+			transaction=session.beginTransaction();
+			Course c=(Course) session.get(Course.class,idCourse );
+			Professor p=(Professor) session.get(Professor.class,idProfessor);
+
+			c.getCommissionProfessors().add(p);
+			p.getSetAsCommission().add(c);
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return id;
 	}
 
 	@Override
-	public Long addProfessorAtCommission(Long idCourse, Professor professor) {
-		// TODO Auto-generated method stub
-		return null;
+	public Long addProfessorAtCommission(Long idCourse, Professor p) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Long id=null;
+		try{
+			transaction=session.beginTransaction();
+			Course c=(Course) session.get(Course.class,idCourse );
+
+			c.getCommissionProfessors().add(p);
+			p.getSetAsCommission().add(c);
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return id;
 	}
 
 	@Override
 	public boolean setCommission(Long idCourse, Set<Professor> commission) {
-		// TODO Auto-generated method stub
-		return false;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		boolean ok=false;
+		try{
+			transaction=session.beginTransaction();
+
+			Course c=(Course) session.get(Course.class,idCourse );
+			c.getCommissionProfessors().clear();
+			c.setCommissionProfessors(commission);
+
+			transaction.commit();
+			ok=true;
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		if(!ok) return false;
+		else return true;
 	}
 
 	@Override
-	public Professor removeProfessorFromCommission(Long idCourse,
-			Long idProfessor) {
-		// TODO Auto-generated method stub
-		return null;
+	public Professor removeProfessorFromCommission(Long idCourse, Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Professor p=null;
+		try{
+			transaction=session.beginTransaction();
+			Course c=(Course) session.get(Course.class,idCourse );
+			p=(Professor)session.get(Professor.class, idProfessor);
+
+			c.getCommissionProfessors().remove(p);
+			p.getSetAsCommission().remove(c);
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return p;
 	}
 
 	@Override
 	public Set<Professor> removeCommission(Long idCourse) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Set<Professor> pSet=null;
+		try{
+			transaction=session.beginTransaction();
+			Course c=(Course) session.get(Course.class,idCourse );
+
+			pSet=new HashSet<Professor>(c.getCommissionProfessors());
+
+			for (Professor professor : pSet) {
+				professor.getSetAsCommission().remove(c);
+			}
+			c.getCommissionProfessors().clear();
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return pSet;
+	}
+
+	@Override
+	public Set<RequestedCourse> getRequestedCourses(Long idCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Set<RequestedCourse> res=null;
+		try{
+			Course c1=(Course) session.get(Course.class, idCourse);
+			res=new HashSet<RequestedCourse>(c1.getRequestedCourses());
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Set<RequestedCourse> getRequestedCourses(Long idCourse,
+			Integer degreeOdPolicy) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Set<RequestedCourse> res=null;
+		try{
+			Course c1=(Course) session.get(Course.class, idCourse);
+			for (RequestedCourse requestedCourse : c1.getRequestedCourses()) {
+				if(requestedCourse.getPolicyOfRequest()==degreeOdPolicy){
+					if(res==null)
+						res=new HashSet<RequestedCourse>();
+					res.add(requestedCourse);
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
 }

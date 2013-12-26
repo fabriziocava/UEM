@@ -29,9 +29,11 @@ public interface ProfessorDAO {
 
 	public Professor removeProfessor(Long idProfessor);
 
-
-	public Set<Professor> listProfessors();
-	public Set<Professor> listProfessorsFromDepartment(Long idDepartment);
+	public Set<Course> getSetCourseAsHolder(Long idProfessor);
+	public Set<Course> getSetCourseAsCommission(Long idProfessor);
+	
+	public Set<Professor> getSetProfessors();
+	public Set<Professor> getSetProfessorsFromDepartment(Long idDepartment);
 
 	/**hibernate
 	 * Advanced method

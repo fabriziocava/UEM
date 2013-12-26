@@ -42,26 +42,26 @@ public class Group {
 
 	
 	public Group(String name, String object, String description,
-			Integer levelOfPolitic, Professor creator) {
+			Integer levelOfPolicy, Professor creator) {
 		this.name = name;
 		this.object = object;
 		this.description = description;
-		this.levelOfPolitic = levelOfPolitic;
+		this.levelOfPolicy = levelOfPolicy;
 		this.creator = creator;
 	}
 
 	/**
 	 * only the professor can publish
 	 */
-	public static final Integer POLITIC_1=1;
+	public static final Integer POLICY_1=1;
 	/**
 	 * only the professor can publish and the student can comment
 	 */
-	public static final Integer POLITIC_2=2;
+	public static final Integer POLICY_2=2;
 	/**
 	 * both professor and student can publish, And of course comments 
 	 */
-	public static final Integer POLITIC_3=3;
+	public static final Integer POLICY_3=3;
 //	public static final Integer POLITIC_4=4;
 	
 	@Id
@@ -79,8 +79,8 @@ public class Group {
 	@Column(name="DESCRIPTION")
 	String description;
 	
-	@Column(name="POLITIC")
-	Integer levelOfPolitic;
+	@Column(name="POLICY")
+	Integer levelOfPolicy;
 	
 	@ManyToOne
 	@JoinColumn(name="PROFESSOR_GRUOP")

@@ -69,7 +69,8 @@ public class Department {
 	private Address address;
 	
 	
-	@OneToMany(cascade=CascadeType.ALL ,mappedBy="department_associated")
+//	@OneToMany(cascade=CascadeType.ALL ,mappedBy="department_associated")
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="DEPARTMENT_PROFESSOR",
 	joinColumns={
 			@JoinColumn(name="DEPARTMENT_ID")

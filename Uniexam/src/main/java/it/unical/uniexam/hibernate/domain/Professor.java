@@ -43,6 +43,17 @@ public class Professor extends User{
 
 	
 	
+//	public Professor(Professor p) {
+//		super();
+//		this.id = p.id;
+//		this.phoneNumbers = p.phoneNumbers;
+//		this.department_associated = p.department_associated;
+//		this.appeals = p.appeals;
+//		this.holder = p.holder;
+//		this.asCommission = p.asCommission;
+//		this.groups = p.groups;
+//	}
+
 	public Professor() {
 	}
 
@@ -101,8 +112,8 @@ public class Professor extends User{
 			})
 	Set<Course>holder=new HashSet<Course>();
 	
-	@ManyToMany
-	@JoinTable(name="PROFESSOR_COURSE_COMMISSION",
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="PROFESSOR_COURSE_COMMISSION", 
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
 			}, 
@@ -160,7 +171,7 @@ public class Professor extends User{
 		this.appeals = appeals;
 	}
 
-	public Set<Course> getHolder() {
+	public Set<Course> getSetHoldersCourse() {
 		return holder;
 	}
 
@@ -168,11 +179,11 @@ public class Professor extends User{
 		this.holder = holder;
 	}
 
-	public Set<Course> getAsCommission() {
+	public Set<Course> getSetAsCommission() {
 		return asCommission;
 	}
 
-	public void setAsCommission(Set<Course> asCommission) {
+	public void setSetAsCommission(Set<Course> asCommission) {
 		this.asCommission = asCommission;
 	}
 
