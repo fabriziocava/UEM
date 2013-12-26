@@ -32,8 +32,8 @@ public interface ProfessorDAO {
 	public Set<Course> getSetCourseAsHolder(Long idProfessor);
 	public Set<Course> getSetCourseAsCommission(Long idProfessor);
 	
-	public Set<Professor> getSetProfessors();
-	public Set<Professor> getSetProfessorsFromDepartment(Long idDepartment);
+//	public Set<Professor> getSetProfessors();
+//	public Set<Professor> getSetProfessorsFromDepartment(Long idDepartment);
 
 	/**hibernate
 	 * Advanced method
@@ -45,8 +45,8 @@ public interface ProfessorDAO {
 	 */
 	//phone
 	public Long addPhoneNumber(Long idProfessor,PhoneNumber number);
-	public void removePhoneNumber(Long idProfessor, Long idPhoneNumber);
-	public void removePhoneNumber(Long idProfessor, PhoneNumber idPhoneNumber);
+	public PhoneNumber removePhoneNumber(Long idProfessor, Long idPhoneNumber);
+//	public PhoneNumber removePhoneNumber(Long idProfessor, PhoneNumber idPhoneNumber);
 	public Set<PhoneNumber> getPhoneNumbers(Long idProfessor);
 	
 	//department associated

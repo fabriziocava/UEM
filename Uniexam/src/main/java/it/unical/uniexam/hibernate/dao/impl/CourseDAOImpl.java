@@ -195,6 +195,7 @@ public class CourseDAOImpl implements CourseDAO{
 					}
 				}
 				c1.getRequestedCourses().remove(res);
+				session.delete(res);
 				transaction.commit();
 			}
 		}catch(Exception e){

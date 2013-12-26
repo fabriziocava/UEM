@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import sun.awt.image.PNGImageDecoder.PNGException;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Department;
@@ -27,10 +28,11 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		Long id=null;
 		try{
 			transaction=session.beginTransaction();
-			
+
 			Professor p=new Professor(name, surname, webSite, email, password, address);
 			/**
 			 * Aggiungere il dipartimento di appartenenza se non nullo
+			 * if(p.getDepartment_associated()!=null){do}
 			 */
 			id=(Long) session.save(p);
 			transaction.commit();
@@ -44,63 +46,166 @@ public class ProfessorDAOImp implements ProfessorDAO {
 
 	@Override
 	public Long addProfessor(Professor professor) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Long id=null;
+		try{
+			transaction=session.beginTransaction();
+
+			/**
+			 * Aggiungere il dipartimento di appartenenza se non nullo
+			 * if(professor.getDepartment_associated()!=null){do}
+			 */
+			id=(Long) session.save(professor);
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return id;
 	}
 
 	@Override
 	public Set<Professor> getProfessors() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Set<Professor>res=null;
+		try{
+			Query q= session.createQuery("from Professor");
+			@SuppressWarnings("unchecked")
+			List<Professor> list = q.list();
+			res=new HashSet<Professor>(list);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
 	@Override
 	public Set<Professor> getProfessorsFromDepartment(Long idDepartment) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Set<Professor>res=null;
+		try{
+			Query q= session.createQuery("from Professor where department_associated=:par");
+			q.setParameter("par", idDepartment);
+			@SuppressWarnings("unchecked")
+			List<Professor> list = q.list();
+			res=new HashSet<Professor>(list);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
 	@Override
 	public Professor getProfessor(Long idProfessor) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Professor res=null;
+		try{
+			res=(Professor)session.get(Professor.class, idProfessor);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
 	@Override
 	public Professor removeProfessor(Long idProfessor) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Professor res=null;
+		Transaction transaction=null;
+		try{
+			transaction=session.beginTransaction();
+			res=(Professor)session.get(Professor.class, idProfessor);
+			session.delete(res);
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
-	@Override
-	public Set<Professor> getSetProfessors() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Set<Professor> getSetProfessors() {
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		Set<Professor>res=null;
+//		try{
+//			Query q= session.createQuery("from Professor");
+//			@SuppressWarnings("unchecked")
+//			List<Professor> list = q.list();
+//			res=new HashSet<Professor>(list);
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}finally{
+//			session.close();
+//		}
+//		return res;
+//	}
 
-	@Override
-	public Set<Professor> getSetProfessorsFromDepartment(Long idDepartment) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Set<Professor> getSetProfessorsFromDepartment(Long idDepartment) {
+//		return null;
+//	}
 
 	@Override
 	public Long addPhoneNumber(Long idProfessor, PhoneNumber number) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Long res=null;
+		try{
+			transaction = session.beginTransaction();
+			
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			p.getPhoneNumbers().add(number);
+			res=(Long)session.save(number);
+			
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
 	@Override
-	public void removePhoneNumber(Long idProfessor, Long idPhoneNumber) {
-		// TODO Auto-generated method stub
-		
+	public PhoneNumber removePhoneNumber(Long idProfessor, Long idPhoneNumber) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		PhoneNumber res=null;
+		try{
+			transaction = session.beginTransaction();
+			
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			PhoneNumber pn=(PhoneNumber)session.get(PhoneNumber.class, idPhoneNumber);
+			p.getPhoneNumbers().remove(pn);
+			session.delete(pn);
+			res=pn;
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
-	@Override
-	public void removePhoneNumber(Long idProfessor, PhoneNumber idPhoneNumber) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void removePhoneNumber(Long idProfessor, PhoneNumber idPhoneNumber) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	@Override
 	public Set<PhoneNumber> getPhoneNumbers(Long idProfessor) {
