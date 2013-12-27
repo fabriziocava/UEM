@@ -4,6 +4,7 @@ import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 
 public interface GroupDAO {
@@ -22,12 +23,27 @@ public interface GroupDAO {
 	public Long addMessageAtGroup(Long idGroup,MessageOfGroup messageOfGroup);
 	public MessageOfGroup addMessageAtGroup(Group group,MessageOfGroup messageOfGroup);
 	
+	
 	public MessageOfGroup modifyMessage(Long idGroup,Long idMessageOfGroup,MessageOfGroup messageOfGroupNew);
 	public MessageOfGroup modifyMessage(Long idMessageOfGroup,MessageOfGroup messageOfGroupNew);
 	
 	public MessageOfGroup removeMessage(Long idGroup,Long idMessageOfGroup);
 	public MessageOfGroup removeMessage(MessageOfGroup messageOfGroup);
 	public MessageOfGroup removeMessage(Long idMessageOfGroup);
+	
+	public Long addCommentAtMessage(Long idMessage,CommentOfMessage comment);
+	public CommentOfMessage removeCommentFromMessage(Long idMessage,Long idComment);
+	public CommentOfMessage modifyCommentFromMessage(Long idComment,CommentOfMessage newComment);
+
+	public Group getGroup(Long idGroup);
+	public MessageOfGroup getMessage(Long idMessage);
+	public CommentOfMessage getComment(Long idComment);
+	
+	public Set<Group>getGroups();
+	public Set<Group>getGroupsFromProfessor(Long idProfessor);
+	public Set<MessageOfGroup>getMessagesOfGroup(Long idGroup);
+	public Set<CommentOfMessage> getCommentsFromMessage(Long idMessage);
+	
 	
 	
 }

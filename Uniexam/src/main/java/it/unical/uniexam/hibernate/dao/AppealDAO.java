@@ -15,25 +15,29 @@ public interface AppealDAO {
 	public Long addAppeal(Course course, String name,
 			Integer maxNumberOfInscribed, String location, Date examDate, Date openDate, Date closeDate,
 			Professor creatorProfessor);
-	public Long addAppeal(Course course, String name,
+	public Long addAppeal(Long idCourse, String name,
 			Integer maxNumberOfInscribed, String location, Date examDate, Date openDate, Date closeDate,
 			Long idProfessor);
 	
 	public Appeal removeAppeal(Long idAppeal);
 	public Appeal removeAppeal(Appeal appeal);
-	public Set<Appeal> removeAppeals(Long idProfessor);
+	public Set<Appeal> removeAllAppealsFromProfessor(Long idProfessor);
 	
 	public Appeal modifyAppeal(Long idAppeal,Appeal appealNew);
 	
 	//advanced
+	public Set<Appeal> getAppealsFromProfessor(Long idProfessor);
+//	public Set<Appeal> getAppeals(Long DegreeCourse);
+	public Set<Appeal> getAppeals();
+	public Set<Student> getStudetsIscribed(Long idAppeal);
 	
-	public Appeal setProfessor(Professor professor);
-	public Appeal setProfessor(Long idProfessor);
+	public Appeal setProfessor(Long idAppeal,Professor professor);
+	public Appeal setProfessor(Long idAppeal,Long idProfessor);
 	
 	public Appeal addStudentAtAppeal(Long idAppeal,Long idStudent);
 	public Appeal addStudentAtAppeal(Long idAppeal,Student student);
 	
-	public Appeal removeStudentAtAppeal(Long idAppeal,Long idStudent);
-	public Appeal removeStudentAtAppeal(Long idAppeal,Student student);
+	public boolean removeStudentAtAppeal(Long idAppeal,Long idStudent);
+	public boolean removeStudentAtAppeal(Long idAppeal,Student student);
 	
 }

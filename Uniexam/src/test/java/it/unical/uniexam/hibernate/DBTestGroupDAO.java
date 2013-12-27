@@ -11,6 +11,7 @@ import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
@@ -50,23 +51,23 @@ public class DBTestGroupDAO {
 		/*2*/HashSet<Email> emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE_UFFICIAL, "ricca@gmail.com"));
 		ids[count++]=professorDAO.addProfessor("Ciccio", "Ricca", new URL("http:\\www.ricca.com"), emails, 
-				"pasticcio", new Address("Cs", "Italia", "87036", "Europa"), null);
+				"pasticcio", new Address("Cs", "Italia", "87036", "Europa"),new HashSet<PhoneNumber>(), null);
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE_UFFICIAL, "cali@gmail.com"));
 		ids[count++]=professorDAO.addProfessor("Ciccio", "Calimeri", new URL("http:\\www.cali.com"), emails, 
-				"mero", new Address("Cs", "Italia", "87036", "Asia"), null);
+				"mero", new Address("Cs", "Italia", "87036", "Asia"),new HashSet<PhoneNumber>(), null);
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE_UFFICIAL, "gibbi@gmail.com"));
 		ids[count++]=professorDAO.addProfessor("Gibbi", "Ianni", new URL("http:\\www.ianni.com"), emails, 
-				"ibbig", new Address("Cs", "Italia", "87036", "USA"), null);
+				"ibbig", new Address("Cs", "Italia", "87036", "USA"),new HashSet<PhoneNumber>(), null);
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE_UFFICIAL, "super@gmail.com"));
 		ids[count++]=professorDAO.addProfessor("Mario", "Alvian", new URL("http:\\www.superM.com"), emails, 
-				"Mario", new Address("Cs", "Italia", "87036", "Swizzera"), null);
+				"Mario", new Address("Cs", "Italia", "87036", "Swizzera"),new HashSet<PhoneNumber>(), null);
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE_UFFICIAL, "febbraro@gmail.com"));
 		/*6*/ids[count++]=professorDAO.addProfessor("Onofr", "Febbr", new URL("http:\\www.febbre.com"), emails, 
-				"marzo", new Address("Cs", "Italia", "87036", "roma"), null);
+				"marzo", new Address("Cs", "Italia", "87036", "roma"),new HashSet<PhoneNumber>(), null);
 		courseDAO.setHolderProfessor(ids[0], ids[2]);
 
 		courseDAO.addProfessorAtCommission(ids[0], ids[2]);
@@ -88,7 +89,7 @@ public class DBTestGroupDAO {
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE_UFFICIAL, "faber@gmail.com"));
 		ids[count++]=professorDAO.addProfessor("Wolfgang", "Faber", new URL("http:\\www.faber.com"),emails, 
-				"color", new Address("Wien", "Austrie", "87036", "europe"), null);
+				"color", new Address("Wien", "Austrie", "87036", "europe"),new HashSet<PhoneNumber>(), null);
 		courseDAO.setHolderProfessor(ids[7], ids[8]);
 
 		courseDAO.addProfessorAtCommission(ids[7], ids[3]);
@@ -119,16 +120,43 @@ public class DBTestGroupDAO {
 		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "primo messaggio"));
 		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "sexondo messaggio"));
 		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "teerzo messaggio"));
-		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "quarto messaggio"));
+		ids[count++]=groupDAO.addMessageAtGroup(groupDAO.getGroup(ids[15]), new MessageOfGroup(ids[2], "quarto messaggio")).getId();
 		/*20*/ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "quinto messaggio"));
 		
 		groupDAO.removeMessage(ids[15], ids[18]);
+		
+		/*21*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4"));
+		/*22*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4.1"));
+		/*23*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4.2"));
+		
+		groupDAO.modifyCommentFromMessage(ids[22], new CommentOfMessage(ids[2],"no con 4.1.1"));
+		
+		groupDAO.removeCommentFromMessage(ids[19], ids[21]);
+		
 		
 		try{
 			Thread.sleep(3000);
 		}catch(Exception e){}
 	}
 
+	@Test
+	public void checkGetMethodOnGroup(){
+		Set<Group> groups = groupDAO.getGroups();
+		assertTrue(groups.size()==1);
+		for (Group group : groups) {
+			System.out.println("Name group: "+group.getName());
+		}
+		System.out.println(groupDAO.getGroup(ids[15]).toString());
+		
+		assertTrue(groupDAO.getMessagesOfGroup(ids[15]).size()==4);
+	}
+	
+	@Test
+	public void checkDeleteModifyComment(){
+		Set<CommentOfMessage> commentsFromMessage = groupDAO.getCommentsFromMessage(ids[19]);
+		assertTrue(commentsFromMessage.size()==2);
+	}
+	
 	@Test
 	public void checkOnlyEmail(){
 		Email emails = professorDAO.getEmail(ids[2],Email.TYPE_HOME);

@@ -23,16 +23,15 @@ public class ProfessorDAOImp implements ProfessorDAO {
 	@Override
 	public Long addProfessor(String name,String surname,
 			URL webSite,Set<Email> emails,String password,
-			Address address,Long idDepartment) {
+			Address address,Set<PhoneNumber>numbers,Long idDepartment) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long id=null;
 		try{
 			transaction=session.beginTransaction();
 
-			Professor p=new Professor(name, surname, webSite, password, address);
+			Professor p=new Professor(name, surname, webSite,emails, password, address,numbers,null);
 			/**
-			 * Le email se ci sono
 			 * Aggiungere il dipartimento di appartenenza se non nullo
 			 * if(p.getDepartment_associated()!=null){do}
 			 */
@@ -53,7 +52,6 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		Long id=null;
 		try{
 			transaction=session.beginTransaction();
-
 			/**
 			 * Aggiungere il dipartimento di appartenenza se non nullo
 			 * if(professor.getDepartment_associated()!=null){do}

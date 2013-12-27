@@ -12,6 +12,7 @@ import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.Session;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
@@ -39,6 +40,7 @@ public class HibernateUtil {
 			.addAnnotatedClass(Session.class)
 			.addAnnotatedClass(PhoneNumber.class)
 			.addAnnotatedClass(Email.class)
+			.addAnnotatedClass(CommentOfMessage.class)
 			.addAnnotatedClass(MessageOfGroup.class)
 			.addAnnotatedClass(Professor.class)
 			.addAnnotatedClass(Manager.class)

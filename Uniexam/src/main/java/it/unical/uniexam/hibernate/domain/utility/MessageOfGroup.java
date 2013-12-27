@@ -1,11 +1,21 @@
 package it.unical.uniexam.hibernate.domain.utility;
 
-import java.util.Date;
+import it.unical.uniexam.hibernate.domain.Group;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -47,8 +57,37 @@ public class MessageOfGroup {
 		this.message = message;
 	}
 
+	@ManyToOne(fetch=FetchType.LAZY, optional=false)
+	Group group;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="MESSAGE_COMMENT",
+	joinColumns={
+			@JoinColumn(name="MESSAGE_ID")
+			}, 
+	inverseJoinColumns={
+			@JoinColumn(name="COMMENT_ID")
+			})
+	private Set<CommentOfMessage> comments=new HashSet<CommentOfMessage>();
+	
+// IMPLEMENTATION
+	
 	public MessageOfGroup() {
 	}
+
+	
+	
+	public Set<CommentOfMessage> getComments() {
+		return comments;
+	}
+
+
+
+	public void setComments(Set<CommentOfMessage> comments) {
+		this.comments = comments;
+	}
+
+
 
 	public Long getId() {
 		return id;
@@ -80,5 +119,17 @@ public class MessageOfGroup {
 
 	public void setDate_of_message(Date date_of_message) {
 		this.date_of_message = date_of_message;
+	}
+
+
+
+	public Group getGroup() {
+		return group;
+	}
+
+
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 }

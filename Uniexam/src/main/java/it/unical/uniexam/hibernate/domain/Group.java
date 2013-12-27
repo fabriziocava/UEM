@@ -104,6 +104,13 @@ public class Group {
 			})
 	List<MessageOfGroup>messages=new ArrayList<MessageOfGroup>();
 
+	//IMPLEMENTATION	
+	
+	@Override
+	public String toString() {
+		return "Name: "+name+"; Creator: "+creator.name;
+	}
+	
 	public Group() {
 	}
 

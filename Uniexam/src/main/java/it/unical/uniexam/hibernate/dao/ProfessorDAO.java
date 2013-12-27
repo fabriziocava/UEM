@@ -20,7 +20,7 @@ public interface ProfessorDAO {
  */
 	public Long addProfessor(String name,String surname,
 			URL webSite,Set<Email> emails,String password,
-			Address address,Long idDepartment);
+			Address address,Set<PhoneNumber>numbers,Long idDepartment);
 
 	public Long addProfessor(Professor professor);
 

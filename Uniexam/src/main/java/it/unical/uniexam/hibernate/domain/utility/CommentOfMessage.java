@@ -6,15 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.ws.soap.MTOM;
 
 /**
  * @category Event 
  * 
- * This class describe a Message of a group
- * each Message of a Group have a code, a date, a id of group that it belong; 
- * At each Message 		have a principal content
- * 						have a possible comments  	 
+ * This class describe a Comment of a Message of a group
+ * each Comment of a Message have a code, a date, a id of Message that it belong; 
+ * At each Comment 		have a principal content
  * 					
  * 					something else?
  * 
@@ -28,25 +29,32 @@ import javax.persistence.Table;
 public class CommentOfMessage {
 
 	@Id
-	@Column(name="MESSAGE_OF_GROUP_ID")
+	@Column(name="COMMENT_ID")
 	@GeneratedValue
 	Long id;
 	
 	@Column(name="USER_ID", nullable=false)
 	Long id_user;
 	
-	@Column(name="MESSAGE", nullable=false)
-	String message;
+	@Column(name="COMMENT", nullable=false)
+	String comment;
 	
-	@Column(name="DATE_OF_MESSAGE",nullable=false)
-	Date date_of_message;
+	@Column(name="DATE_OF_COMMENT",nullable=false)
+	Date date_of_comment;
 
-	public CommentOfMessage(Long id_user, String message) {
+	public CommentOfMessage(Long id_user, String comment) {
 		super();
 		this.id_user = id_user;
-		this.message = message;
+		this.comment = comment;
+		this.date_of_comment=new Date();
 	}
 
+//	@ManyToOne
+//	MessageOfGroup ofMessage;
+	
+	
+	//IMPLEMENTATION
+	
 	public CommentOfMessage() {
 	}
 
@@ -66,19 +74,20 @@ public class CommentOfMessage {
 		this.id_user = id_user;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
-	public Date getDate_of_message() {
-		return date_of_message;
+	public Date getDate_of_comment() {
+		return date_of_comment;
 	}
 
-	public void setDate_of_message(Date date_of_message) {
-		this.date_of_message = date_of_message;
+	public void setDate_of_comment(Date date_of_comment) {
+		this.date_of_comment = date_of_comment;
 	}
+
 }
