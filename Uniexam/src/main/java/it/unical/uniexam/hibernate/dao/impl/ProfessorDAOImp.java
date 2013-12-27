@@ -20,6 +20,10 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 public class ProfessorDAOImp implements ProfessorDAO {
 
+	/**
+	 * Last modification is this!
+	 */
+	
 	@Override
 	public Long addProfessor(String name,String surname,
 			URL webSite,Set<Email> emails,String password,
