@@ -1,6 +1,7 @@
 package it.unical.uniexam.hibernate.domain;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.net.URL;
@@ -38,9 +39,9 @@ public class Manager extends User{
 	
 	
 	
-	public Manager(String name, String surname, URL webSite, String email,
+	public Manager(String name, String surname, URL webSite, Set<Email> emails,
 			String password, Address address, Set<PhoneNumber> phoneNumbers) {
-		super(name, surname, webSite, email, password, address);
+		super(name, surname, webSite, password, address);
 		this.phoneNumbers = phoneNumbers;
 	}
 

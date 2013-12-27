@@ -18,13 +18,12 @@ public abstract class User {
 public User() {
 	}
 
-public User(String name, String surname, URL webSite, String email,
+public User(String name, String surname, URL webSite,
 			String password, Address address) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.webSite = webSite;
-		this.email = email;
 		this.password = password;
 		this.address = address;
 	}
@@ -44,9 +43,6 @@ public User(String name, String surname, URL webSite, String email,
 	
 	@Column(name="WEB_SITE",nullable=true)
 	URL webSite;
-	
-	@Column(name="EMAIL", nullable=false)
-	String email;
 	
 	@Column(name="PASSWORD", nullable=false)
 	String password;
@@ -109,14 +105,6 @@ public User(String name, String surname, URL webSite, String email,
 
 	public void setWebSite(URL webSite) {
 		this.webSite = webSite;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 }

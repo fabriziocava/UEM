@@ -10,6 +10,7 @@ public interface GroupDAO {
 
 	//starndard
 	public Long addGruop(String name,String object,String description,Professor creator,Integer politic);
+	public Long addGruop(String name,String object,String description,Long idProfessorCreator,Integer politic);
 	public Long addGruop(Group group);
 	public Group removeGroup(Long idGroup);
 	public Group removeGroup(Group group);
@@ -18,7 +19,7 @@ public interface GroupDAO {
 	public Set<Group> removeAllGroupFromProfessor(Long idProfessor);
 	
 	//advanced
-	public MessageOfGroup addMessageAtGroup(Long idGroup,MessageOfGroup messageOfGroup);
+	public Long addMessageAtGroup(Long idGroup,MessageOfGroup messageOfGroup);
 	public MessageOfGroup addMessageAtGroup(Group group,MessageOfGroup messageOfGroup);
 	
 	public MessageOfGroup modifyMessage(Long idGroup,Long idMessageOfGroup,MessageOfGroup messageOfGroupNew);

@@ -10,6 +10,10 @@ import javax.persistence.Table;
 @Table(name="PHONE_NUMBER")
 public class PhoneNumber {
 
+	public static final String TYPE_UFFICIAL="uffical";
+	public static final String TYPE_UNUFFICIAL="unuffical";
+	public static final String TYPE_HOME="home";
+	
 	public PhoneNumber(){}
 	
 	public PhoneNumber(String type, String number) {

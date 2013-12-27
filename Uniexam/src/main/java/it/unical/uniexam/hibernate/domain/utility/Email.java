@@ -10,6 +10,11 @@ import javax.persistence.Table;
 @Table(name="EMAIL")
 public class Email {
 
+	public static final String TYPE_UFFICIAL="uffical";
+	public static final String TYPE_UNUFFICIAL="unuffical";
+	public static final String TYPE_HOME="home";
+	
+	
 	public Email(){}
 	
 	public Email(String type, String email) {

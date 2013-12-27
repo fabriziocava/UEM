@@ -1,6 +1,7 @@
 package it.unical.uniexam.hibernate.domain;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.net.URL;
@@ -57,17 +58,18 @@ public class Professor extends User{
 	public Professor() {
 	}
 
-	public Professor(String name, String surname, URL webSite, String email,
+	public Professor(String name, String surname, URL webSite, Set<Email> emails,
 			String password, Address address, Set<PhoneNumber> phoneNumbers,
 			Department department_associated) {
-		super(name, surname, webSite, email, password, address);
+		super(name, surname, webSite, password, address);
+		this.emails=emails;
 		this.phoneNumbers = phoneNumbers;
 		this.department_associated = department_associated;
 	}
 
-	public Professor(String name, String surname, URL webSite, String email,
+	public Professor(String name, String surname, URL webSite,
 			String password, Address address) {
-		super(name, surname, webSite, email, password, address);
+		super(name, surname, webSite,  password, address);
 	}
 
 	
@@ -77,7 +79,15 @@ public class Professor extends User{
 	@Column(name="PROFESSOR_ID")
 	Long id;
 	
-	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="PROFESSOR_EMAIL",
+	joinColumns={
+			@JoinColumn(name="PROFESSOR_ID")
+			}, 
+	inverseJoinColumns={
+			@JoinColumn(name="EMAIL_ID")
+			})
+	private Set<Email> emails=new HashSet<Email>();
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="PROFESSOR_PHONE",
@@ -194,8 +204,14 @@ public class Professor extends User{
 	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
 	}
-	
-	
+
+	public Set<Email> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(Set<Email> emails) {
+		this.emails = emails;
+	}
 	
 	
 }

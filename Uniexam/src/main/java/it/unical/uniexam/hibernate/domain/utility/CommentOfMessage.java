@@ -24,8 +24,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="MESSAGE_OF_GROUP")
-public class MessageOfGroup {
+@Table(name="COMMENT_OF_MESSAGE")
+public class CommentOfMessage {
 
 	@Id
 	@Column(name="MESSAGE_OF_GROUP_ID")
@@ -41,13 +41,13 @@ public class MessageOfGroup {
 	@Column(name="DATE_OF_MESSAGE",nullable=false)
 	Date date_of_message;
 
-	public MessageOfGroup(Long id_user, String message) {
+	public CommentOfMessage(Long id_user, String message) {
 		super();
 		this.id_user = id_user;
 		this.message = message;
 	}
 
-	public MessageOfGroup() {
+	public CommentOfMessage() {
 	}
 
 	public Long getId() {

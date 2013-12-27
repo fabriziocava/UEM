@@ -8,10 +8,12 @@ import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.Email;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,16 +41,27 @@ public class DBTestCourseDAO {
 		int count=0;
 		ids[count++]=courseDAO.addCourse(new Course("INF", "AE", new URL("http:\\www.unical.it/AE"), 5, null, null, null));
 		ids[count++]=courseDAO.addCourse(new Course("INF", "SI", new URL("http:\\www.unical.it/SI"), 5, null, null, null));
-		/*2*/ids[count++]=professorDAO.addProfessor("Ciccio", "Ricca", new URL("http:\\www.ricca.com"), "ricca@gmail.com", 
+		/*2*/HashSet<Email> emails = new HashSet<Email>();
+		emails.add(new Email("ufficial", "ricca@gmail.com"));
+		ids[count++]=professorDAO.addProfessor("Ciccio", "Ricca", new URL("http:\\www.ricca.com"), emails, 
 				"pasticcio", new Address("Cs", "Italia", "87036", "Europa"), null);
-		ids[count++]=professorDAO.addProfessor("Ciccio", "Calimeri", new URL("http:\\www.cali.com"), "cali@gmail.com", 
+		emails = new HashSet<Email>();
+		emails.add(new Email("ufficial", "cali@gmail.com"));
+		ids[count++]=professorDAO.addProfessor("Ciccio", "Calimeri", new URL("http:\\www.cali.com"), emails, 
 				"mero", new Address("Cs", "Italia", "87036", "Asia"), null);
-		ids[count++]=professorDAO.addProfessor("Gibbi", "Ianni", new URL("http:\\www.ianni.com"), "gibbi@gmail.com", 
+		emails = new HashSet<Email>();
+		emails.add(new Email("ufficial", "gibbi@gmail.com"));
+		ids[count++]=professorDAO.addProfessor("Gibbi", "Ianni", new URL("http:\\www.ianni.com"), emails, 
 				"ibbig", new Address("Cs", "Italia", "87036", "USA"), null);
-		ids[count++]=professorDAO.addProfessor("Mario", "Alvian", new URL("http:\\www.superM.com"), "Mar@gmail.com", 
+		emails = new HashSet<Email>();
+		emails.add(new Email("ufficial", "super@gmail.com"));
+		ids[count++]=professorDAO.addProfessor("Mario", "Alvian", new URL("http:\\www.superM.com"), emails, 
 				"Mario", new Address("Cs", "Italia", "87036", "Swizzera"), null);
-		/*6*/ids[count++]=professorDAO.addProfessor("Onofr", "Febbr", new URL("http:\\www.febbre.com"), "frev@gmail.com", 
+		emails = new HashSet<Email>();
+		emails.add(new Email("ufficial", "febbraro@gmail.com"));
+		/*6*/ids[count++]=professorDAO.addProfessor("Onofr", "Febbr", new URL("http:\\www.febbre.com"), emails, 
 				"marzo", new Address("Cs", "Italia", "87036", "roma"), null);
+		
 
 		courseDAO.setHolderProfessor(ids[0], ids[2]);
 
@@ -68,7 +81,9 @@ public class DBTestCourseDAO {
 
 		/*count 7*/
 		ids[count++]=courseDAO.addCourse(new Course("INF", "KM", new URL("http:\\www.unical.it/KM"), 10, null, null, null));
-		ids[count++]=professorDAO.addProfessor("Wolfgang", "Faber", new URL("http:\\www.faber.com"), "faber@gmail.com", 
+		emails = new HashSet<Email>();
+		emails.add(new Email("ufficial", "faber@gmail.com"));
+		ids[count++]=professorDAO.addProfessor("Wolfgang", "Faber", new URL("http:\\www.faber.com"),emails, 
 				"color", new Address("Wien", "Austrie", "87036", "europe"), null);
 
 		courseDAO.setHolderProfessor(ids[7], ids[8]);

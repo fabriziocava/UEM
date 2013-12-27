@@ -107,5 +107,62 @@ public class Group {
 	public Group() {
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getObject() {
+		return object;
+	}
+
+	public void setObject(String object) {
+		this.object = object;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getLevelOfPolicy() {
+		return levelOfPolicy;
+	}
+
+	public void setLevelOfPolicy(Integer levelOfPolicy) {
+		this.levelOfPolicy = levelOfPolicy;
+	}
+
+	public Professor getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Professor creator) {
+		this.creator = creator;
+	}
+
+	public List<MessageOfGroup> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<MessageOfGroup> messages) {
+		this.messages = messages;
+	}
+
+	
 	
 }
