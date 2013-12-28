@@ -1,14 +1,13 @@
 package it.unical.uniexam.hibernate;
 
-import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
-import it.unical.uniexam.hibernate.dao.impl.AppealDAOImpl;
+import it.unical.uniexam.hibernate.dao.SessionDAO;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
-import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.dao.impl.SessionDAOImpl;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -22,7 +21,6 @@ import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,16 +32,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Test for class DAO Appeal
+ * Test for class DAO Session
  * 
  * @author luigi
  *
  */
-public class DBTestAppealDAO {
+public class DBTestSessionDAO {
 	private static CourseDAO courseDAO=new CourseDAOImpl();
 	private static ProfessorDAO professorDAO=new ProfessorDAOImp();
 	private static GroupDAO groupDAO= new GroupDAOImpl();
-	private static AppealDAO appealDAO = new AppealDAOImpl();
+	private static SessionDAO sessionDAO=new SessionDAOImpl();
 	static Long []ids=null;
 	
 	
@@ -144,14 +142,8 @@ public class DBTestAppealDAO {
 		
 		groupDAO.removeCommentFromMessage(ids[19], ids[21]);
 		
-		/*24*/Date examDate = new Date();
-		ids[count++]=appealDAO.addAppeal(ids[1], "Esame1", 20, "Aula MT6", examDate, examDate, examDate, ids[3]);
-		/*25*/ids[count++]=appealDAO.addAppeal(ids[0], "Esame2", 20, "Aula MT5", examDate, examDate, examDate, ids[4]);
-		/*26*/ids[count++]=appealDAO.addAppeal(ids[7], "Esame3", 20, "Aula MT4", examDate, examDate, examDate, ids[5]);
+		sessionDAO.addSession(ids[2],null,null);
 		
-		appealDAO.removeAppeal(ids[25]);
-		
-		appealDAO.modifyAppeal(ids[26], new Appeal(null, "Esame3.1", null, null, new Date(), null, null, null));
 		
 		try{
 			Thread.sleep(3000);
@@ -159,8 +151,8 @@ public class DBTestAppealDAO {
 	}
 
 	@Test
-	public void checkAddAppeal(){
-		assertTrue(appealDAO.getAppeals().size()==2);
+	public void checkSession(){
+		assertTrue(professorDAO.getProfessor(ids[2]).getSession().getOwner()==ids[2]);
 	}
 	
 	@Test

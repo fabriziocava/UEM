@@ -24,6 +24,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ * Test for class DAO Course
+ * 
+ * @author luigi
+ *
+ */
 public class DBTestCourseDAO {
 	private static CourseDAO courseDAO=new CourseDAOImpl();
 	private static ProfessorDAO professorDAO=new ProfessorDAOImp();

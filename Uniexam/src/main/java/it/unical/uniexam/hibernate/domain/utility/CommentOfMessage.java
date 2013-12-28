@@ -33,7 +33,7 @@ public class CommentOfMessage {
 	@GeneratedValue
 	Long id;
 	
-	@Column(name="USER_ID", nullable=false)
+	@Column(name="ID", nullable=false)
 	Long id_user;
 	
 	@Column(name="COMMENT", nullable=false)

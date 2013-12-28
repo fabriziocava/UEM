@@ -36,7 +36,12 @@ import javax.persistence.Table;
 @Table(name="MANAGER")
 public class Manager extends User{
 	
+	@Id
+	@Column(name="MANAGER_ID" , nullable=false)
+	@GeneratedValue
+	Long id;
 	
+
 	
 	
 	public Manager(String name, String surname, URL webSite, Set<Email> emails,
@@ -45,11 +50,6 @@ public class Manager extends User{
 		this.phoneNumbers = phoneNumbers;
 	}
 
-	@Id
-	@Column(name="MANAGER_ID" , nullable=false)
-	@GeneratedValue
-	Long id;
-	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="MANAGER_PHONE",
 	joinColumns={

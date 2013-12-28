@@ -95,7 +95,7 @@ public class Appeal {
 			@JoinColumn(name="APPEL_ID")
 			}, 
 	inverseJoinColumns={
-			@JoinColumn(name="STUDENT_ID")
+			@JoinColumn(name="ID")
 			})
 	Set<Student>studentsInscribed=new HashSet<Student>();
 	

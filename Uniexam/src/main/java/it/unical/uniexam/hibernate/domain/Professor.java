@@ -5,19 +5,27 @@ import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -42,18 +50,18 @@ import javax.persistence.Table;
 @Table(name="PROFESSOR")
 public class Professor extends User{
 
-	
-	
-//	public Professor(Professor p) {
-//		super();
-//		this.id = p.id;
-//		this.phoneNumbers = p.phoneNumbers;
-//		this.department_associated = p.department_associated;
-//		this.appeals = p.appeals;
-//		this.holder = p.holder;
-//		this.asCommission = p.asCommission;
-//		this.groups = p.groups;
-//	}
+
+
+	//	public Professor(Professor p) {
+	//		super();
+	//		this.id = p.id;
+	//		this.phoneNumbers = p.phoneNumbers;
+	//		this.department_associated = p.department_associated;
+	//		this.appeals = p.appeals;
+	//		this.holder = p.holder;
+	//		this.asCommission = p.asCommission;
+	//		this.groups = p.groups;
+	//	}
 
 	public Professor() {
 	}
@@ -73,79 +81,82 @@ public class Professor extends User{
 	}
 
 	
-	
 	@Id
 	@GeneratedValue
 	@Column(name="PROFESSOR_ID")
 	Long id;
+
+	@OneToOne(cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	Session session;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="PROFESSOR_EMAIL",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
-			}, 
+	}, 
 	inverseJoinColumns={
 			@JoinColumn(name="EMAIL_ID")
-			})
+	})
 	private Set<Email> emails=new HashSet<Email>();
-	
+
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="PROFESSOR_PHONE",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
-			}, 
+	}, 
 	inverseJoinColumns={
 			@JoinColumn(name="PHONE_ID")
-			})
+	})
 	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
 
 	@ManyToOne
 	Department department_associated;
-	
+
 	@OneToMany
 	@JoinTable(name="PROFESSOR_APPEAL",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
-			}, 
+	}, 
 	inverseJoinColumns={
 			@JoinColumn(name="APPEAL_ID")
-			})
+	})
 	Set<Appeal>appeals=new HashSet<Appeal>();
-	
+
 	@OneToMany
 	@JoinTable(name="PROFESSOR_COURSE_HOLDER",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
-			}, 
+	}, 
 	inverseJoinColumns={
 			@JoinColumn(name="COURSE_ID")
-			})
+	})
 	Set<Course>holder=new HashSet<Course>();
-	
+
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="PROFESSOR_COURSE_COMMISSION", 
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
-			}, 
+	}, 
 	inverseJoinColumns={
 			@JoinColumn(name="COURSE_ID")
-			})
+	})
 	Set<Course>asCommission=new HashSet<Course>();
-	
+
 	@OneToMany
 	@JoinTable(name="PROFESSOR_GRUOP",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
-			}, 
+	}, 
 	inverseJoinColumns={
 			@JoinColumn(name="GROUP_ID")
-			})
+	})
 	Set<Group>groups=new HashSet<Group>();
 
 	/**
 	 * Implementation
 	 */
-	
+
 	/**
 	 * 
 	 */
@@ -212,6 +223,14 @@ public class Professor extends User{
 	public void setEmails(Set<Email> emails) {
 		this.emails = emails;
 	}
-	
-	
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
+
 }

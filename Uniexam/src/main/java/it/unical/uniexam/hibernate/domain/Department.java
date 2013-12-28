@@ -76,7 +76,7 @@ public class Department {
 			@JoinColumn(name="DEPARTMENT_ID")
 			}, 
 	inverseJoinColumns={
-			@JoinColumn(name="PROFESSOR_ID")
+			@JoinColumn(name="ID")
 			})
 	private Set<Professor> professors=new HashSet<Professor>();
 

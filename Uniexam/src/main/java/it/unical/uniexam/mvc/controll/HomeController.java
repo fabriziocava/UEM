@@ -1,5 +1,9 @@
 package it.unical.uniexam.mvc.controll;
 
+import it.unical.uniexam.hibernate.domain.Session;
+import it.unical.uniexam.mvc.service.HomeService;
+import it.unical.uniexam.mvc.service.MainService;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +26,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
+	@Autowired
+	HomeService homeService;
+	@Autowired
+	MainService mainService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-
+	
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -49,22 +60,26 @@ public class HomeController {
 		return "home";
 	}
 
+	// serve un pattern sia per la session
+	// serve anche un pattern per la personalizzazione
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam("username") String username,
-			@RequestParam("password") String password,
-			HttpServletRequest request,
-			Model model){
-		model.addAttribute("user",username);
-		if(username.equals("s")){
-			return new ModelAndView("student/home", "model", "model");
-		}else if(username.equals("p")){
-			HttpSession session = request.getSession(true);
-			session.setAttribute("user", username);
-			System.out.println(request.getRequestedSessionId());
-			return new ModelAndView("professor/home", "model", "model");
-		}else if(username.equals("m")){
-			return new ModelAndView("manager/home", "model", "model");
+	public ModelAndView login(@RequestParam("username") String username, @RequestParam("password") String password){
+		Session session=homeService.loginUser(username, password);
+		if(session.getId()!=null){
+			
 		}
+//		model.addAttribute("user",username);
+//		if(username.equals("s")){
+//			return new ModelAndView("student/home", "model", "model");
+//		}else if(username.equals("p")){
+//			HttpSession session = request.getSession(true);
+//			session.setAttribute("user", username);
+//			System.out.println(request.getRequestedSessionId());
+//			return new ModelAndView("professor/home", "model", "model");
+//		}else if(username.equals("m")){
+//			return new ModelAndView("manager/home", "model", "model");
+//		}
 		return new ModelAndView("home", "model", "model");
 	}
 
