@@ -1,17 +1,14 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 
-import javax.persistence.ManyToOne;
-
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import it.unical.uniexam.hibernate.dao.SessionDAO;
-import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
-import it.unical.uniexam.hibernate.domain.Student;
+import it.unical.uniexam.hibernate.domain.Session;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
@@ -19,7 +16,7 @@ public class SessionDAOImpl implements SessionDAO {
 
 	@Override
 	public Long addSession(Long user,Long timeExpire,HashMap<String, Object>values) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
+		org.hibernate.Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long res=null;
 		try{
@@ -33,9 +30,17 @@ public class SessionDAOImpl implements SessionDAO {
 				try{
 					Professor p=(Professor)session.get(Professor.class, user);
 					p.getName();
-					it.unical.uniexam.hibernate.domain.Session session2 = new it.unical.uniexam.hibernate.domain.Session();
+					Session session2 = new Session();
 					p.setSession(session2);
 					session2.setOwner(p.getId());
+					session2.setType(User.TYPE.PROFESSOR);
+					Date now = new Date();
+					session2.setCreated(now);
+					session2.setValid(true);
+					session2.setExpire(new Date(now.getTime()+((timeExpire!=null)?timeExpire:Session.timeExpire)));
+					/**
+					 * creare funzione che serializzi le i valori nel DB
+					 */
 				}catch(Exception e2){
 
 				}
