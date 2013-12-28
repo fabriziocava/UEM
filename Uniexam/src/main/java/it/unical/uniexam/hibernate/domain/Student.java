@@ -1,6 +1,6 @@
 package it.unical.uniexam.hibernate.domain;
 
-import it.unical.inf.november26.domain.Address;
+import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.util.HashSet;
