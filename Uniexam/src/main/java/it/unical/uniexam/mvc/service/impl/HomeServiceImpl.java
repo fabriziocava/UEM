@@ -6,7 +6,7 @@ import it.unical.uniexam.mvc.service.HomeService;
 public class HomeServiceImpl implements HomeService {
 
 	@Override
-	public Session loginUser(String username, String password) {
+	public Session loginUser(String email, String password) {
 		
 		return null;
 	}

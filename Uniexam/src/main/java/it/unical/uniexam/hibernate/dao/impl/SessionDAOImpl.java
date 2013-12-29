@@ -15,7 +15,7 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class SessionDAOImpl implements SessionDAO {
 
 	@Override
-	public Long addSession(Long user,Long timeExpire,HashMap<String, Object>values) {
+	public Long addSession(Long user,Long timeExpire,HashMap<String, Object>attributes) {
 		org.hibernate.Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long res=null;
@@ -39,7 +39,7 @@ public class SessionDAOImpl implements SessionDAO {
 					session2.setValid(true);
 					session2.setExpire(new Date(now.getTime()+((timeExpire!=null)?timeExpire:Session.timeExpire)));
 					/**
-					 * creare funzione che serializzi le i valori nel DB
+					 * creare funzione che serializzi gli attributi nel DB
 					 */
 				}catch(Exception e2){
 

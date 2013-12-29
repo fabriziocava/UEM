@@ -160,6 +160,19 @@ public class Professor extends User{
 	/**
 	 * 
 	 */
+//	@Override
+//	public String toString(){
+//		return null;
+//	}
+//	
+//	public Professor getIntanceFromAttributes(String attributes){
+//		//name?cicio$surname?pasticcio //restituita dal toString senza il nome della classe
+//		
+//		
+//		Professor res=null;
+//		return res;
+//	}
+	
 	public Long getId() {
 		return id;
 	}

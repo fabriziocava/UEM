@@ -11,7 +11,7 @@
 <form id="login" action="${pageContext.request.contextPath}/login" method="post">
     <h1>Uniexam</h1>
     <fieldset id="inputs">
-        <input id="username" name="username" type="text" placeholder="Username" autofocus required>   
+        <input id="email" name="email" type="text" placeholder="Email" autofocus required>   
         <input id="password" name="password" type="password" placeholder="Password" required>
     </fieldset>
     <fieldset id="actions">

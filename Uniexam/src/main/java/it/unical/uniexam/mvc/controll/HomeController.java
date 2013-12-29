@@ -64,10 +64,13 @@ public class HomeController {
 	// serve anche un pattern per la personalizzazione
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam("username") String username, @RequestParam("password") String password){
-		Session session=homeService.loginUser(username, password);
-		if(session.getId()!=null){
+	public ModelAndView login(@RequestParam("email") String email, @RequestParam("password") String password){
+		Session session=homeService.loginUser(email, password);
+		if(session.getValid()){
+			//pagina dell'utente
 			
+		}else{
+			//pagina di errore
 		}
 //		model.addAttribute("user",username);
 //		if(username.equals("s")){
