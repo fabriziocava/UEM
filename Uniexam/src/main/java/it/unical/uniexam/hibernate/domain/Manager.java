@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -34,21 +35,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="MANAGER")
+@PrimaryKeyJoinColumn(name="ID")
 public class Manager extends User{
 	
-	@Id
-	@Column(name="MANAGER_ID" , nullable=false)
-	@GeneratedValue
-	Long id;
 	
-
-	
-	
-	public Manager(String name, String surname, URL webSite, Set<Email> emails,
-			String password, Address address, Set<PhoneNumber> phoneNumbers) {
-		super(name, surname, webSite, password, address);
-		this.phoneNumbers = phoneNumbers;
-	}
 
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="MANAGER_PHONE",

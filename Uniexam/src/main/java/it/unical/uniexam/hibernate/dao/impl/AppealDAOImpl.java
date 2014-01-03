@@ -8,7 +8,9 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
@@ -17,6 +19,12 @@ import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
+@Repository
 public class AppealDAOImpl implements AppealDAO {
 
 	@Deprecated
@@ -51,6 +59,7 @@ public class AppealDAOImpl implements AppealDAO {
 
 			transaction.commit();
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
 		}finally{
 			session.close();
@@ -73,6 +82,7 @@ public class AppealDAOImpl implements AppealDAO {
 
 			transaction.commit();
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
 		}finally{
 			session.close();
@@ -102,6 +112,7 @@ public class AppealDAOImpl implements AppealDAO {
 			}
 			transaction.commit();
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
 		}finally{
 			session.close();
@@ -136,6 +147,7 @@ public class AppealDAOImpl implements AppealDAO {
 			res=old;
 			transaction.commit();
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
 		}finally{
 			session.close();
@@ -151,7 +163,7 @@ public class AppealDAOImpl implements AppealDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			res=new HashSet<Appeal>(p.getAppeals());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -166,7 +178,7 @@ public class AppealDAOImpl implements AppealDAO {
 			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
 			res=new HashSet<Student>(a.getStudentsInscribed());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -193,6 +205,7 @@ public class AppealDAOImpl implements AppealDAO {
 			res=a;
 			transaction.commit();
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
 		}finally{
 			session.close();
@@ -214,6 +227,7 @@ public class AppealDAOImpl implements AppealDAO {
 			res=a;
 			transaction.commit();
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
 		}finally{
 			session.close();
@@ -246,6 +260,7 @@ public class AppealDAOImpl implements AppealDAO {
 			transaction.commit();
 			ok=true;
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
 		}finally{
 			session.close();
@@ -269,7 +284,7 @@ public class AppealDAOImpl implements AppealDAO {
 			Query q= session.createQuery("from Appeal");
 			res=new HashSet<Appeal>(q.list());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}

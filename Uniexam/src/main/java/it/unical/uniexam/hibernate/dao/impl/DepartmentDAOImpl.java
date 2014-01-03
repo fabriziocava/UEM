@@ -3,6 +3,8 @@ package it.unical.uniexam.hibernate.dao.impl;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Repository;
+
 import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -13,6 +15,8 @@ import it.unical.uniexam.hibernate.domain.utility.Address;
  * @author luigi
  *
  */
+
+@Repository
 public class DepartmentDAOImpl implements DepartmentDAO {
 
 	@Override

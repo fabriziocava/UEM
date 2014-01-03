@@ -6,6 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
 @Entity
 @Table(name="PHONE_NUMBER")
 public class PhoneNumber {

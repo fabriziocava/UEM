@@ -45,7 +45,7 @@
 			</span>
 			<div>
 				<ul class="links-user">
-					<li><img src="imageUser" />${user}</li>
+					<li><img src="imageUser" />${I.getName()}</li>
 					<li><a
 						href="${pageContext.request.contextPath}/professor/personalizzation">
 							<img class="personalizzation-header"

@@ -8,6 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
 @Entity
 @Table(name="REQUESTED_COURSE")
 public class RequestedCourse {

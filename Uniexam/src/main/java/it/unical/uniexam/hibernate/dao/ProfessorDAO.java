@@ -3,6 +3,7 @@ package it.unical.uniexam.hibernate.dao;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.User.TYPE;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
@@ -18,10 +19,11 @@ public interface ProfessorDAO {
 /**
  * 
  */
-	public Long addProfessor(String name,String surname,
-			URL webSite,Set<Email> emails,String password,
-			Address address,Set<PhoneNumber>numbers,Long idDepartment);
+	public Long addProfessor(String name, String surname, URL webSite,
+			String password, Address address, Set<Email> emails,
+			Set<PhoneNumber> phoneNumbers, Department department_associated);
 
+	@Deprecated
 	public Long addProfessor(Professor professor);
 
 	public Set<Professor> getProfessors();

@@ -1,11 +1,20 @@
 package it.unical.uniexam.hibernate.domain.utility;
 
+import it.unical.uniexam.hibernate.domain.User;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
 @Entity
 @Table(name="EMAIL")
 public class Email {
@@ -28,10 +37,15 @@ public class Email {
 	@GeneratedValue
 	private Long id;
 	
+	
+	
+	@ManyToOne
+	User user;
+	
 	@Column(name="EMAIL_TYPE")
 	private String type;
 	
-	@Column(name="EMAIL")
+	@Column(name="EMAIL" , unique=true)
 	private String email;
 
 	//implementation
@@ -58,6 +72,14 @@ public class Email {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	

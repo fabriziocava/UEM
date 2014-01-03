@@ -3,6 +3,11 @@ package it.unical.uniexam.hibernate.domain.utility;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
 @Embeddable
 public class Address {
 

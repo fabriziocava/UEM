@@ -8,7 +8,9 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -16,6 +18,12 @@ import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
+@Repository
 public class GroupDAOImpl implements GroupDAO {
 
 	@Override
@@ -34,7 +42,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -58,7 +66,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -78,7 +86,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -99,7 +107,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -148,7 +156,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -172,7 +180,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -214,7 +222,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -248,7 +256,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -271,7 +279,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -293,7 +301,7 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -308,7 +316,7 @@ public class GroupDAOImpl implements GroupDAO {
 			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
 			res=new HashSet<CommentOfMessage>(mog.getComments());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -323,7 +331,7 @@ public class GroupDAOImpl implements GroupDAO {
 		try{
 			res=(Group)session.get(Group.class, idGroup);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -337,7 +345,7 @@ public class GroupDAOImpl implements GroupDAO {
 		try{
 			return (MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -351,7 +359,7 @@ public class GroupDAOImpl implements GroupDAO {
 		try{
 			return(CommentOfMessage)session.get(CommentOfMessage.class, idComment);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -368,7 +376,7 @@ public class GroupDAOImpl implements GroupDAO {
 			List<Group> list = q.list();
 			res=new HashSet<Group>(list);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -386,7 +394,7 @@ public class GroupDAOImpl implements GroupDAO {
 			List<Group> list = q.list();
 			res=new HashSet<Group>(list);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -405,7 +413,7 @@ public class GroupDAOImpl implements GroupDAO {
 			List<MessageOfGroup> list = q.list();
 			res=new HashSet<MessageOfGroup>(list);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}

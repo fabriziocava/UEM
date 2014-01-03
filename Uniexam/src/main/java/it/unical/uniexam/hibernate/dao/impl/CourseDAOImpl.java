@@ -8,7 +8,9 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -20,6 +22,8 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
  * @author luigi
  *
  */
+
+@Repository
 public class CourseDAOImpl implements CourseDAO{
 
 	@Override
@@ -47,8 +51,8 @@ public class CourseDAOImpl implements CourseDAO{
 			id=(Long) session.save(c);
 			transaction.commit();
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
-			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -73,8 +77,8 @@ public class CourseDAOImpl implements CourseDAO{
 			id=(Long) session.save(course);
 			transaction.commit();
 		}catch(Exception e){
+			new MokException(e);
 			transaction.rollback();
-			e.printStackTrace();
 		}finally{
 			session.close();
 		}
@@ -92,7 +96,7 @@ public class CourseDAOImpl implements CourseDAO{
 			List<Course> list = q.list();
 			res=new HashSet<Course>(list);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -110,7 +114,7 @@ public class CourseDAOImpl implements CourseDAO{
 			List<Course> list = q.list();
 			res=new HashSet<Course>(list);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -125,7 +129,7 @@ public class CourseDAOImpl implements CourseDAO{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			res=c1;
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -145,7 +149,7 @@ public class CourseDAOImpl implements CourseDAO{
 			res=c1;
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -171,7 +175,7 @@ public class CourseDAOImpl implements CourseDAO{
 			}
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -200,7 +204,7 @@ public class CourseDAOImpl implements CourseDAO{
 			}
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -226,7 +230,7 @@ public class CourseDAOImpl implements CourseDAO{
 			}
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -250,7 +254,7 @@ public class CourseDAOImpl implements CourseDAO{
 			}
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -266,7 +270,7 @@ public class CourseDAOImpl implements CourseDAO{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			res=c1.getHolder();
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -289,7 +293,7 @@ public class CourseDAOImpl implements CourseDAO{
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -311,7 +315,7 @@ public class CourseDAOImpl implements CourseDAO{
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -334,7 +338,7 @@ public class CourseDAOImpl implements CourseDAO{
 			ok=true;
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -358,7 +362,7 @@ public class CourseDAOImpl implements CourseDAO{
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -384,7 +388,7 @@ public class CourseDAOImpl implements CourseDAO{
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -399,7 +403,7 @@ public class CourseDAOImpl implements CourseDAO{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			res=new HashSet<RequestedCourse>(c1.getRequestedCourses());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -421,7 +425,7 @@ public class CourseDAOImpl implements CourseDAO{
 				}
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}

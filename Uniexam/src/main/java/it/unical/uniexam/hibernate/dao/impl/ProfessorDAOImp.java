@@ -8,16 +8,27 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.User;
+import it.unical.uniexam.hibernate.domain.User.TYPE;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
+
+/**
+ * 
+ * @author luigi
+ *
+ */
+@Repository
 public class ProfessorDAOImp implements ProfessorDAO {
 
 	/**
@@ -25,21 +36,25 @@ public class ProfessorDAOImp implements ProfessorDAO {
 	 */
 	
 	@Override
-	public Long addProfessor(String name,String surname,
-			URL webSite,Set<Email> emails,String password,
-			Address address,Set<PhoneNumber>numbers,Long idDepartment) {
+	public Long addProfessor(String name, String surname, URL webSite,
+			String password, Address address, Set<Email> emails,
+			Set<PhoneNumber> phoneNumbers, Department department_associated) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long id=null;
 		try{
 			transaction=session.beginTransaction();
 
-			Professor p=new Professor(name, surname, webSite,emails, password, address,numbers,null);
+			Professor p=new Professor(User.TYPE.PROFESSOR, name, surname, webSite, password, address, emails, phoneNumbers, department_associated);
+			for (Email email : emails) {
+				email.setUser(p);
+			}
 			/**
 			 * Aggiungere il dipartimento di appartenenza se non nullo
 			 * if(p.getDepartment_associated()!=null){do}
 			 */
 			id=(Long) session.save(p);
+			
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
@@ -49,6 +64,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		return id;
 	}
 
+	@Deprecated
 	@Override
 	public Long addProfessor(Professor professor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -60,6 +76,9 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			 * Aggiungere il dipartimento di appartenenza se non nullo
 			 * if(professor.getDepartment_associated()!=null){do}
 			 */
+			for (Email email : professor.getEmails()) {
+				email.setUser(professor);
+			}
 			id=(Long) session.save(professor);
 			transaction.commit();
 		}catch(Exception e){
@@ -80,7 +99,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			List<Professor> list = q.list();
 			res=new HashSet<Professor>(list);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -98,7 +117,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			List<Professor> list = q.list();
 			res=new HashSet<Professor>(list);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -112,7 +131,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		try{
 			res=(Professor)session.get(Professor.class, idProfessor);
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -131,7 +150,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -148,7 +167,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 	//			List<Professor> list = q.list();
 	//			res=new HashSet<Professor>(list);
 	//		}catch(Exception e){
-	//			e.printStackTrace();
+	//			new MokException(e);
 	//		}finally{
 	//			session.close();
 	//		}
@@ -185,7 +204,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -208,7 +227,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -228,7 +247,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			res=new HashSet<PhoneNumber>(p.getPhoneNumbers());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -248,7 +267,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 				}
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -276,7 +295,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			res=p.getSetHoldersCourse();
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -291,7 +310,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			res=p.getSetAsCommission();
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -306,7 +325,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			res=new HashSet<Course>(p.getSetHoldersCourse());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -321,7 +340,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			res=new HashSet<Course>(p.getSetAsCommission());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -348,12 +367,13 @@ public class ProfessorDAOImp implements ProfessorDAO {
 				session.delete(removable);
 			}
 			p.getEmails().add(email);
+			email.setUser(p);
 			res=(Long)session.save(email);
 
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -376,7 +396,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -391,7 +411,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			res=new HashSet<Email>(p.getEmails());
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}
@@ -411,7 +431,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 				}
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}finally{
 			session.close();
 		}

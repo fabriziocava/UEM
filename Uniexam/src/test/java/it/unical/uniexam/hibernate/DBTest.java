@@ -7,6 +7,7 @@ import java.util.Set;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.impl.DepartmentDAOImpl;
@@ -16,6 +17,11 @@ import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.Professor;
 import static org.junit.Assert.*;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
 public class DBTest {
 	private static DepartmentDAO departmentDao=new DepartmentDAOImpl();
 	//private static ProfessorDao professorDao=new ProfessorDaoImp();
@@ -29,10 +35,12 @@ public class DBTest {
 		//	address.setState("ITALY");
 		//	address.setStreet("Europa");
 		//	address.setZip("83843");
-//		Long idDep =departmentDao.addDepartment("12", "Informatica",professors, address);
+		//		Long idDep =departmentDao.addDepartment("12", "Informatica",professors, address);
 		try{
 			Thread.sleep(3000);
-		}catch(Exception e){e.printStackTrace();}
+		}catch(Exception e){
+			new MokException(e);
+		}
 		//	
 		//	professorDao.addProfessor("mok", "klui", idDep);
 		//	professorDao.addProfessor("madsfdok2", "lDsdff", idDep);
@@ -41,7 +49,7 @@ public class DBTest {
 
 	@Test
 	public void prooova(){
-//		assertTrue(departmentDao.listDepartment().size()==2);
+		//		assertTrue(departmentDao.listDepartment().size()==2);
 	}
 
 }

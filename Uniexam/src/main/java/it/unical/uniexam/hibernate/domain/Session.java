@@ -1,5 +1,6 @@
 package it.unical.uniexam.hibernate.domain;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.utility.SessionAttribute;
 
 import java.lang.reflect.InvocationTargetException;
@@ -9,11 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 
@@ -38,9 +42,13 @@ public class Session {
 	public static final Long timeExpire=86400000L; //one day
 	
 	@Id
-	@GeneratedValue
+//	@GeneratedValue
 	@Column(name="SESSION_ID")
-	Long id;
+	String id;
+	
+	public void ensureId(){
+	    this.setId(UUID.randomUUID().toString());
+	}
 	
 	@Column(name="OWNER")
 	Long owner;
@@ -92,7 +100,7 @@ public class Session {
 						Method m=c.getDeclaredMethod("getIntanceFromAttributes", arg);
 						obj=m.invoke(null, object);
 					} catch (Exception e) {
-						e.printStackTrace();
+						new MokException(e);
 					}
 					if(obj!=null)
 						res.put(one[0], obj);
@@ -105,11 +113,11 @@ public class Session {
 		return null;
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -1,6 +1,7 @@
 package it.unical.uniexam.hibernate.util;
 
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
@@ -20,6 +21,11 @@ import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
 public class HibernateUtil {
 
 	private static SessionFactory sessionFactory;
@@ -47,7 +53,7 @@ public class HibernateUtil {
 			.addAnnotatedClass(Student.class)
 			.buildSessionFactory();
 		}catch(Exception e){
-			e.printStackTrace();
+			new MokException(e);
 		}
 	}
 	//si devono aggiungere tutte le classi che vogliamo siano utilizzate nel db

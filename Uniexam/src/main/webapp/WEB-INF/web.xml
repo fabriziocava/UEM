@@ -13,7 +13,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -30,4 +30,9 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+<!-- 	<display-name>Uniexam</display-name> -->
+<!-- 	<welcome-file-list> -->
+<!--         <welcome-file>home.jsp</welcome-file> -->
+<!--     </welcome-file-list> -->
+	
 </web-app>

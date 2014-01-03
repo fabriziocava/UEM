@@ -5,13 +5,28 @@ import java.net.URL;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-
-@MappedSuperclass
-public abstract class User {
+/**
+ * 
+ * @author luigi
+ *
+ */
+@Entity
+@Table(name="USER")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User {
 
 	public enum TYPE{
 		PROFESSOR,STUDENT;
@@ -21,22 +36,27 @@ public abstract class User {
 public User() {
 	}
 
-public User(String name, String surname, URL webSite,
-			String password, Address address) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.webSite = webSite;
-		this.password = password;
-		this.address = address;
-	}
+	public User(TYPE type, String name, String surname, URL webSite,
+		String password, Address address) {
+	super();
+	this.type = type;
+	this.name = name;
+	this.surname = surname;
+	this.webSite = webSite;
+	this.password = password;
+	this.address = address;
+}
 
-//	@Id
-//	@Column(name="USER_ID", nullable=false)
-//	@GeneratedValue
-//	String user_id;
+	@Id
+	@Column(name="ID", nullable=false)
+	@GeneratedValue
+	Long id;
 	
+	@OneToOne(cascade=CascadeType.ALL)
+	Session session;
 	
+	@Column(name="TYPE")
+	TYPE type;
 	
 	@Column(name="NAME", nullable=false)
 	String name;
@@ -72,6 +92,14 @@ public User(String name, String surname, URL webSite,
 
 	public String getPassword() {
 		return password;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setPassword(String password) {
@@ -110,4 +138,20 @@ public User(String name, String surname, URL webSite,
 		this.webSite = webSite;
 	}
 
+	public TYPE getType() {
+		return type;
+	}
+
+	public void setType(TYPE type) {
+		this.type = type;
+	}
+
+	public Session getSession() {
+		return session;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
+	
 }

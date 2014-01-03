@@ -48,47 +48,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="PROFESSOR")
+@PrimaryKeyJoinColumn(name="ID")
 public class Professor extends User{
 
-
-
-	//	public Professor(Professor p) {
-	//		super();
-	//		this.id = p.id;
-	//		this.phoneNumbers = p.phoneNumbers;
-	//		this.department_associated = p.department_associated;
-	//		this.appeals = p.appeals;
-	//		this.holder = p.holder;
-	//		this.asCommission = p.asCommission;
-	//		this.groups = p.groups;
-	//	}
-
-	public Professor() {
-	}
-
-	public Professor(String name, String surname, URL webSite, Set<Email> emails,
-			String password, Address address, Set<PhoneNumber> phoneNumbers,
-			Department department_associated) {
-		super(name, surname, webSite, password, address);
-		this.emails=emails;
+	public Professor(TYPE type, String name, String surname, URL webSite,
+			String password, Address address, Set<Email> emails,
+			Set<PhoneNumber> phoneNumbers, Department department_associated) {
+		super(type, name, surname, webSite, password, address);
+		this.emails = emails;
 		this.phoneNumbers = phoneNumbers;
 		this.department_associated = department_associated;
 	}
-
-	public Professor(String name, String surname, URL webSite,
-			String password, Address address) {
-		super(name, surname, webSite,  password, address);
+	
+	public Professor() {
 	}
 
 	
-	@Id
-	@GeneratedValue
-	@Column(name="PROFESSOR_ID")
-	Long id;
-
-	@OneToOne(cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	Session session;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="PROFESSOR_EMAIL",
@@ -236,14 +211,5 @@ public class Professor extends User{
 	public void setEmails(Set<Email> emails) {
 		this.emails = emails;
 	}
-
-	public Session getSession() {
-		return session;
-	}
-
-	public void setSession(Session session) {
-		this.session = session;
-	}
-
-
+	
 }
