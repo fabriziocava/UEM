@@ -32,14 +32,20 @@ public class ProfessorController {
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_HOME , method=RequestMethod.GET)
 	public String home(HttpServletRequest request, ModelAndView model,
-			@ModelAttribute(UtilsService.QUERY_SESSION)Session session
+			@ModelAttribute(UtilsService.QUERY_SESSION)Session session,
+			@ModelAttribute(ProfessorService.PROFESSOR_QUERY_ID)Long idProf
 			){
 		boolean ok=false;
-		if(session==null || (session!=null && !professorService.checkSession(session, null))){
+		if(session==null || (session!=null && !professorService.checkSession(session, idProf))){
 			// return pagina di errore
 		}
 		request.getSession().setAttribute(UtilsService.QUERY_SESSION, session);
-
+		request.getSession().setAttribute(ProfessorService.PROFESSOR_QUERY_ID, idProf);
+		
+		//rempire il model con le informazioni sull'user
+		Professor p=professorService.getProfessor(idProf);
+		model.addObject(ProfessorService.PROFESSOR_OBJECT, p);
+		
 		if(ok) return ProfessorService.PROFESSOR_HOME; 
 		return ProfessorService.PROFESSOR_HOME;
 	}

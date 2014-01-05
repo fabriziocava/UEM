@@ -97,7 +97,8 @@ public class HomeController {
 		}
 		if(session.getType()==User.TYPE.PROFESSOR){
 			request.getSession().setAttribute(UtilsService.QUERY_SESSION, session);
-			return "redirect:"+ProfessorService.PROFESSOR_HOME;
+			String query="?"+ProfessorService.PROFESSOR_QUERY_ID+"="+session.getOwner();
+			return "redirect:"+ProfessorService.PROFESSOR_HOME+query;
 //			return new ModelAndView("forward:professor/home", "model", model);
 		}else if(session.getType()==User.TYPE.STUDENT){
 //			return "";

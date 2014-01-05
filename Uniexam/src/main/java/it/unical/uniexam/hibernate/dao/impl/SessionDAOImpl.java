@@ -71,8 +71,19 @@ public class SessionDAOImpl implements SessionDAO {
 
 	@Override
 	public Session getSession(Long idUser) {
-		// TODO Auto-generated method stub
-		return null;
+		org.hibernate.Session session =HibernateUtil.getSessionFactory().openSession();
+		Session res=null;
+		try{
+			User user=(User)session.get(User.class, idUser);
+			if(user!=null){
+				res=user.getSession();
+			}
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
 	@Override
