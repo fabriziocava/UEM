@@ -33,7 +33,6 @@ public class ProfessorController {
 	@RequestMapping(value=ProfessorService.PROFESSOR_HOME , method=RequestMethod.GET)
 	public String home(HttpServletRequest request, ModelAndView model,
 			@ModelAttribute(UtilsService.QUERY_SESSION)Session session
-//			@ModelAttribute(ProfessorService.PROFESSOR_QUERY_ID)Professor professor
 			){
 		boolean ok=false;
 		if(session==null || (session!=null && !professorService.checkSession(session, null))){
