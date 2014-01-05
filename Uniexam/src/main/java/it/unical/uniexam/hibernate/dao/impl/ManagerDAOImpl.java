@@ -26,11 +26,11 @@ public class ManagerDAOImpl implements ManagerDao {
 		try{
 			transaction=session.beginTransaction();
 			
-			Manager manager=new Manager(name, surname, webSite, password, address);
+//			Manager manager=new Manager(name, surname, webSite, password, address);
 			/**
 			 * Aggiungere il dipartimento di appartenenza se non nullo
 			 */
-			id=(Long) session.save(manager);
+//			id=(Long) session.save(manager);
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
