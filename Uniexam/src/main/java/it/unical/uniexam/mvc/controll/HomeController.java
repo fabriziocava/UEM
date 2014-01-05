@@ -1,9 +1,12 @@
 package it.unical.uniexam.mvc.controll;
 
 import it.unical.uniexam.MokException;
+import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Session;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.HomeService;
+import it.unical.uniexam.mvc.service.ProfessorService;
+import it.unical.uniexam.mvc.service.UtilsService;
 import it.unical.uniexam.mvc.service.impl.HomeServiceImpl;
 
 import java.text.DateFormat;
@@ -20,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,14 +70,16 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		//				model.addAttribute("students",list);
 
-		return "home";
+		return UtilsService.HOME;
 	}
 
 	// serve un pattern sia per la session
 	// serve anche un pattern per la personalizzazione
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam("email") String email, @RequestParam("password") String password, ModelAndView model){
+	@RequestMapping(value=UtilsService.LOGIN, method = RequestMethod.POST)
+	public String login(HttpServletRequest request,@RequestParam("email") String email, @RequestParam("password") String password
+			, Model model
+			){
 		Session session=null;
 		ArrayList<Object>error= homeService.loginUser(email, password);
 
@@ -83,32 +89,22 @@ public class HomeController {
 			session=(Session) error.get(1);
 			break;
 		case HomeService.ERROR_PASSWD:
-			return redirectToErrorPagePasswd();
+			return UtilsService.redirectToErrorPageGeneral("Password non corretta", "password",model);
 		case HomeService.ERROR_USER:
-			return redirectToErrorPageUser();
+			return UtilsService.redirectToErrorPageGeneral("Username non corretto", "username",model);
 		default:
 			break;
 		}
-		model.addObject("session", session);
 		if(session.getType()==User.TYPE.PROFESSOR){
-//			return "redirect:professor/home";
-			return new ModelAndView("redirect:professor/home", "model", model);
+			request.getSession().setAttribute(UtilsService.QUERY_SESSION, session);
+			return "redirect:"+ProfessorService.PROFESSOR_HOME;
+//			return new ModelAndView("forward:professor/home", "model", model);
 		}else if(session.getType()==User.TYPE.STUDENT){
 //			return "";
-			return new ModelAndView("home", "model", "model");
+//			return new ModelAndView("home", "model", "model");
 		}
-//		return "";
-		return new ModelAndView("home", "model", "model");
-	}
-
-	private ModelAndView redirectToErrorPageUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private ModelAndView redirectToErrorPagePasswd() {
-		// TODO Auto-generated method stub
-		return null;
+		return "";
+//		return new ModelAndView("home", "model", "model");
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

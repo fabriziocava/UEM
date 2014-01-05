@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.mvc.service.UtilsService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -83,6 +84,7 @@
 	</div>
 	<div>
 		<footer>Foooooooooooooooooooot</footer>
+		<a href="${pageContext.request.contextPath}/<%=UtilsService.redirectToErrorPageGeneral("ciao", "type")%>">clik</a>
 	</div>
 </body>
 </html>
