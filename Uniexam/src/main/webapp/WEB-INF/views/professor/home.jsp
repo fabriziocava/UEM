@@ -84,7 +84,6 @@
 	</div>
 	<div>
 		<footer>Foooooooooooooooooooot</footer>
-		<a href="${pageContext.request.contextPath}/<%=UtilsService.redirectToErrorPageGeneral("ciao", "type")%>">clik</a>
 	</div>
 </body>
 </html>
