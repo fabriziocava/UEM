@@ -51,15 +51,15 @@ public class Group {
 	}
 
 	/**
-	 * only the professor can publish
+	 * only the user that have created it can publish
 	 */
 	public static final Integer POLICY_1=1;
 	/**
-	 * only the professor can publish and the student can comment
+	 * only the user can publish and the other user can comment
 	 */
 	public static final Integer POLICY_2=2;
 	/**
-	 * both professor and student can publish, And of course comments 
+	 * both creator's user and other can publish, And of course comments 
 	 */
 	public static final Integer POLICY_3=3;
 //	public static final Integer POLITIC_4=4;
@@ -83,8 +83,8 @@ public class Group {
 	Integer levelOfPolicy;
 	
 	@ManyToOne
-	@JoinColumn(name="PROFESSOR_GRUOP")
-	Professor creator;
+	@JoinColumn(name="USER_GRUOP")
+	User creator;
 
 	/**
 	 * per inserire un nuovo messaggio devo utilizzare 
@@ -154,11 +154,11 @@ public class Group {
 		this.levelOfPolicy = levelOfPolicy;
 	}
 
-	public Professor getCreator() {
+	public User getCreator() {
 		return creator;
 	}
 
-	public void setCreator(Professor creator) {
+	public void setCreator(User creator) {
 		this.creator = creator;
 	}
 

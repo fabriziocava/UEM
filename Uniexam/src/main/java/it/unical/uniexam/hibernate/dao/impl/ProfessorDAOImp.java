@@ -437,5 +437,18 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		}
 		return res;
 	}
+//
+//	@Override
+//	public void getNoReadComments(Long idProfessor) {
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		try{
+//			Professor p=(Professor)session.get(Professor.class, idProfessor);
+//			p.getNoReadComments();
+//		}catch(Exception e){
+//			new MokException(e);
+//		}finally{
+//			session.close();
+//		}
+//	}
 
 }

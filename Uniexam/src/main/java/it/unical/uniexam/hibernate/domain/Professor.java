@@ -5,26 +5,21 @@ import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.net.URL;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -54,9 +49,7 @@ public class Professor extends User{
 	public Professor(TYPE type, String name, String surname, URL webSite,
 			String password, Address address, Set<Email> emails,
 			Set<PhoneNumber> phoneNumbers, Department department_associated) {
-		super(type, name, surname, webSite, password, address);
-		this.emails = emails;
-		this.phoneNumbers = phoneNumbers;
+		super(type, name, surname, webSite, password, address,emails,phoneNumbers);
 		this.department_associated = department_associated;
 	}
 	
@@ -65,30 +58,10 @@ public class Professor extends User{
 
 	
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="PROFESSOR_EMAIL",
-	joinColumns={
-			@JoinColumn(name="PROFESSOR_ID")
-	}, 
-	inverseJoinColumns={
-			@JoinColumn(name="EMAIL_ID")
-	})
-	private Set<Email> emails=new HashSet<Email>();
-
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="PROFESSOR_PHONE",
-	joinColumns={
-			@JoinColumn(name="PROFESSOR_ID")
-	}, 
-	inverseJoinColumns={
-			@JoinColumn(name="PHONE_ID")
-	})
-	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
-
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	Department department_associated;
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="PROFESSOR_APPEAL",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
@@ -98,7 +71,7 @@ public class Professor extends User{
 	})
 	Set<Appeal>appeals=new HashSet<Appeal>();
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="PROFESSOR_COURSE_HOLDER",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
@@ -108,7 +81,7 @@ public class Professor extends User{
 	})
 	Set<Course>holder=new HashSet<Course>();
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinTable(name="PROFESSOR_COURSE_COMMISSION", 
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
@@ -117,16 +90,6 @@ public class Professor extends User{
 			@JoinColumn(name="COURSE_ID")
 	})
 	Set<Course>asCommission=new HashSet<Course>();
-
-	@OneToMany
-	@JoinTable(name="PROFESSOR_GRUOP",
-	joinColumns={
-			@JoinColumn(name="PROFESSOR_ID")
-	}, 
-	inverseJoinColumns={
-			@JoinColumn(name="GROUP_ID")
-	})
-	Set<Group>groups=new HashSet<Group>();
 
 	/**
 	 * Implementation
@@ -154,14 +117,6 @@ public class Professor extends User{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Set<PhoneNumber> getPhoneNumbers() {
-		return phoneNumbers;
-	}
-
-	public void setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
-		this.phoneNumbers = phoneNumbers;
 	}
 
 	public Department getDepartment_associated() {
@@ -196,20 +151,4 @@ public class Professor extends User{
 		this.asCommission = asCommission;
 	}
 
-	public Set<Group> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
-	}
-
-	public Set<Email> getEmails() {
-		return emails;
-	}
-
-	public void setEmails(Set<Email> emails) {
-		this.emails = emails;
-	}
-	
 }

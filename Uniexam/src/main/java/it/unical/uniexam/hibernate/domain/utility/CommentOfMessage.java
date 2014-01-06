@@ -1,5 +1,7 @@
 package it.unical.uniexam.hibernate.domain.utility;
 
+import it.unical.uniexam.hibernate.domain.User;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.xml.ws.soap.MTOM;
 
 /**
  * @category Event 
@@ -33,8 +34,8 @@ public class CommentOfMessage {
 	@GeneratedValue
 	Long id;
 	
-	@Column(name="ID", nullable=false)
-	Long id_user;
+	@ManyToOne
+	User user;
 	
 	@Column(name="COMMENT", nullable=false)
 	String comment;
@@ -42,15 +43,15 @@ public class CommentOfMessage {
 	@Column(name="DATE_OF_COMMENT",nullable=false)
 	Date date_of_comment;
 
-	public CommentOfMessage(Long id_user, String comment) {
+	public CommentOfMessage(User user, String comment) {
 		super();
-		this.id_user = id_user;
+		this.user = user;
 		this.comment = comment;
 		this.date_of_comment=new Date();
 	}
 
-//	@ManyToOne
-//	MessageOfGroup ofMessage;
+	@ManyToOne
+	MessageOfGroup ofMessage;
 	
 	
 	//IMPLEMENTATION
@@ -66,12 +67,12 @@ public class CommentOfMessage {
 		this.id = id;
 	}
 
-	public Long getId_user() {
-		return id_user;
+	public User getUser() {
+		return user;
 	}
 
-	public void setId_user(Long id_user) {
-		this.id_user = id_user;
+	public void setId_user(User id_user) {
+		this.user = id_user;
 	}
 
 	public String getComment() {
@@ -90,4 +91,14 @@ public class CommentOfMessage {
 		this.date_of_comment = date_of_comment;
 	}
 
+	public MessageOfGroup getOfMessage() {
+		return ofMessage;
+	}
+
+	public void setOfMessage(MessageOfGroup ofMessage) {
+		this.ofMessage = ofMessage;
+	}
+
+	
+	
 }

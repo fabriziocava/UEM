@@ -1,4 +1,4 @@
-package it.unical.uniexam.hibernate;
+package it.unical.uniexam.hibernate.mokTest;
 
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;

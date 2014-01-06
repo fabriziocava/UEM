@@ -1,6 +1,7 @@
 package it.unical.uniexam.hibernate.domain.utility;
 
 import it.unical.uniexam.hibernate.domain.Group;
+import it.unical.uniexam.hibernate.domain.User;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -42,8 +43,8 @@ public class MessageOfGroup {
 	@GeneratedValue
 	Long id;
 	
-	@Column(name="USER_ID", nullable=false)
-	Long id_user;
+	@ManyToOne
+	User user;
 	
 	@Column(name="MESSAGE", nullable=false)
 	String message;
@@ -51,13 +52,13 @@ public class MessageOfGroup {
 	@Column(name="DATE_OF_MESSAGE",nullable=false)
 	Date date_of_message;
 
-	public MessageOfGroup(Long id_user, String message) {
+	public MessageOfGroup(User id_user, String message) {
 		super();
-		this.id_user = id_user;
+		this.user = id_user;
 		this.message = message;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	Group group;
 	
 	@OneToMany(cascade=CascadeType.ALL)
@@ -97,12 +98,12 @@ public class MessageOfGroup {
 		this.id = id;
 	}
 
-	public Long getId_user() {
-		return id_user;
+	public User getUser() {
+		return user;
 	}
 
-	public void setId_user(Long id_user) {
-		this.id_user = id_user;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getMessage() {
