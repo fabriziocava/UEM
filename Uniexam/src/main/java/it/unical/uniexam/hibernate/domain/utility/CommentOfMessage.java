@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -47,8 +48,8 @@ public class CommentOfMessage {
 		this.date_of_comment=new Date();
 	}
 
-//	@ManyToOne
-//	MessageOfGroup ofMessage;
+	@ManyToOne
+	MessageOfGroup ofMessage;
 	
 	
 	//IMPLEMENTATION
@@ -88,4 +89,14 @@ public class CommentOfMessage {
 		this.date_of_comment = date_of_comment;
 	}
 
+	public MessageOfGroup getOfMessage() {
+		return ofMessage;
+	}
+
+	public void setOfMessage(MessageOfGroup ofMessage) {
+		this.ofMessage = ofMessage;
+	}
+
+	
+	
 }

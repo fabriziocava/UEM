@@ -14,6 +14,7 @@ import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
@@ -252,6 +253,12 @@ public class GroupDAOImpl implements GroupDAO {
 			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
 			mog.getComments().add(comment);
 			res=(Long)session.save(comment);
+			comment.setOfMessage(mog);
+			
+			User u=(User)session.get(User.class, mog.getId_user());
+			if(u.getClass()==Professor.class){
+				((Professor)u).getNoReadComments().add(res);
+			}
 
 			transaction.commit();
 		}catch(Exception e){

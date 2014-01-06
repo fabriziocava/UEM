@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -55,10 +58,10 @@ public class Professor extends User{
 
 	
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	Department department_associated;
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="PROFESSOR_APPEAL",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
@@ -68,7 +71,7 @@ public class Professor extends User{
 	})
 	Set<Appeal>appeals=new HashSet<Appeal>();
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="PROFESSOR_COURSE_HOLDER",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
@@ -78,7 +81,7 @@ public class Professor extends User{
 	})
 	Set<Course>holder=new HashSet<Course>();
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinTable(name="PROFESSOR_COURSE_COMMISSION", 
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
@@ -88,7 +91,7 @@ public class Professor extends User{
 	})
 	Set<Course>asCommission=new HashSet<Course>();
 
-	@OneToMany
+	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="PROFESSOR_GRUOP",
 	joinColumns={
 			@JoinColumn(name="PROFESSOR_ID")
@@ -98,8 +101,16 @@ public class Professor extends User{
 	})
 	Set<Group>groups=new HashSet<Group>();
 
-	@OneToMany
-	List<String>noReadComments=new ArrayList<String>();
+	@ElementCollection(fetch=FetchType.EAGER)
+	@JoinTable(
+	name = "READ_COMMENT",
+	joinColumns = @JoinColumn(name = "ID")
+	)
+//	@org.hibernate.annotations.IndexColumn(
+//	name="POSITION", base = 1
+//	)
+	@Column(name = "UNREAD")
+	private List<Long> noReadComments = new ArrayList<Long>();
 	
 	/**
 	 * Implementation
@@ -167,6 +178,14 @@ public class Professor extends User{
 
 	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
+	}
+
+	public List<Long> getNoReadComments() {
+		return noReadComments;
+	}
+
+	public void setNoReadComments(List<Long> noReadComments) {
+		this.noReadComments = noReadComments;
 	}
 
 }

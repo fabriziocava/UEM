@@ -69,6 +69,7 @@ public interface ProfessorDAO {
 	public Email removeEmail(Long idProfessor,Long idEmail);
 	public Set<Email> getEmails(Long idProfessor);
 	public Email getEmail(Long idProfessor,String type);
+
 	
 }
 

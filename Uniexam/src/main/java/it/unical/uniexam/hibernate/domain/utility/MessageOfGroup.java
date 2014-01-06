@@ -57,7 +57,7 @@ public class MessageOfGroup {
 		this.message = message;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY, optional=false)
+	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	Group group;
 	
 	@OneToMany(cascade=CascadeType.ALL)
