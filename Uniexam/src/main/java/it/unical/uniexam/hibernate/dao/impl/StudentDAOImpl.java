@@ -10,6 +10,7 @@ import it.unical.uniexam.hibernate.dao.StudentDAO;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
@@ -21,6 +22,7 @@ import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
+@Repository
 public class StudentDAOImpl implements StudentDAO {
 
 	@Override
