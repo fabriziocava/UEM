@@ -4,13 +4,10 @@ import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -36,10 +33,8 @@ public class Student extends User {
 	/*
 	 * CONSTURCTORS
 	 */
-	public Student(TYPE type, String name, String surname, String password, Address address, Email email, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, Long serialNumber) {
-		super(type, name, surname, null, password, address);
-		this.email=email;
-		this.phoneNumbers = phoneNumbers;
+	public Student(TYPE type, String name, String surname, String password, Address address, Set<Email>emails, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, Long serialNumber) {
+		super(type, name, surname, null, password, address,emails,phoneNumbers);
 		this.degreeCourse_registered = degreeCourse_registered;
 		this.serialNumber = serialNumber;
 	}
@@ -68,22 +63,6 @@ public class Student extends User {
 	
 	@Column(name="FISCAL_CODE", length=16)
 	private String fiscal_code;
-	
-	@Embedded
-	private Address address;
-	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="PHONE",
-	joinColumns={
-			@JoinColumn(name="STUDENT_ID")
-			}, 
-	inverseJoinColumns={
-			@JoinColumn(name="PHONE_ID")
-			})
-	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
-	
-	@Column(name="EMAIL")
-	private Email email;
 	
 	@ManyToOne
 	DegreeCourse degreeCourse_registered;
@@ -132,18 +111,6 @@ public class Student extends User {
 		return fiscal_code;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public Set<PhoneNumber> getPhoneNumbers() {
-		return phoneNumbers;
-	}
-
-	public Email getEmail() {
-		return email;
-	}
-
 	public DegreeCourse getDegreeCourse_registered() {
 		return degreeCourse_registered;
 	}
@@ -184,18 +151,6 @@ public class Student extends User {
 
 	public void setFiscal_code(String fiscal_code) {
 		this.fiscal_code = fiscal_code;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public void setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
-		this.phoneNumbers = phoneNumbers;
-	}
-
-	public void setEmail(Email email) {
-		this.email = email;
 	}
 
 	public void setDegreeCourse_registered(DegreeCourse degreeCourse_registered) {
