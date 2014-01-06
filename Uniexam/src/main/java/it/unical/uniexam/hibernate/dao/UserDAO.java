@@ -10,4 +10,5 @@ public interface UserDAO {
 	public String getIdSession(Long idUser);
 	public User getUser(String idSession);
 	public Boolean unRegisterSession(String idSession);
+	public User getUser(Long idUser);
 }

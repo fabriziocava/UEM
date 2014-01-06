@@ -2,17 +2,22 @@ package it.unical.uniexam.hibernate.domain;
 
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -103,22 +108,47 @@ public User() {
 	})
 	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
 	
-//	@OneToMany(cascade=CascadeType.ALL)
-//	@JoinTable(name="USER_PHONE",
-//	joinColumns={
-//			@JoinColumn(name="USER_ID")
-//			}, 
-//	inverseJoinColumns={
-//			@JoinColumn(name="PHONE_ID")
-//			})
-//	Set<PhoneNumber>phoneNumbers=new HashSet<PhoneNumber>();
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="USER_COMMENT",
+	joinColumns={
+			@JoinColumn(name="ID")
+	}, 
+	inverseJoinColumns={
+			@JoinColumn(name="COMMENT_ID")
+	})
+	private Set<CommentOfMessage> comments=new HashSet<CommentOfMessage>();
+	
+	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@JoinTable(
+	name = "READ_COMMENT",
+	joinColumns = @JoinColumn(name = "ID")
+	)
+	@Column(name = "UNREAD")
+	private List<Long> noReadComments = new ArrayList<Long>();
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="USER_GRUOP",
+	joinColumns={
+			@JoinColumn(name="ID")
+	}, 
+	inverseJoinColumns={
+			@JoinColumn(name="GROUP_ID")
+	})
+	Set<Group>groups=new HashSet<Group>();
 	
 	
 	/**
 	 * Second part of function
 	 */
 
+	public Set<CommentOfMessage> getComments() {
+		return comments;
+	}
 
+	public void setComments(Set<CommentOfMessage> comments) {
+		this.comments = comments;
+	}
 
 	public String getPassword() {
 		return password;
@@ -206,5 +236,19 @@ public User() {
 		this.emails = emails;
 	}
 	
+	public List<Long> getNoReadComments() {
+		return noReadComments;
+	}
+
+	public void setNoReadComments(List<Long> noReadComments) {
+		this.noReadComments = noReadComments;
+	}
 	
+	public Set<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
+	}
 }

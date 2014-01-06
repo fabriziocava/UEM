@@ -136,4 +136,18 @@ public class UserDAOImpl implements UserDAO {
 		return res;
 	}
 
+	@Override
+	public User getUser(Long idUser) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		User res=null;
+		try{
+			res=(User)session.get(User.class, idUser);
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
 }

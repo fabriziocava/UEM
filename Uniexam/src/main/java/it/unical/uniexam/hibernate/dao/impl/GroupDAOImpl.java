@@ -255,10 +255,10 @@ public class GroupDAOImpl implements GroupDAO {
 			res=(Long)session.save(comment);
 			comment.setOfMessage(mog);
 			
-			User u=(User)session.get(User.class, mog.getId_user());
-			if(u.getClass()==Professor.class){
-				((Professor)u).getNoReadComments().add(res);
-			}
+			User u=mog.getUser();
+			if(u.getId()!=comment.getUser().getId())
+				u.getNoReadComments().add(res);
+			u.getComments().add(comment);
 
 			transaction.commit();
 		}catch(Exception e){
@@ -280,6 +280,7 @@ public class GroupDAOImpl implements GroupDAO {
 
 			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
 			CommentOfMessage com=(CommentOfMessage)session.get(CommentOfMessage.class, idComment);
+			
 			mog.getComments().remove(com);
 			session.delete(com);
 			res=com;

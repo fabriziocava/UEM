@@ -91,27 +91,6 @@ public class Professor extends User{
 	})
 	Set<Course>asCommission=new HashSet<Course>();
 
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinTable(name="PROFESSOR_GRUOP",
-	joinColumns={
-			@JoinColumn(name="PROFESSOR_ID")
-	}, 
-	inverseJoinColumns={
-			@JoinColumn(name="GROUP_ID")
-	})
-	Set<Group>groups=new HashSet<Group>();
-
-	@ElementCollection(fetch=FetchType.EAGER)
-	@JoinTable(
-	name = "READ_COMMENT",
-	joinColumns = @JoinColumn(name = "ID")
-	)
-//	@org.hibernate.annotations.IndexColumn(
-//	name="POSITION", base = 1
-//	)
-	@Column(name = "UNREAD")
-	private List<Long> noReadComments = new ArrayList<Long>();
-	
 	/**
 	 * Implementation
 	 */
@@ -170,22 +149,6 @@ public class Professor extends User{
 
 	public void setSetAsCommission(Set<Course> asCommission) {
 		this.asCommission = asCommission;
-	}
-
-	public Set<Group> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
-	}
-
-	public List<Long> getNoReadComments() {
-		return noReadComments;
-	}
-
-	public void setNoReadComments(List<Long> noReadComments) {
-		this.noReadComments = noReadComments;
 	}
 
 }

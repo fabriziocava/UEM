@@ -127,19 +127,19 @@ public class DBTestUserDAO {
 		professorDAO.removeEmail(ids[2], ids[13]);
 		
 		/*15*/ids[count++]=groupDAO.addGruop("Gruppo per iscrizione", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[3], Group.POLICY_1);
-		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[3], "primo messaggio"));
-		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[3], "sexondo messaggio"));
-		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[3], "teerzo messaggio"));
-		ids[count++]=groupDAO.addMessageAtGroup(groupDAO.getGroup(ids[15]), new MessageOfGroup(ids[3], "quarto messaggio")).getId();
-		/*20*/ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[3], "quinto messaggio"));
+		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(userDAO.getUser(ids[3]), "primo messaggio"));
+		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(userDAO.getUser(ids[3]), "sexondo messaggio"));
+		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(userDAO.getUser(ids[3]), "teerzo messaggio"));
+		ids[count++]=groupDAO.addMessageAtGroup(groupDAO.getGroup(ids[15]), new MessageOfGroup(userDAO.getUser(ids[3]), "quarto messaggio")).getId();
+		/*20*/ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(userDAO.getUser(ids[3]), "quinto messaggio"));
 		
 		groupDAO.removeMessage(ids[15], ids[18]);
 		
-		/*21*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[3], "se se con il 4"));
-		/*22*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[3], "se se con il 4.1"));
-		/*23*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[3], "se se con il 4.2"));
+		/*21*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(userDAO.getUser(ids[3]), "se se con il 4"));
+		/*22*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(userDAO.getUser(ids[3]), "se se con il 4.1"));
+		/*23*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(userDAO.getUser(ids[3]), "se se con il 4.2"));
 		
-		groupDAO.modifyCommentFromMessage(ids[22], new CommentOfMessage(ids[3],"no con 4.1.1"));
+		groupDAO.modifyCommentFromMessage(ids[22], new CommentOfMessage(userDAO.getUser(ids[3]),"no con 4.1.1"));
 		
 		groupDAO.removeCommentFromMessage(ids[19], ids[21]);
 		
