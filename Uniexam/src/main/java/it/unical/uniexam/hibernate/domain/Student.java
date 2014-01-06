@@ -27,7 +27,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="STUDENT")
-@PrimaryKeyJoinColumn(name="STUDENT_ID")
+//@PrimaryKeyJoinColumn(name="STUDENT_ID")
 public class Student extends User {
 	
 	/*
@@ -47,10 +47,10 @@ public class Student extends User {
 	 */
 	
 
-	@Id
-	@Column(name="STUDENT_ID")
-	@GeneratedValue
-	private Long id;
+//	@Id
+//	@Column(name="STUDENT_ID")
+//	@GeneratedValue
+//	private Long id;
 
 	@Column(name="SERIAL_NUMBER", nullable=false, unique=true)
 	private Long serialNumber; //MATRICOLA

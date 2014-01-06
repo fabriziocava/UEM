@@ -3,14 +3,19 @@ package it.unical.uniexam.hibernate.domain;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -86,6 +91,16 @@ public class Group {
 	@JoinColumn(name="USER_GRUOP")
 	User creator;
 
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="GROUP_USERS", 
+	joinColumns={
+			@JoinColumn(name="GROUP_ID")
+	}, 
+	inverseJoinColumns={
+			@JoinColumn(name="ID")
+	})
+	Set<User>iscribed=new HashSet<User>();
+	
 	/**
 	 * per inserire un nuovo messaggio devo utilizzare 
 	 * messages.add(0,MessageOfGruop);
@@ -168,6 +183,14 @@ public class Group {
 
 	public void setMessages(List<MessageOfGroup> messages) {
 		this.messages = messages;
+	}
+
+	public Set<User> getIscribed() {
+		return iscribed;
+	}
+
+	public void setIscribed(Set<User> iscribed) {
+		this.iscribed = iscribed;
 	}
 
 	

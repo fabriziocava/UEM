@@ -14,6 +14,7 @@ function alineamentoContainer() {
 		center =parseInt(center.replace("px",""));
 		right =parseInt(right.replace("px",""));
 		
+//		alert("left : "+left+" center : "+center+" right: "+right);
 		if (left >= center && left >= right) {
 			$(".container-center").css({
 				"height" : left

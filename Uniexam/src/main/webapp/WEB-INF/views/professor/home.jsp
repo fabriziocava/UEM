@@ -92,9 +92,8 @@
 			<spring:message code="message.title.view.gruops" />
 			<br />
 			<%
-				ArrayList<ArrayList<Object>> struct = (ArrayList<ArrayList<Object>>) request
-						.getAttribute("structNotification");
-				if (struct.size() > 0) {
+				ArrayList<ArrayList<Object>> struct = (ArrayList<ArrayList<Object>>) request.getAttribute("structNotification");
+				if (struct !=null && struct.size() > 0) {
 					while (struct.size() > 0) {
 						ArrayList<Object>step=struct.remove(0);
 			MessageOfGroup mes=(MessageOfGroup)step.remove(0);
@@ -112,7 +111,7 @@
 				CommentOfMessage c=(CommentOfMessage)oj;
 			%>
 				<li>
-				<%=c %>
+				<%=c.getComment()+" "+c.getDate_of_comment() %>
 				</li>
 			<%} %>
 			</ul>

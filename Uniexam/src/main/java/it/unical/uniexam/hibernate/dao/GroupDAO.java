@@ -4,6 +4,7 @@ import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 
@@ -44,6 +45,9 @@ public interface GroupDAO {
 	public Set<MessageOfGroup>getMessagesOfGroup(Long idGroup);
 	public Set<CommentOfMessage> getCommentsFromMessage(Long idMessage);
 	
+	public Boolean iscribeUserAtGroup(User u,Group group);
+	public Boolean iscribeUserAtGroup(Long idUser,Long idGroup);
 	
-	
+	public Boolean cancelUserFromGroup(User u,Group group);
+	public Boolean cancelUserFromGroup(Long idUser,Long idGroup);
 }

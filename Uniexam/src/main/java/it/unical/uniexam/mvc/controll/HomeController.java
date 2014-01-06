@@ -108,7 +108,8 @@ public class HomeController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request,Model model){
 		try{
-			if(!homeService.unRegisterSession(request.getSession(false).getId()))
+			HttpSession session = request.getSession(false);
+			if(session!=null && !homeService.unRegisterSession(session.getId()))
 				return UtilsService.redirectToErrorPageGeneral("Session non chiusa", "session",model);
 		}catch (Exception e){
 			System.err.println("Errore sul logout");

@@ -1,6 +1,9 @@
 package it.unical.uniexam.mvc.controll.professor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import it.unical.uniexam.MokException;
@@ -14,6 +17,7 @@ import it.unical.uniexam.mvc.service.UtilsService;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.ComparatorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,7 +52,7 @@ public class ProfessorController {
 		model.addAttribute("I",p);
 		// aggiungere altre cose
 		updateNotification(model, p);
-		
+
 		return ProfessorService.PROFESSOR_HOME;
 	}
 
@@ -63,6 +67,15 @@ public class ProfessorController {
 		try{
 			if(p.getNoReadComments().size()>0){
 				ArrayList<CommentOfMessage> comms=professorService.getNotificationFromComments(p.getNoReadComments());
+				Collections.sort(comms, new Comparator<CommentOfMessage>(){
+					@Override
+					public int compare(CommentOfMessage o1, CommentOfMessage o2) {
+						if(o1!=null && o2!=null)
+							return (int) (o2.getDate_of_comment().getTime()-o1.getDate_of_comment().getTime());
+						return 0;
+					}
+				});
+
 				if(comms.size()>0){
 					//creare struttura che aggrega, i commenti appartenenti ad un messaggio
 					ArrayList<ArrayList<Object>>structure=new ArrayList<ArrayList<Object>>();

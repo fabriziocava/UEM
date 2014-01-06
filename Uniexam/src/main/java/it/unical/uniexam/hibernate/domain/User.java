@@ -24,10 +24,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -127,14 +125,7 @@ public User() {
 	@Column(name = "UNREAD")
 	private List<Long> noReadComments = new ArrayList<Long>();
 	
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinTable(name="USER_GRUOP",
-	joinColumns={
-			@JoinColumn(name="ID")
-	}, 
-	inverseJoinColumns={
-			@JoinColumn(name="GROUP_ID")
-	})
+	@ManyToMany(mappedBy="iscribed")
 	Set<Group>groups=new HashSet<Group>();
 	
 	
