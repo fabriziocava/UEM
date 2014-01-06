@@ -52,10 +52,5 @@ public class UtilsService {
 		model.addAttribute("error_type", error_type);
 		return UtilsService.GENERAL_ERROR;
 	}
-//	public static String redirectToErrorPageGeneral(String error_message,String error_type,ModelAndView model) {
-//		model.addObject("error_message", error_message);
-//		model.addObject("error_type", error_type);
-//		return UtilsService.GENERAL_ERROR;
-//	}
 	
 }

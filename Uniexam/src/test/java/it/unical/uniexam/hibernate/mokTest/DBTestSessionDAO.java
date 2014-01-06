@@ -1,3 +1,4 @@
+package it.unical.uniexam.hibernate.mokTest;
 //package it.unical.uniexam.hibernate;
 //
 //import it.unical.uniexam.hibernate.dao.CourseDAO;

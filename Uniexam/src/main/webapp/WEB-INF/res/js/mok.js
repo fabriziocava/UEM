@@ -9,9 +9,12 @@ function alineamentoContainer() {
 		var left = $(".container-left").css("height");
 		var center = $(".container-center").css("height");
 		var right = $(".container-right").css("height");
-//		alert(left+" "+center+" "+right);
-
-		if (left > center && center >= right) {
+		
+		left =parseInt(left.replace("px",""));
+		center =parseInt(center.replace("px",""));
+		right =parseInt(right.replace("px",""));
+		
+		if (left >= center && left >= right) {
 			$(".container-center").css({
 				"height" : left
 			});
@@ -19,7 +22,7 @@ function alineamentoContainer() {
 				"height" : left
 			});
 			justContainer(left);
-		} else if (center > right && left >= right) {
+		} else if (center >= right && center >= left) {
 			$(".container-right").css({
 				"height" : center
 			});
@@ -27,7 +30,7 @@ function alineamentoContainer() {
 				"height" : center
 			});
 			justContainer(center);
-		} else if (right > center && center >= left) {
+		} else if (right >= center && right >= left) {
 			$(".container-left").css({
 				"height" : right
 			});
@@ -46,8 +49,9 @@ function justContainer(incr){
 	var container=$("container").css("height");
 	if(isNaN(container))
 		container=0;
-	incr=incr.replace("px","");
-	incr=parseInt(incr, 0);
+	else
+		container=container.replace("px","");
+	container=parseInt(container, 0);
 	container=container+incr;
 	incr=$(".container-up").css("height");
 	incr=incr.replace("px","");

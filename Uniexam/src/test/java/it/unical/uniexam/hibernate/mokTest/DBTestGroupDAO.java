@@ -1,14 +1,19 @@
-package it.unical.uniexam.hibernate;
+package it.unical.uniexam.hibernate.mokTest;
 
 import it.unical.uniexam.hibernate.dao.CourseDAO;
+import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
+import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.Email;
+import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.net.MalformedURLException;
@@ -25,14 +30,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Test for class DAO Professor
+ * Test for class DAO Group
  * 
  * @author luigi
  *
  */
-public class DBTestProfessorDAO {
+public class DBTestGroupDAO {
 	private static CourseDAO courseDAO=new CourseDAOImpl();
 	private static ProfessorDAO professorDAO=new ProfessorDAOImp();
+	private static GroupDAO groupDAO= new GroupDAOImpl();
 	static Long []ids=null;
 	
 	
@@ -44,7 +50,7 @@ public class DBTestProfessorDAO {
 	@BeforeClass
 	public static void prepareBD() throws MalformedURLException{
 
-		ids=new Long[18];
+		ids=new Long[48];
 		int count=0;
 		ids[count++]=courseDAO.addCourse(new Course("INF", "AE", new URL("http:\\www.unical.it/AE"), 5, null, null, null));
 		ids[count++]=courseDAO.addCourse(new Course("INF", "SI", new URL("http:\\www.unical.it/SI"), 5, null, null, null));
@@ -91,7 +97,6 @@ public class DBTestProfessorDAO {
 				"color", new Address("Wien", "Austrie", "87036", "europe"),emails,new HashSet<PhoneNumber>(), null);
 		courseDAO.setHolderProfessor(ids[7], ids[8]);
 
-
 		courseDAO.addProfessorAtCommission(ids[7], ids[3]);
 		courseDAO.addProfessorAtCommission(ids[7], ids[5]);
 		courseDAO.addProfessorAtCommission(ids[7], ids[6]);
@@ -116,12 +121,47 @@ public class DBTestProfessorDAO {
 
 		professorDAO.removeEmail(ids[2], ids[13]);
 		
-
+		/*15*/ids[count++]=groupDAO.addGruop("Gruppo per iscrizione", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[2], Group.POLICY_1);
+		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "primo messaggio"));
+		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "sexondo messaggio"));
+		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "teerzo messaggio"));
+		ids[count++]=groupDAO.addMessageAtGroup(groupDAO.getGroup(ids[15]), new MessageOfGroup(ids[2], "quarto messaggio")).getId();
+		/*20*/ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "quinto messaggio"));
+		
+		groupDAO.removeMessage(ids[15], ids[18]);
+		
+		/*21*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4"));
+		/*22*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4.1"));
+		/*23*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4.2"));
+		
+		groupDAO.modifyCommentFromMessage(ids[22], new CommentOfMessage(ids[2],"no con 4.1.1"));
+		
+		groupDAO.removeCommentFromMessage(ids[19], ids[21]);
+		
+		
 		try{
 			Thread.sleep(3000);
 		}catch(Exception e){}
 	}
 
+	@Test
+	public void checkGetMethodOnGroup(){
+		Set<Group> groups = groupDAO.getGroups();
+		assertTrue(groups.size()==1);
+		for (Group group : groups) {
+			System.out.println("Name group: "+group.getName());
+		}
+		System.out.println(groupDAO.getGroup(ids[15]).toString());
+		
+		assertTrue(groupDAO.getMessagesOfGroup(ids[15]).size()==4);
+	}
+	
+	@Test
+	public void checkDeleteModifyComment(){
+		Set<CommentOfMessage> commentsFromMessage = groupDAO.getCommentsFromMessage(ids[19]);
+		assertTrue(commentsFromMessage.size()==2);
+	}
+	
 	@Test
 	public void checkOnlyEmail(){
 		Email emails = professorDAO.getEmail(ids[2],Email.TYPE_HOME);

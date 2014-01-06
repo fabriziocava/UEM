@@ -1,15 +1,18 @@
-package it.unical.uniexam.hibernate;
+package it.unical.uniexam.hibernate.mokTest;
 
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
+import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
+import it.unical.uniexam.hibernate.dao.impl.UserDAOImpl;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.Email;
@@ -25,6 +28,7 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
+import org.hibernate.Query;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,10 +39,11 @@ import org.junit.Test;
  * @author luigi
  *
  */
-public class DBTestGroupDAO {
+public class DBTestUserDAO {
 	private static CourseDAO courseDAO=new CourseDAOImpl();
 	private static ProfessorDAO professorDAO=new ProfessorDAOImp();
 	private static GroupDAO groupDAO= new GroupDAOImpl();
+	private static UserDAO userDAO=new UserDAOImpl();
 	static Long []ids=null;
 	
 	
@@ -139,11 +144,18 @@ public class DBTestGroupDAO {
 		groupDAO.removeCommentFromMessage(ids[19], ids[21]);
 		
 		
+		
 		try{
 			Thread.sleep(3000);
 		}catch(Exception e){}
 	}
-
+	
+	@Test
+	public void checkQueryEmailPasswd(){
+		User u=userDAO.getUser("cali@gmail.com", "mero",new ArrayList<Object>());
+		assertTrue(u!=null);
+	}
+	
 	@Test
 	public void checkGetMethodOnGroup(){
 		Set<Group> groups = groupDAO.getGroups();

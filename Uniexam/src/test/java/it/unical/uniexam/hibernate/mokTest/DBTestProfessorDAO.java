@@ -1,4 +1,4 @@
-package it.unical.uniexam.hibernate;
+package it.unical.uniexam.hibernate.mokTest;
 
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
@@ -25,12 +25,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Test for class DAO Course
+ * Test for class DAO Professor
  * 
  * @author luigi
  *
  */
-public class DBTestCourseDAO {
+public class DBTestProfessorDAO {
 	private static CourseDAO courseDAO=new CourseDAOImpl();
 	private static ProfessorDAO professorDAO=new ProfessorDAOImp();
 	static Long []ids=null;
@@ -91,6 +91,7 @@ public class DBTestCourseDAO {
 				"color", new Address("Wien", "Austrie", "87036", "europe"),emails,new HashSet<PhoneNumber>(), null);
 		courseDAO.setHolderProfessor(ids[7], ids[8]);
 
+
 		courseDAO.addProfessorAtCommission(ids[7], ids[3]);
 		courseDAO.addProfessorAtCommission(ids[7], ids[5]);
 		courseDAO.addProfessorAtCommission(ids[7], ids[6]);
@@ -100,14 +101,48 @@ public class DBTestCourseDAO {
 		courseDAO.addRequestedCourse(ids[7], ids[0], RequestedCourse.POLICY_2);
 		
 		courseDAO.removeRequestedCourse(ids[7], ids[1]);
+/*9*/
+		ids[count++]=professorDAO.addPhoneNumber(ids[2], new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "3891535998"));
+		ids[count++]=professorDAO.addPhoneNumber(ids[2], new PhoneNumber(PhoneNumber.TYPE_UNUFFICIAL, "3891535999"));
+		/*11*/ids[count++]=professorDAO.addPhoneNumber(ids[2], new PhoneNumber(PhoneNumber.TYPE_HOME, "3891536000"));
 
+		professorDAO.removePhoneNumber(ids[2], ids[10]);
+		
+		/*12*/
+		ids[count++]=professorDAO.addEmail(ids[2], new Email(Email.TYPE_UFFICIAL, "ricca2@unical.it"));
+		ids[count++]=professorDAO.addEmail(ids[2], new Email(Email.TYPE_UNUFFICIAL, "ricca@unUfficial.it"));
+		ids[count++]=professorDAO.addEmail(ids[2], new Email(Email.TYPE_HOME, "ricchia@home.it"));
+		/*14*/
 
+		professorDAO.removeEmail(ids[2], ids[13]);
+		
 
 		try{
 			Thread.sleep(3000);
 		}catch(Exception e){}
 	}
 
+	@Test
+	public void checkOnlyEmail(){
+		Email emails = professorDAO.getEmail(ids[2],Email.TYPE_HOME);
+		assertTrue(emails.getType().equals(Email.TYPE_HOME));
+	}
+
+	
+	@Test
+	public void checkEmail(){
+		
+		Set<Email> emails = professorDAO.getEmails(ids[2]);
+		assertTrue(emails.size()==2);
+	}
+
+	@Test
+	public void checkPhoneNumber(){
+		Set<PhoneNumber> phoneNumbers = professorDAO.getPhoneNumbers(ids[2]);
+		assertTrue(phoneNumbers.size()==2);
+	}
+
+	
 	@Test
 	public void checkCourseRequested(){
 		assertTrue(courseDAO.getRequestedCourses(ids[0], RequestedCourse.POLICY_1).size()==1);
@@ -141,15 +176,9 @@ public class DBTestCourseDAO {
 	@Test
 	public void numberOfCourseAsCommission(){
 		Set<Course> setCourseAsCommission = professorDAO.getSetCourseAsCommission(ids[3]);
-		for (Course course : setCourseAsCommission) {
-			System.out.println("1 :"+course.getName());
-		}
 		assertTrue(setCourseAsCommission.size()==1);
 		Set<Course> setCourseAsCommission2 = professorDAO.getSetCourseAsCommission(ids[6]);
 		int size = setCourseAsCommission2.size();
-		for (Course course : setCourseAsCommission2) {
-			System.out.println("2 :"+course.getName());
-		}
 		assertTrue(size==3);
 	}
 }

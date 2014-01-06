@@ -1,4 +1,4 @@
-package it.unical.uniexam.hibernate;
+package it.unical.uniexam.hibernate.mokTest;
 
 import java.util.ArrayList;
 import java.util.List;
