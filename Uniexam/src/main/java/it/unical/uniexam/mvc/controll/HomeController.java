@@ -2,7 +2,6 @@ package it.unical.uniexam.mvc.controll;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Professor;
-import it.unical.uniexam.hibernate.domain.Session;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.HomeService;
 import it.unical.uniexam.mvc.service.ProfessorService;
@@ -16,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.transaction.synchronization.HibernateSynchronizationImpl;
 import org.slf4j.Logger;
@@ -78,15 +78,14 @@ public class HomeController {
 
 	@RequestMapping(value=UtilsService.LOGIN, method = RequestMethod.POST)
 	public String login(HttpServletRequest request,@RequestParam("email") String email, @RequestParam("password") String password
-			, Model model
-			){
-		Session session=null;
-		ArrayList<Object>error= homeService.loginUser(email, password);
+			, Model model){
 
-		Integer err=(Integer) error.get(0);
+		ArrayList<Object>error= homeService.loginUser(email, password);
+		User user=null;
+		Integer err=(Integer) error.remove(0);
 		switch (err) {
 		case HomeService.NO_ERROR:
-			session=(Session) error.get(1);
+			user=(User)error.get(0);
 			break;
 		case HomeService.ERROR_PASSWD:
 			return UtilsService.redirectToErrorPageGeneral("Password non corretta", "password",model);
@@ -95,14 +94,12 @@ public class HomeController {
 		default:
 			break;
 		}
-		if(session.getType()==User.TYPE.PROFESSOR){
-			request.getSession().setAttribute(UtilsService.QUERY_SESSION, session);
-			String query="?"+ProfessorService.PROFESSOR_QUERY_ID+"="+session.getOwner();
-			return "redirect:"+ProfessorService.PROFESSOR_HOME+query;
-//			return new ModelAndView("forward:professor/home", "model", model);
-		}else if(session.getType()==User.TYPE.STUDENT){
-//			return "";
-//			return new ModelAndView("home", "model", "model");
+		HttpSession session = request.getSession();
+		homeService.registerSession(session.getId(),user.getId());
+		if(user.getType()==User.TYPE.PROFESSOR){
+			return "redirect:"+ProfessorService.PROFESSOR_HOME;
+		}else if(user.getType()==User.TYPE.STUDENT){
+			
 		}
 		return "";
 //		return new ModelAndView("home", "model", "model");
@@ -111,7 +108,8 @@ public class HomeController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request,Model model){
 		try{
-			request.getSession(false).invalidate();
+			if(!homeService.unRegisterSession(request.getSession(false).getId()))
+				return UtilsService.redirectToErrorPageGeneral("Session non chiusa", "session",model);
 		}catch (Exception e){
 			System.err.println("Errore sul logout");
 			new MokException(e);

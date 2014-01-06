@@ -2,8 +2,12 @@ package it.unical.uniexam.hibernate.domain;
 
 
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.Email;
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +17,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -37,7 +44,8 @@ public User() {
 	}
 
 	public User(TYPE type, String name, String surname, URL webSite,
-		String password, Address address) {
+		String password, Address address,Set<Email> emails,
+		Set<PhoneNumber> phoneNumbers) {
 	super();
 	this.type = type;
 	this.name = name;
@@ -45,6 +53,8 @@ public User() {
 	this.webSite = webSite;
 	this.password = password;
 	this.address = address;
+	this.emails = emails;
+	this.phoneNumbers = phoneNumbers;
 }
 
 	@Id
@@ -52,8 +62,8 @@ public User() {
 	@GeneratedValue
 	Long id;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	Session session;
+	@Column(name="SESSION_ID")
+	String sessionId;
 	
 	@Column(name="TYPE")
 	TYPE type;
@@ -72,6 +82,26 @@ public User() {
 	
 	@Embedded
 	Address address;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="USER_EMAIL",
+	joinColumns={
+			@JoinColumn(name="ID")
+	}, 
+	inverseJoinColumns={
+			@JoinColumn(name="EMAIL_ID")
+	})
+	private Set<Email> emails=new HashSet<Email>();
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="USER_PHONE",
+	joinColumns={
+			@JoinColumn(name="ID")
+	}, 
+	inverseJoinColumns={
+			@JoinColumn(name="PHONE_ID")
+	})
+	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
 	
 //	@OneToMany(cascade=CascadeType.ALL)
 //	@JoinTable(name="USER_PHONE",
@@ -146,12 +176,35 @@ public User() {
 		this.type = type;
 	}
 
-	public Session getSession() {
-		return session;
+	public String getSessionId() {
+		return sessionId;
 	}
 
-	public void setSession(Session session) {
-		this.session = session;
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
+
+//	public Session getSession() {
+//		return session;
+//	}
+//
+//	public void setSession(Session session) {
+//		this.session = session;
+//	}
+	public Set<PhoneNumber> getPhoneNumbers() {
+		return phoneNumbers;
+	}
+
+	public void setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
+		this.phoneNumbers = phoneNumbers;
+	}
+	public Set<Email> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(Set<Email> emails) {
+		this.emails = emails;
+	}
+	
 	
 }

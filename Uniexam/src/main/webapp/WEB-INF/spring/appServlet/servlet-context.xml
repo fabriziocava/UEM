@@ -36,16 +36,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<context:component-scan base-package="it.unical.uniexam">
-<!-- 	    <context:include-filter type="annotation" -->
-<!--             expression="org.springframework.stereotype.Controller" /> -->
-<!-- 	    <context:include-filter type="annotation" -->
-<!--             expression="org.springframework.stereotype.Service" /> -->
-<!-- 		 <context:exclude-filter type="annotation" -->
-<!--             expression="org.springframework.stereotype.Repository" /> -->
-	</context:component-scan>
+	<context:component-scan base-package="it.unical.uniexam" />
 
-	
+
 	<!-- for multilanguage start -->
 	<beans:bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -60,15 +53,21 @@
 
 	<beans:bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-		<beans:property name="defaultLocale" value="en" />
+		<beans:property name="defaultLocale" value="it" />
 	</beans:bean>
 
-	<beans:bean id="handlerMapping"
-		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-		<beans:property name="interceptors">
-			<beans:ref bean="localeChangeInterceptor" />
-		</beans:property>
-	</beans:bean>
+	<interceptors>
+		<beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<beans:property name="paramName" value="lang" />
+		</beans:bean>
+	</interceptors>
+
+	<!-- <beans:bean id="handlerMapping" -->
+	<!-- class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"> -->
+	<!-- <beans:property name="interceptors"> -->
+	<!-- <beans:ref bean="localeChangeInterceptor" /> -->
+	<!-- </beans:property> -->
+	<!-- </beans:bean> -->
 
 	<!-- for multilanguage end -->
 

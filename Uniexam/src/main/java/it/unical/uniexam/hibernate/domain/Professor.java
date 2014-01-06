@@ -54,9 +54,7 @@ public class Professor extends User{
 	public Professor(TYPE type, String name, String surname, URL webSite,
 			String password, Address address, Set<Email> emails,
 			Set<PhoneNumber> phoneNumbers, Department department_associated) {
-		super(type, name, surname, webSite, password, address);
-		this.emails = emails;
-		this.phoneNumbers = phoneNumbers;
+		super(type, name, surname, webSite, password, address,emails,phoneNumbers);
 		this.department_associated = department_associated;
 	}
 	
@@ -65,26 +63,6 @@ public class Professor extends User{
 
 	
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="PROFESSOR_EMAIL",
-	joinColumns={
-			@JoinColumn(name="PROFESSOR_ID")
-	}, 
-	inverseJoinColumns={
-			@JoinColumn(name="EMAIL_ID")
-	})
-	private Set<Email> emails=new HashSet<Email>();
-
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="PROFESSOR_PHONE",
-	joinColumns={
-			@JoinColumn(name="PROFESSOR_ID")
-	}, 
-	inverseJoinColumns={
-			@JoinColumn(name="PHONE_ID")
-	})
-	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
-
 	@ManyToOne
 	Department department_associated;
 
@@ -156,14 +134,6 @@ public class Professor extends User{
 		this.id = id;
 	}
 
-	public Set<PhoneNumber> getPhoneNumbers() {
-		return phoneNumbers;
-	}
-
-	public void setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
-		this.phoneNumbers = phoneNumbers;
-	}
-
 	public Department getDepartment_associated() {
 		return department_associated;
 	}
@@ -204,12 +174,4 @@ public class Professor extends User{
 		this.groups = groups;
 	}
 
-	public Set<Email> getEmails() {
-		return emails;
-	}
-
-	public void setEmails(Set<Email> emails) {
-		this.emails = emails;
-	}
-	
 }

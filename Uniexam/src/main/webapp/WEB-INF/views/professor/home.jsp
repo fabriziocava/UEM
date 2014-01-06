@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${user} <spring:message code="label.welcome" /></title>
+<title>${I.getName()} <spring:message code="label.welcome" /></title>
 
 <link href="${pageContext.request.contextPath}/res/css/professor.css"
 	media="all" rel="stylesheet" type="text/css" />

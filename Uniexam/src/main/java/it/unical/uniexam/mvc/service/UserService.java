@@ -1,12 +1,10 @@
 package it.unical.uniexam.mvc.service;
 
-import org.springframework.web.servlet.ModelAndView;
-
-import it.unical.uniexam.hibernate.domain.Session;
+import it.unical.uniexam.hibernate.domain.User;
 
 public interface UserService {
 	
-	public Session getSessionIfItIs(String isSession,Long idUser);
-	public Boolean checkSession(Session session,Long idUser);
+//	public Session getSessionIfItIs(String isSession,Long idUser);
+	public User getSession(String sessionId);
 	
 }

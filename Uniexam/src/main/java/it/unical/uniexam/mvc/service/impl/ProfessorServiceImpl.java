@@ -6,7 +6,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.domain.Professor;
-import it.unical.uniexam.hibernate.domain.Session;
 import it.unical.uniexam.mvc.service.ProfessorService;
 
 /**
