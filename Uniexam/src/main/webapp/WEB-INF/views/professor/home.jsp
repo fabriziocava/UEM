@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${I.getName()} <spring:message code="label.welcome" /></title>
+<title><spring:message code="label.welcome"/> ${I.getName()}</title>
 
 <link href="${pageContext.request.contextPath}/res/css/professor.css"
 	media="all" rel="stylesheet" type="text/css" />
@@ -65,13 +65,13 @@
 		<div class="container-up">
 			<ul class="dashboard">
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">Corsi</a></li>
+					onclick="selectDashBoard(this.innerHTML)"><spring:message code="label.course"/></a></li>
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">Appelli</a></li>
+					onclick="selectDashBoard(this.innerHTML)"><spring:message code="label.appeal"/></a></li>
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">Gruppi</a></li>
+					onclick="selectDashBoard(this.innerHTML)"><spring:message code="label.groups"/></a></li>
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">Firma</a></li>
+					onclick="selectDashBoard(this.innerHTML)"><spring:message code="label.sign"/></a></li>
 			</ul>
 		</div>
 		<div class="container-left">something asd asd asd asd asd asd
