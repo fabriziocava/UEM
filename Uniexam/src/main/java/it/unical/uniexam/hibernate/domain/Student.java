@@ -23,15 +23,7 @@ import javax.persistence.Table;
 
 /**
  * @category Actor 
- * 
- * This class describe the actor Student
- * each Student extend User class, in addition have a set of a phone numbers
- * At each Student 		is associated with a Degree Course
- * 						have a carrier (Carrier is a list of a course with a vote)
- * 
- * 					something else?
- * 
- * 
+ *
  * @author fabrizio
  *
  */
@@ -65,7 +57,7 @@ public class Student extends User {
 	@GeneratedValue
 	private Long id;
 
-	@Column(name="SERIAL_NUMBER", nullable=false)
+	@Column(name="SERIAL_NUMBER", nullable=false, unique=true)
 	private Long serialNumber; //MATRICOLA
 	
 	@Column(name="NAME", nullable=false)
@@ -96,6 +88,26 @@ public class Student extends User {
 	@ManyToOne
 	DegreeCourse degreeCourse_registered;
 
+	@OneToMany
+	@JoinTable(name="STUDENT_APPEAL", 
+				joinColumns={@JoinColumn(name="STUDENT_ID")},
+				inverseJoinColumns={@JoinColumn(name="APPEAL_ID")}
+			)
+	Set<Appeal> appeals = new HashSet<Appeal>();
+	
+	@OneToMany
+	@JoinTable(name="STUDENT_COURSE", //CARRIER
+				joinColumns={@JoinColumn(name="STUDENT_ID")},
+				inverseJoinColumns={@JoinColumn(name="COURSE_ID")}
+			)
+	Set<Course> carrier = new HashSet<Course>();
+	
+	@OneToMany
+	@JoinTable(name="STUDENT_GROUP",
+				joinColumns={@JoinColumn(name="STUDENT_ID")},
+				inverseJoinColumns={@JoinColumn(name="GROUP_ID")}
+			)
+	Set<Group> groups = new HashSet<Group>();
 
 	/*
 	 * GETTER
@@ -104,7 +116,7 @@ public class Student extends User {
 		return id;
 	}
 
-	public Long getSerial_number() {
+	public Long getSerialNumber() {
 		return serialNumber;
 	}
 
@@ -134,6 +146,18 @@ public class Student extends User {
 
 	public DegreeCourse getDegreeCourse_registered() {
 		return degreeCourse_registered;
+	}
+	
+	public Set<Appeal> getAppeals() {
+		return appeals;
+	}
+
+	public Set<Course> getCarrier() {
+		return carrier;
+	}
+
+	public Set<Group> getGroups() {
+		return groups;
 	}	
 	/*
 	 * END_GETTER
@@ -146,7 +170,7 @@ public class Student extends User {
 		this.id = id;
 	}
 
-	public void setSerial_number(Long serialNumber) {
+	public void setSerialNumber(Long serialNumber) {
 		this.serialNumber = serialNumber;
 	}
 
@@ -177,6 +201,18 @@ public class Student extends User {
 	public void setDegreeCourse_registered(DegreeCourse degreeCourse_registered) {
 		this.degreeCourse_registered = degreeCourse_registered;
 	}
+
+	public void setAppeals(Set<Appeal> appeals) {
+		this.appeals = appeals;
+	}
+
+	public void setCarrier(Set<Course> carrier) {
+		this.carrier = carrier;
+	}
+
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
+	}	
 	/*
 	 * END_SETTERS
 	 */

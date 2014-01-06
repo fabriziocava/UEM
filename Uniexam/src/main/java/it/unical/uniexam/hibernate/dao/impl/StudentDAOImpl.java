@@ -11,7 +11,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
+import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.Address;
@@ -65,6 +67,36 @@ public class StudentDAOImpl implements StudentDAO {
 		Student res = null;
 		try {
 			res = (Student) session.get(Student.class, serialNumber);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Set<Course> getCarrier(Long serialNumber) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		HashSet<Course> res = null;
+		try {
+			Student s = (Student) session.get(Student.class, serialNumber);
+			res = new HashSet<Course>(s.getCarrier());
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Set<Group> getGroups(Long serialNumber) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		HashSet<Group> res = null;
+		try {
+			Student s = (Student) session.get(Student.class, serialNumber);
+			res = new HashSet<Group>(s.getGroups());
 		} catch (Exception e) {
 			new MokException(e);
 		} finally {
