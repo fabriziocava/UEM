@@ -9,8 +9,8 @@ import java.util.Map;
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
-import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
-import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
+import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 import it.unical.uniexam.mvc.service.ProfessorService;
 import it.unical.uniexam.mvc.service.UserService;
 import it.unical.uniexam.mvc.service.UtilsService;
@@ -58,7 +58,7 @@ public class ProfessorController {
 
 	/**
 	 * in model add structNotification, a structure in which we have a Array of Array 
-	 * like this : {{[MessageOfGroup],[CommentOfMessage],[CommentOfMessage]},{[MessageOfGroup],[CommentOfMessage]}}
+	 * like this : {{[PostOfGroup],[CommentOfPost],[CommentOfPost]},{[PostOfGroup],[CommentOfPost]}}
 	 * for each array in the first position we have a message of a group in which the comments belong
 	 * @param model
 	 * @param p
@@ -66,10 +66,10 @@ public class ProfessorController {
 	private void updateNotification(Model model, Professor p) {
 		try{
 			if(p.getNoReadComments().size()>0){
-				ArrayList<CommentOfMessage> comms=professorService.getNotificationFromComments(p.getNoReadComments());
-				Collections.sort(comms, new Comparator<CommentOfMessage>(){
+				ArrayList<CommentOfPost> comms=professorService.getNotificationFromComments(p.getNoReadComments());
+				Collections.sort(comms, new Comparator<CommentOfPost>(){
 					@Override
-					public int compare(CommentOfMessage o1, CommentOfMessage o2) {
+					public int compare(CommentOfPost o1, CommentOfPost o2) {
 						if(o1!=null && o2!=null)
 							return (int) (o2.getDate_of_comment().getTime()-o1.getDate_of_comment().getTime());
 						return 0;
@@ -77,26 +77,28 @@ public class ProfessorController {
 				});
 
 				if(comms.size()>0){
+					int generalCount=0;
 					//creare struttura che aggrega, i commenti appartenenti ad un messaggio
 					ArrayList<ArrayList<Object>>structure=new ArrayList<ArrayList<Object>>();
 					int count=-1;
-					MessageOfGroup mes=null;
-					ArrayList<CommentOfMessage>removable=new ArrayList<CommentOfMessage>();
+					PostOfGroup mes=null;
+					ArrayList<CommentOfPost>removable=new ArrayList<CommentOfPost>();
 					while(comms.size()>0){
-						for (CommentOfMessage commentOfMessage : comms) {
-							if(commentOfMessage==null){
-								removable.add(commentOfMessage);
+						for (CommentOfPost commentOfPost : comms) {
+							if(commentOfPost==null){
+								removable.add(commentOfPost);
 								break;
 							}
 							if(mes==null){
-								mes=commentOfMessage.getOfMessage();
+								mes=commentOfPost.getOfPost();
 								structure.add(new ArrayList<Object>());
 								count++;
 								structure.get(count).add(mes);
 							}
-							if(mes.getId()==commentOfMessage.getOfMessage().getId()){
-								structure.get(count).add(commentOfMessage);
-								removable.add(commentOfMessage);
+							if(mes.getId()==commentOfPost.getOfPost().getId()){
+								structure.get(count).add(commentOfPost);
+								removable.add(commentOfPost);
+								generalCount++;
 							}
 						}
 						mes=null;

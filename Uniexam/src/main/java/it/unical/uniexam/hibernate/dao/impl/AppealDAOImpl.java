@@ -16,7 +16,7 @@ import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
-import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
+import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 /**

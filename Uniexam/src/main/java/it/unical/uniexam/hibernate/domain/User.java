@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.utility.Address;
-import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
@@ -114,7 +114,7 @@ public User() {
 	inverseJoinColumns={
 			@JoinColumn(name="COMMENT_ID")
 	})
-	private Set<CommentOfMessage> comments=new HashSet<CommentOfMessage>();
+	private Set<CommentOfPost> comments=new HashSet<CommentOfPost>();
 	
 	
 	@ElementCollection(fetch=FetchType.EAGER)
@@ -133,11 +133,11 @@ public User() {
 	 * Second part of function
 	 */
 
-	public Set<CommentOfMessage> getComments() {
+	public Set<CommentOfPost> getComments() {
 		return comments;
 	}
 
-	public void setComments(Set<CommentOfMessage> comments) {
+	public void setComments(Set<CommentOfPost> comments) {
 		this.comments = comments;
 	}
 

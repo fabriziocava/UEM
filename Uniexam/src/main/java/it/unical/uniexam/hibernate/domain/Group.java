@@ -1,6 +1,6 @@
 package it.unical.uniexam.hibernate.domain;
 
-import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
+import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * @category Event 
  * 
  * This class describe a Group
- * each Group have a code, ( map<Date,MessageOfGroup> messages OR List<MessageOfGroup>) ,a name,a description, a object
+ * each Group have a code, ( map<Date,PostOfGroup> posts OR List<PostOfGroup>) ,a name,a description, a object
  * At each Exam 	have a professor like holder (titolare) same prof. that is holder in the course!,
  * 			 		have many professors like a commission
  * 					refer exact a one course
@@ -34,7 +34,7 @@ import javax.persistence.Table;
  * 					something else?
  * 
  * @functions
- * 	when a message is put on group, the event send a mail a each member of a group, So each member can 
+ * 	when a post is put on group, the event send a mail a each member of a group, So each member can 
  * 	choose if decider receive a notification or not	
  * 
  * @author luigi
@@ -103,21 +103,21 @@ public class Group {
 	
 	/**
 	 * per inserire un nuovo messaggio devo utilizzare 
-	 * messages.add(0,MessageOfGruop);
+	 * posts.add(0,PostOfGruop);
 	 * in questo modo l'elemento viene aggiunto all'inizio della lista
 	 * e quindi per prenderlo devo utilizzare 
-	 * messages.get(0);
+	 * posts.get(0);
 	 * 
 	 */
 	@OneToMany
-	@JoinTable(name="GROUP_MESSAGE",
+	@JoinTable(name="GROUP_POST",
 	joinColumns={
 			@JoinColumn(name="GROUP_ID")
 			}, 
 	inverseJoinColumns={
-			@JoinColumn(name="MESSAGE_OF_GROUP_ID")
+			@JoinColumn(name="POST_OF_GROUP_ID")
 			})
-	List<MessageOfGroup>messages=new ArrayList<MessageOfGroup>();
+	List<PostOfGroup>posts=new ArrayList<PostOfGroup>();
 
 	//IMPLEMENTATION	
 	
@@ -177,12 +177,12 @@ public class Group {
 		this.creator = creator;
 	}
 
-	public List<MessageOfGroup> getMessages() {
-		return messages;
+	public List<PostOfGroup> getPosts() {
+		return posts;
 	}
 
-	public void setMessages(List<MessageOfGroup> messages) {
-		this.messages = messages;
+	public void setPosts(List<PostOfGroup> posts) {
+		this.posts = posts;
 	}
 
 	public Set<User> getIscribed() {

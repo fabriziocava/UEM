@@ -16,9 +16,9 @@
 //import it.unical.uniexam.hibernate.domain.Professor;
 //import it.unical.uniexam.hibernate.domain.RequestedCourse;
 //import it.unical.uniexam.hibernate.domain.utility.Address;
-//import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
+//import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 //import it.unical.uniexam.hibernate.domain.utility.Email;
-//import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
+//import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 //import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 //
 //import java.net.MalformedURLException;
@@ -129,21 +129,21 @@
 //		professorDAO.removeEmail(ids[2], ids[13]);
 //		
 //		/*15*/ids[count++]=groupDAO.addGruop("Gruppo per iscrizione", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[2], Group.POLICY_1);
-//		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "primo messaggio"));
-//		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "sexondo messaggio"));
-//		ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "teerzo messaggio"));
-//		ids[count++]=groupDAO.addMessageAtGroup(groupDAO.getGroup(ids[15]), new MessageOfGroup(ids[2], "quarto messaggio")).getId();
-//		/*20*/ids[count++]=groupDAO.addMessageAtGroup(ids[15], new MessageOfGroup(ids[2], "quinto messaggio"));
+//		ids[count++]=groupDAO.addPostAtGroup(ids[15], new PostOfGroup(ids[2], "primo messaggio"));
+//		ids[count++]=groupDAO.addPostAtGroup(ids[15], new PostOfGroup(ids[2], "sexondo messaggio"));
+//		ids[count++]=groupDAO.addPostAtGroup(ids[15], new PostOfGroup(ids[2], "teerzo messaggio"));
+//		ids[count++]=groupDAO.addPostAtGroup(groupDAO.getGroup(ids[15]), new PostOfGroup(ids[2], "quarto messaggio")).getId();
+//		/*20*/ids[count++]=groupDAO.addPostAtGroup(ids[15], new PostOfGroup(ids[2], "quinto messaggio"));
 //		
-//		groupDAO.removeMessage(ids[15], ids[18]);
+//		groupDAO.removePost(ids[15], ids[18]);
 //		
-//		/*21*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4"));
-//		/*22*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4.1"));
-//		/*23*/ids[count++]=groupDAO.addCommentAtMessage(ids[19], new CommentOfMessage(ids[2], "se se con il 4.2"));
+//		/*21*/ids[count++]=groupDAO.addCommentAtPost(ids[19], new CommentOfPost(ids[2], "se se con il 4"));
+//		/*22*/ids[count++]=groupDAO.addCommentAtPost(ids[19], new CommentOfPost(ids[2], "se se con il 4.1"));
+//		/*23*/ids[count++]=groupDAO.addCommentAtPost(ids[19], new CommentOfPost(ids[2], "se se con il 4.2"));
 //		
-//		groupDAO.modifyCommentFromMessage(ids[22], new CommentOfMessage(ids[2],"no con 4.1.1"));
+//		groupDAO.modifyCommentFromPost(ids[22], new CommentOfPost(ids[2],"no con 4.1.1"));
 //		
-//		groupDAO.removeCommentFromMessage(ids[19], ids[21]);
+//		groupDAO.removeCommentFromPost(ids[19], ids[21]);
 //		
 //		/*24*/Date examDate = new Date();
 //		ids[count++]=appealDAO.addAppeal(ids[1], "Esame1", 20, "Aula MT6", examDate, examDate, examDate, ids[3]);
@@ -175,13 +175,13 @@
 //		}
 //		System.out.println(groupDAO.getGroup(ids[15]).toString());
 //		
-//		assertTrue(groupDAO.getMessagesOfGroup(ids[15]).size()==4);
+//		assertTrue(groupDAO.getPostsOfGroup(ids[15]).size()==4);
 //	}
 //	
 //	@Test
 //	public void checkDeleteModifyComment(){
-//		Set<CommentOfMessage> commentsFromMessage = groupDAO.getCommentsFromMessage(ids[19]);
-//		assertTrue(commentsFromMessage.size()==2);
+//		Set<CommentOfPost> commentsFromPost = groupDAO.getCommentsFromPost(ids[19]);
+//		assertTrue(commentsFromPost.size()==2);
 //	}
 //	
 //	@Test

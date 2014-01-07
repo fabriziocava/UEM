@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.domain.Professor;
-import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 import it.unical.uniexam.mvc.service.ProfessorService;
 
 /**
@@ -32,9 +32,9 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	}
 
 	@Override
-	public ArrayList<CommentOfMessage> getNotificationFromComments(
+	public ArrayList<CommentOfPost> getNotificationFromComments(
 			List<Long> noReadComments) {
-		ArrayList<CommentOfMessage>res=new ArrayList<CommentOfMessage>();
+		ArrayList<CommentOfPost>res=new ArrayList<CommentOfPost>();
 		for (Long idComment : noReadComments) {
 			res.add(groupDAO.getComment(idComment));
 		}

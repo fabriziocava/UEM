@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unical.uniexam.hibernate.domain.Professor;
-import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 
 public interface ProfessorService extends UserService{
 	public final static String PROFESSOR_HOME="professor/home";
@@ -13,6 +13,6 @@ public interface ProfessorService extends UserService{
 	
 	public Professor getProfessor(Long idUser);
 
-	public ArrayList<CommentOfMessage> getNotificationFromComments(List<Long> noReadComments);
+	public ArrayList<CommentOfPost> getNotificationFromComments(List<Long> noReadComments);
 
 }

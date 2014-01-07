@@ -143,15 +143,17 @@ ul.dashboard{
 .container-right {
 	background-color: green;
 	position: relative;
-	width: 26%;
+	width: 30%;
 	height: auto;
 	float: right;
+	overflow-y: scroll;
+	min-height: 200px;
 /* 	margin: 2px; */
 }
 
 .container-center {
 	background-color: transparent;
-	width: 59%;
+	width: 55%;
 	position: relative;
 	height: auto;
 	float: left;

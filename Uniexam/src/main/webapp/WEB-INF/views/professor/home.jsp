@@ -1,10 +1,11 @@
-<%@page import="it.unical.uniexam.hibernate.domain.utility.CommentOfMessage"%>
-<%@page import="it.unical.uniexam.hibernate.domain.utility.MessageOfGroup"%>
+<%@page import="it.unical.uniexam.hibernate.domain.utility.CommentOfPost"%>
+<%@page import="it.unical.uniexam.hibernate.domain.utility.PostOfGroup"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Professor"%>
 <%@page import="it.unical.uniexam.mvc.service.UtilsService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html>
@@ -88,19 +89,19 @@
 			asd asds asd asd asd asd asd asd asds asd asd asd asd asd asd asds
 			asd asd asd asds asd asd asd asd asd asd asds a dasd</div>
 		<div class="container-center">also here</div>
-		<div class="container-right">
+		<div class="container-right"> <tiles:insertAttribute name="right" />
 			<spring:message code="message.title.view.gruops" />
 			<br />
 			<%
 				ArrayList<ArrayList<Object>> struct = (ArrayList<ArrayList<Object>>) request.getAttribute("structNotification");
-				if (struct !=null && struct.size() > 0) {
-					while (struct.size() > 0) {
-						ArrayList<Object>step=struct.remove(0);
-			MessageOfGroup mes=(MessageOfGroup)step.remove(0);
+					if (struct !=null && struct.size() > 0) {
+						while (struct.size() > 0) {
+							ArrayList<Object>step=struct.remove(0);
+				PostOfGroup mes=(PostOfGroup)step.remove(0);
 			%>
 			<div>
 			<%Object []s=new Object[3];
-			s[0]=mes.getMessage();
+			s[0]=mes.getPost();
 			s[1]=mes.getGroup().getName();
 			s[2]=step.size();%>
 			<spring:message code="message.descr.notify.comment" arguments="<%=s%>"/>
@@ -108,7 +109,7 @@
 			<ul>
 			<%
 			for(Object oj : step){
-				CommentOfMessage c=(CommentOfMessage)oj;
+				CommentOfPost c=(CommentOfPost)oj;
 			%>
 				<li>
 				<%=c.getComment()+" "+c.getDate_of_comment() %>

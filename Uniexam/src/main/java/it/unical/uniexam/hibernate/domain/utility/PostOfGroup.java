@@ -22,9 +22,9 @@ import javax.persistence.Table;
 /**
  * @category Event 
  * 
- * This class describe a Message of a group
- * each Message of a Group have a code, a date, a id of group that it belong; 
- * At each Message 		have a principal content
+ * This class describe a Post of a group
+ * each Post of a Group have a code, a date, a id of group that it belong; 
+ * At each Post 		have a principal content
  * 						have a possible comments  	 
  * 					
  * 					something else?
@@ -35,56 +35,56 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="MESSAGE_OF_GROUP")
-public class MessageOfGroup {
+@Table(name="POST_OF_GROUP")
+public class PostOfGroup {
 
 	@Id
-	@Column(name="MESSAGE_OF_GROUP_ID")
+	@Column(name="POST_OF_GROUP_ID")
 	@GeneratedValue
 	Long id;
 	
 	@ManyToOne
 	User user;
 	
-	@Column(name="MESSAGE", nullable=false)
-	String message;
+	@Column(name="POST", nullable=false)
+	String post;
 	
-	@Column(name="DATE_OF_MESSAGE",nullable=false)
-	Date date_of_message;
+	@Column(name="DATE_OF_POST",nullable=false)
+	Date date_of_post;
 
-	public MessageOfGroup(User id_user, String message) {
+	public PostOfGroup(User id_user, String post) {
 		super();
 		this.user = id_user;
-		this.message = message;
+		this.post = post;
 	}
 
 	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	Group group;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="MESSAGE_COMMENT",
+	@JoinTable(name="POST_COMMENT",
 	joinColumns={
-			@JoinColumn(name="MESSAGE_ID")
+			@JoinColumn(name="POST_ID")
 			}, 
 	inverseJoinColumns={
 			@JoinColumn(name="COMMENT_ID")
 			})
-	private Set<CommentOfMessage> comments=new HashSet<CommentOfMessage>();
+	private Set<CommentOfPost> comments=new HashSet<CommentOfPost>();
 	
 // IMPLEMENTATION
 	
-	public MessageOfGroup() {
+	public PostOfGroup() {
 	}
 
 	
 	
-	public Set<CommentOfMessage> getComments() {
+	public Set<CommentOfPost> getComments() {
 		return comments;
 	}
 
 
 
-	public void setComments(Set<CommentOfMessage> comments) {
+	public void setComments(Set<CommentOfPost> comments) {
 		this.comments = comments;
 	}
 
@@ -106,20 +106,20 @@ public class MessageOfGroup {
 		this.user = user;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getPost() {
+		return post;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setPost(String post) {
+		this.post = post;
 	}
 
-	public Date getDate_of_message() {
-		return date_of_message;
+	public Date getDate_of_post() {
+		return date_of_post;
 	}
 
-	public void setDate_of_message(Date date_of_message) {
-		this.date_of_message = date_of_message;
+	public void setDate_of_post(Date date_of_post) {
+		this.date_of_post = date_of_post;
 	}
 
 

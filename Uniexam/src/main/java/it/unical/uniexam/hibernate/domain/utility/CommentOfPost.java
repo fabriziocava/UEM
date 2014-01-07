@@ -14,8 +14,8 @@ import javax.persistence.Table;
 /**
  * @category Event 
  * 
- * This class describe a Comment of a Message of a group
- * each Comment of a Message have a code, a date, a id of Message that it belong; 
+ * This class describe a Comment of a Post of a group
+ * each Comment of a Post have a code, a date, a id of Post that it belong; 
  * At each Comment 		have a principal content
  * 					
  * 					something else?
@@ -26,8 +26,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="COMMENT_OF_MESSAGE")
-public class CommentOfMessage {
+@Table(name="COMMENT_OF_POST")
+public class CommentOfPost {
 
 	@Id
 	@Column(name="COMMENT_ID")
@@ -43,7 +43,7 @@ public class CommentOfMessage {
 	@Column(name="DATE_OF_COMMENT",nullable=false)
 	Date date_of_comment;
 
-	public CommentOfMessage(User user, String comment) {
+	public CommentOfPost(User user, String comment) {
 		super();
 		this.user = user;
 		this.comment = comment;
@@ -51,12 +51,12 @@ public class CommentOfMessage {
 	}
 
 	@ManyToOne
-	MessageOfGroup ofMessage;
+	PostOfGroup ofPost;
 	
 	
 	//IMPLEMENTATION
 	
-	public CommentOfMessage() {
+	public CommentOfPost() {
 	}
 
 	public Long getId() {
@@ -91,12 +91,12 @@ public class CommentOfMessage {
 		this.date_of_comment = date_of_comment;
 	}
 
-	public MessageOfGroup getOfMessage() {
-		return ofMessage;
+	public PostOfGroup getOfPost() {
+		return ofPost;
 	}
 
-	public void setOfMessage(MessageOfGroup ofMessage) {
-		this.ofMessage = ofMessage;
+	public void setOfPost(PostOfGroup ofPost) {
+		this.ofPost = ofPost;
 	}
 
 	

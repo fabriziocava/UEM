@@ -16,8 +16,8 @@ import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
-import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
-import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
+import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 /**
@@ -150,7 +150,7 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
-	public Long addMessageAtGroup(Long idGroup,MessageOfGroup messageOfGroup) {
+	public Long addPostAtGroup(Long idGroup,PostOfGroup postOfGroup) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long res=null;
@@ -158,10 +158,10 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction = session.beginTransaction();
 
 			Group group=(Group)session.get(Group.class, idGroup);
-			messageOfGroup.setDate_of_message(new Date());
-			messageOfGroup.setGroup(group);
-			group.getMessages().add(messageOfGroup);
-			res=(Long)session.save(messageOfGroup);
+			postOfGroup.setDate_of_post(new Date());
+			postOfGroup.setGroup(group);
+			group.getPosts().add(postOfGroup);
+			res=(Long)session.save(postOfGroup);
 
 			transaction.commit();
 		}catch(Exception e){
@@ -174,19 +174,19 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
-	public MessageOfGroup addMessageAtGroup(Group group,
-			MessageOfGroup messageOfGroup) {
+	public PostOfGroup addPostAtGroup(Group group,
+			PostOfGroup postOfGroup) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
-		MessageOfGroup res=null;
+		PostOfGroup res=null;
 		try{
 			transaction = session.beginTransaction();
 			group=(Group)session.get(Group.class, group.getId());
-			messageOfGroup.setDate_of_message(new Date());
-			messageOfGroup.setGroup(group);
-			group.getMessages().add(messageOfGroup);
-			session.save(messageOfGroup);
-			res=messageOfGroup;
+			postOfGroup.setDate_of_post(new Date());
+			postOfGroup.setGroup(group);
+			group.getPosts().add(postOfGroup);
+			session.save(postOfGroup);
+			res=postOfGroup;
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
@@ -199,36 +199,36 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@Deprecated
 	@Override
-	public MessageOfGroup modifyMessage(Long idGroup, Long idMessageOfGroup,
-			MessageOfGroup messageOfGroupNew) {
+	public PostOfGroup modifyPost(Long idGroup, Long idPostOfGroup,
+			PostOfGroup postOfGroupNew) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Deprecated
 	@Override
-	public MessageOfGroup modifyMessage(Long idMessageOfGroup,
-			MessageOfGroup messageOfGroupNew) {
+	public PostOfGroup modifyPost(Long idPostOfGroup,
+			PostOfGroup postOfGroupNew) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MessageOfGroup removeMessage(Long idGroup, Long idMessageOfGroup) {
+	public PostOfGroup removePost(Long idGroup, Long idPostOfGroup) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
-		MessageOfGroup res=null;
+		PostOfGroup res=null;
 		try{
 			transaction = session.beginTransaction();
 
 			Group group=(Group)session.get(Group.class, idGroup);
-			for (MessageOfGroup message : group.getMessages()) {
-				if(message.getId()==idMessageOfGroup){
-					res=message;
+			for (PostOfGroup post : group.getPosts()) {
+				if(post.getId()==idPostOfGroup){
+					res=post;
 					break;
 				}
 			}
-			group.getMessages().remove(res);
+			group.getPosts().remove(res);
 			session.delete(res);
 
 			transaction.commit();
@@ -243,30 +243,30 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@Deprecated
 	@Override
-	public MessageOfGroup removeMessage(MessageOfGroup messageOfGroup) {
+	public PostOfGroup removePost(PostOfGroup postOfGroup) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Deprecated
 	@Override
-	public MessageOfGroup removeMessage(Long idMessageOfGroup) {
+	public PostOfGroup removePost(Long idPostOfGroup) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Long addCommentAtMessage(Long idMessage, CommentOfMessage comment) {
+	public Long addCommentAtPost(Long idPost, CommentOfPost comment) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long res=null;
 		try{
 			transaction = session.beginTransaction();
 
-			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
+			PostOfGroup mog=(PostOfGroup)session.get(PostOfGroup.class, idPost);
 			mog.getComments().add(comment);
 			res=(Long)session.save(comment);
-			comment.setOfMessage(mog);
+			comment.setOfPost(mog);
 			
 			User creator=(User)session.get(User.class, comment.getUser().getId());
 			for (User user : mog.getGroup().getIscribed()) {
@@ -286,15 +286,15 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
-	public CommentOfMessage removeCommentFromMessage(Long idMessage, Long idComment) {
+	public CommentOfPost removeCommentFromPost(Long idPost, Long idComment) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
-		CommentOfMessage res=null;
+		CommentOfPost res=null;
 		try{
 			transaction = session.beginTransaction();
 
-			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
-			CommentOfMessage com=(CommentOfMessage)session.get(CommentOfMessage.class, idComment);
+			PostOfGroup mog=(PostOfGroup)session.get(PostOfGroup.class, idPost);
+			CommentOfPost com=(CommentOfPost)session.get(CommentOfPost.class, idComment);
 			User u=com.getUser();
 			u.getComments().remove(com);
 			for (User user : mog.getGroup().getIscribed()) {
@@ -316,14 +316,14 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
-	public CommentOfMessage modifyCommentFromMessage(Long idComment,CommentOfMessage newComment) {
+	public CommentOfPost modifyCommentFromPost(Long idComment,CommentOfPost newComment) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
-		CommentOfMessage res=null;
+		CommentOfPost res=null;
 		try{
 			transaction = session.beginTransaction();
 
-			CommentOfMessage com=(CommentOfMessage)session.get(CommentOfMessage.class, idComment);
+			CommentOfPost com=(CommentOfPost)session.get(CommentOfPost.class, idComment);
 			com.setComment(newComment.getComment());
 			com.setDate_of_comment(new Date());
 			res=com;
@@ -338,12 +338,12 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
-	public Set<CommentOfMessage> getCommentsFromMessage(Long idMessage) {
+	public Set<CommentOfPost> getCommentsFromPost(Long idPost) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
-		Set<CommentOfMessage> res=null;
+		Set<CommentOfPost> res=null;
 		try{
-			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
-			res=new HashSet<CommentOfMessage>(mog.getComments());
+			PostOfGroup mog=(PostOfGroup)session.get(PostOfGroup.class, idPost);
+			res=new HashSet<CommentOfPost>(mog.getComments());
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
@@ -368,11 +368,11 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
-	public MessageOfGroup getMessage(Long idMessage) {
+	public PostOfGroup getPost(Long idPost) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
-		MessageOfGroup res=null;
+		PostOfGroup res=null;
 		try{
-			return (MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
+			return (PostOfGroup)session.get(PostOfGroup.class, idPost);
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
@@ -382,11 +382,11 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
-	public CommentOfMessage getComment(Long idComment) {
+	public CommentOfPost getComment(Long idComment) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
-		CommentOfMessage res=null;
+		CommentOfPost res=null;
 		try{
-			return(CommentOfMessage)session.get(CommentOfMessage.class, idComment);
+			return(CommentOfPost)session.get(CommentOfPost.class, idComment);
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
@@ -432,15 +432,15 @@ public class GroupDAOImpl implements GroupDAO {
 
 
 	@Override
-	public Set<MessageOfGroup> getMessagesOfGroup(Long idGroup) {
+	public Set<PostOfGroup> getPostsOfGroup(Long idGroup) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
-		Set<MessageOfGroup> res=null;
+		Set<PostOfGroup> res=null;
 		try{
-			Query q= session.createQuery("from MessageOfGroup where group.id=:par");
+			Query q= session.createQuery("from PostOfGroup where group.id=:par");
 			q.setParameter("par", idGroup);
 			@SuppressWarnings("unchecked")
-			List<MessageOfGroup> list = q.list();
-			res=new HashSet<MessageOfGroup>(list);
+			List<PostOfGroup> list = q.list();
+			res=new HashSet<PostOfGroup>(list);
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
