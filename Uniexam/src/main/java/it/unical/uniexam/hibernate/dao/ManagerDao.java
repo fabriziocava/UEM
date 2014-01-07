@@ -3,6 +3,7 @@ package it.unical.uniexam.hibernate.dao;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.net.URL;
@@ -21,10 +22,17 @@ public interface ManagerDao {
 	
 	
 	public Long addPhoneNumber(Long idManager, PhoneNumber number);
-	public void removePhoneNumber(Long idManager, Long idPhoneNumber);
+	public PhoneNumber removePhoneNumber(Long idManager, Long idPhoneNumber);
+	public PhoneNumber getPhoneNumber(Long idManager, String type); 
 	public void removePhoneNumber(Long idManager, PhoneNumber idPhoneNumber);
 	public Set<PhoneNumber> getPhoneNumbers(Long idManager);
 	
+	
+	//gestione delle email..
+	public Long addEmail(Long idManager,Email email);
+	public Email removeEmail(Long idManager,Long idEmail);
+	public Set<Email> getEmails(Long idManager);
+	public Email getEmail(Long idManager,String type);
 	
 	public Long setDepartmentAssociated(Long idManager, Long idDepartment);
 	public boolean setDepartmentAssociated(Long idManager, Department department);
