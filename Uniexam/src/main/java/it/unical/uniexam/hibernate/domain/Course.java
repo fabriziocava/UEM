@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -91,7 +92,20 @@ public class Course {
 
 	@Column(name="CREDITS", nullable=false)
 	Integer credits;
+	
+	@Column(name="NOTE")
+	String note;
 
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="COURSE_GROUP",
+	joinColumns={
+			@JoinColumn(name="COURSE_ID")
+	}, 
+	inverseJoinColumns={
+			@JoinColumn(name="GROUP_ID")
+	})
+	Set<Group> groups=new HashSet<Group>();
+	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="COURSE_REQUESTCOURSE",
 	joinColumns={
@@ -223,39 +237,38 @@ public class Course {
 				return false;
 		} else if (!code.equals(other.code))
 			return false;
-		if (commissionProfessors == null) {
-			if (other.commissionProfessors != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!commissionProfessors.equals(other.commissionProfessors))
-			return false;
-		if (credits == null) {
-			if (other.credits != null)
-				return false;
-		} else if (!credits.equals(other.credits))
-			return false;
-		if (holder == null) {
-			if (other.holder != null)
-				return false;
-		} else if (!holder.equals(other.holder))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (requestedCourses == null) {
-			if (other.requestedCourses != null)
-				return false;
-		} else if (!requestedCourses.equals(other.requestedCourses))
-			return false;
-		if (webSite == null) {
-			if (other.webSite != null)
-				return false;
-		} else if (!webSite.equals(other.webSite))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
 
+	
+	public Set<Group> getGroups() {
+		return groups;
+	}
+
+
+
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
+	}
+
+
+
+	public String getNote() {
+		return note;
+	}
+
+
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	
 	
 	
 }

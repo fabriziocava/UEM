@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class UtilsService {
 	public final static String LOGIN_SUCCESSFUL="";
-	public final static String HOME="home";
 	public final static String LOGIN="login";
 	
 	public static final String QUERY_SESSION = "idSession";

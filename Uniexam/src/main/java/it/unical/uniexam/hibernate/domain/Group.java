@@ -47,33 +47,39 @@ public class Group {
 
 	
 	public Group(String name, String object, String description,
-			Integer levelOfPolicy, Professor creator) {
+			Integer levelOfPolicy, Professor creator,Course cours) {
 		this.name = name;
 		this.object = object;
 		this.description = description;
 		this.levelOfPolicy = levelOfPolicy;
 		this.creator = creator;
+		course=cours;
 	}
 
 	/**
 	 * only the user that have created it can publish
 	 */
-	public static final Integer POLICY_1=1;
+	public static final int POLICY_1=1;
 	/**
 	 * only the user can publish and the other user can comment
 	 */
-	public static final Integer POLICY_2=2;
+	public static final int POLICY_2=2;
 	/**
 	 * both creator's user and other can publish, And of course comments 
 	 */
-	public static final Integer POLICY_3=3;
-//	public static final Integer POLITIC_4=4;
+	public static final int POLICY_3=3;
+	
+	public enum GroupState{
+		OPEN,CLOSE;
+	}
 	
 	@Id
 	@GeneratedValue
 	@Column(name="GROUP_ID")
 	Long id;
 	
+	@Column(name="STATE")
+	GroupState state;
 	
 	@Column(name="NAME")
 	String name;
@@ -86,6 +92,10 @@ public class Group {
 	
 	@Column(name="POLICY")
 	Integer levelOfPolicy;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="COURSE_GROUP")
+	Course course;
 	
 	@ManyToOne
 	@JoinColumn(name="USER_GRUOP")
@@ -109,7 +119,7 @@ public class Group {
 	 * posts.get(0);
 	 * 
 	 */
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="GROUP_POST",
 	joinColumns={
 			@JoinColumn(name="GROUP_ID")
@@ -193,6 +203,55 @@ public class Group {
 		this.iscribed = iscribed;
 	}
 
-	
+	public GroupState getState() {
+		return state;
+	}
+
+	public void setState(GroupState state) {
+		this.state = state;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((course == null) ? 0 : course.hashCode());
+		result = prime * result + ((creator == null) ? 0 : creator.hashCode());
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((object == null) ? 0 : object.hashCode());
+		result = prime * result + ((posts == null) ? 0 : posts.hashCode());
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Group other = (Group) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+		
 	
 }

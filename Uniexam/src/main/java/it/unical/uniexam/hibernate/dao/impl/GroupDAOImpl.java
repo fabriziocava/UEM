@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,7 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
+import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
+import it.unical.uniexam.hibernate.domain.Group.GroupState;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
@@ -30,17 +31,21 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@Override
 	public Long addGruop(String name, String object, String description,
-			Professor creator, Integer politic) {
+			Professor creator, Integer politic, Course course) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long res=null;
 		try{
 			transaction = session.beginTransaction();
 
-			Group g=new Group(name, object, description, politic, creator);
+			Group g=new Group(name, object, description, politic, creator,course);
 			creator.getGroups().add(g);
 			g.getIscribed().add(creator);
+			g.setState(GroupState.OPEN);
 			res=(Long)session.save(g);
+
+			Course c=(Course)session.get(Course.class, course.getId());
+			c.getGroups().add(g);
 
 			transaction.commit();
 		}catch(Exception e){
@@ -54,7 +59,7 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@Override
 	public Long addGruop(String name, String object, String description,
-			Long idProfessorCreator, Integer politic) {
+			Long idProfessorCreator, Integer politic,Long idCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long res=null;
@@ -62,10 +67,17 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction = session.beginTransaction();
 
 			Professor creator=(Professor)session.get(Professor.class, idProfessorCreator);
-			Group g=new Group(name, object, description, politic, creator);
+			Course c=null;
+			if(idCourse!=null)
+				c=(Course)session.get(Course.class, idCourse);
+			Group g=new Group(name, object, description, politic, creator,c);
 			creator.getGroups().add(g);
 			g.getIscribed().add(creator);
+			g.setState(GroupState.OPEN);
 			res=(Long)session.save(g);
+
+			if(c!=null)
+				c.getGroups().add(g);
 
 			transaction.commit();
 		}catch(Exception e){
@@ -88,7 +100,14 @@ public class GroupDAOImpl implements GroupDAO {
 			res=(Long)session.save(group);
 			group.getIscribed().add(group.getCreator());
 			group.getCreator().getGroups().add(group);
-			
+			group.setState(GroupState.OPEN);
+
+			Course course = group.getCourse();
+			if(course!=null){
+				Course c=(Course)session.get(Course.class, course.getId());
+				c.getGroups().add(group);
+			}
+
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
@@ -108,6 +127,27 @@ public class GroupDAOImpl implements GroupDAO {
 			transaction = session.beginTransaction();
 
 			Group group=(Group)session.get(Group.class, idGroup);
+			if(group.getCourse()!=null){
+				Course c=group.getCourse();
+				c.getGroups().remove(group);
+			}
+
+			User creator=group.getCreator();
+			creator.getGroups().remove(group);
+
+			Set<User> iscribed = group.getIscribed();
+			for (User user : iscribed) {
+				user.getGroups().remove(group);
+				for(PostOfGroup p:group.getPosts()){
+					for(CommentOfPost com:p.getComments()){
+						if(user.getComments().contains(com)){
+							user.getComments().remove(com);
+						}
+					}
+
+				}
+			}
+
 			session.delete(group);
 
 			transaction.commit();
@@ -267,13 +307,13 @@ public class GroupDAOImpl implements GroupDAO {
 			mog.getComments().add(comment);
 			res=(Long)session.save(comment);
 			comment.setOfPost(mog);
-			
+
 			User creator=(User)session.get(User.class, comment.getUser().getId());
 			for (User user : mog.getGroup().getIscribed()) {
 				if(!user.getNoReadComments().contains(comment) && user.getId()!=creator.getId())
 					user.getNoReadComments().add(comment.getId());
 			}
-			creator.getComments().add(comment);//togliere LAZY
+			creator.getComments().add(comment);//togliere LAZY °°°°MOKSOL
 
 			transaction.commit();
 		}catch(Exception e){
@@ -305,7 +345,7 @@ public class GroupDAOImpl implements GroupDAO {
 			session.delete(com);
 			res=com;
 			transaction.commit();
-			
+
 		}catch(Exception e){
 			transaction.rollback();
 			new MokException(e);
@@ -461,7 +501,7 @@ public class GroupDAOImpl implements GroupDAO {
 			group=(Group)session.get(Group.class, group.getId());
 			user.getGroups().add(group);
 			group.getIscribed().add(user);
-			
+
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
@@ -484,7 +524,7 @@ public class GroupDAOImpl implements GroupDAO {
 			Group group=(Group)session.get(Group.class, idGroup);
 			user.getGroups().add(group);
 			group.getIscribed().add(user);
-			
+
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
@@ -507,7 +547,7 @@ public class GroupDAOImpl implements GroupDAO {
 			group=(Group)session.get(Group.class, group.getId());
 			user.getGroups().remove(group);
 			group.getIscribed().remove(user);
-			
+
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
@@ -530,7 +570,51 @@ public class GroupDAOImpl implements GroupDAO {
 			Group group=(Group)session.get(Group.class, idGroup);
 			user.getGroups().remove(group);
 			group.getIscribed().remove(user);
-			
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Group closeGroup(Long idGroup) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Group res=null;
+		try{
+			transaction = session.beginTransaction();
+
+			Group group=(Group)session.get(Group.class, idGroup);
+			group.setState(GroupState.CLOSE);
+			res=group;
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Group closeGroup(Group grou) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Group res=null;
+		try{
+			transaction = session.beginTransaction();
+
+			Group group=(Group)session.get(Group.class, grou.getId());
+			group.setState(GroupState.CLOSE);
+			res=group;
+
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();

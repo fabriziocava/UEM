@@ -37,14 +37,14 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-public class HomeController {
+public class LoginController {
 
 	@Autowired
 	HomeService homeService;
 	//	@Autowired
 	//	MainService mainService;
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	//	
 
 	/**
@@ -70,7 +70,7 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		//				model.addAttribute("students",list);
 
-		return UtilsService.HOME;
+		return UtilsService.LOGIN;
 	}
 
 	// serve un pattern sia per la session
@@ -115,6 +115,6 @@ public class HomeController {
 			System.err.println("Errore sul logout");
 			new MokException(e);
 		}
-		return "home";
+		return UtilsService.LOGIN;
 	}
 }

@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
+import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 import it.unical.uniexam.mvc.service.ProfessorService;
 
@@ -25,6 +28,8 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	ProfessorDAO professorDAO;
 	@Autowired
 	GroupDAO groupDAO;
+	@Autowired
+	CourseDAO courseDAO;
 	
 	@Override
 	public Professor getProfessor(Long idUser) {
@@ -39,6 +44,11 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 			res.add(groupDAO.getComment(idComment));
 		}
 		return res;
+	}
+
+	@Override
+	public ArrayList<Course> getAssociatedCourseWithGroups(User user) {
+		return courseDAO.getAssociatedCourseWithGroups(user);
 	}
 
 }

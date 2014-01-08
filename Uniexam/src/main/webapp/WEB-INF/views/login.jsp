@@ -1,3 +1,4 @@
+<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <!DOCTYPE html>
 
 <html>
@@ -7,6 +8,8 @@
 </head>
 
 <body>
+
+<%-- <tiles:insertAttribute name="pro" /> --%>
 
 <form id="login" action="${pageContext.request.contextPath}/login" method="post">
     <h1>Uniexam</h1>

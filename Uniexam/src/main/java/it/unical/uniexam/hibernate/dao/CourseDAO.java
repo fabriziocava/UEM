@@ -1,11 +1,13 @@
 package it.unical.uniexam.hibernate.dao;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.User;
 
 public interface CourseDAO {
 	/**
@@ -50,5 +52,7 @@ public interface CourseDAO {
 	
 	public Set<RequestedCourse> getRequestedCourses(Long idCourse);
 	public Set<RequestedCourse> getRequestedCourses(Long idCourse,Integer degreeOdPolicy);
+
+	public ArrayList<Course> getAssociatedCourseWithGroups(User user);
 	
 }

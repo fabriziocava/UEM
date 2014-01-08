@@ -61,7 +61,7 @@ public class PostOfGroup {
 	@ManyToOne(fetch=FetchType.EAGER, optional=false)
 	Group group;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)///°°°°MOKTODO lascialo che serve...credo
 	@JoinTable(name="POST_COMMENT",
 	joinColumns={
 			@JoinColumn(name="POST_ID")

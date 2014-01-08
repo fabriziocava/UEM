@@ -2,6 +2,7 @@ package it.unical.uniexam.hibernate.dao;
 
 import java.util.Set;
 
+import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
@@ -11,15 +12,16 @@ import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 public interface GroupDAO {
 
 	//starndard
-	public Long addGruop(String name,String object,String description,Professor creator,Integer politic);
-	public Long addGruop(String name,String object,String description,Long idProfessorCreator,Integer politic);
+	public Long addGruop(String name,String object,String description,Professor creator,Integer politic,Course course);
+	public Long addGruop(String name,String object,String description,Long idProfessorCreator,Integer politic,Long idCourse);
 	public Long addGruop(Group group);
 	public Group removeGroup(Long idGroup);
 	public Group removeGroup(Group group);
 	public Long modifyGruop(Long idGruop,String name,String object,String description,Integer politic);
 	public Long modifyGruop(Long idGruop,Group groupNew);
 	public Set<Group> removeAllGroupFromProfessor(Long idProfessor);
-	
+	public Group closeGroup(Long idGroup);
+	public Group closeGroup(Group group);
 	//advanced
 	public Long addPostAtGroup(Long idGroup,PostOfGroup postOfGroup);
 	public PostOfGroup addPostAtGroup(Group group,PostOfGroup postOfGroup);

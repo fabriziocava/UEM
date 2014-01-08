@@ -126,7 +126,7 @@ public class DBTestGroup2DAO {
 
 		professorDAO.removeEmail(ids[2], ids[13]);
 		
-		/*15*/ids[count++]=groupDAO.addGruop("Gruppo per iscrizione", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[3], Group.POLICY_1);
+		/*15*/ids[count++]=groupDAO.addGruop("Gruppo per iscrizione", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[3], Group.POLICY_1,ids[1]);
 		
 		groupDAO.iscribeUserAtGroup(ids[2], ids[15]);
 		groupDAO.iscribeUserAtGroup(ids[4], ids[15]);
@@ -144,11 +144,11 @@ public class DBTestGroup2DAO {
 		/*21*/ids[count++]=groupDAO.addCommentAtPost(ids[19], new CommentOfPost(userDAO.getUser(ids[3]), "se se con il 4"));
 		/*22*/ids[count++]=groupDAO.addCommentAtPost(ids[19], new CommentOfPost(userDAO.getUser(ids[3]), "se se con il 4.1"));
 		try{
-			Thread.sleep(3000);
+			Thread.sleep(300);
 		}catch(Exception e){}
 		/*23*/ids[count++]=groupDAO.addCommentAtPost(ids[19], new CommentOfPost(userDAO.getUser(ids[3]), "se se con il 4.2"));
 		try{
-			Thread.sleep(3000);
+			Thread.sleep(300);
 		}catch(Exception e){}
 		groupDAO.modifyCommentFromPost(ids[22], new CommentOfPost(userDAO.getUser(ids[3]),"no con 4.1.1"));
 		
@@ -156,11 +156,11 @@ public class DBTestGroup2DAO {
 		
 		//add some comments
 		
-		/*24*/ids[count++]=groupDAO.addGruop("Gruppo2", "Ogetto2", "Descrizione 2", ids[4], Group.POLICY_1);
+		/*24*/ids[count++]=groupDAO.addGruop("Gruppo2", "Ogetto2", "Descrizione 2", ids[4], Group.POLICY_1,ids[1]);
 		groupDAO.iscribeUserAtGroup(ids[5], ids[24]);
 		groupDAO.iscribeUserAtGroup(ids[7], ids[24]);
 		try{
-			Thread.sleep(3000);
+			Thread.sleep(300);
 		}catch(Exception e){}
 		/*25*/ids[count++]=groupDAO.addPostAtGroup(ids[24], new PostOfGroup(userDAO.getUser(ids[4]), "Io sono dovrei essere il 2"));
 		groupDAO.addCommentAtPost(ids[25], new CommentOfPost(userDAO.getUser(ids[5]), "ok tu il 4 io il 5"));
@@ -168,9 +168,14 @@ public class DBTestGroup2DAO {
 		/*26*/ids[count++]=groupDAO.addPostAtGroup(ids[24], new PostOfGroup(userDAO.getUser(ids[5]), "Io sono dovrei essere il 3"));
 		groupDAO.addCommentAtPost(ids[25], new CommentOfPost(userDAO.getUser(ids[4]), "si sei il 5 io il 4"));
 		
-		
 		groupDAO.cancelUserFromGroup(ids[5], ids[15]);
+
+//		groupDAO.removeGroup(ids[15]);
+		// provare ad eliminare il corso! il gruppo deve restare
 		
+		/*27*/ids[count++]=courseDAO.addCourse(new Course("INF", "Fondamenti di Informatica", new URL("http:\\www.unical.it/Fondamenti"), 5, null, null, professorDAO.getProfessor(ids[3])));
+		/*28*/ids[count++]=groupDAO.addGruop("Altro gruppo", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[3], Group.POLICY_1,ids[1]);
+		/*29*/ids[count++]=groupDAO.addGruop("gruppo per fondamenti", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[3], Group.POLICY_1,ids[27]);
 		try{
 			Thread.sleep(3000);
 		}catch(Exception e){}
@@ -185,19 +190,19 @@ public class DBTestGroup2DAO {
 	@Test
 	public void checkGetMethodOnGroup(){
 		Set<Group> groups = groupDAO.getGroups();
-		assertTrue(groups.size()==2);
-		for (Group group : groups) {
-			System.out.println("Name group: "+group.getName());
-		}
-		System.out.println(groupDAO.getGroup(ids[15]).toString());
+		assertTrue(groups.size()==1);
+//		for (Group group : groups) {
+//			System.out.println("Name group: "+group.getName());
+//		}
+//		System.out.println(groupDAO.getGroup(ids[15]).toString());
 		
-		assertTrue(groupDAO.getPostsOfGroup(ids[15]).size()==4);
+		assertTrue(groupDAO.getPostsOfGroup(ids[15]).size()==0);
 	}
 	
 	@Test
 	public void checkDeleteModifyComment(){
-		Set<CommentOfPost> commentsFromPost = groupDAO.getCommentsFromPost(ids[19]);
-		assertTrue(commentsFromPost.size()==2);
+		Set<CommentOfPost> commentsFromPost = groupDAO.getCommentsFromPost(ids[26]);
+		assertTrue(commentsFromPost.size()==0);
 	}
 	
 	@Test

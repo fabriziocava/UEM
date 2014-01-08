@@ -1,10 +1,12 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,8 +15,10 @@ import org.springframework.stereotype.Repository;
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 /**
@@ -423,6 +427,30 @@ public class CourseDAOImpl implements CourseDAO{
 						res=new HashSet<RequestedCourse>();
 					res.add(requestedCourse);
 				}
+			}
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public ArrayList<Course> getAssociatedCourseWithGroups(User user) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<Course> res=null;
+		try{
+			Query q=session.createQuery("from Course where holder.id=:p");
+			q.setParameter("p", user.getId());
+			res=(ArrayList<Course>) q.list();
+			for (Course course : res) {
+				Set<Group>g=course.getGroups();
+				for (Group group : g) {
+					System.out.println(group.getName());
+				}
+				Hibernate.initialize(course);///°°°° MOKSOL LAKY LOAD
+				Hibernate.initialize(course.getGroups());
 			}
 		}catch(Exception e){
 			new MokException(e);

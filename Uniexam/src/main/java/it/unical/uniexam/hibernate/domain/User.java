@@ -106,7 +106,7 @@ public User() {
 	})
 	private Set<PhoneNumber> phoneNumbers=new HashSet<PhoneNumber>();
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL)//°°°°MOKTODO lascialo questo dovrebbe servire
 	@JoinTable(name="USER_COMMENT",
 	joinColumns={
 			@JoinColumn(name="ID")
