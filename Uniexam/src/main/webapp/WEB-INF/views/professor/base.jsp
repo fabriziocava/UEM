@@ -11,7 +11,8 @@
 <link href="${pageContext.request.contextPath}/res/css/professor.css"
 	media="all" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js">
-	
+</script>
+<script src="${pageContext.request.contextPath}/res/js/jquery-ui-1.10.3.custom.js">
 </script>
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 	
@@ -35,6 +36,7 @@
 	<input type="hidden" id="context"
 		value="${pageContext.request.contextPath}/professor" />
 	<div class="container">
+		<tiles:insertAttribute name="graggable-groups-box" />
 		<tiles:insertAttribute name="container-up" />
 		<tiles:insertAttribute name="container-left" />
 		<tiles:insertAttribute name="container-center" />

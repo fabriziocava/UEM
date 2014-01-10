@@ -50,6 +50,13 @@ header {
 	border: solid #d5d5d5;
 }
 
+.box-groups{
+	position:fixed;
+	left: 10px;
+	top:50px;
+	z-index: 2;
+}
+
 .box-header {
 	background-color: #eaeaea;
 	background-image: -moz-linear-gradient(#fafafa, #eaeaea);
@@ -60,6 +67,7 @@ header {
 	border-top-right-radius: 4px;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
+	cursor: move;
 }
 
 .box-body {
