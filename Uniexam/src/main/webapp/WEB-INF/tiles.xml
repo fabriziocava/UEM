@@ -19,11 +19,11 @@
 		<put-attribute name="container-left" value="" />
 		<put-attribute name="container-center" value="" />
 		<put-attribute name="container-down" value="" />
-		<put-attribute name="draggable-notify-box" value="" />
+		<put-attribute name="draggable-notify-box" value="/WEB-INF/views/professor/draggable_notify_box.jsp" />
 		<put-attribute name="draggable-groups-box" value=""/>
 	</definition>
 	<definition name="professor/home" extends="professor.base">
-		<put-attribute name="draggable-notify-box" value="/WEB-INF/views/professor/home/draggable_notify_box.jsp" />
+<!-- 		<put-attribute name="draggable-notify-box" value="/WEB-INF/views/professor/draggable_notify_box.jsp" /> -->
 	</definition>
 	<definition name="professor/course" extends="professor.base">
 		<put-attribute name="container-center" value="/WEB-INF/views/professor/course/container_center.jsp" />

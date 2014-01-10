@@ -19,7 +19,6 @@
 </script>
 <script type="text/javascript">
 		$(document).ready(function() {
-			// 			alert("path: ");
 			$(".draggable").draggable();
 			alineamentoContainer();
 			alingDashBoard();
@@ -34,11 +33,10 @@
 	<header>
 		<tiles:insertAttribute name="container-header" />
 	</header>
-	<input type="hidden" id="context"
-		value="${pageContext.request.contextPath}/professor" />
-	<div class="container">
+	<input type="hidden" id="context" value="${pageContext.request.contextPath}/professor" />
 		<tiles:insertAttribute name="draggable-groups-box" />
 		<tiles:insertAttribute name="draggable-notify-box" />
+	<div class="container">
 		<tiles:insertAttribute name="container-up" />
 		<tiles:insertAttribute name="container-left" />
 		<tiles:insertAttribute name="container-center" />

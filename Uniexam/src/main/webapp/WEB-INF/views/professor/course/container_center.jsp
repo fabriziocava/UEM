@@ -11,7 +11,7 @@
 		selectingFromDashBoard(document.getElementById("courseButton"));
 	});
 </script>
-<div class="container-center" style="width: 66%">
+<div class="container-center">
 	<ul>
 		<%
 			ArrayList<ArrayList<Object>>struct=new ArrayList<ArrayList<Object>>();

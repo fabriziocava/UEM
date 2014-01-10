@@ -6,40 +6,17 @@
 <%
 ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
 %>
-<div class="box box-groups draggable">
+<div class="box box-groups draggable" id="box-groups">
 		<div class="box-header">
-			<spring:message
-				code="message.professor.course.container.center.titleBoxGroups" />
+			<span class="span_expandible" id="collapse_drag_collapsable_group">+</span>		
+			<spring:message code="message.professor.course.container.center.titleBoxGroups" />
 		</div>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$("span[id^='collapse'],span[id^='expanse']").each(function() {
-					$(this).bind("click", function() {
-						var idOld = this.id;
-						var realID;
-						var newID;
-						if(idOld.match("collapse")){
-							realID = idOld.replace("collapse", "");
-							newID="expanse";
-							$(this).html("-");
-						}else{
-							realID = idOld.replace("expanse", "");
-							newID="collapse";
-							$(this).html("+");
-						}
-						var idd = "list-groups-box" + realID;
-						$("#" + idd).toggle();
-						$(this).attr("id", newID+realID);
-					});
-				});
-			});
-		</script>
-		<div class="box-body">
+		<div class="box-body" id="_drag_collapsable_group">
 			<%
 				for (Course c : courses) {
 			%>
 			<ol class="list-courses-box">
-				<span style="cursor:pointer;" id="collapse<%=c.getId()%>">+</span>
+				<span class="span_expandible" id="collapselist-groups-box<%=c.getId()%>">+</span>
 				<%=c.getName()%>
 				<li>
 					<ol id="list-groups-box<%=c.getId()%>" class="list-groups-box"

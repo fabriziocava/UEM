@@ -13,6 +13,7 @@ public interface ProfessorService extends UserService{
 	public final static String PROFESSOR_QUERY_ID="idProfessor";
 	public final static String PROFESSOR_OBJECT="profObj";
 	public static final String PROFESSOR_COURSE = "professor/course";
+	public static final String PROFESSOR_PERSONALIZZATION = "professor/personalizzation";
 	
 	public Professor getProfessor(Long idUser);
 

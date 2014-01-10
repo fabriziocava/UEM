@@ -112,6 +112,12 @@ public class ProfessorController {
 		return ProfessorService.PROFESSOR_COURSE;
 	}
 	
+//	/personalizzation
+	@RequestMapping(value=ProfessorService.PROFESSOR_PERSONALIZZATION , method=RequestMethod.GET)
+	public String personalizzation(HttpServletRequest request){
+		System.out.println("ok"+request.getQueryString());
+		return "ok";
+	}
 	
 	/**
 	 * in model add structNotification, a structure in which we have a Array of Array 

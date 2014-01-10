@@ -11,21 +11,21 @@ html {
 	border-radius: 4px;
 }
 
-.list-courses-box{
+.list-courses-box {
 	display: list-item;
 	list-style-type: none;
 	-webkit-margin-before: 0px;
 	-webkit-margin-after: 1em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 10px;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 10px;
 	-webkit-padding-start: 5px;
 }
 
 .list-groups-box {
-    list-style-type: none;
+	list-style-type: none;
 	display: list-item;
-    text-align: inherit;
-    -webkit-padding-start: 20px;
+	text-align: inherit;
+	-webkit-padding-start: 20px;
 }
 
 .dashboard>li.selected_dash_board {
@@ -42,6 +42,11 @@ header {
 	top: 0px;
 }
 
+.span_expandible {
+	cursor: pointer;
+	margin: 0px 10px 0px 10px;
+}
+
 .list_course {
 	list-style: none;
 	text-align: left;
@@ -51,17 +56,18 @@ header {
 }
 
 .box {
-	position:fixed;
+	position: fixed;
 	z-index: 2;
 }
 
 .box-group {
 	left: 10px;
-	top:50px;
+	top: 50px;
 }
+
 .box-notify {
 	left: 10px;
-	top:50px;
+	top: 50px;
 }
 
 .box-header {
@@ -75,6 +81,19 @@ header {
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
 	cursor: move;
+	padding: 2px 10px 2px 1px;
+}
+
+.color_red{
+	background-image: -moz-linear-gradient(#fafafa, #FF0000);
+	background-image: -webkit-linear-gradient(#fafafa, #FF0000);
+	background-image: linear-gradient(#fafafa, #FF0000);
+}
+
+.color_green{
+	background-image: -moz-linear-gradient(#fafafa, #52D614);
+	background-image: -webkit-linear-gradient(#fafafa, #52D614);
+	background-image: linear-gradient(#fafafa, #52D614);
 }
 
 .box-body {
@@ -85,6 +104,7 @@ header {
 	border-bottom-right-radius: 4px;
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
+	display: none;
 }
 
 .button {
@@ -221,7 +241,7 @@ ul.dashboard {
 
 .container-center {
 	background-color: transparent;
-	width: 55%;
+	width: 95%;
 	position: relative;
 	height: auto;
 	float: left;

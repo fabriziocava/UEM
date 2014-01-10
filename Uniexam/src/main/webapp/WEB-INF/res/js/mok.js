@@ -2,46 +2,30 @@ function alineamentoContainer() {
 	{
 		$(".container-left").css({"height":"auto"});
 		$(".container-center").css({"height":"auto"});
-		$(".container-right").css({"height":"auto"});
+//		$(".container-right").css({"height":"auto"});
 		$(".container-up").css({"height":"auto"});
 		$(".container-down").css({"height":"auto"});
 
 		var left = $(".container-left").css("height");
 		var center = $(".container-center").css("height");
-		var right = $(".container-right").css("height");
-		
+//		var right = $(".container-right").css("height");
+
 //		alert("left : "+left+" center : "+center+" right: "+right);
-		
+
 		((left!=undefined)?left =parseInt(left.replace("px","")):left=0);
 		((center!=undefined)?center =parseInt(center.replace("px","")):center=0);
-		((right!=undefined)?right =parseInt(right.replace("px","")):right=0);
+//		((right!=undefined)?right =parseInt(right.replace("px","")):right=0);
 
-		if (left >= center && left >= right) {
+		if (left >= center) {
 			$(".container-center").css({
 				"height" : left
 			});
-			$(".container-right").css({
-				"height" : left
-			});
 			justContainer(left);
-		} else if (center >= right && center >= left) {
-			$(".container-right").css({
-				"height" : center
-			});
+		} else if (center >= left) {
 			$(".container-left").css({
 				"height" : center
 			});
 			justContainer(center);
-		} else if (right >= center && right >= left) {
-			$(".container-left").css({
-				"height" : right
-			});
-			$(".container-center").css({
-				"height" : right
-			});
-			justContainer(right);
-		}else{
-			justContainer(right);
 		}
 	}
 	//container size
@@ -76,17 +60,58 @@ function alingDashBoard(){
 
 function selectDashBoard(item){
 	$(".dashboard > li.selected_dash_board").attr("class","");
-//	$(".dashboard > li > a").each(function(index,element){
-//		var d=element.innerHTML;
-//		if(d==item){
-			selectingFromDashBoard(item);
-//			alert($("#context").attr("value")+"/"+element.id+"");
-			var url=item.id.replace("Button","");
-			window.location=$("#context").attr("value")+"/"+url;
-//		}
-//	});
+	selectingFromDashBoard(item);
+	var url=item.id.replace("Button","");
+	window.location=$("#context").attr("value")+"/"+url;
 }
 
 function selectingFromDashBoard(element){
 	element.parentNode.setAttribute("class","selected_dash_board");
 }
+
+$(document).ready(function() {
+	$( ".draggable" ).draggable({
+		stop: function( event, ui ) {
+			changePersonalization(this,ui);
+		}
+	});
+});
+//url: conte+"/personalizzation?"+dataSend,
+function changePersonalization(item,ui){
+	//tramite ajax una richiesta che setta il div nella posizione lasciata
+	var conte=$("#context").attr("value");
+	var dataSend=item.id+"&left="+ui.position.left+"&top="+ui.position.top;
+	var ing=$.ajax({
+		type: "GET",
+		url: conte+"/personalizzation?"+dataSend,
+		processData: false
+	});
+
+	$("#"+item.id).addClass("processing");
+
+	ing.done(function(){
+		$("#"+item.id).removeClass("processing");
+	});
+}
+
+$(document).ready(function() {
+	$("span[id^='collapse'],span[id^='expanse']").each(function() {
+		$(this).bind("click", function() {
+			var idOld = this.id;
+			var realID;
+			var newID;
+			if(idOld.match("collapse")){
+				realID = idOld.replace("collapse", "");
+				newID="expanse";
+				$(this).html("-");
+			}else{
+				realID = idOld.replace("expanse", "");
+				newID="collapse";
+				$(this).html("+");
+			}
+			var idd = realID;
+			$("#" + idd).toggle();
+			$(this).attr("id", newID+realID);
+		});
+	});
+});
