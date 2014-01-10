@@ -7,18 +7,44 @@ $(document).ready(function() {
 //	}
 //	});
 //	});
-	$(".draggable").children(".box-header").draggable({
-		stop: function( event, ui ) {
-			changePersonalization(this,ui);
-//			$(this).parent().draggable( "destroy" );
-		},
-		drag: function(event,ui){
-			$(this).parent().css({
-			      "left": ui.position.left,
-			      "top": ui.position.top
-			    });
+//	$("#box-notify").children("span[class^='lock']").bind("click",function(){
+//		alert("ciao");
+//		if($(this).hasClass("lock-close")){
+//			$(this).removeClass("lock-close");
+//			$(this).addClass("lock-open");
+//			$("#box-notify").draggable({
+//				stop: function( event, ui ) {
+//					changePersonalization(this,ui);
+//				},
+//			});
+//		}else{
+//			$(this).removeClass("lock-open");
+//			$(this).addClass("lock-close");
+//			$("#box-notify").draggable( "destroy" );
+//		}
+//	});
+	$(".box-header").css("width","+=10px");
+	$("span[class^='lock']").bind("click",function(){
+		if($(this).hasClass("lock-close")){
+			$(this).removeClass("lock-close");
+			$(this).addClass("lock-open");
+			$(this).parent().parent().draggable({
+				stop: function( event, ui ) {
+					changePersonalization(this,ui);
+				},
+			});
+		}else{
+			$(this).removeClass("lock-open");
+			$(this).addClass("lock-close");
+			$(this).parent().parent().draggable( "destroy" );
 		}
 	});
+//	$(".draggable").draggable({
+//		stop: function( event, ui ) {
+//			changePersonalization(this,ui);
+////			$(this).parent().draggable( "destroy" );
+//		},
+//	});
 
 	alineamentoContainer();
 	alingDashBoard();
