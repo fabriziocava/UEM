@@ -11,6 +11,18 @@ html {
 	border-radius: 4px;
 }
 
+.lock-open {
+	background: url("../img/images.png") -79px 0px;
+}
+
+.lock-close {
+	background: transparent url("../img/images.png") -0px -40px no-repeat;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	text-indent: -99999px;
+}
+
 .list-courses-box {
 	display: list-item;
 	list-style-type: none;
@@ -84,13 +96,13 @@ header {
 	padding: 2px 10px 2px 1px;
 }
 
-.color_red{
+.color_red {
 	background-image: -moz-linear-gradient(#fafafa, #FF0000);
 	background-image: -webkit-linear-gradient(#fafafa, #FF0000);
 	background-image: linear-gradient(#fafafa, #FF0000);
 }
 
-.color_green{
+.color_green {
 	background-image: -moz-linear-gradient(#fafafa, #52D614);
 	background-image: -webkit-linear-gradient(#fafafa, #52D614);
 	background-image: linear-gradient(#fafafa, #52D614);
@@ -178,7 +190,7 @@ ul.dashboard {
 .header-logo {
 	background: url("../img/images.png") 0px 0px;
 	width: 35px;
-	height: 33px;
+	height: 35px;
 	position: relative;
 	margin: 3px 0px 0px 0px;
 	float: left;
@@ -188,6 +200,9 @@ ul.dashboard {
 	background: url("../img/images.png") -50px 0px;
 	width: 23px;
 	height: 26px;
+	position: relative;
+	margin: 2px 0px 0px 0px;
+	float: left;
 }
 
 .container {

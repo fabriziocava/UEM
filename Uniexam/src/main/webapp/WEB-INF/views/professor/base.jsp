@@ -18,15 +18,7 @@
 	
 </script>
 <script type="text/javascript">
-		$(document).ready(function() {
-			$(".draggable").draggable();
-			alineamentoContainer();
-			alingDashBoard();
-		});
-		$(window).bind("resize", resizeWindow);
-		function resizeWindow(e) {
-			alineamentoContainer();
-		}
+		
 	</script>
 </head>
 <body>

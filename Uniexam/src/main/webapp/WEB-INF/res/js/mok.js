@@ -1,3 +1,58 @@
+$(document).ready(function() {
+//	$(".draggable").children(".box-header").each(function(){
+//	alert(""+$(this).attr("class"));
+//	$(this).draggable({
+//	stop: function( event, ui ) {
+//	changePersonalization(this,ui);
+//	}
+//	});
+//	});
+	$(".draggable").children(".box-header").draggable({
+		stop: function( event, ui ) {
+			changePersonalization(this,ui);
+//			$(this).parent().draggable( "destroy" );
+		},
+		drag: function(event,ui){
+			$(this).parent().css({
+			      "left": ui.position.left,
+			      "top": ui.position.top
+			    });
+		}
+	});
+
+	alineamentoContainer();
+	alingDashBoard();
+});
+
+$(window).bind("resize", resizeWindow);
+function resizeWindow(e) {
+	alineamentoContainer();
+}
+$(document).ready(function() {
+//	$( ".draggable" ).draggable(
+});
+
+$(document).ready(function() {
+	$("span[id^='collapse'],span[id^='expanse']").each(function() {
+		$(this).bind("click", function() {
+			var idOld = this.id;
+			var realID;
+			var newID;
+			if(idOld.match("collapse")){
+				realID = idOld.replace("collapse", "");
+				newID="expanse";
+				$(this).html("-");
+			}else{
+				realID = idOld.replace("expanse", "");
+				newID="collapse";
+				$(this).html("+");
+			}
+			var idd = realID;
+			$("#" + idd).toggle();
+			$(this).attr("id", newID+realID);
+		});
+	});
+});
 function alineamentoContainer() {
 	{
 		$(".container-left").css({"height":"auto"});
@@ -69,14 +124,6 @@ function selectingFromDashBoard(element){
 	element.parentNode.setAttribute("class","selected_dash_board");
 }
 
-$(document).ready(function() {
-	$( ".draggable" ).draggable({
-		stop: function( event, ui ) {
-			changePersonalization(this,ui);
-		}
-	});
-});
-//url: conte+"/personalizzation?"+dataSend,
 function changePersonalization(item,ui){
 	//tramite ajax una richiesta che setta il div nella posizione lasciata
 	var conte=$("#context").attr("value");
@@ -94,24 +141,3 @@ function changePersonalization(item,ui){
 	});
 }
 
-$(document).ready(function() {
-	$("span[id^='collapse'],span[id^='expanse']").each(function() {
-		$(this).bind("click", function() {
-			var idOld = this.id;
-			var realID;
-			var newID;
-			if(idOld.match("collapse")){
-				realID = idOld.replace("collapse", "");
-				newID="expanse";
-				$(this).html("-");
-			}else{
-				realID = idOld.replace("expanse", "");
-				newID="collapse";
-				$(this).html("+");
-			}
-			var idd = realID;
-			$("#" + idd).toggle();
-			$(this).attr("id", newID+realID);
-		});
-	});
-});

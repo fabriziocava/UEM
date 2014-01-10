@@ -11,9 +11,9 @@
 <!-- <div class="container-right"> -->
 <div class="draggable box box-notify" id="box-notify">
 	<div class="box-header color_red">
-		<span class="span_expandible"
-			id="collapse_drag_collapsable_notify">+</span>
+		<span class="span_expandible" id="collapse_drag_collapsable_notify">+</span>
 		<spring:message code="message.title.view.gruops" />
+		<span class="lock-close">lock</span>
 	</div>
 	<div class="box-body" id="_drag_collapsable_notify">
 		<%
