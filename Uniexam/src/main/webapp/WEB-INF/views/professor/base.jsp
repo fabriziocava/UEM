@@ -36,7 +36,7 @@
 	<input type="hidden" id="context"
 		value="${pageContext.request.contextPath}/professor" />
 	<div class="container">
-		<tiles:insertAttribute name="graggable-groups-box" />
+		<tiles:insertAttribute name="draggable-groups-box" />
 		<tiles:insertAttribute name="container-up" />
 		<tiles:insertAttribute name="container-left" />
 		<tiles:insertAttribute name="container-center" />
