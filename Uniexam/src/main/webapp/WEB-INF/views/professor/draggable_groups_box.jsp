@@ -6,7 +6,7 @@
 <%
 ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
 %>
-<div class="box-groups">
+<div class="box box-groups draggable">
 		<div class="box-header">
 			<spring:message
 				code="message.professor.course.container.center.titleBoxGroups" />
@@ -32,7 +32,6 @@ ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
 						$(this).attr("id", newID+realID);
 					});
 				});
-				$(".box-groups").draggable();
 			});
 		</script>
 		<div class="box-body">

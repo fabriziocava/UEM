@@ -50,11 +50,18 @@ header {
 	border: solid #d5d5d5;
 }
 
-.box-groups{
+.box {
 	position:fixed;
+	z-index: 2;
+}
+
+.box-group {
 	left: 10px;
 	top:50px;
-	z-index: 2;
+}
+.box-notify {
+	left: 10px;
+	top:50px;
 }
 
 .box-header {

@@ -20,6 +20,7 @@
 <script type="text/javascript">
 		$(document).ready(function() {
 			// 			alert("path: ");
+			$(".draggable").draggable();
 			alineamentoContainer();
 			alingDashBoard();
 		});
@@ -37,10 +38,10 @@
 		value="${pageContext.request.contextPath}/professor" />
 	<div class="container">
 		<tiles:insertAttribute name="draggable-groups-box" />
+		<tiles:insertAttribute name="draggable-notify-box" />
 		<tiles:insertAttribute name="container-up" />
 		<tiles:insertAttribute name="container-left" />
 		<tiles:insertAttribute name="container-center" />
-		<tiles:insertAttribute name="container-right" />
 		<tiles:insertAttribute name="container-down" />
 	</div>
 	<div>
