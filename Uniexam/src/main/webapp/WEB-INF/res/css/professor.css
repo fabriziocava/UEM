@@ -11,6 +11,23 @@ html {
 	border-radius: 4px;
 }
 
+.list-courses-box{
+	display: list-item;
+	list-style-type: none;
+	-webkit-margin-before: 0px;
+	-webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 10px;
+	-webkit-padding-start: 5px;
+}
+
+.list-groups-box {
+    list-style-type: none;
+	display: list-item;
+    text-align: inherit;
+    -webkit-padding-start: 20px;
+}
+
 .dashboard>li.selected_dash_board {
 	font-style: italic;
 }
@@ -23,10 +40,6 @@ header {
 	z-index: 1;
 	position: fixed;
 	top: 0px;
-}
-
-.list_course>div a {
-	text-decoration: none;
 }
 
 .list_course {
