@@ -27,33 +27,27 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="STUDENT")
-//@PrimaryKeyJoinColumn(name="STUDENT_ID")
+@PrimaryKeyJoinColumn(name="STUDENT_ID")
 public class Student extends User {
 	
 	/*
 	 * CONSTURCTORS
 	 */
-	public Student(TYPE type, String name, String surname, String password, Address address, Set<Email>emails, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, Long serialNumber) {
-		super(type, name, surname, null, password, address,emails,phoneNumbers);
+	public Student(TYPE type, String name, String surname, String password, Address address, Set<Email>emails, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, int serialNumber) {
+		super(type, name, surname, null, password, address, emails, phoneNumbers);
 		this.degreeCourse_registered = degreeCourse_registered;
 		this.serialNumber = serialNumber;
 	}
 		
 	public Student() {
-
+		super();
 	}
 	/*
 	 * END_CONSTRUCTORS
 	 */
 	
-
-//	@Id
-//	@Column(name="STUDENT_ID")
-//	@GeneratedValue
-//	private Long id;
-
 	@Column(name="SERIAL_NUMBER", nullable=false, unique=true)
-	private Long serialNumber; //MATRICOLA
+	private int serialNumber; //MATRICOLA
 	
 	@Column(name="NAME", nullable=false)
 	private String name;
@@ -61,14 +55,14 @@ public class Student extends User {
 	@Column(name="SURNAME", nullable=false)
 	private String surname;
 	
-	@Column(name="FISCAL_CODE", length=16)
+	@Column(name="FISCAL_CODE", length=16, nullable=false)
 	private String fiscal_code;
 	
 	@ManyToOne
-	DegreeCourse degreeCourse_registered;
+	DegreeCourse degreeCourse_registered; //verificare
 
 	@OneToMany
-	@JoinTable(name="STUDENT_APPEAL", 
+	@JoinTable(name="STUDENT_APPEAL",
 				joinColumns={@JoinColumn(name="STUDENT_ID")},
 				inverseJoinColumns={@JoinColumn(name="APPEAL_ID")}
 			)
@@ -91,11 +85,7 @@ public class Student extends User {
 	/*
 	 * GETTER
 	 */
-	public Long getId() {
-		return id;
-	}
-
-	public Long getSerialNumber() {
+	public int getSerialNumber() {
 		return serialNumber;
 	}
 
@@ -133,11 +123,7 @@ public class Student extends User {
 	/*
 	 * SETTER
 	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setSerialNumber(Long serialNumber) {
+	public void setSerialNumber(int serialNumber) {
 		this.serialNumber = serialNumber;
 	}
 
@@ -172,3 +158,4 @@ public class Student extends User {
 	 * END_SETTERS
 	 */
 }
+

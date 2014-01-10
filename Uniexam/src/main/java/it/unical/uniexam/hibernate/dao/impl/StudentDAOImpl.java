@@ -28,16 +28,20 @@ public class StudentDAOImpl implements StudentDAO {
 	@Override
 	public Long addStundent(String name, String surname, String password,
 			Address address, Set<Email> emails, Set<PhoneNumber> phoneNumbers,
-			DegreeCourse degreeCourse_registered, Long serialNumber) {
+			DegreeCourse degreeCourse_registered, int serialNumber) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		Long id = null;
 		try {
 			transaction = session.beginTransaction();
 			Student s = new Student(User.TYPE.STUDENT, name, surname, password, address, emails, phoneNumbers, degreeCourse_registered, serialNumber);
+			for(Email email : emails) {
+				email.setUser(s);
+			}
 			id = (Long) session.save(s);
 			transaction.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			transaction.rollback();
 		} finally {
 			session.close();
