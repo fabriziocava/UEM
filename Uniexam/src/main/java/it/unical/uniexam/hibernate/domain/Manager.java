@@ -1,5 +1,6 @@
 package it.unical.uniexam.hibernate.domain;
 
+import it.unical.uniexam.hibernate.domain.User.TYPE;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
@@ -11,11 +12,14 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -38,8 +42,26 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="ID")
 public class Manager extends User{
 	
+
+	public Manager(TYPE type, String name, String surname, URL webSite,
+			String password, Address address, Set<Email> emails,
+			Set<PhoneNumber> phoneNumbers, Department department_associated) {
+		super(type, name, surname, webSite, password, address,emails,phoneNumbers);
+		this.department_associated=department_associated;
+	}
+
+	public Manager(Long manager_id, Set<PhoneNumber> phoneNumbers) {
+		this.id = manager_id;
+		this.phoneNumbers = phoneNumbers;
+	}
+	
+	
 	
 
+	
+	@OneToOne(fetch=FetchType.LAZY) // da controllare
+	Department department_associated;
+	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="MANAGER_PHONE",
 	joinColumns={
@@ -56,21 +78,11 @@ public class Manager extends User{
 	 * 
 	 */
 	
-	
-	
-	
 	public Long getManager_id() {
 		return id;
 	}
 
-	public Manager() {
-	}
-
-	public Manager(Long manager_id, Set<PhoneNumber> phoneNumbers) {
-		this.id = manager_id;
-		this.phoneNumbers = phoneNumbers;
-	}
-
+	
 	public void setManager_id(Long manager_id) {
 		this.id = manager_id;
 	}
@@ -83,5 +95,12 @@ public class Manager extends User{
 		this.phoneNumbers = phoneNumbers;
 	}
 	
+	public Department getDepartment_associated() {
+		return department_associated;
+	}
+
+	public void setDepartment_associated(Department department_associated) {
+		this.department_associated = department_associated;
+	}
 	
 }

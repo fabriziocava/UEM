@@ -41,7 +41,7 @@ import javax.persistence.Table;
 public class User {
 
 	public enum TYPE{
-		PROFESSOR,STUDENT;
+		PROFESSOR,STUDENT,MANAGER;
 	}
 	
 	

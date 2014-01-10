@@ -12,7 +12,8 @@ import java.util.Set;
 public interface ManagerDao {
 	
 	public Long addManager(String name, String surname, URL webSite,
-			 String password, Address address);
+			String password, Address address, Set<Email> emails,
+			Set<PhoneNumber> phoneNumbers, Department department_associated);
 	
 	public Long addManager(Manager manager);
 	public Set<Manager> getManagers();

@@ -14,6 +14,7 @@ import it.unical.uniexam.hibernate.dao.ManagerDao;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
@@ -23,19 +24,25 @@ public class ManagerDAOImpl implements ManagerDao {
 
 	@Override
 	public Long addManager(String name, String surname, URL webSite,
-			 String password, Address address) {
+			String password, Address address, Set<Email> emails,
+			Set<PhoneNumber> phoneNumbers, Department department_associated) {
 		
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long id=null;
 		try{
 			transaction=session.beginTransaction();
-			
-//			Manager manager=new Manager(name, surname, webSite, password, address);
+
+			Manager m=new Manager(User.TYPE.MANAGER, name, surname, webSite, password, address, emails, phoneNumbers, department_associated);
+			for (Email email : emails) {
+				email.setUser(m);
+			}
 			/**
 			 * Aggiungere il dipartimento di appartenenza se non nullo
+			 * if(m.getDepartment_associated()!=null){do}
 			 */
-//			id=(Long) session.save(manager);
+			id=(Long) session.save(m);
+			
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
@@ -43,7 +50,6 @@ public class ManagerDAOImpl implements ManagerDao {
 			session.close();
 		}
 		return id;
-		
 	}
 
 	@Override
