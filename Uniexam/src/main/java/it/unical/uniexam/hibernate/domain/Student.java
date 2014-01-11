@@ -33,8 +33,9 @@ public class Student extends User {
 	/*
 	 * CONSTURCTORS
 	 */
-	public Student(TYPE type, String name, String surname, String password, Address address, Set<Email>emails, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, int serialNumber) {
+	public Student(TYPE type, String name, String surname, String fiscalCode, String password, Address address, Set<Email>emails, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, String serialNumber) {
 		super(type, name, surname, null, password, address, emails, phoneNumbers);
+		this.fiscalCode = fiscalCode;
 		this.degreeCourse_registered = degreeCourse_registered;
 		this.serialNumber = serialNumber;
 	}
@@ -47,7 +48,7 @@ public class Student extends User {
 	 */
 	
 	@Column(name="SERIAL_NUMBER", nullable=false, unique=true)
-	private int serialNumber; //MATRICOLA
+	private String serialNumber; //MATRICOLA
 	
 	@Column(name="NAME", nullable=false)
 	private String name;
@@ -56,10 +57,10 @@ public class Student extends User {
 	private String surname;
 	
 	@Column(name="FISCAL_CODE", length=16, nullable=false)
-	private String fiscal_code;
+	private String fiscalCode;
 	
 	@ManyToOne
-	DegreeCourse degreeCourse_registered; //verificare
+	DegreeCourse degreeCourse_registered;
 
 	@OneToMany
 	@JoinTable(name="STUDENT_APPEAL",
@@ -85,7 +86,7 @@ public class Student extends User {
 	/*
 	 * GETTER
 	 */
-	public int getSerialNumber() {
+	public String getSerialNumber() {
 		return serialNumber;
 	}
 
@@ -97,8 +98,8 @@ public class Student extends User {
 		return surname;
 	}
 
-	public String getFiscal_code() {
-		return fiscal_code;
+	public String getFiscalCode() {
+		return fiscalCode;
 	}
 
 	public DegreeCourse getDegreeCourse_registered() {
@@ -123,7 +124,7 @@ public class Student extends User {
 	/*
 	 * SETTER
 	 */
-	public void setSerialNumber(int serialNumber) {
+	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
 	}
 
@@ -135,8 +136,8 @@ public class Student extends User {
 		this.surname = surname;
 	}
 
-	public void setFiscal_code(String fiscal_code) {
-		this.fiscal_code = fiscal_code;
+	public void setFiscalCode(String fiscalCode) {
+		this.fiscalCode = fiscalCode;
 	}
 
 	public void setDegreeCourse_registered(DegreeCourse degreeCourse_registered) {

@@ -1,14 +1,20 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.utility.Address;
+import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 /**
  * 
@@ -28,14 +34,36 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
 	@Override
 	public Long addDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Long id = null;
+		try {
+			transaction = session.beginTransaction();
+			id = (Long) session.save(department);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return id;
 	}
 
 	@Override
-	public Set<Department> getDepartment() {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Department> getDepartments() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Set<Department> res = null;
+		try {
+			Query q = session.createQuery("from Department");
+			@SuppressWarnings("unchecked")
+			List<Department> list = q.list();
+			res = new HashSet<Department>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
 	}
 
 	@Override

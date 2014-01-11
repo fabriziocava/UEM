@@ -32,14 +32,13 @@ import javax.persistence.Table;
  * 						something else?
  * 	
  * @author luigi
+ * modified by fabrizio
  *
  */
 
 @Entity
 @Table(name="DEPARTMENT")
 public class Department {
-
-	
 	
 	public Department() {
 	}
@@ -80,6 +79,16 @@ public class Department {
 			})
 	private Set<Professor> professors=new HashSet<Professor>();
 
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="DEPARTMENT_DEGREECOURSE",
+	joinColumns={
+			@JoinColumn(name="DEPARTMENT_ID")
+			}, 
+	inverseJoinColumns={
+			@JoinColumn(name="DEGREE_COURSE_ID")
+			})
+	private Set<DegreeCourse> degreeCourses = new HashSet<DegreeCourse>();
+	
 	/**
 	 * Implementation
 	 */
@@ -118,6 +127,33 @@ public class Department {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	public Professor getPresident() {
+		return president;
+	}
+
+	public void setPresident(Professor president) {
+		this.president = president;
+	}
+
+	public Set<Professor> getProfessors() {
+		return professors;
+	}
+
+	public void setProfessors(Set<Professor> professors) {
+		this.professors = professors;
+	}
+
+	public Set<DegreeCourse> getDegreeCourses() {
+		return degreeCourses;
+	}
+
+	public void setDegreeCourses(Set<DegreeCourse> degreeCourses) {
+		this.degreeCourses = degreeCourses;
+	}
+	
+	
+	
 //	@Column(name="PRESIDENT")
 //	@OneToOne(fetch=FetchType.LAZY)
 //	private Professor president;

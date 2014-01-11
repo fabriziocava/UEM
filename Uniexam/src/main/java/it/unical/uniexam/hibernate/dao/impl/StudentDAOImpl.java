@@ -26,15 +26,15 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class StudentDAOImpl implements StudentDAO {
 
 	@Override
-	public Long addStundent(String name, String surname, String password,
+	public Long addStundent(String name, String surname, String fiscalCode, String password,
 			Address address, Set<Email> emails, Set<PhoneNumber> phoneNumbers,
-			DegreeCourse degreeCourse_registered, int serialNumber) {
+			DegreeCourse degreeCourse_registered, String serialNumber) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		Long id = null;
 		try {
 			transaction = session.beginTransaction();
-			Student s = new Student(User.TYPE.STUDENT, name, surname, password, address, emails, phoneNumbers, degreeCourse_registered, serialNumber);
+			Student s = new Student(User.TYPE.STUDENT, name, surname, fiscalCode, password, address, emails, phoneNumbers, degreeCourse_registered, serialNumber);
 			for(Email email : emails) {
 				email.setUser(s);
 			}
