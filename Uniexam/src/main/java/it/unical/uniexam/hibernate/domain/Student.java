@@ -50,12 +50,6 @@ public class Student extends User {
 	@Column(name="SERIAL_NUMBER", nullable=false, unique=true)
 	private String serialNumber; //MATRICOLA
 	
-	@Column(name="NAME", nullable=false)
-	private String name;
-
-	@Column(name="SURNAME", nullable=false)
-	private String surname;
-	
 	@Column(name="FISCAL_CODE", length=16, nullable=false)
 	private String fiscalCode;
 	
@@ -76,26 +70,12 @@ public class Student extends User {
 			)
 	Set<Course> carrier = new HashSet<Course>();
 	
-	@OneToMany
-	@JoinTable(name="STUDENT_GROUP",
-				joinColumns={@JoinColumn(name="STUDENT_ID")},
-				inverseJoinColumns={@JoinColumn(name="GROUP_ID")}
-			)
-	Set<Group> groups = new HashSet<Group>();
-
+	
 	/*
 	 * GETTER
 	 */
 	public String getSerialNumber() {
 		return serialNumber;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getSurname() {
-		return surname;
 	}
 
 	public String getFiscalCode() {
@@ -126,14 +106,6 @@ public class Student extends User {
 	 */
 	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
 	}
 
 	public void setFiscalCode(String fiscalCode) {

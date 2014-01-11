@@ -8,6 +8,7 @@ import it.unical.uniexam.hibernate.domain.Department;
 public interface DegreeCourseDAO {
 	
 	public Long addDegreeCourse(String name, Department department_associated);
+	public Long addDegreeCourse(DegreeCourse degreeCourse);
 	public Set<DegreeCourse> getDegreeCourses(Long idDepartment);
 	public Set<DegreeCourse> getDegreeCourses();
 	

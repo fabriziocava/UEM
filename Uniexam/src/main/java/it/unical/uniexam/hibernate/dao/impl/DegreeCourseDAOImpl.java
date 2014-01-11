@@ -35,6 +35,23 @@ public class DegreeCourseDAOImpl implements DegreeCourseDAO {
 		}
 		return id;
 	}
+	
+	@Override
+	public Long addDegreeCourse(DegreeCourse degreeCourse) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Long id = null;
+		try {
+			transaction = session.beginTransaction();
+			id = (Long) session.save(degreeCourse);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return id;
+	}
 
 	@Override
 	public Set<DegreeCourse> getDegreeCourses(Long idDepartment) {
