@@ -68,9 +68,11 @@
 				<li><a class="button" href="#"
 					onclick="selectDashBoard(this.innerHTML)">A</a></li>
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">B</a></li>
+					onclick="selectDashBoard(this.innerHTML)"><spring:message
+						code="label.appeal" /></a></li>
 				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">C</a>
+					onclick="selectDashBoard(this.innerHTML)"><spring:message
+						code="label.groups" /></a>
 				</li>
 								
 				<li><a class="button" href="#"
