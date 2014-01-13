@@ -14,7 +14,7 @@ public interface DepartmentDAO {
 			String name,Address address,List<Professor> professors);
 	public Long addDepartment(Department department);
 
-	public Set<Department> getDepartment();
+	public Set<Department> getDepartments();
 	public Department getDepartment(Long idDepartment);
 	
 	public Department removeDepartment(Long idDepartment);
