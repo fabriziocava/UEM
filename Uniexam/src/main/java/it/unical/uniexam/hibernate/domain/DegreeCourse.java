@@ -1,9 +1,20 @@
 package it.unical.uniexam.hibernate.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -15,22 +26,92 @@ import javax.persistence.Table;
  * At each DC we have a number of course and a number of student inscribed 
  * 
  * @author luigi
+ * modified by fabrizio
  *
  */
+
 @Entity
 @Table(name="DEGREE_COURSE")
 public class DegreeCourse {
 	
-	
-	
+	/*
+	 * CONSTRUCTORS
+	 */
 	public DegreeCourse() {
+	
 	}
-
+	
+	public DegreeCourse(String name, Department department_associated) {
+		this.name = name;
+		this.department_associated = department_associated;
+	}
+	/*
+	 * END_CONSTRUCTORS
+	 */
+	
 	@Id
 	@GeneratedValue
 	@Column(name="DEGREE_COURSE_ID")
-	Long id;
+	private Long id;
 	
+	@Column(name="NAME", nullable=false, unique=true)
+	private String name;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	Department department_associated;
 	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="DEGREECOURSE_STUDENT",
+			joinColumns = {
+				@JoinColumn(name="DEGREE_COURSE_ID")
+			},
+			inverseJoinColumns = {
+				@JoinColumn(name="STUDENT_ID")
+			}
+		)
+	private Set<Student> students = new HashSet<Student>();
+
+	/*
+	 * SETTER
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDepartment_associated(Department department_associated) {
+		this.department_associated = department_associated;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
+	}
+	/*
+	 * END_SETTER
+	 */
+
+	/*
+	 * GETTER
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Department getDepartment_associated() {
+		return department_associated;
+	}
+
+	public Set<Student> getStudents() {
+		return students;
+	}
+	/*
+	 * END_GETTER
+	 */	
 }
