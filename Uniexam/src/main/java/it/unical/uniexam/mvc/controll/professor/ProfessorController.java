@@ -310,7 +310,7 @@ public class ProfessorController {
 		model.addAttribute("personalizzationMap", personalizzationMap);
 	}
 
-	private String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
+	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
 		User user=professorService.getSession(request.getSession().getId());
 		if(user==null){
 			HttpSession session = request.getSession(false);

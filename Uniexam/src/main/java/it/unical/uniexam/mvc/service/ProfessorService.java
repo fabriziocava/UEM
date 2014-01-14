@@ -39,4 +39,6 @@ public interface ProfessorService extends UserService{
 	public Boolean streamImage(Professor p, OutputStream outputStream);
 	
 	public void putImage(Professor p, InputStream is,int length);
+
+	public Course getCourseDetails(Professor p, Long idCourse);
 }

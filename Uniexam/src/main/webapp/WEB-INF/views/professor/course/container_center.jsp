@@ -45,22 +45,22 @@
 								code="message.professor.course.container.center.legendCourses" /></legend>
 		<ul>
 			<%
-				ArrayList<ArrayList<Object>> struct = new ArrayList<ArrayList<Object>>();
-				ArrayList<Course> courses = (ArrayList<Course>) request
-						.getAttribute("courses");
-				int count = 0;
+// 				ArrayList<ArrayList<Object>> struct = new ArrayList<ArrayList<Object>>();
+				ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
+// 				int count = 0;
 				if (courses != null && courses.size() > 0) {
 					for (Course c : courses) {
-						struct.add(new ArrayList<Object>());
-						struct.get(count).add(c);
-						struct.get(count).addAll(c.getGroups());
+// 						System.out.print(count+" ");
+// 						struct.add(new ArrayList<Object>());
+// 						struct.get(count).add(c);
+// 						struct.get(count).addAll(c.getGroups());
 			%>
 			<li class="list_course">
 				<article>
-					<section id="<%="course" + (count++)%>">
-						<a href="#"><h1><%=c.getName()%></h1></a>
+					<section id="<%="course" + c.getId()%>">
+						<a id="<%="acourse" + c.getId()%>" href="#" onclick="getDataFromAjax(this);"><h1><%=c.getName()%></h1></a>
 					</section>
-					<section id="<%="note" + (count)%>" contenteditable="true"
+					<section id="<%="note" + c.getId()%>" contenteditable="true"
 						onfocus="storeOld(this)"
 						onblur="beforeChangeNote(this,'<%=c.getId()%>')">
 						<%
@@ -80,6 +80,7 @@
 						%>
 					</section>
 				</article>
+<%-- 				<a href="${pageContext.request.contextPath}/professor/ajax/course/course_details">LINK TO TRY</a> --%>
 			</li>
 			<%
 				}

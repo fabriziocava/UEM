@@ -22,6 +22,23 @@ $(document).ready(function() {
 	});
 });
 
+
+function getDataFromAjax(item){
+	var id=item.id;
+	if(id.match("acourse")){
+		var idCourse=id.replace("acourse","");
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+"/ajax/course/course_details", "GET", "idCourse", idCourse);
+		ajax.done(function(data){
+//			alert(data);
+			var newId="divCourse"+idCourse;
+			var newDiv="<div id='"+newId+"'></div>";
+			if($("#"+newId).html()==undefined)
+				$(newDiv).insertAfter($(item));
+			$("#"+newId).html(data);
+		});
+	}
+}
 /**
  * <span class="span_expandible" id="collapseIDTAGTOCOLLAPSE">+</span>	
  */
@@ -165,7 +182,11 @@ function changePersonalization(item){
 //	var dataSend=elementId+":[left#"+item.css("left")+"%top#"+item.css("top")+"]";
 	//idTAG:name=cicio%surname=pasticcio$idTAG:id=125
 	var dataSend=elementId+"[left:"+item.css("left")+",top:"+item.css("top");
-	sendAJAXmessage(conte, "data", dataSend);
+//	var ajax=
+	sendAJAXmessage(conte,"POST", "data", dataSend);
+//	ajax.done(function(data){
+//		alert(data+"");
+//	});
 }
 ////formData.append('cazz', "cio");
 ////formData=formData.serialize();
@@ -195,9 +216,9 @@ function changePersonalization(item){
 //ing.done(function(msg){
 //	$(".processing").css("display","none");
 //});
-function sendAJAXmessage(url,name,value){
+function sendAJAXmessage(url,type,name,value){
 	var ing=$.ajax({
-		type: "POST",
+		type: type,
 		url: url,
 		data:name+"="+value,
 		processData:false
@@ -206,6 +227,7 @@ function sendAJAXmessage(url,name,value){
 	ing.done(function(msg){
 		$(".processing").css("display","none");
 	});
+	return ing;
 }
 
 function changeNote(item,idCourse){
@@ -214,5 +236,5 @@ function changeNote(item,idCourse){
 	var conte=$("#context").attr("value");
 	conte=conte+"/changeNote";
 	var dataSend=$("#"+idd).children().html();
-	sendAJAXmessage(conte, "data"+idCourse, dataSend);
+	sendAJAXmessage(conte,"POST", "data"+idCourse, dataSend);
 }

@@ -141,6 +141,39 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
+	public Course getCourseAll(Long idCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Course res=null;
+		try{
+			Course c1=(Course) session.get(Course.class, idCourse);
+			Hibernate.initialize(c1);
+			Hibernate.initialize(c1.getCommissionProfessors());
+			Hibernate.initialize(c1.getGroups());
+			Hibernate.initialize(c1.getRequestedCourses());
+			res=c1;
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+//	@Override
+//	public Course getCourse(Long idCourse) {
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		Course res=null;
+//		try{
+//			Course c1=(Course) session.get(Course.class, idCourse);
+//			res=c1;
+//		}catch(Exception e){
+//			new MokException(e);
+//		}finally{
+//			session.close();
+//		}
+//		return res;
+//	}
+	
+	@Override
 	public Course removeCourse(Long idCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
@@ -446,9 +479,9 @@ public class CourseDAOImpl implements CourseDAO{
 			res=(ArrayList<Course>) q.list();
 			for (Course course : res) {
 				Set<Group>g=course.getGroups();
-				for (Group group : g) {
-					System.out.println(group.getName());
-				}
+//				for (Group group : g) {
+//					System.out.println(group.getName());
+//				}
 				Hibernate.initialize(course);///°°°° MOKSOL LAKY LOAD
 				Hibernate.initialize(course.getGroups());
 			}

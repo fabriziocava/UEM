@@ -83,4 +83,16 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 		professorDAO.storeImage2(p.getId(), is,length);
 	}
 
+	@Override
+	public Course getCourseDetails(Professor p, Long idCourse) {
+		Course res=courseDAO.getCourse(idCourse);
+		if(res.getHolder().getId()==p.getId()){
+			res=courseDAO.getCourseAll(idCourse);
+		}else{
+			//sto accedendo ad un corso e non sono il docente titolare
+			//quindi carica solo il necessario alla visualizzazione
+		}
+		return res;
+	}
+
 }

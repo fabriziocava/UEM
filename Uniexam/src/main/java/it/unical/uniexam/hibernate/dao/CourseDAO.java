@@ -26,6 +26,7 @@ public interface CourseDAO {
 	public Set<Course> getCourses();
 	public Set<Course> getCoursesFromDegreeCourse(Long idDegreeCourse);
 	public Course getCourse(Long idCourse);
+	public Course getCourseAll(Long idCourse);
 	public Course removeCourse(Long idCourse);
 
 	/**
@@ -57,5 +58,6 @@ public interface CourseDAO {
 	
 	public String getNote(Long idCourse);
 	public Boolean setNote(Long idCourse,String note);
+
 	
 }
