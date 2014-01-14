@@ -26,8 +26,8 @@
 	<!-- <resources mapping="/resources/**" location="/resources/" /> -->
 	<resources location="/WEB-INF/res/*" mapping="res/**" />
 
-
-	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass">
 			<beans:value>
 				org.springframework.web.servlet.view.tiles2.TilesView
@@ -38,7 +38,10 @@
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<beans:property name="definitions">
 			<beans:list>
-				<beans:value>/WEB-INF/tiles.xml</beans:value>
+				<beans:value>/WEB-INF/views/professor/tiles.xml</beans:value>
+				<beans:value>/WEB-INF/views/professor/home/tiles.xml</beans:value>
+				<beans:value>/WEB-INF/views/professor/course/tiles.xml</beans:value>
+				<beans:value>/WEB-INF/views/professor/account/tiles.xml</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>
@@ -72,7 +75,8 @@
 	</beans:bean>
 
 	<interceptors>
-		<beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<beans:bean
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<beans:property name="paramName" value="lang" />
 		</beans:bean>
 	</interceptors>
@@ -86,5 +90,9 @@
 
 	<!-- for multilanguage end -->
 
+<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="268435456" />
+	</beans:bean>
 
 </beans:beans>

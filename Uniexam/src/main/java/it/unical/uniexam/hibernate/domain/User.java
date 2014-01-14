@@ -80,6 +80,9 @@ public User() {
 	@Column(name="WEB_SITE",nullable=true)
 	URL webSite;
 	
+	@Column(name="Personalizzation",length=100000)
+	String personalizzation;
+	
 	@Column(name="PASSWORD", nullable=false)
 	String password;
 	
@@ -115,7 +118,6 @@ public User() {
 			@JoinColumn(name="COMMENT_ID")
 	})
 	private Set<CommentOfPost> comments=new HashSet<CommentOfPost>();
-	
 	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@JoinTable(
@@ -241,5 +243,13 @@ public User() {
 
 	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
+	}
+
+	public String getPersonalizzation() {
+		return personalizzation;
+	}
+
+	public void setPersonalizzation(String personalizzation) {
+		this.personalizzation = personalizzation;
 	}
 }

@@ -6,11 +6,11 @@
 <%
 ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
 %>
-<div class="box box-groups draggable" id="box-groups">
+<div class="box box-groups" id="box-groups">
 		<div class="box-header">
 			<span class="span_expandible" id="collapse_drag_collapsable_group">+</span>		
 			<spring:message code="message.professor.course.container.center.titleBoxGroups" />
-			<span class="lock-close">lock</span>
+			<span class="lock-draggable-close" id="draggablebox-groups">lock/unlock</span>
 		</div>
 		<div class="box-body" id="_drag_collapsable_group">
 			<%

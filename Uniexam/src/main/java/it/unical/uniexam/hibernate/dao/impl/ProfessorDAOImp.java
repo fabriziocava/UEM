@@ -1,14 +1,23 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
+
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.FileCopyUtils;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
@@ -34,7 +43,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 	/**
 	 * Last modification is this!
 	 */
-	
+
 	@Override
 	public Long addProfessor(String name, String surname, URL webSite,
 			String password, Address address, Set<Email> emails,
@@ -54,7 +63,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			 * if(p.getDepartment_associated()!=null){do}
 			 */
 			id=(Long) session.save(p);
-			
+
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();
@@ -437,18 +446,100 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		}
 		return res;
 	}
-//
-//	@Override
-//	public void getNoReadComments(Long idProfessor) {
-//		Session session =HibernateUtil.getSessionFactory().openSession();
-//		try{
-//			Professor p=(Professor)session.get(Professor.class, idProfessor);
-//			p.getNoReadComments();
-//		}catch(Exception e){
-//			new MokException(e);
-//		}finally{
-//			session.close();
-//		}
-//	}
+	//
+	//	@Override
+	//	public void getNoReadComments(Long idProfessor) {
+	//		Session session =HibernateUtil.getSessionFactory().openSession();
+	//		try{
+	//			Professor p=(Professor)session.get(Professor.class, idProfessor);
+	//			p.getNoReadComments();
+	//		}catch(Exception e){
+	//			new MokException(e);
+	//		}finally{
+	//			session.close();
+	//		}
+	//	}
 
+	@Override
+	public Boolean streamImage(Long idProfessor,OutputStream outputStream) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean res=false;
+		try{
+			transaction = session.beginTransaction();
+
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			Blob fileimage = p.getFileimage();
+			if(fileimage!=null){
+				InputStream is = fileimage.getBinaryStream();
+				if (is != null) {
+					FileCopyUtils.copy(is, outputStream);
+					res=true;
+				}
+			}
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	public void storeImage(Long idProfessor,InputStream is,int length){
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		try{
+			transaction = session.beginTransaction();
+
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			{
+				//			File resume = new File("D:\\Resume.doc");
+				byte[] fileContent = new byte[length];
+				try {
+					//				FileInputStream fileInputStream = new FileInputStream(resume);
+					//				//convert file into array of bytes
+					//				fileInputStream.read(fileContent);
+					//				fileInputStream.close();
+					is.read(fileContent);
+					is.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				//		     Blob blob = Hibernate.createBlob(fileContent,session);
+				Blob blob= session.getLobHelper().createBlob(fileContent);
+				p.setFileimage(blob);
+			}
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+	}
+
+	public void storeImage2(Long idProfessor,InputStream is,int length){
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		try{
+			transaction = session.beginTransaction();
+
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+//			byte[] data=new byte[length];
+			Blob b=session.getLobHelper().createBlob(is, length);
+			p.setFileimage(b);
+//			FileCopyUtils.copy(is, p.getFileimage().setBinaryStream(1));
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+	}
 }

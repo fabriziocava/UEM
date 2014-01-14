@@ -2,7 +2,9 @@ package it.unical.uniexam.hibernate.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,6 +20,7 @@ import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
+import it.unical.uniexam.mvc.service.UtilsService;
 
 /**
  * 
@@ -150,4 +153,106 @@ public class UserDAOImpl implements UserDAO {
 		return res;
 	}
 
+	@Override
+	public Map<String, String> getPersonalization(User user) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Map<String,String> res=new HashMap<String, String>();
+		try{
+			user=(User)session.get(User.class, user.getId());
+			String perso=user.getPersonalizzation();
+			res=UtilsService.getMapPersonalizzation(perso);
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Map<String, String> getPersonalization(Long userId) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Map<String,String> res=new HashMap<String, String>();
+		try{
+			User user=(User)session.get(User.class, userId);
+			String perso=user.getPersonalizzation();
+			res=UtilsService.getMapPersonalizzation(perso);
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Boolean updatePersonalizzation(Map<String, String> personalizzation,Long userId) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean res=false;
+		try{
+			transaction = session.beginTransaction();
+			
+			User user=(User)session.get(User.class, userId);
+			String perso=user.getPersonalizzation();
+			Map<String, String> mapPersonalizzation = UtilsService.getMapPersonalizzation(perso);
+			mapPersonalizzation.putAll(personalizzation);
+			user.setPersonalizzation(UtilsService.getStringPersonalizzation(mapPersonalizzation));
+			
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Boolean updatePersonalizzation(String personalizzation,Long userId) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean res=false;
+		try{
+			transaction = session.beginTransaction();
+			//box-notify:left=10px%top=50px
+			User user=(User)session.get(User.class, userId);
+			String perso=user.getPersonalizzation();
+			Map<String, String> mapPersonalizzation = UtilsService.getMapPersonalizzation(perso);
+			Map<String, String> mapPersonalizzation2 = UtilsService.getMapPersonalizzation(personalizzation);
+			mapPersonalizzation.putAll(mapPersonalizzation2);
+			String queryPersonalizzation = UtilsService.getStringPersonalizzation(mapPersonalizzation);
+			user.setPersonalizzation(queryPersonalizzation);
+			
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
+	public Boolean resetPersonalizzation(Long userId) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean res=false;
+		try{
+			transaction = session.beginTransaction();
+			
+			User user=(User)session.get(User.class, userId);
+			user.setPersonalizzation(null);
+			
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
 }

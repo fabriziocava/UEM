@@ -460,6 +460,42 @@ public class CourseDAOImpl implements CourseDAO{
 		return res;
 	}
 
+	@Override
+	public String getNote(Long idCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		String res=null;
+		try{
+			Course c=(Course) session.get(Course.class, idCourse);
+			res=c.getNote();
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Boolean setNote(Long idCourse, String note) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean res=false;
+		try{
+			transaction=session.beginTransaction();
+			
+			Course course=(Course)session.get(Course.class, idCourse);
+			course.setNote(note);
+			
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
 }
 
 //Session session =HibernateUtil.getSessionFactory().openSession();

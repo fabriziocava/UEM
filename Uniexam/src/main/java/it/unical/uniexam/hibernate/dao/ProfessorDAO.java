@@ -8,8 +8,12 @@ import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.Set;
+
+import javax.servlet.ServletOutputStream;
 
 public interface ProfessorDAO {
 	/**
@@ -70,7 +74,9 @@ public interface ProfessorDAO {
 	public Set<Email> getEmails(Long idProfessor);
 	public Email getEmail(Long idProfessor,String type);
 
-	
+	public Boolean streamImage(Long idProfessor,OutputStream outputStream);
+	public void storeImage(Long idProfessor,InputStream is,int length);
+	public void storeImage2(Long idProfessor,InputStream is,int length);
 }
 
 

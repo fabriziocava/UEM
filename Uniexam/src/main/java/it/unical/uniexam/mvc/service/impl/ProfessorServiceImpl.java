@@ -1,15 +1,20 @@
 package it.unical.uniexam.mvc.service.impl;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
+import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
@@ -30,6 +35,8 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	GroupDAO groupDAO;
 	@Autowired
 	CourseDAO courseDAO;
+	@Autowired
+	UserDAO userDAO;
 	
 	@Override
 	public Professor getProfessor(Long idUser) {
@@ -49,6 +56,31 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	@Override
 	public ArrayList<Course> getAssociatedCourseWithGroups(User user) {
 		return courseDAO.getAssociatedCourseWithGroups(user);
+	}
+
+	@Override
+	public void updatePersonalizzationValues(String personalizzation,Long id) {
+		userDAO.updatePersonalizzation(personalizzation, id);
+	}
+
+	@Override
+	public Map<String, String> getPersonalizzationValues(Long id) {
+		return userDAO.getPersonalization(id);
+	}
+
+	@Override
+	public void changeNote(Long idCourse, String parameter) {
+		courseDAO.setNote(idCourse, parameter);
+	}
+
+	@Override
+	public Boolean streamImage(Professor p, OutputStream outputStream) {
+		return professorDAO.streamImage(p.getId(), outputStream);
+	}
+
+	@Override
+	public void putImage(Professor p, InputStream is,int length) {
+		professorDAO.storeImage2(p.getId(), is,length);
 	}
 
 }

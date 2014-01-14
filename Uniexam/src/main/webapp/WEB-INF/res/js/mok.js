@@ -1,51 +1,4 @@
 $(document).ready(function() {
-//	$(".draggable").children(".box-header").each(function(){
-//	alert(""+$(this).attr("class"));
-//	$(this).draggable({
-//	stop: function( event, ui ) {
-//	changePersonalization(this,ui);
-//	}
-//	});
-//	});
-//	$("#box-notify").children("span[class^='lock']").bind("click",function(){
-//		alert("ciao");
-//		if($(this).hasClass("lock-close")){
-//			$(this).removeClass("lock-close");
-//			$(this).addClass("lock-open");
-//			$("#box-notify").draggable({
-//				stop: function( event, ui ) {
-//					changePersonalization(this,ui);
-//				},
-//			});
-//		}else{
-//			$(this).removeClass("lock-open");
-//			$(this).addClass("lock-close");
-//			$("#box-notify").draggable( "destroy" );
-//		}
-//	});
-	$(".box-header").css("width","+=10px");
-	$("span[class^='lock']").bind("click",function(){
-		if($(this).hasClass("lock-close")){
-			$(this).removeClass("lock-close");
-			$(this).addClass("lock-open");
-			$(this).parent().parent().draggable({
-				stop: function( event, ui ) {
-					changePersonalization(this,ui);
-				},
-			});
-		}else{
-			$(this).removeClass("lock-open");
-			$(this).addClass("lock-close");
-			$(this).parent().parent().draggable( "destroy" );
-		}
-	});
-//	$(".draggable").draggable({
-//		stop: function( event, ui ) {
-//			changePersonalization(this,ui);
-////			$(this).parent().draggable( "destroy" );
-//		},
-//	});
-
 	alineamentoContainer();
 	alingDashBoard();
 });
@@ -55,13 +8,28 @@ function resizeWindow(e) {
 	alineamentoContainer();
 }
 $(document).ready(function() {
-//	$( ".draggable" ).draggable(
+	initDraggable();
+	initCollapsable();
 });
 
 $(document).ready(function() {
+	$(".box-header").css("width","+=10px");
+	var conte=$("#contextPath").attr("value");
+	$(".processing").children().attr("src",conte+"/res/img/spinner36_39.gif");
+	$(".box").bind("click",function(){
+		$(".box").css("z-index","2");
+		$(this).css("z-index","3");
+	});
+});
+
+/**
+ * <span class="span_expandible" id="collapseIDTAGTOCOLLAPSE">+</span>	
+ */
+function initCollapsable(){
 	$("span[id^='collapse'],span[id^='expanse']").each(function() {
 		$(this).bind("click", function() {
 			var idOld = this.id;
+//			alert(idOld+"");
 			var realID;
 			var newID;
 			if(idOld.match("collapse")){
@@ -78,7 +46,42 @@ $(document).ready(function() {
 			$(this).attr("id", newID+realID);
 		});
 	});
-});
+}
+
+/**
+ * <div> div da rendere draggable
+ * <div>
+ * <span class="lock-draggable-close" id="draggableIDTODRAG">lock/unlock</span>
+ * </div>
+ * </div>
+ */
+function initDraggable(){
+	$("span[class^='lock']").bind("click",function(){
+		if($(this).hasClass("lock-draggable-close")){
+			$(this).removeClass("lock-draggable-close");
+			$(this).addClass("lock-draggable-open");
+			var idOld = this.id;
+			var idTAG=idOld.replace("draggable","");
+			$("#"+idTAG).addClass("draggable");
+			$("#"+idTAG).draggable();
+//					{
+//				stop: function( event, ui ) {
+//					changePersonalization(this,ui);
+//				},
+//			});
+		}else{
+			$(this).removeClass("lock-draggable-open");
+			$(this).addClass("lock-draggable-close");
+			var idOld = this.id;
+			var idTAG=idOld.replace("draggable","");
+			var tag=$("#"+idTAG);
+			tag.removeClass("draggable");
+			tag.draggable( "destroy" );
+			changePersonalization(tag);
+		}
+	});
+}
+
 function alineamentoContainer() {
 	{
 		$(".container-left").css({"height":"auto"});
@@ -150,20 +153,66 @@ function selectingFromDashBoard(element){
 	element.parentNode.setAttribute("class","selected_dash_board");
 }
 
-function changePersonalization(item,ui){
+
+
+function changePersonalization(item){
 	//tramite ajax una richiesta che setta il div nella posizione lasciata
+	var elementId=item.attr("id");
 	var conte=$("#context").attr("value");
-	var dataSend=item.id+"&left="+ui.position.left+"&top="+ui.position.top;
+	conte=conte+"/personalizzation";
+//	var formData = new FormData("caxx=cia&asd=ty");
+	//idTAG:name=cicio%surname=pasticcio$idTAG:id=125
+//	var dataSend=elementId+":[left#"+item.css("left")+"%top#"+item.css("top")+"]";
+	//idTAG:name=cicio%surname=pasticcio$idTAG:id=125
+	var dataSend=elementId+"[left:"+item.css("left")+",top:"+item.css("top");
+	sendAJAXmessage(conte, "data", dataSend);
+}
+////formData.append('cazz', "cio");
+////formData=formData.serialize();
+//var ing=$.ajax({
+////	beforeSend: function( xhr ) {
+////	    xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+////	  },
+//	type: "POST",
+//	url: conte+"/personalizzation",
+////	data: { 'name': "John", 'location': "Boston" },
+//	data:"data="+dataSend,
+////	contentType:"text; charset=utf-8",
+////	dataType:"text",
+//	processData:false
+//});
+////var ing=$.ajax({
+////	type: "POST",
+////	url: conte+"/personalizzation",
+////	processData: false,
+////	data: JSON.stringify(dataSend),
+////    contentType: "application/json",
+////    dataType:"json"
+////});
+//
+//$(".processing").css("display","block");
+//
+//ing.done(function(msg){
+//	$(".processing").css("display","none");
+//});
+function sendAJAXmessage(url,name,value){
 	var ing=$.ajax({
-		type: "GET",
-		url: conte+"/personalizzation?"+dataSend,
-		processData: false
+		type: "POST",
+		url: url,
+		data:name+"="+value,
+		processData:false
 	});
-
-	$("#"+item.id).addClass("processing");
-
-	ing.done(function(){
-		$("#"+item.id).removeClass("processing");
+	$(".processing").css("display","block");
+	ing.done(function(msg){
+		$(".processing").css("display","none");
 	});
 }
 
+function changeNote(item,idCourse){
+	var idd=item.id;
+//	alert($("#"+idd).children().html());
+	var conte=$("#context").attr("value");
+	conte=conte+"/changeNote";
+	var dataSend=$("#"+idd).children().html();
+	sendAJAXmessage(conte, "data"+idCourse, dataSend);
+}

@@ -3,11 +3,14 @@ package it.unical.uniexam.hibernate.domain;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
+import it.unical.uniexam.mvc.service.UtilsService;
 
 import java.net.URL;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,11 +20,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.type.LobType;
 
 /**
  * @category Actor 
@@ -91,9 +97,21 @@ public class Professor extends User{
 	})
 	Set<Course>asCommission=new HashSet<Course>();
 
+	@Column( name = "IMAGE" )
+	@Lob
+	private Blob fileimage;
+	
 	/**
 	 * Implementation
 	 */
+
+	public Blob getFileimage() {
+		return fileimage;
+	}
+
+	public void setFileimage(Blob fileimage) {
+		this.fileimage = fileimage;
+	}
 
 	/**
 	 * 

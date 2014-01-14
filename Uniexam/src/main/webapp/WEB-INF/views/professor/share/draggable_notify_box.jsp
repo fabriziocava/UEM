@@ -9,11 +9,11 @@
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!-- <div class="container-right"> -->
-<div class="draggable box box-notify" id="box-notify">
+<div class="box box-notify" id="box-notify">
 	<div class="box-header color_red">
 		<span class="span_expandible" id="collapse_drag_collapsable_notify">+</span>
 		<spring:message code="message.title.view.gruops" />
-		<span class="lock-close">lock</span>
+		<span class="lock-draggable-close" id="draggablebox-notify">lock</span>
 	</div>
 	<div class="box-body" id="_drag_collapsable_notify">
 		<%

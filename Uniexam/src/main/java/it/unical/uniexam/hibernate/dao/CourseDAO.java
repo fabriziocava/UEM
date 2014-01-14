@@ -55,4 +55,7 @@ public interface CourseDAO {
 
 	public ArrayList<Course> getAssociatedCourseWithGroups(User user);
 	
+	public String getNote(Long idCourse);
+	public Boolean setNote(Long idCourse,String note);
+	
 }
