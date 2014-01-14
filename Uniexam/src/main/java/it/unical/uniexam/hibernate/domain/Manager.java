@@ -50,27 +50,17 @@ public class Manager extends User{
 		this.department_associated=department_associated;
 	}
 
-	public Manager(Long manager_id, Set<PhoneNumber> phoneNumbers) {
-		this.id = manager_id;
-		this.phoneNumbers = phoneNumbers;
+	
+	
+	public Manager(){
+		
 	}
-	
-	
-	
 
 	
 	@OneToOne(fetch=FetchType.LAZY) // da controllare
 	Department department_associated;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="MANAGER_PHONE",
-	joinColumns={
-			@JoinColumn(name="MANAGER_ID")
-			}, 
-	inverseJoinColumns={
-			@JoinColumn(name="PHONE_ID")
-			})
-	Set<PhoneNumber>phoneNumbers=new HashSet<PhoneNumber>();
+
 
 	/**
 	 * 
@@ -87,13 +77,7 @@ public class Manager extends User{
 		this.id = manager_id;
 	}
 
-	public Set<PhoneNumber> getPhoneNumbers() {
-		return phoneNumbers;
-	}
-
-	public void setPhoneNumbers(Set<PhoneNumber> phoneNumbers) {
-		this.phoneNumbers = phoneNumbers;
-	}
+	
 	
 	public Department getDepartment_associated() {
 		return department_associated;

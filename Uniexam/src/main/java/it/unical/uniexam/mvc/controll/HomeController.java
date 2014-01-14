@@ -101,6 +101,9 @@ public class HomeController {
 		}else if(user.getType()==User.TYPE.STUDENT){
 			
 		}
+		else if(user.getType()==User.TYPE.MANAGER){
+			return "manager/home";
+		}
 		return "";
 //		return new ModelAndView("home", "model", "model");
 	}
