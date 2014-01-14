@@ -47,11 +47,6 @@ public class Student extends User {
 	 */
 	
 
-	@Id
-	@Column(name="STUDENT_ID")
-	@GeneratedValue
-	private Long id;
-
 	@Column(name="SERIAL_NUMBER", nullable=false, unique=true)
 	private Long serialNumber; //MATRICOLA
 	
