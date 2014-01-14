@@ -3,6 +3,7 @@ package it.unical.uniexam.hibernate.dao.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -16,17 +17,45 @@ import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
+import it.unical.uniexam.hibernate.domain.User.TYPE;
+import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 /**
  * 
  * @author luigi
+ * modified by fabrizio
  *
  */
+
 @Repository
 public class UserDAOImpl implements UserDAO {
 
+	@Override
+	public Long addUser(String name, String surname,
+			String password, Address address, Set<Email> emails,
+			Set<PhoneNumber> phoneNumbers) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Long id = null;
+		try {
+			transaction = session.beginTransaction();
+			User u = new User(User.TYPE.SECRETARY, name, surname, null, password, address, emails, phoneNumbers);
+			for(Email email : emails) {
+				email.setUser(u);
+			}
+			id = (Long) session.save(u);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return id;
+	}
+	
 	@Override
 	public User getUser(String email, String password,ArrayList<Object>result) {
 		Session session =HibernateUtil.getSessionFactory().openSession();

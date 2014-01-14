@@ -7,14 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user} <spring:message code="label.welcome" /></title>
 
-<link href="${pageContext.request.contextPath}/res/css/student.css"
+<link href="${pageContext.request.contextPath}/res/css/secretary.css"
+	media="all" rel="stylesheet" type="text/css" />
+	<link href="${pageContext.request.contextPath}/res/css/menu.css"
 	media="all" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js">
 </script>
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 </script>
-
-
 
 </head>
 <body>
@@ -31,12 +31,24 @@
 
 	</script>
 	<script type="text/javascript">
-	
+		$(document).ready(function () {
+		      $('#nav li').hover(
+		        function () {
+		            //mostra sottomenu
+		            $('ul', this).stop(true, true).delay(50).slideDown(100);
+		 
+		        }, 
+		        function () {
+		            //nascondi sottomenu
+		            $('ul', this).stop(true, true).slideUp(200);        
+		        }
+		    );
+		});
 	</script>
 	<header>
 		<div class="header">
 			<div class="header-logo">
-				<a href="${pageContext.request.contextPath}/student/home"
+				<a href="${pageContext.request.contextPath}/secretary/home"
 					title="home"> <img
 					src="${pageContext.request.contextPath}/res/img/pixel.png"
 					width="30" height="30">
@@ -48,11 +60,6 @@
 			<div>
 				<ul class="links-user">
 					<li><img src="imageUser" />${user}</li>
-					<li><a
-						href="${pageContext.request.contextPath}/professor/personalizzation">
-							<img class="personalizzation-header"
-							src="${pageContext.request.contextPath}/res/img/pixel.png" />
-					</a></li>
 					<li><a href="${pageContext.request.contextPath}/logout"> <img
 							class="logout-header"
 							src="${pageContext.request.contextPath}/res/img/pixel.png" />
@@ -63,22 +70,31 @@
 	</header>
 	<div class="container">
 
-		<div class="container-up">
-			<ul  id="jsddm" class="dashboard">
-				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">A</a></li>
-				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)"><spring:message
-						code="label.appeals" /></a></li>
-				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)"><spring:message
-						code="label.groups" /></a>
-				</li>
-								
-				<li><a class="button" href="#"
-					onclick="selectDashBoard(this.innerHTML)">D</a></li>
-			</ul>
+		<div class="container-up">		
+			<ul id="nav">
+		    <li class="first"><a href="#"><spring:message code="label.insert" /></a></li>
+		    <li><a href="#">Voce 02</a>
+		        <ul>
+		            <li><a href="#">Sottovoce Menu Numero 01</a></li>
+		            <li><a href="#">Sottovoce Menu Numero 02</a></li>
+		            <li class="last"><a href="#">Sottovoce Menu Numero 03</a></li>
+		        </ul>
+		        <div class="clear"></div>
+		    </li>
+		    <li><a href="#">Voce 03</a>
+		    <ul>
+		        <li><a href="#">Sottovoce Menu Numero 04</a></li>
+		        <li><a href="#">Sottovoce Menu Numero 05</a></li>
+		        <li><a href="#">Sottovoce Menu Numero 06</a></li>
+		        <li class="last"><a href="#">Sottovoce Menu Numero 07</a></li>
+		    </ul>         
+		        <div class="clear"></div>
+		    </li>
+		    <li class="last"><a href="#">Voce 04</a></li>
+		</ul>
 		</div>
+		
+		
 		<div class="container-left">something asd asd asd asd asd asd
 			asd asds asd asd asd asd asd asd asds asd asd asd asd asd asd asds
 			asd asd asd asd asd asd asds asd asd asd asd asd asd asds asd asd asd
