@@ -42,4 +42,6 @@ public class ManagerController {
 		
 		return ManagerService.MANAGER_HOME;
 	}
+	
+	
 }
