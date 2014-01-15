@@ -54,9 +54,13 @@
 					width="30" height="30">
 				</a>
 			</div>
-			<span style="float: left; position: relative; margin-left: 30px;"> <a
-				href="?lang=en">en</a> | <a href="?lang=it">it</a>
-			</span>
+	        <span style="float: left; position: relative; margin-left: 30px;">
+	                <a href="?lang=en">
+	                <img class="image20" src="${pageContext.request.contextPath}/res/img/eng_flag.png"/></a> 
+	                | 
+	                <a href="?lang=it">
+	                <img class="image20" src="${pageContext.request.contextPath}/res/img/it_flag.png"/></a>
+	        </span>
 			<div>
 				<ul class="links-user">
 					<li><img src="imageUser" />${user}</li>
@@ -72,7 +76,13 @@
 
 		<div class="container-up">		
 			<ul id="nav">
-		    <li class="first"><a href="#"><spring:message code="label.insert" /></a></li>
+		    <li class="first"><a href="#"><spring:message code="label.insert" /></a>
+		    	<ul>
+		    		<li><a href="${pageContext.request.contextPath}/secretary/registerManager"><spring:message code="label.newManager" /></a></li>
+		    		<li><a href="#"><spring:message code="label.newProfessor" /></a></li>
+		    		<li><a href="#"><spring:message code="label.newStudent" /></a></li>
+		    	</ul>
+		    </li>
 		    <li><a href="#">Voce 02</a>
 		        <ul>
 		            <li><a href="#">Sottovoce Menu Numero 01</a></li>

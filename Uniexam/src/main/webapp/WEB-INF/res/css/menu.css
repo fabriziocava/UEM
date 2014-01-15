@@ -66,8 +66,8 @@
     list-style:none;
 }
 #nav ul li {
-    width:100%;
-    float:left;
+    width:90%;
+    float:right;
     border-top:1px solid #fff;
 }
 #nav ul a {
@@ -75,4 +75,5 @@
     height:auto;
     padding: 8px 5px;
     color: rgb(57, 142, 209);
+    text-align: left;
 }
