@@ -110,7 +110,8 @@ public class LoginController {
 		try{
 			HttpSession session = request.getSession(false);
 			if(session!=null && !homeService.unRegisterSession(session.getId()))
-				return UtilsService.redirectToErrorPageGeneral("Session non chiusa", "session",model);
+//				return UtilsService.redirectToErrorPageGeneral("Session non chiusa", "session",model);
+				return UtilsService.LOGIN;
 		}catch (Exception e){
 			System.err.println("Errore sul logout");
 			new MokException(e);

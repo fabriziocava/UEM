@@ -9,6 +9,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		selectingFromDashBoard(document.getElementById("courseButton"));
+		$("#sorting").tablesorter();
 	});
 </script>
 <div class="container-center">
@@ -43,7 +44,7 @@
 	<fieldset>
 		<legend><spring:message
 								code="message.professor.course.container.center.legendCourses" /></legend>
-		<ul>
+		<ol id="#sorting">
 			<%
 // 				ArrayList<ArrayList<Object>> struct = new ArrayList<ArrayList<Object>>();
 				ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
@@ -60,7 +61,7 @@
 					<section id="<%="course" + c.getId()%>">
 						<a id="<%="acourse" + c.getId()%>" href="#" onclick="getDataFromAjax(this);"><h1><%=c.getName()%></h1></a>
 					</section>
-					<section id="<%="note" + c.getId()%>" contenteditable="true"
+					<section id="<%="note" + c.getId()%>" contenteditable="true" spellcheck="true"
 						onfocus="storeOld(this)"
 						onblur="beforeChangeNote(this,'<%=c.getId()%>')">
 						<%
@@ -91,7 +92,7 @@
 			<%
 				}
 			%>
-		</ul>
+		</ol>
 	</fieldset>
 </div>
 <%-- 						<input id="<%="noteInput" + (count)%>" type="text" --%>

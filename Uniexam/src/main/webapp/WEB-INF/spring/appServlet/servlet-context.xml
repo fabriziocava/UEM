@@ -42,6 +42,7 @@
 				<beans:value>/WEB-INF/views/professor/home/tiles.xml</beans:value>
 				<beans:value>/WEB-INF/views/professor/course/tiles.xml</beans:value>
 				<beans:value>/WEB-INF/views/professor/account/tiles.xml</beans:value>
+				<beans:value>/WEB-INF/views/professor/share_dialog/tiles.xml</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>

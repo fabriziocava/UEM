@@ -31,8 +31,7 @@
 								s[1] = mes.getGroup().getName();
 								s[2] = step.size();
 			%>
-			<spring:message code="message.descr.notify.comment"
-				arguments="<%=s%>" />
+			<spring:message code="message.descr.notify.comment" arguments="<%=s%>" />
 		</div>
 		<ul>
 			<%

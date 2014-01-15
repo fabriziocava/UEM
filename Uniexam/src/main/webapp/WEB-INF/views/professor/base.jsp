@@ -17,11 +17,27 @@
 <script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js">
 </script>
 <script
+	src="${pageContext.request.contextPath}/res/js/jquery-sorting.js">
+</script>
+<script
 	src="${pageContext.request.contextPath}/res/js/jquery-ui-1.10.3.custom.js">
 </script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/res/css/jquery-ui.css">
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
-	
+
 </script>
+<script>
+  $(function() {
+    $( document ).tooltip({
+    	show: {
+            effect: "slideDown",
+            delay: 150
+          },
+    track:true
+    });
+  });
+  </script>
 </head>
 <body>
 	<div class="processing">
@@ -42,7 +58,7 @@
 		<tiles:insertAttribute name="container-center" />
 		<tiles:insertAttribute name="container-down" />
 	</div>
-	<div>
+	<div class="container-footer">
 		<footer>
 			<tiles:insertAttribute name="footer" />
 		</footer>
@@ -71,8 +87,7 @@
 								 property.append("\""+values[0]);
 								 property.append("\":\"");
 								 property.append(values[1]+"\"");
-							}
-					%>
+							}%>
 					var idd="#<%=id%>";
 					$(idd).css({<%=property.toString()%>});
 			<%}}}}catch(Exception e){new MokException(e);}

@@ -11,7 +11,7 @@
 			value="/WEB-INF/views/professor/share/draggable_groups_box.jsp" />
 	</definition>
 
-	<definition name="professor/ajax/course/course_details" template="/WEB-INF/views/professor/course/course_details.jsp">
+	<definition name="professor/course/course_details" template="/WEB-INF/views/professor/course/course_details.jsp">
 	</definition>
 
 </tiles-definitions>

@@ -36,10 +36,26 @@ public class AjaxController {
 		Long idCourse=Long.valueOf(idCours);
 		Course c=professorService.getCourseDetails(p,idCourse);
 		model.addAttribute("course", c);
-		return "professor/ajax/course/course_details";
+		return "professor/course/course_details";
 	}
+//	/ajax/course/course_details/dialog
 
-
+	@RequestMapping("/dialog/requested_course")
+	public String dialog_requested_course(HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+		String idCours=request.getParameter("id");
+		Long idCourse=Long.valueOf(idCours);
+		Course c=professorService.getCourseDetails(p,idCourse);
+		model.addAttribute("course", c);
+		return "professor/dialog/requested_course";
+	}
+	
 	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
 		User user=professorService.getSession(request.getSession().getId());
 		if(user==null){
