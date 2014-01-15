@@ -57,7 +57,7 @@ ul.dashboard{
 	float: right;
 	position: relative;
 	list-style: none;
-	margin: 6px 0px 0px 0px;
+	margin: 10px 0px 0px 0px;
 }
 
 .links-user>li {
@@ -164,6 +164,7 @@ ul.dashboard{
 /* background-color: transparent; */
 /* z-index: 0;	 */
 /* } */
+
 
 
 footer {

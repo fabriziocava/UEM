@@ -15,6 +15,8 @@
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 </script>
 
+<script src="${pageContext.request.contextPath}/res/js/pino.js">
+</script>
 
 
 </head>
@@ -35,6 +37,7 @@
 	
 	</script>
 	<header>
+		
 		<div class="header">
 			<div class="header-logo">
 				<a href="${pageContext.request.contextPath}/manager/home"
@@ -47,8 +50,9 @@
 				href="?lang=en">en</a> | <a href="?lang=it">it</a>
 			</span>
 			<div>
+			
 				<ul class="links-user">
-					<li><img src="imageUser" />${M.getName()}</li>
+					<li><img src="imageUser" />Sig : ${M.getName()}</li>
 					<li><a
 						href="${pageContext.request.contextPath}/manager/personalizzation">
 							<img class="personalizzation-header"
@@ -58,7 +62,9 @@
 							class="logout-header"
 							src="${pageContext.request.contextPath}/res/img/pixel.png" />
 					</a></li>
+				    <li><table class="date"><tr><td><script type="text/javascript">WebDate(); </script></table></li>
 				</ul>
+				
 			</div>
 		</div>
 	</header>
