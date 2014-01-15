@@ -4,6 +4,7 @@ import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.HomeService;
+import it.unical.uniexam.mvc.service.ManagerService;
 import it.unical.uniexam.mvc.service.ProfessorService;
 import it.unical.uniexam.mvc.service.UtilsService;
 import it.unical.uniexam.mvc.service.impl.HomeServiceImpl;
@@ -102,7 +103,7 @@ public class HomeController {
 			
 		}
 		else if(user.getType()==User.TYPE.MANAGER){
-			return "manager/home";
+			return "redirect:"+ManagerService.MANAGER_HOME;
 		}
 		return "";
 //		return new ModelAndView("home", "model", "model");

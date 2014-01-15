@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${user} <spring:message code="label.welcome" /></title>
+
+<title><spring:message code="label.welcome" /> ${M.getName()}</title>
 
 <link href="${pageContext.request.contextPath}/res/css/manager.css"
 	media="all" rel="stylesheet" type="text/css" />
@@ -47,9 +48,9 @@
 			</span>
 			<div>
 				<ul class="links-user">
-					<li><img src="imageUser" />${user}</li>
+					<li><img src="imageUser" />${M.getName()}</li>
 					<li><a
-						href="${pageContext.request.contextPath}/professor/personalizzation">
+						href="${pageContext.request.contextPath}/manager/personalizzation">
 							<img class="personalizzation-header"
 							src="${pageContext.request.contextPath}/res/img/pixel.png" />
 					</a></li>
