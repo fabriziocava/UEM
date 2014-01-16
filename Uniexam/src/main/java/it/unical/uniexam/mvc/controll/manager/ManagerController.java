@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import it.unical.uniexam.MokException;
+import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
@@ -70,6 +71,24 @@ public class ManagerController {
 		return ManagerService.MANAGER_ACCOUNT;
 	}
 	
+	
+	@RequestMapping(value=ManagerService.MANAGER_EXAM , method=RequestMethod.GET)
+	public String course(HttpServletRequest request, Model model){
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+		}
+		if(user.getClass()!=Manager.class){
+			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+		}
+		Manager m=(Manager)user;
+
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		// aggiungere altre cose
+
+		return ManagerService.MANAGER_EXAM;
+	}
 	
 	@RequestMapping(value=ManagerService.MANAGER_UPLOAD, method=RequestMethod.POST)
 	public String uploadImageProfile(MultipartHttpServletRequest requestM,HttpServletRequest request,Model model){

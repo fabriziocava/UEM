@@ -49,7 +49,7 @@
 				<beans:value>/WEB-INF/views/manager/course/tiles.xml</beans:value>
 				<beans:value>/WEB-INF/views/manager/account/tiles.xml</beans:value>
 				<beans:value>/WEB-INF/views/manager/share_dialog/tiles.xml</beans:value>
-				
+				<beans:value>/WEB-INF/views/manager/exam_session/tiles.xml</beans:value>
 				
 			</beans:list>
 		</beans:property>
