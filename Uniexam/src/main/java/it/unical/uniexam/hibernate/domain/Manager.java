@@ -6,6 +6,7 @@ import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.net.URL;
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -61,6 +63,22 @@ public class Manager extends User{
 	Department department_associated;
 	
 
+	
+	@Column( name = "IMAGE" )
+    @Lob
+    private Blob fileimage;
+    
+    /**
+     * Implementation
+     */
+
+    public Blob getFileimage() {
+            return fileimage;
+    }
+
+    public void setFileimage(Blob fileimage) {
+            this.fileimage = fileimage;
+    }
 
 	/**
 	 * 

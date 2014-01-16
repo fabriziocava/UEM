@@ -6,6 +6,8 @@ import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.Set;
 
@@ -37,5 +39,9 @@ public interface ManagerDao {
 	
 	public Long setDepartmentAssociated(Long idManager, Long idDepartment);
 	public boolean setDepartmentAssociated(Long idManager, Department department);
+	
+	public Boolean streamImage(Long idManager,OutputStream outputStream);
+    public void storeImage(Long idManager,InputStream is,int length);
+    public void storeImage2(Long idManager,InputStream is,int length);
 
 }
