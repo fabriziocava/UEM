@@ -96,9 +96,9 @@ public class DBTestProfessorDAO {
 		courseDAO.addProfessorAtCommission(ids[7], ids[5]);
 		courseDAO.addProfessorAtCommission(ids[7], ids[6]);
 
-		courseDAO.addRequestedCourse(ids[0], ids[1], RequestedCourse.POLICY_1);
-		courseDAO.addRequestedCourse(ids[7], ids[1], RequestedCourse.POLICY_1);
-		courseDAO.addRequestedCourse(ids[7], ids[0], RequestedCourse.POLICY_2);
+		courseDAO.addRequestedCourse(ids[0], ids[1], RequestedCourse.POLICY_LIGHT);
+		courseDAO.addRequestedCourse(ids[7], ids[1], RequestedCourse.POLICY_LIGHT);
+		courseDAO.addRequestedCourse(ids[7], ids[0], RequestedCourse.POLICY_MEDIUM);
 		
 		courseDAO.removeRequestedCourse(ids[7], ids[1]);
 /*9*/
@@ -145,12 +145,12 @@ public class DBTestProfessorDAO {
 	
 	@Test
 	public void checkCourseRequested(){
-		assertTrue(courseDAO.getRequestedCourses(ids[0], RequestedCourse.POLICY_1).size()==1);
-		assertTrue(courseDAO.getRequestedCourses(ids[0], RequestedCourse.POLICY_2)==null);
-		assertTrue(courseDAO.getRequestedCourses(ids[7], RequestedCourse.POLICY_1)==null);
-		assertTrue(courseDAO.getRequestedCourses(ids[7], RequestedCourse.POLICY_2).size()==1);
+		assertTrue(courseDAO.getRequestedCourses(ids[0], RequestedCourse.POLICY_LIGHT).size()==1);
+		assertTrue(courseDAO.getRequestedCourses(ids[0], RequestedCourse.POLICY_MEDIUM)==null);
+		assertTrue(courseDAO.getRequestedCourses(ids[7], RequestedCourse.POLICY_LIGHT)==null);
+		assertTrue(courseDAO.getRequestedCourses(ids[7], RequestedCourse.POLICY_MEDIUM).size()==1);
 		assertTrue(courseDAO.getRequestedCourses(ids[7]).size()==1);
-		assertTrue(courseDAO.getRequestedCourses(ids[0]).iterator().next().getPolicyOfRequest()==RequestedCourse.POLICY_1);
+		assertTrue(courseDAO.getRequestedCourses(ids[0]).iterator().next().getPolicyOfRequest()==RequestedCourse.POLICY_LIGHT);
 		assertTrue(courseDAO.getRequestedCourses(ids[7]).iterator().next().getCourse().getName().equals("AE"));
 	}
 

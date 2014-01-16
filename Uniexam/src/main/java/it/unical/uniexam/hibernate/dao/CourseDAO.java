@@ -36,7 +36,7 @@ public interface CourseDAO {
 	/**
 	 * Adding a requested course a one course
 	 */
-	public boolean addRequestedCourse(Long idCourse,Long idCourseRequested,Integer degree);
+	public boolean addRequestedCourse(Long idCourse,Long idCourseRequested,String degree);
 	public RequestedCourse removeRequestedCourse(Long idCourse,Long idCourseRequested);
 //	public void modifyRequestedCourse(Long idCourse,Long idCourseRequested); // can be derived by a remove and a add
 	
@@ -52,7 +52,7 @@ public interface CourseDAO {
 	public Set<Professor> removeCommission(Long idCourse);
 	
 	public Set<RequestedCourse> getRequestedCourses(Long idCourse);
-	public Set<RequestedCourse> getRequestedCourses(Long idCourse,Integer degreeOdPolicy);
+	public Set<RequestedCourse> getRequestedCourses(Long idCourse,String degreeOdPolicy);
 
 	public ArrayList<Course> getAssociatedCourseWithGroups(User user);
 	

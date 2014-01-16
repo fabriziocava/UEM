@@ -20,15 +20,15 @@ public class RequestedCourse {
 	/**
 	 * the course can be take from any student
 	 */
-	public static final Integer POLICY_1=1;
+	public static final String POLICY_LIGHT="light";
 	/**
 	 * the course can be take only if the student have already take the requested course
 	 */
-	public static final Integer POLICY_2=2;
+	public static final String POLICY_MEDIUM="medium";
 	
-//	public static final Integer POLICY_3=3;
+	public static final String POLICY_STRONG="strong";
 	
-	public RequestedCourse(Course course, Integer degreeOfRequest) {
+	public RequestedCourse(Course course, String degreeOfRequest) {
 		this.course = course;
 		this.policyOfRequested = degreeOfRequest;
 	}
@@ -45,7 +45,7 @@ public class RequestedCourse {
 	Course course;
 	
 	@Column(name="POLICY")
-	Integer policyOfRequested;
+	String policyOfRequested;
 
 	
 	/**
@@ -72,11 +72,11 @@ public class RequestedCourse {
 		this.course = course;
 	}
 
-	public Integer getPolicyOfRequest() {
+	public String getPolicyOfRequest() {
 		return policyOfRequested;
 	}
 
-	public void setPolicyOfRequest(Integer policyOfRequest) {
+	public void setPolicyOfRequest(String policyOfRequest) {
 		this.policyOfRequested = policyOfRequest;
 	}
 

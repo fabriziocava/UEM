@@ -42,6 +42,7 @@
 		<tr id="requestCourse<%=req.getCourse().getId()%>" style="display: none;"><td>
 		<div>
 		<%req.getPolicyOfRequest(); %>///******
+		
 		</div>
 		</td></tr>
 			<%}

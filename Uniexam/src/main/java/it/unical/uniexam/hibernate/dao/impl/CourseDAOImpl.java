@@ -194,7 +194,7 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
-	public boolean addRequestedCourse(Long idCourse, Long idCourseRequested,Integer degree) {
+	public boolean addRequestedCourse(Long idCourse, Long idCourseRequested,String degree) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		boolean ok=false;
@@ -449,13 +449,13 @@ public class CourseDAOImpl implements CourseDAO{
 
 	@Override
 	public Set<RequestedCourse> getRequestedCourses(Long idCourse,
-			Integer degreeOdPolicy) {
+			String degreeOdPolicy) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Set<RequestedCourse> res=null;
 		try{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			for (RequestedCourse requestedCourse : c1.getRequestedCourses()) {
-				if(requestedCourse.getPolicyOfRequest()==degreeOdPolicy){
+				if(requestedCourse.getPolicyOfRequest().equals(degreeOdPolicy)){
 					if(res==null)
 						res=new HashSet<RequestedCourse>();
 					res.add(requestedCourse);
