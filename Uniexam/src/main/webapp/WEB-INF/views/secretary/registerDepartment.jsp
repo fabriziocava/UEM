@@ -33,12 +33,27 @@
 			<td><form:label path="name"><spring:message code="label.denomination" /></form:label></td>
 			<td><form:input path="name"/></td>
 			</tr>
+			<tr>
+			<td><form:label path="Address.street"><spring:message code="label.street" /></form:label></td>
+			<td><form:input path="Address.street"/></td>
+			</tr>
+			<tr>
+			<td><form:label path="Address.city"><spring:message code="label.city" /></form:label></td>
+			<td><form:input path="Address.city"/></td>
+			</tr>
+			<tr>
+			<td><form:label path="Address.zip"><spring:message code="label.zip" /></form:label></td>
+			<td><form:input path="Address.zip"/></td>
+			</tr>
+			<tr>
+			<td><form:label path="Address.state"><spring:message code="label.state" /></form:label></td>
+			<td><form:input path="Address.state"/></td>
+			</tr>
 			<tr><td></td><td>
-			<input type="submit" value="RegisterDepartment" />
+			<input type="submit" value="<spring:message code="label.register" />" />
 			</td></tr>
 			</table>
 			</form:form>
-
 		</div>
 		<div class="container-right"></div>
 		<div class="container-down"></div>

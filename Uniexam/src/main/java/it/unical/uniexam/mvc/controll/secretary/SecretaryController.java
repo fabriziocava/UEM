@@ -37,10 +37,10 @@ public class SecretaryController {
 		return new ModelAndView(SecretaryService.SECRETARY_REGISTER_DEPARTMENT, "model", model);
 	}
 	
-	@RequestMapping("/saveDepartment")
+	@RequestMapping("secretary/saveDepartment")
 	public ModelAndView saveDepartment(@ModelAttribute("department") Department department, BindingResult result) {
 		secretaryService.addDepartment(department);
-		return new ModelAndView("redirect:"+SecretaryService.SECRETARY_HOME);
+		return new ModelAndView(SecretaryService.SECRETARY_HOME);
 	}
 	
 	@RequestMapping(value=SecretaryService.SECRETARY_REGISTER_DEGREECOURSE, method=RequestMethod.GET)
