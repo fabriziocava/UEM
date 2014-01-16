@@ -31,6 +31,68 @@ function openPopUpWithAjaxContent(caseId,id){
 	}
 }
 
+function Commands(){
+	// scrivere la classe che prende in input il set a command e poi con un to string ritorna la stringa come commando
+}
+
+function dialogModifyRequestedCourse(){
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width : "7aaaaaaaaaa5%",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		}
+	});
+	
+	$("li[id^='modifyRequest']").bind("click", function(event) {
+		var ids=this.id;
+		ids=ids.replace("modifyRequest","");
+		var id=ids.split("$")[0];
+		var degree=ids.split("$")[1];
+		alert("id is: "+id+" and degree is: "+degree);
+		if($("#sendRequestCourseChange").html()==undefined){
+//			$("<input></input>").attr('id','sendRequestCourseChange').attr('name','setCommand').appendTo('body');
+			
+		}
+//			creare il div che apparirà d'avanti al mouse
+		$("<div></div>")
+		.attr('id','divRequestCourseChange')
+		.appendTo('body').html($("#radio"+degree).html());
+//			.css('height',"100px")
+//			.css('left',event.pageX)
+//			.css('top',event.pageY)
+		$("#divRequestCourseChange").dialog({
+		      resizable: false,
+		      modal: true,
+		      buttons: {
+		        "Save": function() {
+		          $( this ).dialog( "close" );
+		          alert(ok);
+//		          var newVal=$("input[name='choose']:radio:checked").val();
+//		          requested_courseAddIfNotAddAlready ///strutturaaaa!!! classeEEEEE
+//		          var comm="%requested"+id+"$change"+newVal+"%";
+		          ok="no";
+		          $("div").remove("#divRequestCourseChange");
+		        },
+		        Cancel: function() {
+		          $( this ).dialog( "close" );
+		        	if($("#sendRequestCourseChange").val()==""){
+		        		$("input").remove("#sendRequestCourseChange");
+		        	}
+		        	$("div").remove("#divRequestCourseChange");
+		        }
+		      }
+		    });
+		$("#setRequestCourseChange").css('height',"auto");
+	});
+}
+
 function getDataFromAjax(item){
 	var id=item.id;
 	if(id.match("acourse")){

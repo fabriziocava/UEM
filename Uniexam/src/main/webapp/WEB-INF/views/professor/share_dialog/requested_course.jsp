@@ -10,18 +10,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#dialog").dialog({
-			autoOpen : true,
-			width : "75%",
-			show : {
-				effect : "blind",
-				duration : 500
-			},
-			hide : {
-				effect : "explode",
-				duration : 500
-			}
-		});
+		var ok="si";
+		dialogModifyRequestedCourse();
 	});
 </script>
 <%
@@ -36,15 +26,19 @@
 			<%
 				for(RequestedCourse req:c.getRequestedCourses()){
 			%>
-		<tr><td>
-		<span class="span_expandible" id="collapserequestCourse<%=req.getCourse().getId()%>">+</span> <%=req.getCourse().getName()%>
-		</td></tr>
-		<tr id="requestCourse<%=req.getCourse().getId()%>" style="display: none;"><td>
+		<tr>
+		<td>
 		<div>
-		<%req.getPolicyOfRequest(); %>///******
-		
+		<div class="square-small <%=req.getPolicyOfRequest()%>"></div>
+		<%=req.getCourse().getName()%>
+		<ul class="links-user">
+		<li>Opzioni :</li> 
+		<li class="bottonmok">Elimina</li>
+		<li class="bottonmok" id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequest()%>">Modifica</li>
+		</ul>
 		</div>
-		</td></tr>
+		</td>
+		</tr>
 			<%}
 				
 			%>
@@ -57,8 +51,32 @@
 
 </div>
 
+<div id="radiostrong" style="display: none;">
+<label><input type='radio' name='choose' value="light"/>light</label>
+<label><input type='radio' name='choose' value="medium"/>medium</label>
+</div>
 
+<div id="radiolight" style="display: none;">
+<label><input type='radio' name='choose' value="medium"/>medium</label>
+<label><input type='radio' name='choose' value="strong"/>strong</label>
+</div>
 
+<div id="radiomedium" style="display: none;">
+<label><input type='radio' name='choose' value="light"/>light</label>
+<label><input type='radio' name='choose' value="strong"/>strong</label>
+</div>
+
+<!-- <td> -->
+<%-- 		<span class="span_expandible" id="collapserequestCourse<%=req.getCourse().getId()%>">+</span> <%=req.getCourse().getName()%> --%>
+<!-- 		</td></tr> -->
+<%-- 		<tr id="requestCourse<%=req.getCourse().getId()%>" style="display: none;"><td> --%>
+<!-- 		<div> -->
+<!-- 		<div>Quadretto in base al grado</div> -->
+<%-- 		<%req.getPolicyOfRequest(); %>///****** --%>
+<%-- 		<span class="span_expandible" id="collapserequestCourseOption<%=req.getCourse().getId()%>">+</span> <%=req.getCourse().getName()%> --%>
+		
+<!-- 		</div> -->
+<!-- 		</td> -->
 
 
 
