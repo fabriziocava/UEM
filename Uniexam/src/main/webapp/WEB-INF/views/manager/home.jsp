@@ -52,7 +52,7 @@
 			<div>
 			
 				<ul class="links-user">
-					<li><img src="imageUser" /> Sig : ${M.getName() M.getSurname()}</li>
+					<li><img src="imageUser" /> Sig : ${M.getName()}</li>
 					<li><a
 						href="${pageContext.request.contextPath}/manager/personalizzation">
 							<img class="personalizzation-header"

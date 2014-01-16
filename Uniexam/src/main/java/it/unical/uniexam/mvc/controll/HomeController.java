@@ -118,6 +118,6 @@ public class HomeController {
 			System.err.println("Errore sul logout");
 			new MokException(e);
 		}
-		return "home";
+		return "login";
 	}
 }
