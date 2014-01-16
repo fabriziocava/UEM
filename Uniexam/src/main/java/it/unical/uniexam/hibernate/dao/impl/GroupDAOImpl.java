@@ -1,6 +1,5 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -13,12 +12,13 @@ import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
+import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
+import it.unical.uniexam.hibernate.domain.Group.GroupState;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
-import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
-import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
+import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 /**
@@ -29,405 +29,600 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 @Repository
 public class GroupDAOImpl implements GroupDAO {
 
-	@Override
-	public Long addGruop(String name, String object, String description,
-			Professor creator, Integer politic) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		Long res=null;
-		try{
-			transaction = session.beginTransaction();
+        @Override
+        public Long addGruop(String name, String object, String description,
+                        Professor creator, Integer politic, Course course) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Long res=null;
+                try{
+                        transaction = session.beginTransaction();
 
-			Group g=new Group(name, object, description, politic, creator);
-			creator.getGroups().add(g);
-			res=(Long)session.save(g);
+                        Group g=new Group(name, object, description, politic, creator,course);
+                        creator.getGroups().add(g);
+                        g.getIscribed().add(creator);
+                        g.setState(GroupState.OPEN);
+                        res=(Long)session.save(g);
 
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        Course c=(Course)session.get(Course.class, course.getId());
+                        c.getGroups().add(g);
 
-	@Override
-	public Long addGruop(String name, String object, String description,
-			Long idProfessorCreator, Integer politic) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		Long res=null;
-		try{
-			transaction = session.beginTransaction();
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
-			Professor creator=(Professor)session.get(Professor.class, idProfessorCreator);
-			Group g=new Group(name, object, description, politic, creator);
-			creator.getGroups().add(g);
-			res=(Long)session.save(g);
+        @Override
+        public Long addGruop(String name, String object, String description,
+                        Long idProfessorCreator, Integer politic,Long idCourse) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Long res=null;
+                try{
+                        transaction = session.beginTransaction();
 
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        Professor creator=(Professor)session.get(Professor.class, idProfessorCreator);
+                        Course c=null;
+                        if(idCourse!=null)
+                                c=(Course)session.get(Course.class, idCourse);
+                        Group g=new Group(name, object, description, politic, creator,c);
+                        creator.getGroups().add(g);
+                        g.getIscribed().add(creator);
+                        g.setState(GroupState.OPEN);
+                        res=(Long)session.save(g);
 
-	@Override
-	public Long addGruop(Group group) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		Long res=null;
-		try{
-			transaction = session.beginTransaction();
+                        if(c!=null)
+                                c.getGroups().add(g);
 
-			res=(Long)session.save(group);
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+        @Override
+        public Long addGruop(Group group) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Long res=null;
+                try{
+                        transaction = session.beginTransaction();
 
-	@Override
-	public Group removeGroup(Long idGroup) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		Group res=null;
-		try{
-			transaction = session.beginTransaction();
+                        res=(Long)session.save(group);
+                        group.getIscribed().add(group.getCreator());
+                        group.getCreator().getGroups().add(group);
+                        group.setState(GroupState.OPEN);
 
-			Group group=(Group)session.get(Group.class, idGroup);
-			session.delete(group);
+                        Course course = group.getCourse();
+                        if(course!=null){
+                                Course c=(Course)session.get(Course.class, course.getId());
+                                c.getGroups().add(group);
+                        }
 
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public Group removeGroup(Group group) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        @Override
+        public Group removeGroup(Long idGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Group res=null;
+                try{
+                        transaction = session.beginTransaction();
 
-	@Override
-	public Long modifyGruop(Long idGruop, String name, String object,
-			String description, Integer politic) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+                        Group group=(Group)session.get(Group.class, idGroup);
+                        if(group.getCourse()!=null){
+                                Course c=group.getCourse();
+                                c.getGroups().remove(group);
+                        }
 
-	@Override
-	public Long modifyGruop(Long idGruop, Group groupNew) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+                        User creator=group.getCreator();
+                        creator.getGroups().remove(group);
 
-	@Override
-	public Set<Group> removeAllGroupFromProfessor(Long idProfessor) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+                        Set<User> iscribed = group.getIscribed();
+                        for (User user : iscribed) {
+                                user.getGroups().remove(group);
+                                for(PostOfGroup p:group.getPosts()){
+                                        for(CommentOfPost com:p.getComments()){
+                                                if(user.getComments().contains(com)){
+                                                        user.getComments().remove(com);
+                                                }
+                                        }
 
-	@Override
-	public Long addMessageAtGroup(Long idGroup,MessageOfGroup messageOfGroup) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		Long res=null;
-		try{
-			transaction = session.beginTransaction();
+                                }
+                        }
 
-			Group group=(Group)session.get(Group.class, idGroup);
-			messageOfGroup.setDate_of_message(new Date());
-			messageOfGroup.setGroup(group);
-			group.getMessages().add(messageOfGroup);
-			res=(Long)session.save(messageOfGroup);
+                        session.delete(group);
 
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public MessageOfGroup addMessageAtGroup(Group group,
-			MessageOfGroup messageOfGroup) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		MessageOfGroup res=null;
-		try{
-			transaction = session.beginTransaction();
-			group=(Group)session.get(Group.class, group.getId());
-			messageOfGroup.setDate_of_message(new Date());
-			messageOfGroup.setGroup(group);
-			group.getMessages().add(messageOfGroup);
-			session.save(messageOfGroup);
-			res=messageOfGroup;
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+        @Deprecated
+        @Override
+        public Group removeGroup(Group group) {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
-	@Override
-	public MessageOfGroup modifyMessage(Long idGroup, Long idMessageOfGroup,
-			MessageOfGroup messageOfGroupNew) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        @Deprecated
+        @Override
+        public Long modifyGruop(Long idGruop, String name, String object,
+                        String description, Integer politic) {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
-	@Override
-	public MessageOfGroup modifyMessage(Long idMessageOfGroup,
-			MessageOfGroup messageOfGroupNew) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        @Deprecated
+        @Override
+        public Long modifyGruop(Long idGruop, Group groupNew) {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
-	@Override
-	public MessageOfGroup removeMessage(Long idGroup, Long idMessageOfGroup) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		MessageOfGroup res=null;
-		try{
-			transaction = session.beginTransaction();
+        @Deprecated
+        @Override
+        public Set<Group> removeAllGroupFromProfessor(Long idProfessor) {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
-			Group group=(Group)session.get(Group.class, idGroup);
-			for (MessageOfGroup message : group.getMessages()) {
-				if(message.getId()==idMessageOfGroup){
-					res=message;
-					break;
-				}
-			}
-			group.getMessages().remove(res);
-			session.delete(res);
+        @Override
+        public Long addPostAtGroup(Long idGroup,PostOfGroup postOfGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Long res=null;
+                try{
+                        transaction = session.beginTransaction();
 
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        Group group=(Group)session.get(Group.class, idGroup);
+                        postOfGroup.setDate_of_post(new Date());
+                        postOfGroup.setGroup(group);
+                        group.getPosts().add(postOfGroup);
+                        res=(Long)session.save(postOfGroup);
 
-	@Override
-	public MessageOfGroup removeMessage(MessageOfGroup messageOfGroup) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public MessageOfGroup removeMessage(Long idMessageOfGroup) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        @Override
+        public PostOfGroup addPostAtGroup(Group group,
+                        PostOfGroup postOfGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                PostOfGroup res=null;
+                try{
+                        transaction = session.beginTransaction();
+                        group=(Group)session.get(Group.class, group.getId());
+                        postOfGroup.setDate_of_post(new Date());
+                        postOfGroup.setGroup(group);
+                        group.getPosts().add(postOfGroup);
+                        session.save(postOfGroup);
+                        res=postOfGroup;
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public Long addCommentAtMessage(Long idMessage, CommentOfMessage comment) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		Long res=null;
-		try{
-			transaction = session.beginTransaction();
+        @Deprecated
+        @Override
+        public PostOfGroup modifyPost(Long idGroup, Long idPostOfGroup,
+                        PostOfGroup postOfGroupNew) {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
-			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
-			mog.getComments().add(comment);
-			res=(Long)session.save(comment);
-			comment.setOfMessage(mog);
-			
-			User u=mog.getUser();
-			if(u.getId()!=comment.getUser().getId())
-				u.getNoReadComments().add(res);
-			u.getComments().addAll((Collection<? extends CommentOfPost>) comment);
+        @Deprecated
+        @Override
+        public PostOfGroup modifyPost(Long idPostOfGroup,
+                        PostOfGroup postOfGroupNew) {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+        @Override
+        public PostOfGroup removePost(Long idGroup, Long idPostOfGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                PostOfGroup res=null;
+                try{
+                        transaction = session.beginTransaction();
 
-	@Override
-	public CommentOfMessage removeCommentFromMessage(Long idMessage, Long idComment) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		CommentOfMessage res=null;
-		try{
-			transaction = session.beginTransaction();
+                        Group group=(Group)session.get(Group.class, idGroup);
+                        for (PostOfGroup post : group.getPosts()) {
+                                if(post.getId()==idPostOfGroup){
+                                        res=post;
+                                        break;
+                                }
+                        }
+                        group.getPosts().remove(res);
+                        session.delete(res);
 
-			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
-			CommentOfMessage com=(CommentOfMessage)session.get(CommentOfMessage.class, idComment);
-			
-			mog.getComments().remove(com);
-			session.delete(com);
-			res=com;
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public CommentOfMessage modifyCommentFromMessage(Long idComment,CommentOfMessage newComment) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		CommentOfMessage res=null;
-		try{
-			transaction = session.beginTransaction();
+        @Deprecated
+        @Override
+        public PostOfGroup removePost(PostOfGroup postOfGroup) {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
-			CommentOfMessage com=(CommentOfMessage)session.get(CommentOfMessage.class, idComment);
-			com.setComment(newComment.getComment());
-			com.setDate_of_comment(new Date());
-			res=com;
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+        @Deprecated
+        @Override
+        public PostOfGroup removePost(Long idPostOfGroup) {
+                // TODO Auto-generated method stub
+                return null;
+        }
 
-	@Override
-	public Set<CommentOfMessage> getCommentsFromMessage(Long idMessage) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Set<CommentOfMessage> res=null;
-		try{
-			MessageOfGroup mog=(MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
-			res=new HashSet<CommentOfMessage>(mog.getComments());
-		}catch(Exception e){
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+        @Override
+        public Long addCommentAtPost(Long idPost, CommentOfPost comment) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Long res=null;
+                try{
+                        transaction = session.beginTransaction();
 
+                        PostOfGroup mog=(PostOfGroup)session.get(PostOfGroup.class, idPost);
+                        mog.getComments().add(comment);
+                        res=(Long)session.save(comment);
+                        comment.setOfPost(mog);
 
-	@Override
-	public Group getGroup(Long idGroup) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Group res=null;
-		try{
-			res=(Group)session.get(Group.class, idGroup);
-		}catch(Exception e){
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        User creator=(User)session.get(User.class, comment.getUser().getId());
+                        for (User user : mog.getGroup().getIscribed()) {
+                                if(!user.getNoReadComments().contains(comment) && user.getId()!=creator.getId())
+                                        user.getNoReadComments().add(comment.getId());
+                        }
+                        creator.getComments().add(comment);//togliere LAZY °°°°MOKSOL
 
-	@Override
-	public MessageOfGroup getMessage(Long idMessage) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		MessageOfGroup res=null;
-		try{
-			return (MessageOfGroup)session.get(MessageOfGroup.class, idMessage);
-		}catch(Exception e){
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public CommentOfMessage getComment(Long idComment) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		CommentOfMessage res=null;
-		try{
-			return(CommentOfMessage)session.get(CommentOfMessage.class, idComment);
-		}catch(Exception e){
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+        @Override
+        public CommentOfPost removeCommentFromPost(Long idPost, Long idComment) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                CommentOfPost res=null;
+                try{
+                        transaction = session.beginTransaction();
 
-	@Override
-	public Set<Group> getGroups() {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Set<Group> res=null;
-		try{
-			Query q= session.createQuery("from Group");
-			@SuppressWarnings("unchecked")
-			List<Group> list = q.list();
-			res=new HashSet<Group>(list);
-		}catch(Exception e){
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                        PostOfGroup mog=(PostOfGroup)session.get(PostOfGroup.class, idPost);
+                        CommentOfPost com=(CommentOfPost)session.get(CommentOfPost.class, idComment);
+                        User u=com.getUser();
+                        u.getComments().remove(com);
+                        for (User user : mog.getGroup().getIscribed()) {
+                                if(user.getNoReadComments().contains(com))
+                                        user.getNoReadComments().remove(com.getId());
+                        }
+                        mog.getComments().remove(com);
+                        session.delete(com);
+                        res=com;
+                        transaction.commit();
 
-	@Override
-	public Set<Group> getGroupsFromProfessor(Long idProfessor) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Set<Group> res=null;
-		try{
-			Query q= session.createQuery("from Group where creator.id=:par");
-			q.setParameter("par", idProfessor);
-			@SuppressWarnings("unchecked")
-			List<Group> list = q.list();
-			res=new HashSet<Group>(list);
-		}catch(Exception e){
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public CommentOfPost modifyCommentFromPost(Long idComment,CommentOfPost newComment) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                CommentOfPost res=null;
+                try{
+                        transaction = session.beginTransaction();
+
+                        CommentOfPost com=(CommentOfPost)session.get(CommentOfPost.class, idComment);
+                        com.setComment(newComment.getComment());
+                        com.setDate_of_comment(new Date());
+                        res=com;
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Set<CommentOfPost> getCommentsFromPost(Long idPost) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Set<CommentOfPost> res=null;
+                try{
+                        PostOfGroup mog=(PostOfGroup)session.get(PostOfGroup.class, idPost);
+                        res=new HashSet<CommentOfPost>(mog.getComments());
+                }catch(Exception e){
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
 
-	@Override
-	public Set<MessageOfGroup> getMessagesOfGroup(Long idGroup) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Set<MessageOfGroup> res=null;
-		try{
-			Query q= session.createQuery("from MessageOfGroup where group.id=:par");
-			q.setParameter("par", idGroup);
-			@SuppressWarnings("unchecked")
-			List<MessageOfGroup> list = q.list();
-			res=new HashSet<MessageOfGroup>(list);
-		}catch(Exception e){
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
-	}
+        @Override
+        public Group getGroup(Long idGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Group res=null;
+                try{
+                        res=(Group)session.get(Group.class, idGroup);
+                }catch(Exception e){
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public PostOfGroup getPost(Long idPost) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                PostOfGroup res=null;
+                try{
+                        return (PostOfGroup)session.get(PostOfGroup.class, idPost);
+                }catch(Exception e){
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public CommentOfPost getComment(Long idComment) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                CommentOfPost res=null;
+                try{
+                        return(CommentOfPost)session.get(CommentOfPost.class, idComment);
+                }catch(Exception e){
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Set<Group> getGroups() {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Set<Group> res=null;
+                try{
+                        Query q= session.createQuery("from Group");
+                        @SuppressWarnings("unchecked")
+                        List<Group> list = q.list();
+                        res=new HashSet<Group>(list);
+                }catch(Exception e){
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Set<Group> getGroupsFromProfessor(Long idProfessor) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Set<Group> res=null;
+                try{
+                        Query q= session.createQuery("from Group where creator.id=:par");
+                        q.setParameter("par", idProfessor);
+                        @SuppressWarnings("unchecked")
+                        List<Group> list = q.list();
+                        res=new HashSet<Group>(list);
+                }catch(Exception e){
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+
+        @Override
+        public Set<PostOfGroup> getPostsOfGroup(Long idGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Set<PostOfGroup> res=null;
+                try{
+                        Query q= session.createQuery("from PostOfGroup where group.id=:par");
+                        q.setParameter("par", idGroup);
+                        @SuppressWarnings("unchecked")
+                        List<PostOfGroup> list = q.list();
+                        res=new HashSet<PostOfGroup>(list);
+                }catch(Exception e){
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Boolean iscribeUserAtGroup(User user,Group group) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Boolean res=null;
+                try{
+                        transaction = session.beginTransaction();
+
+                        user=(User)session.get(User.class, user.getId());
+                        group=(Group)session.get(Group.class, group.getId());
+                        user.getGroups().add(group);
+                        group.getIscribed().add(user);
+
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Boolean iscribeUserAtGroup(Long idUser,Long idGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Boolean res=null;
+                try{
+                        transaction = session.beginTransaction();
+
+                        User user=(User)session.get(User.class, idUser);
+                        Group group=(Group)session.get(Group.class, idGroup);
+                        user.getGroups().add(group);
+                        group.getIscribed().add(user);
+
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Boolean cancelUserFromGroup(User user, Group group) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Boolean res=null;
+                try{
+                        transaction = session.beginTransaction();
+
+                        user=(User)session.get(User.class, user.getId());
+                        group=(Group)session.get(Group.class, group.getId());
+                        user.getGroups().remove(group);
+                        group.getIscribed().remove(user);
+
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Boolean cancelUserFromGroup(Long idUser, Long idGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Boolean res=null;
+                try{
+                        transaction = session.beginTransaction();
+
+                        User user=(User)session.get(User.class, idUser);
+                        Group group=(Group)session.get(Group.class, idGroup);
+                        user.getGroups().remove(group);
+                        group.getIscribed().remove(user);
+
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Group closeGroup(Long idGroup) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Group res=null;
+                try{
+                        transaction = session.beginTransaction();
+
+                        Group group=(Group)session.get(Group.class, idGroup);
+                        group.setState(GroupState.CLOSE);
+                        res=group;
+
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
+
+        @Override
+        public Group closeGroup(Group grou) {
+                Session session =HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction=null;
+                Group res=null;
+                try{
+                        transaction = session.beginTransaction();
+
+                        Group group=(Group)session.get(Group.class, grou.getId());
+                        group.setState(GroupState.CLOSE);
+                        res=group;
+
+                        transaction.commit();
+                }catch(Exception e){
+                        transaction.rollback();
+                        new MokException(e);
+                }finally{
+                        session.close();
+                }
+                return res;
+        }
 
 }
