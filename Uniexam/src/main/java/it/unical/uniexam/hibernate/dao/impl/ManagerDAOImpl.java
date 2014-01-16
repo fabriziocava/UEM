@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.hibernate.dao.ManagerDao;
 import it.unical.uniexam.hibernate.domain.Department;
@@ -14,6 +15,7 @@ import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
+@Repository
 public class ManagerDAOImpl implements ManagerDao {
 
 	@Override

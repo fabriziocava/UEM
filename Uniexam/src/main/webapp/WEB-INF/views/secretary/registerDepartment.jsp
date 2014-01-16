@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${user} - Add new Manager</title>
+<title>${user} - <spring:message code="title.addNewDepartment" /></title>
 
 <link href="${pageContext.request.contextPath}/res/css/secretary.css"
 	media="all" rel="stylesheet" type="text/css" />
@@ -22,19 +22,19 @@
 		<div class="container-up"></div>
 		<div class="container-left"></div>
 		<div class="container-center">
-			<c:url var="userRegistration" value=""/>
-			<form:form id="registerForm" modelAttribute="manager" method="post" action="">
+			<c:url var="departmentRegistration" value="saveDepartment.html"/>
+			<form:form id="registerDepartmentForm" modelAttribute="department" method="post" action="saveDepartment.html">
 			<table>
 			<tr>
-			<td><form:label path="name">Name</form:label></td>
-			<td><form:input  path="name"/></td>
+			<td><form:label path="code"><spring:message code="label.code" /></form:label></td>
+			<td><form:input path="code"/></td>
 			</tr>
 			<tr>
-			<td><form:label path="surname">Surname</form:label></td>
-			<td><form:input  path="surname"/></td>
+			<td><form:label path="name"><spring:message code="label.denomination" /></form:label></td>
+			<td><form:input path="name"/></td>
 			</tr>
 			<tr><td></td><td>
-			<input type="submit" value="Register" />
+			<input type="submit" value="RegisterDepartment" />
 			</td></tr>
 			</table>
 			</form:form>

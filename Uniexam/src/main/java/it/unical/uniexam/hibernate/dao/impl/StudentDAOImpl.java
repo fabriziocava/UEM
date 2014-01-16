@@ -24,7 +24,27 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO {
-
+	
+	@Override
+	public Long addStudent(Student student) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Long id = null;
+		try {
+			transaction = session.beginTransaction();
+			for(Email email : student.getEmails()) {
+				email.setUser(student);
+			}
+			id = (Long) session.save(student);
+			transaction.commit();
+		} catch (Exception e) {
+			
+		} finally {
+			
+		}
+		return id;
+	}
+	
 	@Override
 	public Long addStundent(String name, String surname, String fiscalCode, String password,
 			Address address, Set<Email> emails, Set<PhoneNumber> phoneNumbers,

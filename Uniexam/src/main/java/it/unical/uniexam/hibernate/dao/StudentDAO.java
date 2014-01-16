@@ -12,6 +12,7 @@ import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 public interface StudentDAO {
 	
+	public Long addStudent(Student student);
 	public Long addStundent(String name, String surname, String fiscalCode, String password, Address address, Set<Email> emails, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, String serialNumber);
 	public Set<Student> getStudents();
 	public Student getStudent(Long serialNumber);

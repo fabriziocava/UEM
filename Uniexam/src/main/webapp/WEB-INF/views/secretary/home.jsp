@@ -78,9 +78,11 @@
 			<ul id="nav">
 		    <li class="first"><a href="#"><spring:message code="label.insert" /></a>
 		    	<ul>
-		    		<li><a href="${pageContext.request.contextPath}/secretary/registerManager"><spring:message code="label.newManager" /></a></li>
-		    		<li><a href="#"><spring:message code="label.newProfessor" /></a></li>
-		    		<li><a href="#"><spring:message code="label.newStudent" /></a></li>
+			    	<li><a href="${pageContext.request.contextPath}/secretary/registerDepartment"><spring:message code="label.department" /></a></li>
+		    		<li><a href="#"><spring:message code="label.degreeCourse" /></a></li>
+		    		<li><a href="${pageContext.request.contextPath}/secretary/registerManager"><spring:message code="label.manager" /></a></li>
+		    		<li><a href="#"><spring:message code="label.professor" /></a></li>
+		    		<li><a href="#"><spring:message code="label.student" /></a></li>
 		    	</ul>
 		    </li>
 		    <li><a href="#">Voce 02</a>
