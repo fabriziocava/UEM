@@ -41,4 +41,6 @@ public interface ProfessorService extends UserService{
 	public void putImage(Professor p, InputStream is,int length);
 
 	public Course getCourseDetails(Professor p, Long idCourse);
+
+	public Boolean applyCommandForRequestedCourse(Long idCourse, String commands);
 }

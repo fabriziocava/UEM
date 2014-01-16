@@ -21,15 +21,15 @@ html {
 	width: 20px;
 }
 
-.strong > div{
+.strong.square-small{
 	background-color: red;
 }
 
-.medium > div{
+.medium.square-small{
 	background-color: orange;
 }
 
-.light > div{
+.light.square-small{
 	background-color: green;
 }
 

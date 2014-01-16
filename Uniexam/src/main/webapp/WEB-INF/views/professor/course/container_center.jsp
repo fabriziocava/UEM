@@ -46,15 +46,9 @@
 								code="message.professor.course.container.center.legendCourses" /></legend>
 		<ol id="#sorting">
 			<%
-// 				ArrayList<ArrayList<Object>> struct = new ArrayList<ArrayList<Object>>();
 				ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
-// 				int count = 0;
 				if (courses != null && courses.size() > 0) {
 					for (Course c : courses) {
-// 						System.out.print(count+" ");
-// 						struct.add(new ArrayList<Object>());
-// 						struct.get(count).add(c);
-// 						struct.get(count).addAll(c.getGroups());
 			%>
 			<li class="list_course">
 				<article>

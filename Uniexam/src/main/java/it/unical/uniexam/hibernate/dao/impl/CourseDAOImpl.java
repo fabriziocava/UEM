@@ -158,21 +158,21 @@ public class CourseDAOImpl implements CourseDAO{
 		}
 		return res;
 	}
-//	@Override
-//	public Course getCourse(Long idCourse) {
-//		Session session =HibernateUtil.getSessionFactory().openSession();
-//		Course res=null;
-//		try{
-//			Course c1=(Course) session.get(Course.class, idCourse);
-//			res=c1;
-//		}catch(Exception e){
-//			new MokException(e);
-//		}finally{
-//			session.close();
-//		}
-//		return res;
-//	}
-	
+	//	@Override
+	//	public Course getCourse(Long idCourse) {
+	//		Session session =HibernateUtil.getSessionFactory().openSession();
+	//		Course res=null;
+	//		try{
+	//			Course c1=(Course) session.get(Course.class, idCourse);
+	//			res=c1;
+	//		}catch(Exception e){
+	//			new MokException(e);
+	//		}finally{
+	//			session.close();
+	//		}
+	//		return res;
+	//	}
+
 	@Override
 	public Course removeCourse(Long idCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -479,9 +479,9 @@ public class CourseDAOImpl implements CourseDAO{
 			res=(ArrayList<Course>) q.list();
 			for (Course course : res) {
 				Set<Group>g=course.getGroups();
-//				for (Group group : g) {
-//					System.out.println(group.getName());
-//				}
+				//				for (Group group : g) {
+				//					System.out.println(group.getName());
+				//				}
 				Hibernate.initialize(course);///°°°° MOKSOL LAKY LOAD
 				Hibernate.initialize(course.getGroups());
 			}
@@ -515,10 +515,39 @@ public class CourseDAOImpl implements CourseDAO{
 		Boolean res=false;
 		try{
 			transaction=session.beginTransaction();
-			
+
 			Course course=(Course)session.get(Course.class, idCourse);
 			course.setNote(note);
-			
+
+			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+
+	@Override
+	public Boolean modifyDegreeRequestedCourse(Long idCourse,
+			Long idCourseRequested, String degree) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean res=false;
+		try{
+			transaction=session.beginTransaction();
+			if(degree.equals(RequestedCourse.POLICY_LIGHT)|| degree.equals(RequestedCourse.POLICY_MEDIUM)||
+					degree.equals(RequestedCourse.POLICY_STRONG)){
+				Course course=(Course)session.get(Course.class, idCourse);
+				for(RequestedCourse req:course.getRequestedCourses()){
+					if(req.getCourse().getId()==idCourseRequested){
+						req.setPolicyOfRequest(degree);
+						res=true;
+					}
+				}
+			}
 			transaction.commit();
 		}catch(Exception e){
 			transaction.rollback();

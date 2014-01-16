@@ -38,7 +38,7 @@ public interface CourseDAO {
 	 */
 	public boolean addRequestedCourse(Long idCourse,Long idCourseRequested,String degree);
 	public RequestedCourse removeRequestedCourse(Long idCourse,Long idCourseRequested);
-//	public void modifyRequestedCourse(Long idCourse,Long idCourseRequested); // can be derived by a remove and a add
+	public Boolean modifyDegreeRequestedCourse(Long idCourse,Long idCourseRequested,String degree); // can be derived by a remove and a add
 	
 	public boolean setHolderProfessor(Long idCourse,Long idProfessor);
 	public boolean setHolderProfessor(Long idCourse, Professor professor);

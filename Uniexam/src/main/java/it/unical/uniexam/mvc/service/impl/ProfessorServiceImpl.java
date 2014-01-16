@@ -11,6 +11,7 @@ import javax.servlet.ServletOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
@@ -37,7 +38,7 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	CourseDAO courseDAO;
 	@Autowired
 	UserDAO userDAO;
-	
+
 	@Override
 	public Professor getProfessor(Long idUser) {
 		return professorDAO.getProfessor(idUser);
@@ -91,6 +92,36 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 		}else{
 			//sto accedendo ad un corso e non sono il docente titolare
 			//quindi carica solo il necessario alla visualizzazione
+		}
+		return res;
+	}
+
+	/**
+	 * caso remove/change 1:2,remove,no:3,change,strong:
+	 */
+	@Override
+	public Boolean applyCommandForRequestedCourse(Long idCourse, String commands) {
+		Boolean res=true;
+		Course c=courseDAO.getCourse(idCourse);
+		String []items=commands.split(":");
+		if(items[0].equals(String.valueOf(c.getId()))){
+			for(String item:items){
+				try{
+					String []elems=item.split(",");
+					if(elems!=null && elems.length>1){
+						if(elems[1].equals("change")){
+							if(!courseDAO.modifyDegreeRequestedCourse(idCourse, Long.valueOf(elems[0]), elems[2]))
+								return false;
+						}else if(elems[1].equals("remove")){
+							if(courseDAO.removeRequestedCourse(idCourse, Long.valueOf(elems[0]))==null)
+								return false;
+						}
+					}
+				}catch(Exception e){new MokException(e);res=false;}
+			}
+		}else{
+			System.out.println("inatteso");
+			res=false;
 		}
 		return res;
 	}

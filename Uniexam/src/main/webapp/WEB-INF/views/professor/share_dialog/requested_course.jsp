@@ -10,17 +10,52 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		var ok="si";
 		dialogModifyRequestedCourse();
+		<%
+		String res=((String) request.getAttribute("result"));
+		if(res!=null){
+			if(res.equals("success")){%>
+				alert("Modifiche apportate!");
+			<%}else{%>
+				alert("Error in some istruction!");
+			<%}}
+		%>
+	});
+// 	function legendOfDegree(){
+		
+// 	}
+// 	$(".square-small")
+// 	.mouseover(function(){
+		
+// 	})
+// 	.mouseout(function(){
+		
+// 	});
+	var timer;
+	var delay=1000;
+	$('.square-small').hover(function(event) {
+	    // on mouse in, start a timeout
+// 	alert(event.pageX);
+	    
+	    timer = setTimeout(function() {
+	    	$("#legendOfDegree").css("left",event.pageX);
+	    	$("#legendOfDegree").css("top",event.pageY);
+	        $("#legendOfDegree").fadeIn();
+	        $("#legendOfDegree").attr("display","block");
+	    }, delay);
+	}, function() {
+		$("#legendOfDegree").fadeOut();
+	    clearTimeout(timer);
 	});
 </script>
 <%
 	Course c = (Course) request.getAttribute("course");
 %>
 <div id="dialog_content">
-	THIS IS DIALOG CONTENT
-	<h1 align="center"><%=c.getName()%></h1>
 	
+	<h1 align="center"><%=c.getName()%></h1>
+	<p class="alertSomeModifyRequestCourse" style="display: none;"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+	<spring:message code="message.professor.dialog.requested_course.alert_Save_Modification" /></p>
 	<div>
 		<table>
 			<%
@@ -29,12 +64,28 @@
 		<tr>
 		<td>
 		<div>
+		<div style="display: none;position: fixed;z-index: 9;background-color: gray;" id="legendOfDegree">
+		<table style="border-collapse: separate; border-spacing: 5px;">
+		<tr>
+		<th><div class="square-small strong"></div></th>
+		<td><div><spring:message code="message.professor.dialog.requested_course.description_strong" /></div></td>
+		</tr>
+		<tr>
+		<th><div class="square-small medium"></div></th>
+		<td><div><spring:message code="message.professor.dialog.requested_course.description_medium" /></div></td>
+		</tr>
+		<tr>
+		<th><div class="square-small light"></div></th>
+		<td><div><spring:message code="message.professor.dialog.requested_course.description_light" /></div></td>
+		</tr>
+		</table>
+		</div>
 		<div class="square-small <%=req.getPolicyOfRequest()%>"></div>
-		<%=req.getCourse().getName()%>
+		<div id="requestedCourse<%=req.getCourse().getId()%>"><%=req.getCourse().getName()%></div>
 		<ul class="links-user">
 		<li>Opzioni :</li> 
-		<li class="bottonmok">Elimina</li>
-		<li class="bottonmok" id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequest()%>">Modifica</li>
+		<li class="bottonmok" id="deleteRequest<%=req.getCourse().getId()%>$<%=c.getId()%>">Elimina</li>
+		<li class="bottonmok" id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequest()%>$<%=c.getId()%>">Modifica</li>
 		</ul>
 		</div>
 		</td>
@@ -47,7 +98,7 @@
 			%>
 		</table>
 	</div>
-
+<div class="alertSomeModifyRequestCourse" style="display: none;"><input type="button" onclick="submitCommandRequestedCourse()" value="<spring:message code='message.general.Save' />"></div>
 
 </div>
 
