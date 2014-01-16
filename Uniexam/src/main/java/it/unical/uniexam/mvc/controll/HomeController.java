@@ -71,7 +71,7 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		//				model.addAttribute("students",list);
 
-		return UtilsService.HOME;
+		return UtilsService.LOGIN;
 	}
 
 	// serve un pattern sia per la session

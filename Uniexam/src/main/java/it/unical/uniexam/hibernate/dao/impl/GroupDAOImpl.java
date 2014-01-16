@@ -1,5 +1,6 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfMessage;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 import it.unical.uniexam.hibernate.domain.utility.MessageOfGroup;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
@@ -258,7 +260,7 @@ public class GroupDAOImpl implements GroupDAO {
 			User u=mog.getUser();
 			if(u.getId()!=comment.getUser().getId())
 				u.getNoReadComments().add(res);
-			u.getComments().add(comment);
+			u.getComments().addAll((Collection<? extends CommentOfPost>) comment);
 
 			transaction.commit();
 		}catch(Exception e){
