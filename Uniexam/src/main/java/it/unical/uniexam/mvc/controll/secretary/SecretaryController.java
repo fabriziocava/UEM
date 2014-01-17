@@ -26,11 +26,13 @@ public class SecretaryController {
 	@Autowired
 	SecretaryService secretaryService;
 	
+	
 	@RequestMapping(value=SecretaryService.SECRETARY_HOME, method=RequestMethod.GET)
 	public String home(HttpServletRequest request,Model model){
 		return SecretaryService.SECRETARY_HOME;
 	}
 	
+	/*
 	@RequestMapping(value=SecretaryService.SECRETARY_REGISTER_DEPARTMENT, method=RequestMethod.GET)
 	public ModelAndView getRegisterDepartmentForm(@ModelAttribute("department") Department department, BindingResult result) {
 		Map<String, Object> model = new HashMap<String, Object>();
@@ -54,5 +56,5 @@ public class SecretaryController {
 		Map<String, Object> model = new HashMap<String, Object>();
 		return new ModelAndView(SecretaryService.SECRETARY_REGISTER_MANAGER, "model", model);
 	}
-	
+	*/
 }

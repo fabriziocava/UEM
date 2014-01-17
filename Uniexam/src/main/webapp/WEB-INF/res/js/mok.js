@@ -67,12 +67,19 @@ function justContainer(incr){
 	$(".container").css({"height":container+"px"});
 }
 
-function alingDashBoard(){
+/*function alingDashBoard(){
 	var count = $("#nav > li").length;
 	var percent=100/count-1;
 	$("#nav > li").css({"width":percent+"%"});
 	$("#nav > li").css({"text-align":"center"});
-}	
+}*/
+
+function alingDashBoard(){
+	var count = $(".dashboard li").length;
+	var percent=100/count;
+	$(".dashboard li").css({"width":percent+"%"});
+	$(".dashboard li").css({"text-align":"center"});
+}
 
 function alingMenu(){
 	var count = $(".dashboard li").length;

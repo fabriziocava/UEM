@@ -27,7 +27,10 @@
 			<table>
 			<tr>
 			<td><form:label path="code"><spring:message code="label.code" /></form:label></td>
-			<td><form:input path="code"/></td>
+			<td><form:input path="code"/>
+				<%--<div style="display: none;"> </div>--%>
+				<%--<input type="text" placeholder="code"/>--%>
+			</td>
 			</tr>
 			<tr>
 			<td><form:label path="name"><spring:message code="label.denomination" /></form:label></td>
