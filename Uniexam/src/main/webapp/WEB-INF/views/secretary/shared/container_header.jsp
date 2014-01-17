@@ -15,12 +15,10 @@
 	</span>
 	<div>
 		<ul class="links-user">
-			<%--
-			<li><a href="${pageContext.request.contextPath}/secretary/account" title="Gestione Account">
-				<img class="image30" src="${pageContext.request.contextPath}/secretary/image"/>${I.getName()}
-			</a></li>
-			--%>
-			<li><a class="logout-header" href="${pageContext.request.contextPath}/logout"> 
+			<li><img src="imageUser" />${user}</li>
+			<li><a href="${pageContext.request.contextPath}/logout"> <img
+					class="logout-header"
+					src="${pageContext.request.contextPath}/res/img/pixel.png" />
 			</a></li>
 		</ul>
 	</div>

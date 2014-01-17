@@ -10,8 +10,6 @@
 
 <link href="${pageContext.request.contextPath}/res/css/secretary.css"
 	media="all" rel="stylesheet" type="text/css" />
-	<link href="${pageContext.request.contextPath}/res/css/menu.css"
-	media="all" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js">
 </script>
 <script src="${pageContext.request.contextPath}/res/js/mok.js">

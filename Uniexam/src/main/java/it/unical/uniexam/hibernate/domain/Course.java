@@ -122,6 +122,9 @@ public class Course {
 	@ManyToOne
 	Professor holder;
 
+	@ManyToOne
+	DegreeCourse degreeCourse;
+	
 	/**
 	 * implementetion function part
 	 * 
@@ -268,7 +271,16 @@ public class Course {
 		this.note = note;
 	}
 
-	
-	
+
+
+	public DegreeCourse getDegreeCourse() {
+		return degreeCourse;
+	}
+
+
+
+	public void setDegreeCourse(DegreeCourse degreeCourse) {
+		this.degreeCourse = degreeCourse;
+	}
 	
 }

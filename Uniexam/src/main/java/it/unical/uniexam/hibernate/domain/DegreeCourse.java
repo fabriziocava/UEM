@@ -71,6 +71,17 @@ public class DegreeCourse {
 		)
 	private Set<Student> students = new HashSet<Student>();
 
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="DEGREECOURSE_COURSE",
+			joinColumns = {
+				@JoinColumn(name="DEGREE_COURSE_ID")
+			},
+			inverseJoinColumns = {
+				@JoinColumn(name="COURSE_ID")
+			}
+		)
+	private Set<Course> courses = new HashSet<Course>();
+	
 	/*
 	 * SETTER
 	 */
@@ -89,9 +100,14 @@ public class DegreeCourse {
 	public void setStudents(Set<Student> students) {
 		this.students = students;
 	}
+	
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
+	}	
 	/*
 	 * END_SETTER
 	 */
+
 
 	/*
 	 * GETTER
@@ -111,7 +127,12 @@ public class DegreeCourse {
 	public Set<Student> getStudents() {
 		return students;
 	}
+	
+	public Set<Course> getCourses() {
+		return courses;
+	}	
 	/*
 	 * END_GETTER
-	 */	
+	 */
+	
 }
