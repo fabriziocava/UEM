@@ -29,141 +29,105 @@ import javax.persistence.Table;
 @Table(name="STUDENT")
 @PrimaryKeyJoinColumn(name="STUDENT_ID")
 public class Student extends User {
-	
-	/*
-	 * CONSTURCTORS
-	 */
-	public Student(TYPE type, String name, String surname, String password, Address address, Set<Email>emails, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, Long serialNumber) {
-		super(type, name, surname, null, password, address,emails,phoneNumbers);
-		this.degreeCourse_registered = degreeCourse_registered;
-		this.serialNumber = serialNumber;
-	}
-		
-	public Student() {
+        
+        /*
+         * CONSTURCTORS
+         */
+        public Student(TYPE type, String name, String surname, String fiscalCode, String password, Address address, Set<Email>emails, Set<PhoneNumber> phoneNumbers, DegreeCourse degreeCourse_registered, String serialNumber) {
+                super(type, name, surname, null, password, address, emails, phoneNumbers);
+                this.fiscalCode = fiscalCode;
+                this.degreeCourse_registered = degreeCourse_registered;
+                this.serialNumber = serialNumber;
+        }
+                
+        public Student() {
+                super();
+        }
+        /*
+         * END_CONSTRUCTORS
+         */
+        
+        @Column(name="SERIAL_NUMBER", nullable=false, unique=true)
+        private String serialNumber; //MATRICOLA
+        
+        @Column(name="FISCAL_CODE", length=16, nullable=false)
+        private String fiscalCode;
+        
+        @ManyToOne
+        DegreeCourse degreeCourse_registered;
 
-	}
-	/*
-	 * END_CONSTRUCTORS
-	 */
-	
+        @OneToMany
+        @JoinTable(name="STUDENT_APPEAL",
+                                joinColumns={@JoinColumn(name="STUDENT_ID")},
+                                inverseJoinColumns={@JoinColumn(name="APPEAL_ID")}
+                        )
+        Set<Appeal> appeals = new HashSet<Appeal>();
+        
+        @OneToMany
+        @JoinTable(name="STUDENT_COURSE", //CARRIER
+                                joinColumns={@JoinColumn(name="STUDENT_ID")},
+                                inverseJoinColumns={@JoinColumn(name="COURSE_ID")}
+                        )
+        Set<Course> carrier = new HashSet<Course>();
+        
+        
+        /*
+         * GETTER
+         */
+        public String getSerialNumber() {
+                return serialNumber;
+        }
 
-	@Column(name="SERIAL_NUMBER", nullable=false, unique=true)
-	private Long serialNumber; //MATRICOLA
-	
-	@Column(name="NAME", nullable=false)
-	private String name;
+        public String getFiscalCode() {
+                return fiscalCode;
+        }
 
-	@Column(name="SURNAME", nullable=false)
-	private String surname;
-	
-	@Column(name="FISCAL_CODE", length=16)
-	private String fiscal_code;
-	
-	@ManyToOne
-	DegreeCourse degreeCourse_registered;
+        public DegreeCourse getDegreeCourse_registered() {
+                return degreeCourse_registered;
+        }
+        
+        public Set<Appeal> getAppeals() {
+                return appeals;
+        }
 
-	@OneToMany
-	@JoinTable(name="STUDENT_APPEAL", 
-				joinColumns={@JoinColumn(name="STUDENT_ID")},
-				inverseJoinColumns={@JoinColumn(name="APPEAL_ID")}
-			)
-	Set<Appeal> appeals = new HashSet<Appeal>();
-	
-	@OneToMany
-	@JoinTable(name="STUDENT_COURSE", //CARRIER
-				joinColumns={@JoinColumn(name="STUDENT_ID")},
-				inverseJoinColumns={@JoinColumn(name="COURSE_ID")}
-			)
-	Set<Course> carrier = new HashSet<Course>();
-	
-	@OneToMany
-	@JoinTable(name="STUDENT_GROUP",
-				joinColumns={@JoinColumn(name="STUDENT_ID")},
-				inverseJoinColumns={@JoinColumn(name="GROUP_ID")}
-			)
-	Set<Group> groups = new HashSet<Group>();
+        public Set<Course> getCarrier() {
+                return carrier;
+        }
 
-	/*
-	 * GETTER
-	 */
-	public Long getId() {
-		return id;
-	}
+        public Set<Group> getGroups() {
+                return groups;
+        }        
+        /*
+         * END_GETTER
+         */
+        
+        /*
+         * SETTER
+         */
+        public void setSerialNumber(String serialNumber) {
+                this.serialNumber = serialNumber;
+        }
 
-	public Long getSerialNumber() {
-		return serialNumber;
-	}
+        public void setFiscalCode(String fiscalCode) {
+                this.fiscalCode = fiscalCode;
+        }
 
-	public String getName() {
-		return name;
-	}
+        public void setDegreeCourse_registered(DegreeCourse degreeCourse_registered) {
+                this.degreeCourse_registered = degreeCourse_registered;
+        }
 
-	public String getSurname() {
-		return surname;
-	}
+        public void setAppeals(Set<Appeal> appeals) {
+                this.appeals = appeals;
+        }
 
-	public String getFiscal_code() {
-		return fiscal_code;
-	}
+        public void setCarrier(Set<Course> carrier) {
+                this.carrier = carrier;
+        }
 
-	public DegreeCourse getDegreeCourse_registered() {
-		return degreeCourse_registered;
-	}
-	
-	public Set<Appeal> getAppeals() {
-		return appeals;
-	}
-
-	public Set<Course> getCarrier() {
-		return carrier;
-	}
-
-	public Set<Group> getGroups() {
-		return groups;
-	}	
-	/*
-	 * END_GETTER
-	 */
-	
-	/*
-	 * SETTER
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setSerialNumber(Long serialNumber) {
-		this.serialNumber = serialNumber;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-	public void setFiscal_code(String fiscal_code) {
-		this.fiscal_code = fiscal_code;
-	}
-
-	public void setDegreeCourse_registered(DegreeCourse degreeCourse_registered) {
-		this.degreeCourse_registered = degreeCourse_registered;
-	}
-
-	public void setAppeals(Set<Appeal> appeals) {
-		this.appeals = appeals;
-	}
-
-	public void setCarrier(Set<Course> carrier) {
-		this.carrier = carrier;
-	}
-
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
-	}	
-	/*
-	 * END_SETTERS
-	 */
+        public void setGroups(Set<Group> groups) {
+                this.groups = groups;
+        }        
+        /*
+         * END_SETTERS
+         */
 }

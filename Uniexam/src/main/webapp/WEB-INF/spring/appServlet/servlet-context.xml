@@ -51,6 +51,8 @@
 				<beans:value>/WEB-INF/views/manager/share_dialog/tiles.xml</beans:value>
 				<beans:value>/WEB-INF/views/manager/exam_session/tiles.xml</beans:value>
 				
+				<beans:value>/WEB-INF/views/secretary/tiles.xml</beans:value>
+                <beans:value>/WEB-INF/views/secretary/home/tiles.xml</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>

@@ -24,86 +24,109 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO {
+        
+        @Override
+        public Long addStudent(Student student) {
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction = null;
+                Long id = null;
+                try {
+                        transaction = session.beginTransaction();
+                        for(Email email : student.getEmails()) {
+                                email.setUser(student);
+                        }
+                        id = (Long) session.save(student);
+                        transaction.commit();
+                } catch (Exception e) {
+                        
+                } finally {
+                        
+                }
+                return id;
+        }
+        
+        @Override
+        public Long addStundent(String name, String surname, String fiscalCode, String password,
+                        Address address, Set<Email> emails, Set<PhoneNumber> phoneNumbers,
+                        DegreeCourse degreeCourse_registered, String serialNumber) {
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                Transaction transaction = null;
+                Long id = null;
+                try {
+                        transaction = session.beginTransaction();
+                        Student s = new Student(User.TYPE.STUDENT, name, surname, fiscalCode, password, address, emails, phoneNumbers, degreeCourse_registered, serialNumber);
+                        for(Email email : emails) {
+                                email.setUser(s);
+                        }
+                        id = (Long) session.save(s);
+                        transaction.commit();
+                } catch (Exception e) {
+                        transaction.rollback();
+                } finally {
+                        session.close();
+                }
+                return id;
+        }
 
-	@Override
-	public Long addStundent(String name, String surname, String password,
-			Address address, Set<Email> emails, Set<PhoneNumber> phoneNumbers,
-			DegreeCourse degreeCourse_registered, Long serialNumber) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = null;
-		Long id = null;
-		try {
-			transaction = session.beginTransaction();
-			Student s = new Student(User.TYPE.STUDENT, name, surname, password, address, emails, phoneNumbers, degreeCourse_registered, serialNumber);
-			id = (Long) session.save(s);
-			transaction.commit();
-		} catch (Exception e) {
-			transaction.rollback();
-		} finally {
-			session.close();
-		}
-		return id;
-	}
+        @Override
+        public Set<Student> getStudents() {
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                Set<Student> res = null;
+                try {
+                        Query q = session.createQuery("from Student");
+                        @SuppressWarnings("unchecked")
+                        List<Student> list = q.list();
+                        res = new HashSet<Student>(list);
+                } catch (Exception e) {
+                        new MokException(e);
+                } finally {
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public Set<Student> getStudents() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Set<Student> res = null;
-		try {
-			Query q = session.createQuery("from Student");
-			@SuppressWarnings("unchecked")
-			List<Student> list = q.list();
-			res = new HashSet<Student>(list);
-		} catch (Exception e) {
-			new MokException(e);
-		} finally {
-			session.close();
-		}
-		return res;
-	}
+        @Override
+        public Student getStudent(Long serialNumber) {
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                Student res = null;
+                try {
+                        res = (Student) session.get(Student.class, serialNumber);
+                } catch (Exception e) {
+                        new MokException(e);
+                } finally {
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public Student getStudent(Long serialNumber) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Student res = null;
-		try {
-			res = (Student) session.get(Student.class, serialNumber);
-		} catch (Exception e) {
-			new MokException(e);
-		} finally {
-			session.close();
-		}
-		return res;
-	}
+        @Override
+        public Set<Course> getCarrier(Long serialNumber) {
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                HashSet<Course> res = null;
+                try {
+                        Student s = (Student) session.get(Student.class, serialNumber);
+                        res = new HashSet<Course>(s.getCarrier());
+                } catch (Exception e) {
+                        new MokException(e);
+                } finally {
+                        session.close();
+                }
+                return res;
+        }
 
-	@Override
-	public Set<Course> getCarrier(Long serialNumber) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		HashSet<Course> res = null;
-		try {
-			Student s = (Student) session.get(Student.class, serialNumber);
-			res = new HashSet<Course>(s.getCarrier());
-		} catch (Exception e) {
-			new MokException(e);
-		} finally {
-			session.close();
-		}
-		return res;
-	}
-
-	@Override
-	public Set<Group> getGroups(Long serialNumber) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		HashSet<Group> res = null;
-		try {
-			Student s = (Student) session.get(Student.class, serialNumber);
-			res = new HashSet<Group>(s.getGroups());
-		} catch (Exception e) {
-			new MokException(e);
-		} finally {
-			session.close();
-		}
-		return res;
-	}
-	
+        @Override
+        public Set<Group> getGroups(Long serialNumber) {
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                HashSet<Group> res = null;
+                try {
+                        Student s = (Student) session.get(Student.class, serialNumber);
+                        res = new HashSet<Group>(s.getGroups());
+                } catch (Exception e) {
+                        new MokException(e);
+                } finally {
+                        session.close();
+                }
+                return res;
+        }
+        
 }
