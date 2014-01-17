@@ -43,6 +43,22 @@ public class Course {
         public Course() {
         }
 
+        
+        
+//        public Course(Course c) {
+//                super();
+//                this.id = c.id;
+//                this.code = c.code;
+//                this.name = c.name;
+//                this.webSite = c.webSite;
+//                this.credits = c.credits;
+//                this.requestedCourses = new HashSet<RequestedCourse>(c.requestedCourses);
+//                this.commissionProfessors = new HashSet<Professor>(c.commissionProfessors);
+//                this.holder = new Professor(c.holder);
+//        }
+
+
+
         public Course(String code, String name, URL webSite, Integer credits,
                         Set<RequestedCourse> requestedCourses,
                         Set<Professor> commissionProfessors, Professor holder) {
@@ -90,7 +106,7 @@ public class Course {
         })
         Set<Group> groups=new HashSet<Group>();
         
-        @OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+        @OneToMany(cascade=CascadeType.ALL)
         @JoinTable(name="COURSE_REQUESTCOURSE",
         joinColumns={
                         @JoinColumn(name="COURSE_ID")
@@ -100,12 +116,15 @@ public class Course {
         })
         Set<RequestedCourse> requestedCourses=new HashSet<RequestedCourse>();
 
-        @ManyToMany(mappedBy="asCommission",fetch=FetchType.LAZY)
+        @ManyToMany(mappedBy="asCommission")
         Set<Professor>commissionProfessors=new HashSet<Professor>();
 
         @ManyToOne
         Professor holder;
 
+        @ManyToOne
+        DegreeCourse degreeCourse;
+        
         /**
          * implementetion function part
          * 
@@ -252,7 +271,16 @@ public class Course {
                 this.note = note;
         }
 
-        
-        
+
+
+        public DegreeCourse getDegreeCourse() {
+                return degreeCourse;
+        }
+
+
+
+        public void setDegreeCourse(DegreeCourse degreeCourse) {
+                this.degreeCourse = degreeCourse;
+        }
         
 }
