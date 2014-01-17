@@ -158,20 +158,6 @@ public class CourseDAOImpl implements CourseDAO{
 		}
 		return res;
 	}
-	//	@Override
-	//	public Course getCourse(Long idCourse) {
-	//		Session session =HibernateUtil.getSessionFactory().openSession();
-	//		Course res=null;
-	//		try{
-	//			Course c1=(Course) session.get(Course.class, idCourse);
-	//			res=c1;
-	//		}catch(Exception e){
-	//			new MokException(e);
-	//		}finally{
-	//			session.close();
-	//		}
-	//		return res;
-	//	}
 
 	@Override
 	public Course removeCourse(Long idCourse) {
@@ -218,34 +204,6 @@ public class CourseDAOImpl implements CourseDAO{
 		}
 		if(!ok) return false;
 		else return true;
-	}
-
-	@Override
-	public RequestedCourse removeRequestedCourse(Long idCourse, Long idCourseRequested) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		RequestedCourse res=null;
-		try{
-			transaction = session.beginTransaction();
-			Course c1=(Course) session.get(Course.class, idCourse);
-			if(c1!=null){
-				for(RequestedCourse r : c1.getRequestedCourses()){
-					if(r.getCourse().getId()==idCourseRequested){
-						res=r;
-						break;
-					}
-				}
-				c1.getRequestedCourses().remove(res);
-				session.delete(res);
-				transaction.commit();
-			}
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-		return res;
 	}
 
 	@Override
@@ -529,10 +487,36 @@ public class CourseDAOImpl implements CourseDAO{
 		return res;
 	}
 
+	@Override
+	public RequestedCourse removeRequestedCourse(Long idCourse, Long idCourseRequested) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		RequestedCourse res=null;
+		try{
+			transaction = session.beginTransaction();
+			Course c1=(Course) session.get(Course.class, idCourse);
+			if(c1!=null){
+				for(RequestedCourse r : c1.getRequestedCourses()){
+					if(r.getCourse().getId()==idCourseRequested){
+						res=r;
+						break;
+					}
+				}
+				c1.getRequestedCourses().remove(res);
+				session.delete(res);
+				transaction.commit();
+			}
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
 
 	@Override
-	public Boolean modifyDegreeRequestedCourse(Long idCourse,
-			Long idCourseRequested, String degree) {
+	public Boolean modifyDegreeRequestedCourse(Long idCourse,Long idCourseRequested, String degree) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Boolean res=false;
@@ -558,6 +542,72 @@ public class CourseDAOImpl implements CourseDAO{
 		return res;
 	}
 
+	
+	
+	@Override
+	public RequestedCourse removeRequestedCourse(Long idCourse, Long idCourseRequested,Session session,Transaction transaction) {
+		RequestedCourse res=null;
+		if(session==null)
+			session =HibernateUtil.getSessionFactory().openSession();
+		try{
+			if(transaction==null)
+				transaction=session.beginTransaction();
+			Course c1=(Course) session.get(Course.class, idCourse);
+			if(c1!=null){
+				for(RequestedCourse r : c1.getRequestedCourses()){
+					if(r.getCourse().getId()==idCourseRequested){
+						res=r;
+						break;
+					}
+				}
+				c1.getRequestedCourses().remove(res);
+				session.delete(res);
+//				transaction.commit();
+			}
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+//			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Boolean modifyDegreeRequestedCourse(Long idCourse,Long idCourseRequested, String degree,Session session,Transaction transaction) {
+		if(session==null)
+			session =HibernateUtil.getSessionFactory().openSession();
+//		Transaction transaction=null;
+		Boolean res=false;
+		try{
+			if(transaction==null)
+				transaction=session.beginTransaction();
+			if(degree.equals(RequestedCourse.POLICY_LIGHT)|| degree.equals(RequestedCourse.POLICY_MEDIUM)||
+					degree.equals(RequestedCourse.POLICY_STRONG)){
+				Course course=(Course)session.get(Course.class, idCourse);
+				for(RequestedCourse req:course.getRequestedCourses()){
+					if(req.getCourse().getId()==idCourseRequested){
+						req.setPolicyOfRequest(degree);
+						res=true;
+					}
+				}
+			}
+//			transaction.commit();
+		}catch(Exception e){
+			transaction.rollback();
+			res=false;
+			new MokException(e);
+		}finally{
+//			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Session getSession() {
+		return HibernateUtil.getSessionFactory().openSession();
+	}
+	
 }
 
 //Session session =HibernateUtil.getSessionFactory().openSession();

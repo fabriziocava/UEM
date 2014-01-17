@@ -306,7 +306,7 @@ function changePersonalization(item){
 ////},
 //type: "POST",
 //url: conte+"/personalizzation",
-////data: { 'name': "John", 'location': "Boston" },
+////data: { 'name': "John", 'location': "Boston" }, sbagliato
 //data:"data="+dataSend,
 ////contentType:"text; charset=utf-8",
 ////dataType:"text",

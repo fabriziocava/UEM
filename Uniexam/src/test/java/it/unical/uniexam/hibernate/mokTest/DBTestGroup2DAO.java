@@ -121,7 +121,7 @@ public class DBTestGroup2DAO {
 		/*12*/
 		ids[count++]=professorDAO.addEmail(ids[2], new Email(Email.TYPE_UFFICIAL, "ricca2@unical.it"));
 		ids[count++]=professorDAO.addEmail(ids[2], new Email(Email.TYPE_UNUFFICIAL, "ricca@unUfficial.it"));
-		ids[count++]=professorDAO.addEmail(ids[2], new Email(Email.TYPE_HOME, "ricchia@home.it"));
+		ids[count++]=professorDAO.addEmail(ids[2], new Email(Email.TYPE_HOME, "ricca@home.it"));
 		/*14*/
 
 		professorDAO.removeEmail(ids[2], ids[13]);

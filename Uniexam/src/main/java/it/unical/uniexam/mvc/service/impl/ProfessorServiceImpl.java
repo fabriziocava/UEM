@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -106,18 +108,32 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 		String []items=commands.split(":");
 		if(items[0].equals(String.valueOf(c.getId()))){
 			for(String item:items){
+				Session session=null;
+				Transaction transaction=null;
 				try{
+					session=courseDAO.getSession();
+					transaction=session.getTransaction();
+					
 					String []elems=item.split(",");
 					if(elems!=null && elems.length>1){
 						if(elems[1].equals("change")){
 							if(!courseDAO.modifyDegreeRequestedCourse(idCourse, Long.valueOf(elems[0]), elems[2]))
-								return false;
+//								return false;
+								throw new Exception();
 						}else if(elems[1].equals("remove")){
 							if(courseDAO.removeRequestedCourse(idCourse, Long.valueOf(elems[0]))==null)
-								return false;
+//								return false;
+								throw new Exception();
 						}
 					}
-				}catch(Exception e){new MokException(e);res=false;}
+					
+				}catch(Exception e){
+					new MokException(e);
+					res=false;
+					transaction.rollback();
+				}finally{
+					session.close();
+				}
 			}
 		}else{
 			System.out.println("inatteso");

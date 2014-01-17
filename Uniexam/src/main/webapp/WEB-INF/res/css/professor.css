@@ -47,6 +47,8 @@ html {
 	box-shadow: none;
 	text-decoration: none;
 	cursor: pointer;
+	display: block;
+	text-align: center;
 }
 
 .processing>img {

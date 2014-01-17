@@ -37,10 +37,12 @@ public class UserDAOImpl implements UserDAO {
 		try{
 			Query q=session.createQuery("from Email where email=:e");
 			q.setParameter("e", email);
-			List<Email>u =q.list();
-			Integer si=u.size();
-			if(si>0){
-				Email e=u.get(0);
+			Email e=(Email) q.uniqueResult();
+//			List<Email>u =q.list();
+//			Integer si=u.size();
+//			if(si>0){
+			if(e!=null){
+//				Email e=u.get(0);
 				if(e.getUser().getPassword().equals(password)){
 					res=e.getUser();
 				}else{
@@ -101,10 +103,11 @@ public class UserDAOImpl implements UserDAO {
 		try{
 			Query q=session.createQuery("from User where sessionId=:sID");
 			q.setParameter("sID", idSession);
-			List<User>li =q.list();
-			if(li.size()==1){
-				res=li.get(0);
-			}
+			res=(User)q.uniqueResult();
+//			List<User>li =q.list();
+//			if(li.size()==1){
+//				res=li.get(0);
+//			}
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
@@ -123,11 +126,16 @@ public class UserDAOImpl implements UserDAO {
 			
 			Query q=session.createQuery("from User where sessionId=:sID");
 			q.setParameter("sID", idSession);
-			List<User>li =q.list();
-			if(li.size()==1){
-				li.get(0).setSessionId(null);
+			User user=(User)q.uniqueResult();
+			if(user!=null){
+				user.setSessionId(null);
 				res=true;
 			}
+//			List<User>li =q.list();
+//			if(li.size()==1){
+//				li.get(0).setSessionId(null);
+//				res=true;
+//			}
 
 			transaction.commit();
 		}catch(Exception e){
