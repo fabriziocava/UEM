@@ -95,7 +95,7 @@ function dialogModifyRequestedCourse(){
 	$("#dialog").dialog({
 		autoOpen : true,
 		modal: true,
-		minWidth : "400",
+		width:"auto",
 		show : {
 			effect : "blind",
 			duration : 500
@@ -132,6 +132,7 @@ function dialogModifyRequestedCourse(){
 		$("<div></div>")
 		.attr('id','divRequestCourseChange')
 		.appendTo('body').html($("#radio"+degree).html());
+		$("#divRequestCourseChange").attr("title",$(this).html());
 		$("#divRequestCourseChange").dialog({
 		      resizable: false,
 		      modal: true,
@@ -161,6 +162,7 @@ function dialogModifyRequestedCourse(){
 					$("div").remove("#divRequestCourseChange");
 				}
 		    });
+		$("#divRequestCourseChange").attr("title","");
 		$("#setRequestCourseChange").css('height',"auto");
 	});
 	$("li[id^='deleteRequest']").bind("click", function(event) {
@@ -179,6 +181,21 @@ function dialogModifyRequestedCourse(){
          });
          dirtingTheElement();
 	});
+	$("div[id^='addRequested']").bind("click", function(event) {
+		var conte=$("#context").attr("value");
+		var id=this.id;
+		var idCourse=id.replace("addRequested","");
+		var ajax=sendAJAXmessage(conte+"/ajax/dialog/addRequestedCourse", "GET", "id", idCourse);
+		ajax.done(function(data){
+			if($("#dialogAddRequested").html()==undefined)
+				$("<div></div>").attr('id','dialogAddRequested').appendTo('body');
+			$("#dialogAddRequested").html(data);
+		});
+	});
+}
+
+function dialogAddRequestedCourse(){
+	
 }
 
 function getDataFromAjax(item){

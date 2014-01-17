@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 
@@ -43,4 +44,6 @@ public interface ProfessorService extends UserService{
 	public Course getCourseDetails(Professor p, Long idCourse);
 
 	public Boolean applyCommandForRequestedCourse(Long idCourse, String commands);
+
+	public Set<Course> getCoursesFromDepartment(Long idCourse);
 }

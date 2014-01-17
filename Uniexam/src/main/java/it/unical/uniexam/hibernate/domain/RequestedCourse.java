@@ -72,14 +72,12 @@ public class RequestedCourse {
 		this.course = course;
 	}
 
-	public String getPolicyOfRequest() {
+	public String getPolicyOfRequested() {
 		return policyOfRequested;
 	}
 
-	public void setPolicyOfRequest(String policyOfRequest) {
-		this.policyOfRequested = policyOfRequest;
+	public void setPolicyOfRequested(String policyOfRequested) {
+		this.policyOfRequested = policyOfRequested;
 	}
 
-	
-	
 }

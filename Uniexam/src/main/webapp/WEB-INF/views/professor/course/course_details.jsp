@@ -42,9 +42,9 @@
 	<spring:message code="message.professor.course.attribute.requested_courses" />
 	</th>
 	<td><%if(c.getRequestedCourses()!=null && c.getRequestedCourses().size()>0){%>
-	<a href="#" class="bottonmok" onclick="openPopUpWithAjaxContent('requested_course',<%=c.getId()%>)"><spring:message code="message.professor.course.course_details.button_yes" /></a>
+	<a href="#" class="bottonmok" onclick="openPopUpWithAjaxContent('requested_course',<%=c.getId()%>)"><spring:message code="message.general.manage" /></a>
 	<%}else{ %>
-	<a href="#" class="bottonmok" onclick="openPopUpWithAjaxContent('requested_course',<%=c.getId()%>)"><spring:message code="message.professor.course.course_details.button_no" /></a>
+	<a href="#" class="bottonmok" onclick="openPopUpWithAjaxContent('requested_course',<%=c.getId()%>)"><spring:message code="message.general.add" /></a>
 	<%} %>
 	</td>
 	</tr><tr>
@@ -52,9 +52,9 @@
 	<spring:message code="message.professor.course.attribute.commissions" />
 	</th>
 	<td><%if(c.getCommissionProfessors()!=null && c.getCommissionProfessors().size()>0){%>
-	<a href="#" class="bottonmok"><spring:message code="message.professor.course.course_details.button_yes" /></a>
+	<a href="#" class="bottonmok"><spring:message code="message.general.manage" /></a>
 	<%}else{ %>
-	<a href="#" class="bottonmok"><spring:message code="message.professor.course.course_details.button_no" /></a>
+	<a href="#" class="bottonmok"><spring:message code="message.general.add" /></a>
 	<%} %>
 	</td>
 	</tr><tr>
@@ -62,9 +62,9 @@
 	<spring:message code="message.professor.course.attribute.groups" />
 	</th>
 	<td><%if(c.getGroups()!=null && c.getGroups().size()>0){%>
-	<a href="#" class="bottonmok"><spring:message code="message.professor.course.course_details.button_yes" /></a>
+	<a href="#" class="bottonmok"><spring:message code="message.general.manage" /></a>
 	<%}else{ %>
-	<a href="#" class="bottonmok"><spring:message code="message.professor.course.course_details.button_no" /></a>
+	<a href="#" class="bottonmok"><spring:message code="message.general.add" /></a>
 	<%} %>
 	</td>
 	</tr>

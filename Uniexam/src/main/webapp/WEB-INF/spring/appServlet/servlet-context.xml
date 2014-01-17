@@ -21,6 +21,14 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
+	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+      <beans:property name="formatters">
+           <beans:set>
+                 <beans:ref bean="RequestedCourseFormatter"/>
+           </beans:set>
+      </beans:property>
+	</beans:bean>
+	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 	<!-- <resources mapping="/resources/**" location="/resources/" /> -->

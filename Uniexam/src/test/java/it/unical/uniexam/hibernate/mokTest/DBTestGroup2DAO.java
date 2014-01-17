@@ -233,7 +233,7 @@ public class DBTestGroup2DAO {
 		assertTrue(courseDAO.getRequestedCourses(ids[7], RequestedCourse.POLICY_LIGHT)==null);
 		assertTrue(courseDAO.getRequestedCourses(ids[7], RequestedCourse.POLICY_MEDIUM).size()==1);
 		assertTrue(courseDAO.getRequestedCourses(ids[7]).size()==1);
-		assertTrue(courseDAO.getRequestedCourses(ids[0]).iterator().next().getPolicyOfRequest()==RequestedCourse.POLICY_LIGHT);
+		assertTrue(courseDAO.getRequestedCourses(ids[0]).iterator().next().getPolicyOfRequested()==RequestedCourse.POLICY_LIGHT);
 		assertTrue(courseDAO.getRequestedCourses(ids[7]).iterator().next().getCourse().getName().equals("AE"));
 	}
 

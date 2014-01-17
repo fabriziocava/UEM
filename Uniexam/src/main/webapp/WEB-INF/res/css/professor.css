@@ -16,9 +16,15 @@ html {
 /* 	width: 5em; */
 /* } */
 
+.line-top{
+border-top: 3px solid #f1f1f1; 
+margin : 7px;	
+}
+
 .square-small{
 	height: 20px;
 	width: 20px;
+	float: left;
 }
 
 .strong.square-small{

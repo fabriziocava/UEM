@@ -55,6 +55,7 @@ public interface CourseDAO {
 	public Set<Professor> removeCommission(Long idCourse);
 	
 	public Set<RequestedCourse> getRequestedCourses(Long idCourse);
+	public RequestedCourse getRequestedCourse(Long idRequestedCourse);
 	public Set<RequestedCourse> getRequestedCourses(Long idCourse,String degreeOdPolicy);
 
 	public ArrayList<Course> getAssociatedCourseWithGroups(User user);
@@ -66,5 +67,7 @@ public interface CourseDAO {
 	public RequestedCourse removeRequestedCourse(Long idCourse, Long idCourseRequested,Session session,Transaction transaction);
 	
 	public Session getSession();
+
+	public ArrayList<String> getCoursesFromDepartment();
 	
 }

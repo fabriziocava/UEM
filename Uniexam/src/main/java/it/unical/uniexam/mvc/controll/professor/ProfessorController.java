@@ -1,28 +1,20 @@
 package it.unical.uniexam.mvc.controll.professor;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 import it.unical.uniexam.mvc.service.ProfessorService;
-import it.unical.uniexam.mvc.service.UserService;
 import it.unical.uniexam.mvc.service.UtilsService;
 
 import javax.servlet.ServletOutputStream;
@@ -35,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -132,8 +125,38 @@ public class ProfessorController {
 		updatePersonalizzation(model, p);
 		return ProfessorService.PROFESSOR_ACCOUNT;
 	}
+//	@Validated
+	@RequestMapping(value="professor/addRequestedCourseAction", method=RequestMethod.POST)
+	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
+			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+		//riempire una mappa da dove posso sceliere i corsi che possono essere richiesti 
+//		String idCours=request.getParameter("id");
+//		if(idCours!=null){
+//			Long idCourse=Long.valueOf(idCours);
+//			ArrayList<String> degree = new ArrayList<String>();
+//			degree.add(RequestedCourse.POLICY_LIGHT);
+//			degree.add(RequestedCourse.POLICY_MEDIUM);
+//			degree.add(RequestedCourse.POLICY_STRONG);
+//			model.addAttribute("degree", degree);
+//			Set<Course> courses=professorService.getCoursesFromDepartment(idCourse);
+//			model.addAttribute("courses", courses);
+//		}else{
+//			return new ModelAndView(UtilsService.GENERAL_ERROR);
+////			response.sendRedirect("redirect:"+UtilsService.redirectToErrorPageGeneral("Errore", "Errore", model));
+//		}
+//		Course c=professorService.getCourseDetails(p,idCourse);
+//		model.addAttribute("course", c);
+		return new ModelAndView("professor/dialog/addRequestedCourse", "model", model);
+	}
 
-
+	
 	//Pagine Secondarie
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_PERSONALIZZATION , method=RequestMethod.POST)

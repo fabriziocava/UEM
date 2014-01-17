@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 
@@ -142,4 +143,8 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 		return res;
 	}
 
+	@Override
+	public Set<Course> getCoursesFromDepartment(Long idCourse) {
+		return courseDAO.getCourses();
+	}
 }

@@ -80,12 +80,13 @@
 		</tr>
 		</table>
 		</div>
-		<div class="square-small <%=req.getPolicyOfRequest()%>"></div>
+		<div class="line-top"></div>
+		<div class="square-small <%=req.getPolicyOfRequested()%>"></div>
 		<div id="requestedCourse<%=req.getCourse().getId()%>"><%=req.getCourse().getName()%></div>
 		<ul class="links-user">
-		<li>Opzioni :</li> 
-		<li class="bottonmok" id="deleteRequest<%=req.getCourse().getId()%>$<%=c.getId()%>">Elimina</li>
-		<li class="bottonmok" id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequest()%>$<%=c.getId()%>">Modifica</li>
+		<li><spring:message code='message.general.options' /> :</li> 
+		<li class="bottonmok" id="deleteRequest<%=req.getCourse().getId()%>$<%=c.getId()%>"><spring:message code='message.general.remove' /></li>
+		<li class="bottonmok" id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequested()%>$<%=c.getId()%>"><spring:message code='message.general.modify' /></li>
 		</ul>
 		</div>
 		</td>
@@ -95,15 +96,26 @@
 			%>
 			<tr>
 			<td>
-			
+			<div class="line-top"></div>
+			</td>
+			</tr>
+			<tr>
+			<td>
+			<div class="line-top"></div>
+			<div class="bottonmok" id="addRequested<%=c.getId()%>"><spring:message code='message.general.add' /></div>
 			</td>
 			</tr>
 			<%
 				
 			%>
+<!-- 			<tr> -->
+<!-- 			<td> -->
+<!-- 			<div class="line-top"></div> -->
+<!-- 			</td> -->
+<!-- 			</tr> -->
 		</table>
 	</div>
-<div class="alertSomeModifyRequestCourse" style="display: none;"><input type="button" onclick="submitCommandRequestedCourse()" value="<spring:message code='message.general.Save' />"></div>
+<div class="alertSomeModifyRequestCourse line-top" style="display: none;"><input type="button" onclick="submitCommandRequestedCourse()" value="<spring:message code='message.general.Save' />"></div>
 
 </div>
 
