@@ -44,6 +44,29 @@ function openPopUpWithAjaxContent(caseId,id){
 	}
 	
 }
+function dialogAddAppeal(){
+	$("#dialog").attr("title","Add Appeal");
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#dialog");
+			commands=undefined;
+		}
+	});
+	$("#dialog").attr("title","");
+}
+
 
 function Commands(name,id){
 	// scrivere la classe che prende in input il set a command e poi con un to string ritorna la stringa come commando

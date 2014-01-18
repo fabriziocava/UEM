@@ -48,6 +48,19 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	AppealDAO appealDAO;
 
 	@Override
+	public List<Course> getCourseAssociated(Long id) {
+		return new ArrayList<Course>(professorDAO.getCourseHolder(id));
+	}
+	
+	@Override
+	public Boolean addAppeal(Professor p, Appeal appeal) {
+		return appealDAO.addAppeal(appeal.getCourse().getId(),appeal.getName(),
+				appeal.getMaxNumberOfInscribed(),appeal.getLocation()
+				, appeal.getExamDate(), appeal.getOpenDate(),appeal.getCloseDate()
+				,p.getId())!=null;
+	}
+	
+	@Override
 	public Professor getProfessor(Long idUser) {
 		return professorDAO.getProfessor(idUser);
 	}

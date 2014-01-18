@@ -72,6 +72,28 @@ public class ProfessorControllerAppeal {
 		
 		return ProfessorService.PROFESSOR_APPEAL;
 	}
+	
+	@RequestMapping(value="/add" , method=RequestMethod.POST)
+	public String add(@ModelAttribute("appeal") Appeal appeal,HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+
+		model.addAttribute("I",p);
+		updateNotification(model, p);
+		updatePersonalizzation(model, p);
+
+		Boolean ris=professorService.addAppeal(p,appeal);
+		
+		List<List<Object>>appeals=professorService.getStructureCourse_Appeal(p.getId());
+		model.addAttribute("struct",appeals);
+		
+		return ProfessorService.PROFESSOR_APPEAL;
+	}
 
 	//Pagine Secondarie
 

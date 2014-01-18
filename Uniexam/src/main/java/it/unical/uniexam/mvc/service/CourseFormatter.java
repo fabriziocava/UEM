@@ -27,8 +27,8 @@ public class CourseFormatter implements Formatter<Course> {
 
 	@Override
 	public Course parse(String idCourse, Locale locale) throws ParseException {
-		if(idCourse==null){
-			return null;
+		if(idCourse==null || idCourse.equals("-1")){
+			return new Course();
 		}
 		Course r=(Course) courseDAO.getCourse(Long.valueOf(idCourse));
 		return r;

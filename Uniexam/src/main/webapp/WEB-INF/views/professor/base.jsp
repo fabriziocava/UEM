@@ -17,11 +17,16 @@
 <script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js">
 </script>
 <script
+	src="${pageContext.request.contextPath}/res/js/jquery-ui-1.10.3.custom.js">
+</script>
+<script
 	src="${pageContext.request.contextPath}/res/js/jquery-sorting.js">
 </script>
 <script
-	src="${pageContext.request.contextPath}/res/js/jquery-ui-1.10.3.custom.js">
+	src="${pageContext.request.contextPath}/res/js/jquery-ui-timepicker-addon.js">
 </script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/res/js/jquery-ui-timepicker-addon.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/res/css/jquery-ui.css">
 <script src="${pageContext.request.contextPath}/res/js/mok.js">

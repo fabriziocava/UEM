@@ -302,6 +302,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		Set<Course> res=null;
 		try{
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			Hibernate.initialize(p.getSetHoldersCourse());// FOR LAZY LOAD
 			res=p.getSetHoldersCourse();
 		}catch(Exception e){
 			new MokException(e);

@@ -8,7 +8,7 @@
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <!-- from Controller attribute course that contains the all details for Course -->
 	<%
-	Course c=(Course)request.getAttribute("course"); 
+		Course c=(Course)request.getAttribute("course");
 	%>
 <div id="course_details_<%=c.getId()%>" style="display: none;">
 	<script type="text/javascript">

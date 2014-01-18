@@ -54,4 +54,8 @@ public interface ProfessorService extends UserService{
 	public Boolean addRequestedCourse(Long idCourse,RequestedCourse requestedCourse);
 
 	public List<List<Object>> getStructureCourse_Appeal(Long p);
+
+	public Boolean addAppeal(Professor p, Appeal appeal);
+
+	public List<Course> getCourseAssociated(Long id);
 }

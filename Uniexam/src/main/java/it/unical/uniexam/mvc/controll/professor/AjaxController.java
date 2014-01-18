@@ -1,5 +1,6 @@
 package it.unical.uniexam.mvc.controll.professor;
 
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
@@ -10,6 +11,7 @@ import it.unical.uniexam.mvc.service.UtilsService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,16 +51,22 @@ public class AjaxController {
 //	/ajax/course/course_details/dialog
 
 	@RequestMapping("/dialog/add_appeal")
-	public String dialog_add_appeal(HttpServletRequest request, Model model){
+	public ModelAndView dialog_add_appeal(@ModelAttribute("appeal") Appeal appeal,HttpServletRequest request, Model model){
 		Professor p=null;
 		String redirect=null;
 		ArrayList<Professor>plist=new ArrayList<Professor>();
 		redirect=setProfessorOrRedirect(request,model,plist);
 		if(redirect!=null)
-			return redirect;
+			return new ModelAndView(redirect);
 		p=plist.get(0);
 		
-		return "professor/dialog/add_appeal";
+		List<Course> courses=professorService.getCourseAssociated(p.getId());
+		Course course = new Course(null, "NO", null, null, null, null, null);
+		course.setId(-1L);
+		courses.add(0, course);
+		model.addAttribute("courses", courses);
+		
+		return new ModelAndView("professor/dialog/add_appeal", "model", model);
 	}
 	
 	@RequestMapping("/dialog/requested_course")

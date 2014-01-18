@@ -68,11 +68,11 @@ public class Appeal {
 	@ManyToOne
 	Course course;
 	
-	@Column(name="NAME")
-	String name;
-	
 	@Column(name="CURR_INSCRIBED")
 	Integer currNumberOfInscribed;
+	
+	@Column(name="NAME")
+	String name;
 	
 	@Column(name="MAX_INSCRIBED")
 	Integer maxNumberOfInscribed;

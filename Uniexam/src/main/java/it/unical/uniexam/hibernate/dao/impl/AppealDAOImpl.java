@@ -42,9 +42,9 @@ public class AppealDAOImpl implements AppealDAO {
 					res=new ArrayList<List<Object>>();
 				res.add(new ArrayList<Object>());
 				res.get(count).add(course);
-//				Query q=session.createQuery("from Appeal where course=:courId and creatorProfessor=:idProf");
-//				q.setParameter("courId", course);
-//				q.setParameter("idProf", ((Professor)session.get(Professor.class, idProfessor)));
+				//				Query q=session.createQuery("from Appeal where course=:courId and creatorProfessor=:idProf");
+				//				q.setParameter("courId", course);
+				//				q.setParameter("idProf", ((Professor)session.get(Professor.class, idProfessor)));
 				Query q=session.createQuery("from Appeal where course.id=:courId and creatorProfessor.id=:idProf");
 				q.setParameter("courId", course.getId());
 				q.setParameter("idProf", idProfessor);
@@ -86,8 +86,9 @@ public class AppealDAOImpl implements AppealDAO {
 		Long id=null;
 		try{
 			transaction=session.beginTransaction();
-
-			Course course=(Course)session.get(Course.class, idCourse);
+			Course course=null;
+			if(idCourse!=null)
+				course=(Course)session.get(Course.class, idCourse);
 			Professor creatorProfessor=(Professor)session.get(Professor.class, idProfessor);
 			Appeal a=new Appeal(course, name, maxNumberOfInscribed, location, examDate, openDate, closeDate, creatorProfessor);
 			creatorProfessor.getAppeals().add(a);
@@ -96,6 +97,7 @@ public class AppealDAOImpl implements AppealDAO {
 			transaction.commit();
 		}catch(Exception e){
 			new MokException(e);
+			id=null;
 			transaction.rollback();
 		}finally{
 			session.close();

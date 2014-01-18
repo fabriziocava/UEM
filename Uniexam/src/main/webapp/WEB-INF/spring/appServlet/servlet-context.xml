@@ -22,11 +22,13 @@
 	<annotation-driven conversion-service="conversionService"/>
 
 	<beans:bean id="courseFormatter" class="it.unical.uniexam.mvc.service.CourseFormatter"></beans:bean>
+	<beans:bean id="dateFormatter" class="it.unical.uniexam.mvc.service.DateFormatter"></beans:bean>
 	
 	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
       <beans:property name="formatters">
            <beans:set>
                  <beans:ref bean="courseFormatter"/>
+                 <beans:ref bean="dateFormatter"/>
            </beans:set>
       </beans:property>
 	</beans:bean>

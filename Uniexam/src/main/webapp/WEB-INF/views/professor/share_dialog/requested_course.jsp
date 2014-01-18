@@ -11,15 +11,13 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		dialogModifyRequestedCourse();
-		<%
-		String res=((String) request.getAttribute("result"));
+		<%String res=((String) request.getAttribute("result"));
 		if(res!=null){
 			if(res.equals("success")){%>
 				alert("Modifiche apportate!");
 			<%}else{%>
 				alert("Error in some istruction!");
-			<%}}
-		%>
+			<%}}%>
 	});
 // 	function legendOfDegree(){
 		

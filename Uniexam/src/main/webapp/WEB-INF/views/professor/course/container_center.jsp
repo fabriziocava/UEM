@@ -47,8 +47,8 @@
 		<ol id="#sorting">
 			<%
 				ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
-				if (courses != null && courses.size() > 0) {
-					for (Course c : courses) {
+						if (courses != null && courses.size() > 0) {
+							for (Course c : courses) {
 			%>
 			<li class="list_course">
 				<article>

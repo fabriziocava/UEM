@@ -51,9 +51,9 @@
 		<table id="#sorting">
 			<%
 				if (struct != null) {
-					// 				response.sendRedirect("error_page/general_error.jsp?error_type=Null_pointer&error_message=Error_in_appeals");
-					// 			}
-					for (ArrayList<Object> items : struct) {
+							// 				response.sendRedirect("error_page/general_error.jsp?error_type=Null_pointer&error_message=Error_in_appeals");
+							// 			}
+							for (ArrayList<Object> items : struct) {
 			%>
 			<tr>
 				<td><span class="span_expandible" id="collapseAppeals<%=((Course) items.get(0)).getId()%>">+</span>
