@@ -95,13 +95,14 @@ public class Appeal {
 			@JoinColumn(name="APPEL_ID")
 			}, 
 	inverseJoinColumns={
-			@JoinColumn(name="ID")
+			@JoinColumn(name="STUDENT_ID")
 			})
 	Set<Student>studentsInscribed=new HashSet<Student>();
 	
 	@ManyToOne
 	Professor creatorProfessor;
-
+	
+	
 	/// Implementation
 	
 	public Long getId() {

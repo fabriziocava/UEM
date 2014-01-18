@@ -77,10 +77,6 @@ public class Course {
 	@GeneratedValue
 	Long id;
 
-	//deve essere implemetnato il collegamento tra il cdl e il cdl all'ordinamento
-	//	@ManyToOne
-	//	DegreeCourse underDegreeCourse;
-
 	@Column(name="CODE", nullable=false)
 	String code;
 
@@ -124,6 +120,17 @@ public class Course {
 
 	@ManyToOne
 	DegreeCourse degreeCourse;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="COURSE_APPEAL",
+			joinColumns = {
+				@JoinColumn(name="COURSE_ID")
+			},
+			inverseJoinColumns = {
+				@JoinColumn(name="APPEAL_ID")
+			}
+		)
+	Set<Appeal> appeals = new HashSet<Appeal>();
 	
 	/**
 	 * implementetion function part
@@ -248,39 +255,36 @@ public class Course {
 		return true;
 	}
 
-	
 	public Set<Group> getGroups() {
 		return groups;
 	}
-
-
 
 	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
 	}
 
-
-
 	public String getNote() {
 		return note;
 	}
-
-
 
 	public void setNote(String note) {
 		this.note = note;
 	}
 
-
-
 	public DegreeCourse getDegreeCourse() {
 		return degreeCourse;
 	}
 
-
-
 	public void setDegreeCourse(DegreeCourse degreeCourse) {
 		this.degreeCourse = degreeCourse;
 	}
-	
+
+	public Set<Appeal> getAppeals() {
+		return appeals;
+	}
+
+	public void setAppeals(Set<Appeal> appeals) {
+		this.appeals = appeals;
+	}
+		
 }

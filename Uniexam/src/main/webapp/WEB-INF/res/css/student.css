@@ -132,11 +132,10 @@ ul.dashboard{
 }
 
 .container-left {
-	color: #800000;
 	position: relative;
 	background-color: transparent;
-	/*border: 2px inset;
-	border-color: black;*/
+	border: 1px inset;
+	border-color: black;
 	position: relative;
 	width: 14%;
 	height: auto;
