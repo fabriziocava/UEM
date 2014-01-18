@@ -545,13 +545,13 @@ public class CourseDAOImpl implements CourseDAO{
 	
 	
 	@Override
-	public RequestedCourse removeRequestedCourse(Long idCourse, Long idCourseRequested,Session session,Transaction transaction) {
+	public RequestedCourse removeRequestedCourse(Long idCourse, Long idCourseRequested,Session session) {
 		RequestedCourse res=null;
-		if(session==null)
-			session =HibernateUtil.getSessionFactory().openSession();
+//		if(session==null)
+//			session =HibernateUtil.getSessionFactory().openSession();
 		try{
-			if(transaction==null)
-				transaction=session.beginTransaction();
+//			if(transaction==null)
+//				transaction=session.beginTransaction();
 			Course c1=(Course) session.get(Course.class, idCourse);
 			if(c1!=null){
 				for(RequestedCourse r : c1.getRequestedCourses()){
@@ -565,7 +565,7 @@ public class CourseDAOImpl implements CourseDAO{
 //				transaction.commit();
 			}
 		}catch(Exception e){
-			transaction.rollback();
+//			transaction.rollback();
 			new MokException(e);
 		}finally{
 //			session.close();
@@ -574,14 +574,14 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
-	public Boolean modifyDegreeRequestedCourse(Long idCourse,Long idCourseRequested, String degree,Session session,Transaction transaction) {
-		if(session==null)
-			session =HibernateUtil.getSessionFactory().openSession();
+	public Boolean modifyDegreeRequestedCourse(Long idCourse,Long idCourseRequested, String degree,Session session) {
+//		if(session==null)
+//			session =HibernateUtil.getSessionFactory().openSession();
 //		Transaction transaction=null;
 		Boolean res=false;
 		try{
-			if(transaction==null)
-				transaction=session.beginTransaction();
+//			if(transaction==null)
+//				transaction=session.beginTransaction();
 			if(degree.equals(RequestedCourse.POLICY_LIGHT)|| degree.equals(RequestedCourse.POLICY_MEDIUM)||
 					degree.equals(RequestedCourse.POLICY_STRONG)){
 				Course course=(Course)session.get(Course.class, idCourse);
@@ -594,7 +594,7 @@ public class CourseDAOImpl implements CourseDAO{
 			}
 //			transaction.commit();
 		}catch(Exception e){
-			transaction.rollback();
+//			transaction.rollback();
 			res=false;
 			new MokException(e);
 		}finally{

@@ -63,8 +63,8 @@ public interface CourseDAO {
 	public String getNote(Long idCourse);
 	public Boolean setNote(Long idCourse,String note);
 
-	public Boolean modifyDegreeRequestedCourse(Long idCourse,Long idCourseRequested, String degree,Session session,Transaction transaction);
-	public RequestedCourse removeRequestedCourse(Long idCourse, Long idCourseRequested,Session session,Transaction transaction);
+	public Boolean modifyDegreeRequestedCourse(Long idCourse,Long idCourseRequested, String degree,Session session);
+	public RequestedCourse removeRequestedCourse(Long idCourse, Long idCourseRequested,Session session);
 	
 	public Session getSession();
 

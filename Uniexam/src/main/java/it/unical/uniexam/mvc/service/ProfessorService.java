@@ -9,8 +9,10 @@ import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 
@@ -24,6 +26,8 @@ public interface ProfessorService extends UserService{
 	public static final String PROFESSOR_CHANGE_NOTE = "professor/changeNote";
 	public static final String PROFESSOR_IMAGE = "professor/image";
 	public static final String PROFESSOR_UPLOAD ="professor/upload";
+	
+	public final static String PROFESSOR_APPEAL="professor/appeal";
 	
 	public Professor getProfessor(Long idUser);
 
@@ -45,5 +49,9 @@ public interface ProfessorService extends UserService{
 
 	public Boolean applyCommandForRequestedCourse(Long idCourse, String commands);
 
-	public Set<Course> getCoursesFromDepartment(Long idCourse);
+	public Set<Course> getCoursesForRequestedCourseFromDepartment(Long idCourse);
+
+	public Boolean addRequestedCourse(Long idCourse,RequestedCourse requestedCourse);
+
+	public List<List<Object>> getStructureCourse_Appeal(Long p);
 }

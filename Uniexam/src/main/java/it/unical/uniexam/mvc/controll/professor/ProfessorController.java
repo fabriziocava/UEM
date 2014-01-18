@@ -73,7 +73,7 @@ public class ProfessorController {
 		return ProfessorService.PROFESSOR_HOME;
 	}
 
-	@RequestMapping(value=ProfessorService.PROFESSOR_COURSE , method=RequestMethod.GET)
+	@RequestMapping(value=ProfessorService.PROFESSOR_COURSE)
 	public String course(HttpServletRequest request, Model model){
 		Professor p=null;
 		String redirect=null;
@@ -136,24 +136,15 @@ public class ProfessorController {
 		if(redirect!=null)
 			return new ModelAndView(redirect);
 		p=plist.get(0);
-		//riempire una mappa da dove posso sceliere i corsi che possono essere richiesti 
-//		String idCours=request.getParameter("id");
-//		if(idCours!=null){
-//			Long idCourse=Long.valueOf(idCours);
-//			ArrayList<String> degree = new ArrayList<String>();
-//			degree.add(RequestedCourse.POLICY_LIGHT);
-//			degree.add(RequestedCourse.POLICY_MEDIUM);
-//			degree.add(RequestedCourse.POLICY_STRONG);
-//			model.addAttribute("degree", degree);
-//			Set<Course> courses=professorService.getCoursesFromDepartment(idCourse);
-//			model.addAttribute("courses", courses);
-//		}else{
-//			return new ModelAndView(UtilsService.GENERAL_ERROR);
-////			response.sendRedirect("redirect:"+UtilsService.redirectToErrorPageGeneral("Errore", "Errore", model));
-//		}
-//		Course c=professorService.getCourseDetails(p,idCourse);
-//		model.addAttribute("course", c);
-		return new ModelAndView("professor/dialog/addRequestedCourse", "model", model);
+		
+		String idCours=request.getParameter("idCourse");
+		
+		Long idCourse=Long.valueOf(idCours);
+		
+		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
+		
+//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
+		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
 	}
 
 	
@@ -265,7 +256,7 @@ public class ProfessorController {
 		} else {
 			//            return "You failed to upload because the file was empty.";
 		}
-		return "redirect:"+ProfessorService.PROFESSOR_ACCOUNT;
+		return "redirect:/"+ProfessorService.PROFESSOR_ACCOUNT;
 	}
 
 	//OTHER METHOD

@@ -6,6 +6,7 @@ import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public interface AppealDAO {
@@ -39,5 +40,6 @@ public interface AppealDAO {
 	
 	public boolean removeStudentAtAppeal(Long idAppeal,Long idStudent);
 	public boolean removeStudentAtAppeal(Long idAppeal,Student student);
+	public List<List<Object>> getStructureCourse_Appeal(Long p);
 	
 }

@@ -1,5 +1,7 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +28,40 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
  */
 @Repository
 public class AppealDAOImpl implements AppealDAO {
+
+	@Override
+	public List<List<Object>> getStructureCourse_Appeal(Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		List<List<Object>> res=null;
+		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			List<Course>courses=new ArrayList<Course>(p.getSetHoldersCourse());
+			int count=0;
+			for (Course course : courses) {
+				if(res==null)
+					res=new ArrayList<List<Object>>();
+				res.add(new ArrayList<Object>());
+				res.get(count).add(course);
+//				Query q=session.createQuery("from Appeal where course=:courId and creatorProfessor=:idProf");
+//				q.setParameter("courId", course);
+//				q.setParameter("idProf", ((Professor)session.get(Professor.class, idProfessor)));
+				Query q=session.createQuery("from Appeal where course.id=:courId and creatorProfessor.id=:idProf");
+				q.setParameter("courId", course.getId());
+				q.setParameter("idProf", idProfessor);
+				ArrayList<Appeal>ris=(ArrayList<Appeal>) q.list();
+				if(ris!=null && ris.size()>0){
+					res.get(count).addAll(ris);
+				}
+				count++;
+			}
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
 
 	@Deprecated
 	@Override

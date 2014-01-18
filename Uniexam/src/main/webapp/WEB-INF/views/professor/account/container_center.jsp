@@ -15,7 +15,7 @@
 	<script type="text/javascript">
 		
 	</script>
-	<div>
+	<div style="display: inline-block;">
 		<div>
 			<div style="float: left;">
 				<img class="image360"
@@ -30,21 +30,33 @@
 					
 				%>
 			</div>
-			<div style="float: right:;">
+			<div style="float: right; margin-left: 30px">
 				<fieldset>
 					<legend>
 						<spring:message
 							code="message.professor.account.container.center.legend" />
 					</legend>
 					<article>
-						<section id="">
-							<form
-								action="${pageContext.request.contextPath}/professor/upload"
-								method="POST" enctype="multipart/form-data">
-								Please select a file to upload : <input type="file" name="file" />
-								<input type="submit" value="upload" />
-							</form>
-						</section>
+						<form action="${pageContext.request.contextPath}/professor/upload"
+							method="POST" enctype="multipart/form-data">
+							<section>
+								<table class="tablemok">
+									<tr>
+										<td>
+											<div style="">Please select a file to upload :</div>
+										<td>
+									</tr>
+									<tr>
+										<td><input type="file" name="file" />
+										<td>
+									</tr>
+									<tr>
+										<td><input type="submit" value="upload" />
+										<td>
+									</tr>
+								</table>
+							</section>
+						</form>
 					</article>
 				</fieldset>
 			</div>

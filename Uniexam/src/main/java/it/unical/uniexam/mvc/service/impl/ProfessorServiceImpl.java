@@ -15,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.uniexam.MokException;
+import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 import it.unical.uniexam.mvc.service.ProfessorService;
@@ -41,6 +44,8 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	CourseDAO courseDAO;
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	AppealDAO appealDAO;
 
 	@Override
 	public Professor getProfessor(Long idUser) {
@@ -108,33 +113,34 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 		Course c=courseDAO.getCourse(idCourse);
 		String []items=commands.split(":");
 		if(items[0].equals(String.valueOf(c.getId()))){
-			for(String item:items){
-				Session session=null;
-				Transaction transaction=null;
-				try{
-					session=courseDAO.getSession();
-					transaction=session.getTransaction();
-					
+			Session session=null;
+			Transaction transaction=null;
+			try{
+				session=courseDAO.getSession();
+				transaction=session.beginTransaction();
+				for(String item:items){
+
 					String []elems=item.split(",");
 					if(elems!=null && elems.length>1){
 						if(elems[1].equals("change")){
-							if(!courseDAO.modifyDegreeRequestedCourse(idCourse, Long.valueOf(elems[0]), elems[2]))
-//								return false;
+							if(!courseDAO.modifyDegreeRequestedCourse(idCourse, Long.valueOf(elems[0]), elems[2],session))
+								//								return false;
 								throw new Exception();
 						}else if(elems[1].equals("remove")){
 							if(courseDAO.removeRequestedCourse(idCourse, Long.valueOf(elems[0]))==null)
-//								return false;
+								//								return false;
 								throw new Exception();
 						}
 					}
-					
-				}catch(Exception e){
-					new MokException(e);
-					res=false;
-					transaction.rollback();
-				}finally{
-					session.close();
+
 				}
+				transaction.commit();
+			}catch(Exception e){
+				new MokException(e);
+				res=false;
+				transaction.rollback();
+			}finally{
+				session.close();
 			}
 		}else{
 			System.out.println("inatteso");
@@ -144,7 +150,17 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	}
 
 	@Override
-	public Set<Course> getCoursesFromDepartment(Long idCourse) {
+	public Set<Course> getCoursesForRequestedCourseFromDepartment(Long idCourse) {
 		return courseDAO.getCourses();
+	}
+
+	@Override
+	public Boolean addRequestedCourse(Long idCourse,RequestedCourse requestedCourse) {
+		return courseDAO.addRequestedCourse(idCourse, requestedCourse.getCourse().getId(), requestedCourse.getPolicyOfRequested());
+	}
+
+	@Override
+	public List<List<Object>> getStructureCourse_Appeal(Long p) {
+		return appealDAO.getStructureCourse_Appeal(p);
 	}
 }

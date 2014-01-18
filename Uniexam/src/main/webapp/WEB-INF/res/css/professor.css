@@ -16,6 +16,11 @@ html {
 /* 	width: 5em; */
 /* } */
 
+.tablemok{
+	border-collapse: separate; 
+	border-spacing: 5px;
+}
+
 .line-top{
 border-top: 3px solid #f1f1f1; 
 margin : 7px;	

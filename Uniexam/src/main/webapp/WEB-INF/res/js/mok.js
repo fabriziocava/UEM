@@ -33,7 +33,16 @@ function openPopUpWithAjaxContent(caseId,id){
 				$("<div></div>").attr('id','dialog').appendTo('body');
 			$("#dialog").html(data);
 		});
+	}else if(caseId.match("addAppeal")){
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+"/ajax/dialog/add_appeal", "GET", "i", "0");
+		ajax.done(function(data){
+			if($("#dialog").html()==undefined)
+				$("<div></div>").attr('id','dialog').appendTo('body');
+			$("#dialog").html(data);
+		});
 	}
+	
 }
 
 function Commands(name,id){
@@ -88,6 +97,17 @@ function submitCommandRequestedCourse(){
 		$("#dialog").html(data);
 	});
 //	alert(data);
+}
+
+function submitAddRequestedCourse(){
+	var conte=$("#context").attr("value");
+//	$("#addrequestedCourse").submit();
+	var ajax=$.post(conte+'/addRequestedCourseAction', $('#addrequestedCourse').serialize());
+	ajax.done(function(data){
+		if($("#dialog").html()==undefined)
+			$("<div></div>").attr('id','dialog').appendTo('body');
+		$("#dialog").html(data);
+	});
 }
 
 function dialogModifyRequestedCourse(){

@@ -36,7 +36,8 @@
 				Save:function(){
 					//something else
 					if($("#policyOfRequested:radio:checked").val()!=""){
-						$("#addrequestedCourse").submit();
+						submitAddRequestedCourse();
+						alert("vado");
 						$( this ).dialog( "close" );
 						$("div").remove("#dialogAddRequested");
 					}else{
@@ -59,7 +60,7 @@
 
 <div id="dialog_content">
 <form:form id="addrequestedCourse" modelAttribute="requestedCourse" method="post" action="addRequestedCourseAction">
-<table>
+<table class="tablemok">
 <tr>
 <td><form:label path="policyOfRequested">Degree of requested</form:label></td>
 <td><form:radiobuttons id="policyOfRequested" path="policyOfRequested" items="${model.degree}"/></td>
@@ -67,6 +68,7 @@
 <tr>
 <td><form:label path="Course">Course</form:label></td>
 <td><form:select path="Course" items="${model.courses}" itemLabel="name"></form:select></td>
+<td><input type="hidden" name="idCourse" value="${model.idCourse}"/></td>
 </tr>
 <tr><td></td><td>
 <!-- <input type="submit" value="Register" /> -->

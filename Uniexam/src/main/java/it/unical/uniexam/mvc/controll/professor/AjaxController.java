@@ -48,6 +48,19 @@ public class AjaxController {
 	}
 //	/ajax/course/course_details/dialog
 
+	@RequestMapping("/dialog/add_appeal")
+	public String dialog_add_appeal(HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+		
+		return "professor/dialog/add_appeal";
+	}
+	
 	@RequestMapping("/dialog/requested_course")
 	public String dialog_requested_course(HttpServletRequest request, Model model){
 		Professor p=null;
@@ -61,6 +74,14 @@ public class AjaxController {
 		Long idCourse=Long.valueOf(idCours);
 		Course c=professorService.getCourseDetails(p,idCourse);
 		model.addAttribute("course", c);
+		
+		String ris=request.getParameter("ris");
+		if(ris!=null){
+			if(ris.equals("true"))
+				model.addAttribute("result","success");
+			else
+				model.addAttribute("result","error");
+		}
 		return "professor/dialog/requested_course";
 	}
 	
@@ -83,8 +104,10 @@ public class AjaxController {
 			degree.add(RequestedCourse.POLICY_MEDIUM);
 			degree.add(RequestedCourse.POLICY_STRONG);
 			model.addAttribute("degree", degree);
-			Set<Course> courses=professorService.getCoursesFromDepartment(idCourse);
+			Set<Course> courses=professorService.getCoursesForRequestedCourseFromDepartment(idCourse);
 			model.addAttribute("courses", courses);
+			
+			model.addAttribute("idCourse", idCourse);
 		}else{
 			return new ModelAndView(UtilsService.GENERAL_ERROR);
 //			response.sendRedirect("redirect:"+UtilsService.redirectToErrorPageGeneral("Errore", "Errore", model));
@@ -114,7 +137,7 @@ public class AjaxController {
 			commands=commands.replace("sendRequestedCourse", "");
 			String []items=commands.split(":");
 			String idCours=items[0];
-			System.out.println(commands);
+//			System.out.println(commands);
 			Long idCourse=Long.valueOf(idCours);
 			if(professorService.applyCommandForRequestedCourse(idCourse,commands))
 				model.addAttribute("result","success");

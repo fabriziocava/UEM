@@ -57,7 +57,7 @@
 	<p class="alertSomeModifyRequestCourse" style="display: none;"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 	<spring:message code="message.professor.dialog.requested_course.alert_Save_Modification" /></p>
 	<div>
-		<table>
+		<table class="tablemok">
 			<%
 				for(RequestedCourse req:c.getRequestedCourses()){
 			%>
@@ -65,7 +65,7 @@
 		<td>
 		<div>
 		<div style="display: none;position: fixed;z-index: 9;background-color: gray;" id="legendOfDegree">
-		<table style="border-collapse: separate; border-spacing: 5px;">
+		<table class="tablemok">
 		<tr>
 		<th><div class="square-small strong"></div></th>
 		<td><div><spring:message code="message.professor.dialog.requested_course.description_strong" /></div></td>

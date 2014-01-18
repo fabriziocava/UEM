@@ -17,7 +17,7 @@
 		$("#course_details_<%=c.getId()%>").slideDown(1000);
 	});
 	</script>
-	<table style="border-spacing: 4px;">
+	<table class="tablemok">
 	<caption><strong><spring:message code="message.professor.course.course_details.caption" /></strong></caption>
 	<tbody>
 	<tr>
