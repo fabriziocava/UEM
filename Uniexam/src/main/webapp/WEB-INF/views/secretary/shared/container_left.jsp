@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <link href="${pageContext.request.contextPath}/res/css/menuTree.css"
 	media="all" rel="stylesheet" type="text/css" />
 
@@ -31,7 +32,7 @@
 			<ul>
 				<li><a href='#'><spring:message code="label.secretary.add" /></a></li>
 				<li><a href='#'><spring:message code="label.secretary.list" /></a></li>
-				<li><spring:message code="label.courses" />
+				<li><spring:message code="label.secretary.courses" />
 					<ul>
 						<li><a href='#'><spring:message code="label.secretary.add" /></a></li>
 						<li><a href='#'><spring:message code="label.secretary.list" /></a></li>

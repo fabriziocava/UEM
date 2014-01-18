@@ -59,7 +59,7 @@ public class Manager extends User{
 	}
 
 	
-	@OneToOne(fetch=FetchType.LAZY) // da controllare
+	@OneToOne // da controllare
 	Department department_associated;
 	
 
@@ -101,6 +101,9 @@ public class Manager extends User{
 		return department_associated;
 	}
 
+	public Long getDepartmentAssociated(){
+		return department_associated.getId();
+	}
 	public void setDepartment_associated(Department department_associated) {
 		this.department_associated = department_associated;
 	}

@@ -318,12 +318,16 @@ ul.dashboard {
 }
 
 .container-left {
-	background-color: red;
-	position: relative;
-	width: 14%;
-	height: auto;
-	float: left;
-	/* 	margin: 2px; */
+        color: #800000;
+        position: relative;
+        background-color: transparent;
+        /*border: 2px inset;
+        border-color: black;*/
+        position: relative;
+        width: 14%;
+        height: auto;
+        float: left;
+/*         margin: 2px; */
 }
 
 .container-right {
@@ -360,5 +364,5 @@ footer {
 	/* 	height: 20px; */
 	background-color: #f3f3f3;
 	z-index: 1;
-	margin: 20px 0px 10px 0px;
+	margin: 430px 0px 10px 0px;
 }
