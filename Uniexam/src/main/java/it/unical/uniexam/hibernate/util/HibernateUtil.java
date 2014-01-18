@@ -6,6 +6,7 @@ import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -51,6 +52,7 @@ public class HibernateUtil {
                         .addAnnotatedClass(Professor.class)
                         .addAnnotatedClass(Manager.class)
                         .addAnnotatedClass(Student.class)
+                        .addAnnotatedClass(ExamSession.class)
                         .buildSessionFactory();
                 }catch(Exception e){
                         new MokException(e);
