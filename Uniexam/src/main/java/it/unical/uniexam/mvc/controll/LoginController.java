@@ -6,6 +6,7 @@ import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.HomeService;
 import it.unical.uniexam.mvc.service.ManagerService;
 import it.unical.uniexam.mvc.service.ProfessorService;
+import it.unical.uniexam.mvc.service.SecretaryService;
 import it.unical.uniexam.mvc.service.UtilsService;
 import it.unical.uniexam.mvc.service.impl.HomeServiceImpl;
 
@@ -109,6 +110,9 @@ public class LoginController {
 		}
 		else if(user.getType()==User.TYPE.MANAGER){
 			return "redirect:"+ManagerService.MANAGER_HOME;
+		}
+		else if(user.getType()==User.TYPE.SECRETARY){
+			return "redirect:"+SecretaryService.SECRETARY_HOME;
 		}
 		return "";
 //		return new ModelAndView("home", "model", "model");

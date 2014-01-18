@@ -21,40 +21,40 @@
 	<label><b>Quick Links:</b></label>
 	<br>
 	<ul id="nav">
-		<li><spring:message code="label.department" />
+		<li><spring:message code="label.secretary.department" />
 			<ul>
-				<li><a href="${pageContext.request.contextPath}/secretary/registerDepartment"><spring:message code="label.add" /></a></li>
-				<li><a href='#'><spring:message code="label.list" /></a></li>
+				<li><a href="${pageContext.request.contextPath}/secretary/registerDepartment"><spring:message code="label.secretary.add" /></a></li>
+				<li><a href='#'><spring:message code="label.secretary.list" /></a></li>
 			</ul>
 		</li>
-		<li><spring:message code="label.degreeCourse" />
+		<li><spring:message code="label.secretary.degreeCourse" />
 			<ul>
-				<li><a href='#'><spring:message code="label.add" /></a></li>
-				<li><a href='#'><spring:message code="label.list" /></a></li>
+				<li><a href='#'><spring:message code="label.secretary.add" /></a></li>
+				<li><a href='#'><spring:message code="label.secretary.list" /></a></li>
 				<li><spring:message code="label.courses" />
 					<ul>
-						<li><a href='#'><spring:message code="label.add" /></a></li>
-						<li><a href='#'><spring:message code="label.list" /></a></li>
+						<li><a href='#'><spring:message code="label.secretary.add" /></a></li>
+						<li><a href='#'><spring:message code="label.secretary.list" /></a></li>
 					</ul>
 				</li>
 			</ul>
 		</li>
-		<li><spring:message code="label.manager" />
+		<li><spring:message code="label.secretary.manager" />
 			<ul>
-				<li><a href='${pageContext.request.contextPath}/secretary/registerManager'><spring:message code="label.add" /></a></li>
-				<li><a href='#'><spring:message code="label.list" /></a></li>
+				<li><a href='${pageContext.request.contextPath}/secretary/registerManager'><spring:message code="label.secretary.add" /></a></li>
+				<li><a href='#'><spring:message code="label.secretary.list" /></a></li>
 			</ul>
 		</li>
-		<li><spring:message code="label.professor" />
+		<li><spring:message code="label.secretary.professor" />
 			<ul>
-				<li><a href='#'><spring:message code="label.add" /></a></li>
-				<li><a href='#'><spring:message code="label.list" /></a></li>
+				<li><a href='#'><spring:message code="label.secretary.add" /></a></li>
+				<li><a href='#'><spring:message code="label.secretary.list" /></a></li>
 			</ul>
 		</li>
-		<li><spring:message code="label.student" />
+		<li><spring:message code="label.secretary.student" />
 			<ul>
-				<li><a href='#'><spring:message code="label.add" /></a></li>
-				<li><a href='#'><spring:message code="label.list" /></a></li>
+				<li><a href='#'><spring:message code="label.secretary.add" /></a></li>
+				<li><a href='#'><spring:message code="label.secretary.list" /></a></li>
 			</ul>
 		</li>
 	</ul>
