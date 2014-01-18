@@ -132,6 +132,17 @@ public class Course {
 		)
 	Set<Appeal> appeals = new HashSet<Appeal>();
 	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="COURSE_CARRIER",
+			joinColumns = {
+				@JoinColumn(name="COURSE_ID")
+			},
+			inverseJoinColumns = {
+				@JoinColumn(name="CARRIER_ID")
+			}
+		)
+	Set<Carrier> carrier = new HashSet<Carrier>();
+	
 	/**
 	 * implementetion function part
 	 * 
@@ -286,5 +297,13 @@ public class Course {
 	public void setAppeals(Set<Appeal> appeals) {
 		this.appeals = appeals;
 	}
-		
+
+	public Set<Carrier> getCarrier() {
+		return carrier;
+	}
+
+	public void setCarrier(Set<Carrier> carrier) {
+		this.carrier = carrier;
+	}
+	
 }

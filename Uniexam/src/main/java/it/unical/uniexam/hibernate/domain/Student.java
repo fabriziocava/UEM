@@ -9,8 +9,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -56,23 +55,36 @@ public class Student extends User {
 	@ManyToOne
 	DegreeCourse degreeCourse_registered;
 
-	@OneToMany
-	@JoinTable(name="STUDENT_APPEAL",
-				joinColumns={@JoinColumn(name="STUDENT_ID")},
-				inverseJoinColumns={@JoinColumn(name="APPEAL_ID")}
-			)
-	Set<Appeal> appeals = new HashSet<Appeal>();
+//	@OneToMany(fetch=FetchType.LAZY)
+//	@JoinTable(name="STUDENT_APPEAL",
+//				joinColumns={@JoinColumn(name="ID")},
+//				inverseJoinColumns={@JoinColumn(name="APPEAL_ID")}
+//			)
+//	Set<Appeal> appeals = new HashSet<Appeal>();
 	
-	@OneToMany
-	@JoinTable(name="STUDENT_COURSE", //CARRIER
-				joinColumns={@JoinColumn(name="STUDENT_ID")},
-				inverseJoinColumns={@JoinColumn(name="COURSE_ID")}
-			)
-	Set<Course> carrier = new HashSet<Course>();
+//	@OneToMany(fetch=FetchType.LAZY)
+//	@JoinTable(name="STUDENT_COURSE", //CARRIER
+//				joinColumns={@JoinColumn(name="ID")},
+//				inverseJoinColumns={@JoinColumn(name="COURSE_ID")}
+//			)
+//	Set<Course> carrier = new HashSet<Course>();
 	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="STUDENT_APPEAL-STUDENT",
+				joinColumns={@JoinColumn(name="ID")},
+				inverseJoinColumns={@JoinColumn(name="AS_ID")}
+			)
+	Set<Appeal_Student> appeal_student = new HashSet<Appeal_Student>();
+
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="STUDENT_CARRIER",
+				joinColumns={@JoinColumn(name="ID")},
+				inverseJoinColumns={@JoinColumn(name="CARRIER_ID")}
+			)
+	Set<Carrier> carrier = new HashSet<Carrier>();
 	
 	/*
-	 * GETTER
+	 * GETTERS
 	 */
 	public String getSerialNumber() {
 		return serialNumber;
@@ -86,23 +98,31 @@ public class Student extends User {
 		return degreeCourse_registered;
 	}
 	
-	public Set<Appeal> getAppeals() {
-		return appeals;
-	}
+//	public Set<Appeal> getAppeals() {
+//		return appeals;
+//	}
 
-	public Set<Course> getCarrier() {
-		return carrier;
-	}
+//	public Set<Course> getCarrier() {
+//		return carrier;
+//	}
 
 	public Set<Group> getGroups() {
 		return groups;
 	}	
-	/*
-	 * END_GETTER
-	 */
 	
+	public Set<Appeal_Student> getAppeal_student() {
+		return appeal_student;
+	}
+	
+	public Set<Carrier> getCarrier() {
+		return carrier;
+	}
 	/*
-	 * SETTER
+	 * END_GETTERS
+	 */
+
+	/*
+	 * SETTERS
 	 */
 	public void setSerialNumber(String serialNumber) {
 		this.serialNumber = serialNumber;
@@ -116,19 +136,28 @@ public class Student extends User {
 		this.degreeCourse_registered = degreeCourse_registered;
 	}
 
-	public void setAppeals(Set<Appeal> appeals) {
-		this.appeals = appeals;
-	}
+//	public void setAppeals(Set<Appeal> appeals) {
+//		this.appeals = appeals;
+//	}
 
-	public void setCarrier(Set<Course> carrier) {
-		this.carrier = carrier;
-	}
+//	public void setCarrier(Set<Course> carrier) {
+//		this.carrier = carrier;
+//	}
 
 	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
-	}	
+	}
+
+	public void setAppeal_student(Set<Appeal_Student> appeal_student) {
+		this.appeal_student = appeal_student;
+	}
+	
+	public void setCarrier(Set<Carrier> carrier) {
+		this.carrier = carrier;
+	}
 	/*
 	 * END_SETTERS
 	 */
+	
 }
 

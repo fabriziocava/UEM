@@ -105,7 +105,7 @@ public class StudentDAOImpl implements StudentDAO {
 		HashSet<Course> res = null;
 		try {
 			Student s = (Student) session.get(Student.class, serialNumber);
-			res = new HashSet<Course>(s.getCarrier());
+			//res = new HashSet<Course>(s.getCarrier()); CORREGGERE
 		} catch (Exception e) {
 			new MokException(e);
 		} finally {

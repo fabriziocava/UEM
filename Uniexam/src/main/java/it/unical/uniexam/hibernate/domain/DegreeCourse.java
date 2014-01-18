@@ -66,7 +66,7 @@ public class DegreeCourse {
 				@JoinColumn(name="DEGREE_COURSE_ID")
 			},
 			inverseJoinColumns = {
-				@JoinColumn(name="STUDENT_ID")
+				@JoinColumn(name="ID")
 			}
 		)
 	private Set<Student> students = new HashSet<Student>();
@@ -83,7 +83,7 @@ public class DegreeCourse {
 	private Set<Course> courses = new HashSet<Course>();
 	
 	/*
-	 * SETTER
+	 * SETTERS
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -105,12 +105,12 @@ public class DegreeCourse {
 		this.courses = courses;
 	}	
 	/*
-	 * END_SETTER
+	 * END_SETTERS
 	 */
 
 
 	/*
-	 * GETTER
+	 * GETTERS
 	 */
 	public Long getId() {
 		return id;
@@ -132,7 +132,7 @@ public class DegreeCourse {
 		return courses;
 	}	
 	/*
-	 * END_GETTER
+	 * END_GETTERS
 	 */
 	
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -89,18 +90,28 @@ public class Appeal {
 	Date closeDate;
 	
 
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="APPEAL_STUDENT",
+//	@OneToMany(cascade=CascadeType.ALL)
+//	@JoinTable(name="APPEAL_STUDENT",
+//	joinColumns={
+//			@JoinColumn(name="APPEL_ID")
+//			}, 
+//	inverseJoinColumns={
+//			@JoinColumn(name="ID")
+//			})
+//	Set<Student>studentsInscribed=new HashSet<Student>();
+	
+	@ManyToOne
+	Professor creatorProfessor;
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="APPEAL_APPEAL-STUDENT",
 	joinColumns={
 			@JoinColumn(name="APPEL_ID")
 			}, 
 	inverseJoinColumns={
-			@JoinColumn(name="STUDENT_ID")
+			@JoinColumn(name="AS_ID")
 			})
-	Set<Student>studentsInscribed=new HashSet<Student>();
-	
-	@ManyToOne
-	Professor creatorProfessor;
+	Set<Appeal_Student> appeal_student = new HashSet<Appeal_Student>();
 	
 	
 	/// Implementation
@@ -169,13 +180,13 @@ public class Appeal {
 		this.closeDate = closeDate;
 	}
 
-	public Set<Student> getStudentsInscribed() {
-		return studentsInscribed;
-	}
-
-	public void setStudentsInscribed(Set<Student> studentsInscribed) {
-		this.studentsInscribed = studentsInscribed;
-	}
+//	public Set<Student> getStudentsInscribed() {
+//		return studentsInscribed;
+//	}
+//
+//	public void setStudentsInscribed(Set<Student> studentsInscribed) {
+//		this.studentsInscribed = studentsInscribed;
+//	}
 
 	public Professor getCreatorProfessor() {
 		return creatorProfessor;
@@ -184,8 +195,14 @@ public class Appeal {
 	public void setCreatorProfessor(Professor creatorProfessor) {
 		this.creatorProfessor = creatorProfessor;
 	}
-	
-	
+
+	public Set<Appeal_Student> getAppeal_student() {
+		return appeal_student;
+	}
+
+	public void setAppeal_student(Set<Appeal_Student> appeal_student) {
+		this.appeal_student = appeal_student;
+	}
 	
 	
 }

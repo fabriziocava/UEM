@@ -142,8 +142,8 @@ public class AppealDAOImpl implements AppealDAO {
 				old.setName(appealNew.getName());
 			if(appealNew.getOpenDate()!=null && appealNew.getOpenDate().compareTo(old.getOpenDate())!=0)
 				old.setOpenDate(appealNew.getOpenDate());
-			if(appealNew.getStudentsInscribed()!=null && appealNew.getStudentsInscribed().size()>0)
-				old.setStudentsInscribed(appealNew.getStudentsInscribed());
+		//	if(appealNew.getStudentsInscribed()!=null && appealNew.getStudentsInscribed().size()>0) CORREGGERE
+		//		old.setStudentsInscribed(appealNew.getStudentsInscribed());
 			res=old;
 			transaction.commit();
 		}catch(Exception e){
@@ -176,7 +176,7 @@ public class AppealDAOImpl implements AppealDAO {
 		Set<Student> res=null;
 		try{
 			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
-			res=new HashSet<Student>(a.getStudentsInscribed());
+		//	res=new HashSet<Student>(a.getStudentsInscribed()); CORREGGERE
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
@@ -223,7 +223,7 @@ public class AppealDAOImpl implements AppealDAO {
 
 			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
 			Student s=(Student)session.get(Student.class, idStudent);
-			a.getStudentsInscribed().add(s);
+		//	a.getStudentsInscribed().add(s); CORREGGERE
 			res=a;
 			transaction.commit();
 		}catch(Exception e){
@@ -254,9 +254,9 @@ public class AppealDAOImpl implements AppealDAO {
 			 */
 			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
 			Student s=(Student)session.get(Student.class, idStudent);
-			if(a.getStudentsInscribed().contains(s)){
-				a.getStudentsInscribed().remove(s);
-			}
+		//	if(a.getStudentsInscribed().contains(s)){  CORREGGERE
+		//		a.getStudentsInscribed().remove(s);
+		//	}
 			transaction.commit();
 			ok=true;
 		}catch(Exception e){
