@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("professor/ajax")
-public class AjaxController {
+public class AjaxControllerCourse {
 
 	@Autowired
 	ProfessorService professorService;
@@ -42,32 +42,13 @@ public class AjaxController {
 		if(redirect!=null)
 			return redirect;
 		p=plist.get(0);
-		String idCours=request.getParameter("idCourse");
+		String idCours=request.getParameter("id");
 		Long idCourse=Long.valueOf(idCours);
 		Course c=professorService.getCourseDetails(p,idCourse);
 		model.addAttribute("course", c);
 		return "professor/course/course_details";
 	}
-//	/ajax/course/course_details/dialog
 
-	@RequestMapping("/dialog/add_appeal")
-	public ModelAndView dialog_add_appeal(@ModelAttribute("appeal") Appeal appeal,HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
-		
-		List<Course> courses=professorService.getCourseAssociated(p.getId());
-		Course course = new Course(null, "NO", null, null, null, null, null);
-		course.setId(-1L);
-		courses.add(0, course);
-		model.addAttribute("courses", courses);
-		
-		return new ModelAndView("professor/dialog/add_appeal", "model", model);
-	}
 	
 	@RequestMapping("/dialog/requested_course")
 	public String dialog_requested_course(HttpServletRequest request, Model model){

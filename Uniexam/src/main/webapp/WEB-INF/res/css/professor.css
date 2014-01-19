@@ -16,9 +16,14 @@ html {
 /* 	width: 5em; */
 /* } */
 
+.clickable{
+	cursor: pointer;
+}
+
 .tablemok{
 	border-collapse: separate; 
 	border-spacing: 5px;
+	width: 100%;
 }
 
 .line-top{
@@ -138,7 +143,7 @@ header {
 	margin: 0px 10px 0px 10px;
 }
 
-.list_course {
+.list-item {
 	padding-left: 10px;
 	padding-right: 10px;
 	list-style: none;
@@ -146,6 +151,7 @@ header {
 	color: blueviolet;
 	background-color: darkgrey;
 	border: solid #d5d5d5;
+	border-radius: 50px;
 }
 
 .box {

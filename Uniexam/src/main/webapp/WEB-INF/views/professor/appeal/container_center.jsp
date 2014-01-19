@@ -14,72 +14,132 @@
 </script>
 <%
 	ArrayList<ArrayList<Object>>struct=(ArrayList<ArrayList<Object>>)request.getAttribute("struct");
+	ArrayList<Appeal>other=(ArrayList<Appeal>)request.getAttribute("noCourse");
 %>
 <div class="container-center">
 	<script type="text/javascript">
 		
 	</script>
 	<script type="text/javascript">
-		var oldString = "";
-		function aler() {
-			// 					alert("ciao");
-		}
-		function storeOld(item) {
-			// 			alert("ciao");
-			// 			oldString = $("#" + item.id).children().html();
-			// 			$("#" + item.id).children().html().select();
-			oldString = $("#" + item.id).children().html();
-			$("#" + item.id).children().select();
-			// 			oldString.parent().select();
-		}
-		function beforeChangeNote(item, idCourse) {
-			var newString = $("#" + item.id).children().html();
-			if (newString == oldString || newString == "") {
-				// 						alert("sono Uguali");
-				return;
-			}
-			// 					alert("sono Diversi");
-			changeNote(item, idCourse);
-		}
 	</script>
-	<div class="bottonmok" onclick="openPopUpWithAjaxContent('addAppeal','')">Crea Appello</div>
+	<div class="bottonmok"
+		onclick="openPopUpWithAjaxContent('addAppeal','')">Crea Appello</div>
 	<fieldset>
 		<legend>
 			<spring:message
 				code="message.professor.course.container.center.legendCourses" />
 		</legend>
-		<table id="#sorting">
+		<table id="#sorting" class="tablemok">
 			<%
 				if (struct != null) {
-							// 				response.sendRedirect("error_page/general_error.jsp?error_type=Null_pointer&error_message=Error_in_appeals");
-							// 			}
-							for (ArrayList<Object> items : struct) {
+					// 				response.sendRedirect("error_page/general_error.jsp?error_type=Null_pointer&error_message=Error_in_appeals");
+					// 			}
+					for (ArrayList<Object> items : struct) {
 			%>
 			<tr>
-				<td><span class="span_expandible" id="collapseAppeals<%=((Course) items.get(0)).getId()%>">+</span>
-				<%=((Course) items.get(0)).getName()%></td>
+				<td><span class="span_expandible"
+					id="collapseAppeals<%=((Course) items.get(0)).getId()%>">+</span> <%=((Course) items.get(0)).getName()%></td>
 			</tr>
-			<tr style="display: none;" id="Appeals<%=((Course) items.get(0)).getId()%>">
+			<tr style="display: none;"
+				id="Appeals<%=((Course) items.get(0)).getId()%>">
 				<td>
-					<% if(items.size()>1){%>
-					<ol>
-						<%for(int i=1;i<items.size();i++){ %>
-						<li>
-							<%=((Appeal)items.get(i)).getName() %>
-						</li>
-						<%} %>
-					</ol> <%}else{ %> Non ci sono appelli su questo corso <%} %>
+					<%
+						if (items.size() > 1) {
+					%>
+					<table class="tablemok">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Inscribed</th>
+								<th>Date exam</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								for (int i = 1; i < items.size(); i++) {
+												Appeal appeal = ((Appeal) items.get(i));
+							%>
+							<tr class="list-item" style="text-align: center;">
+								<td title="Name appeal" class="bottonmok" onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
+								<td title="Inscribed"><%=appeal.getStudentsInscribed().size()%></td>
+								<td title="date of exam"><%=appeal.getExamDate()%></td>
+								<td title="description"><%=appeal.getDescription()%></td>
+							</tr>
+							<tr>
+								<td><div class="line-top"></div></td>
+							</tr>
+							<%
+								}
+							%>
+						</tbody>
+					</table> 
+					<%
+					 	} else {
+					 %> Non ci sono appelli su questo corso <%
+					 	}
+					 %>
 				</td>
 			<tr>
-			<%
-				}
-				} else {
-			%>
-			<spring:message
-				code="message.professor.course.container.center.nocourse" />
-			<%
-				}
-			%>
+				<%
+					}
+					} else {
+				%>
+				<spring:message
+					code="message.professor.course.container.center.nocourse" />
+				<%
+					}
+				%>
+			
+			<tr>
+				<td><div class="line-top"></div></td>
+			</tr>
+			<tr>
+				<td><span class="span_expandible" id="collapseAppealsNoCourse">+</span>Altri
+					appelli</td>
+			</tr>
+			<tr style="display: none;" id="AppealsNoCourse">
+				<td><div>
+						<%
+							if (other != null && other.size() > 0) {
+						%>
+						<table class="tablemok">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Inscribed</th>
+									<th>Date exam</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<%
+									for (Appeal appeal : other) {
+								%>
+								<tr class="list-item" style="text-align: center;">
+									<td title="Name appeal" class="bottonmok" onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
+									<td title="Inscribed"><%=appeal.getStudentsInscribed().size()%></td>
+									<td title="date of exam"><%=appeal.getExamDate()%></td>
+									<td title="description"><%=appeal.getDescription()%></td>
+								</tr>
+								<tr>
+									<td><div class="line-top"></div></td>
+								</tr>
+								<%
+									}
+								%>
+							</tbody>
+						</table>
+						<%
+							} else {
+						%>
+					</div></td>
+				<spring:message
+					code="message.professor.course.container.center.nocourse" />
+				<%
+					}
+				%>
+			</tr>
 		</table>
 	</fieldset>
 </div>

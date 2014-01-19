@@ -2,7 +2,14 @@ package it.unical.uniexam.mvc.service.impl;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -48,6 +55,60 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	AppealDAO appealDAO;
 
 	@Override
+	public Boolean changeAppealAttribute(Long idAppeal, String variable,String value,String clazz) {
+		Appeal ap=new Appeal(null, null, null, null, null, 
+				null, null, null, null);
+		try {
+			Object valuee=null;
+			value=value.replaceAll("\n", "");
+			if(clazz.equals("Integer")){
+				valuee=Integer.valueOf(value);
+			}else if(clazz.equals("String")){
+				valuee=String.valueOf(value);
+			}else if(clazz.equals("Date")){
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+				Date result =  df.parse(value);
+				valuee=result;
+			}
+			Class<Appeal> loadClass = Appeal.class;
+			Field declaredField = loadClass.getDeclaredField(variable);
+			declaredField.setAccessible(true);
+			declaredField.set(ap, valuee);
+		} catch (Exception e) {
+			new MokException(e);
+			return false;
+		}
+		appealDAO.modifyAppeal(idAppeal, ap);
+		return true;
+	}
+	
+	@Override
+	public Appeal getAppealDetails(Long idAppeal) {
+		return appealDAO.getAppealDetails(idAppeal);
+	}
+	
+	@Override
+	public List<Appeal> getAppealWithoutCourse(Long id) {
+		ArrayList<Appeal>app=new ArrayList<Appeal>(appealDAO.getAppealsFromProfessorDetails(id));
+		ArrayList<Appeal>removable=new ArrayList<Appeal>();
+		for (Appeal appeal : app) {
+			if(appeal.getCourse()!=null && appeal.getCourse().getId()!=-1){
+				removable.add(appeal);
+			}
+		}
+		app.removeAll(removable);
+		Collections.sort(app, new Comparator<Appeal>(){
+			@Override
+			public int compare(Appeal o1, Appeal o2) {
+				if(o1!=null && o2!=null)
+					return (int) (o2.getExamDate().getTime()-o1.getExamDate().getTime());
+				return 0;
+			}
+		});
+		return app;
+	}
+	
+	@Override
 	public List<Course> getCourseAssociated(Long id) {
 		return new ArrayList<Course>(professorDAO.getCourseHolder(id));
 	}
@@ -55,7 +116,7 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	@Override
 	public Boolean addAppeal(Professor p, Appeal appeal) {
 		return appealDAO.addAppeal(appeal.getCourse().getId(),appeal.getName(),
-				appeal.getMaxNumberOfInscribed(),appeal.getLocation()
+				appeal.getMaxNumberOfInscribed(),appeal.getLocation(),appeal.getDescription()
 				, appeal.getExamDate(), appeal.getOpenDate(),appeal.getCloseDate()
 				,p.getId())!=null;
 	}

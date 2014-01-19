@@ -15,31 +15,17 @@
 <div class="container-center">
 	<script type="text/javascript">
 		var oldString = "";
-		function aler() {
-			// 					alert("ciao");
-		}
 		function storeOld(item) {
-// 			alert("ciao");
-			// 			oldString = $("#" + item.id).children().html();
-			// 			$("#" + item.id).children().html().select();
 			oldString = $("#" + item.id).children().html();
 			$("#" + item.id).children().select();
-			// 			oldString.parent().select();
 		}
 		function beforeChangeNote(item, idCourse) {
 			var newString = $("#" + item.id).children().html();
 			if (newString == oldString || newString == "") {
-				// 						alert("sono Uguali");
 				return;
 			}
-			// 					alert("sono Diversi");
 			changeNote(item, idCourse);
 		}
-		// 				$(document).ready(function(){
-		// 					$("#clearH").click(function(){
-		// 						clear(this);
-		// 					});
-		// 				});
 	</script>
 	<fieldset>
 		<legend><spring:message
@@ -50,10 +36,12 @@
 						if (courses != null && courses.size() > 0) {
 							for (Course c : courses) {
 			%>
-			<li class="list_course">
+			<li class="list-item" style="border-radius: 4px; ">
 				<article>
 					<section id="<%="course" + c.getId()%>">
-						<a id="<%="acourse" + c.getId()%>" href="#" onclick="getDataFromAjax(this);"><h1><%=c.getName()%></h1></a>
+					<span class="span_expandible" id="collapsedivrse<%=c.getId()%>" onclick="getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');">+</span><%=c.getName()%>
+<%-- 						<a id="<%="acourse" + c.getId()%>" href="#" onclick="getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');"><h1><%=c.getName()%></h1></a> --%>
+						<div id="divrse<%=c.getId()%>" style="display: none;"></div>
 					</section>
 					<section id="<%="note" + c.getId()%>" contenteditable="true" spellcheck="true"
 						onfocus="storeOld(this)"

@@ -70,6 +70,9 @@ public class ProfessorControllerAppeal {
 		List<List<Object>>appeals=professorService.getStructureCourse_Appeal(p.getId());
 		model.addAttribute("struct",appeals);
 		
+		List<Appeal>other=professorService.getAppealWithoutCourse(p.getId());
+		model.addAttribute("noCourse",other);
+		
 		return ProfessorService.PROFESSOR_APPEAL;
 	}
 	

@@ -58,4 +58,10 @@ public interface ProfessorService extends UserService{
 	public Boolean addAppeal(Professor p, Appeal appeal);
 
 	public List<Course> getCourseAssociated(Long id);
+
+	public List<Appeal> getAppealWithoutCourse(Long id);
+
+	public Appeal getAppealDetails(Long idAppeal);
+
+	public Boolean changeAppealAttribute(Long idAppeal, String variable,String value, String clazz);
 }

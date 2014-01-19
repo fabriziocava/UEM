@@ -19,6 +19,36 @@ $(document).ready(function() {
 	});
 });
 
+var oldString = "";
+function storeOld(item) {
+	oldString = item.innerHTML;
+}
+function checkBeforeChangeEditable(item,path,id,variable,clazz) {
+	var newString = item.innerHTML;
+	if (newString == oldString || newString == "") {
+		return;
+	}
+	changeEditable(path,id,variable,newString,clazz);
+//	changeNote(item, idCourse);
+}
+
+function changeEditable(path,id,variable,newString,clazz){
+	var conte=$("#context").attr("value");
+	var ing=$.ajax({
+		type: "POST",
+		url: conte+"/ajax/"+path,
+		data:{ id: id, variable: variable,value:newString,clazz:clazz}
+	});
+	$(".processing").css("display","block");
+	ing.done(function(msg){
+		$(".processing").css("display","none");
+		if(msg.match("no")){
+			alert("Errore nel apportare le modifiche");
+		}
+	});
+	return ing;
+}
+
 //apre un popUp con il contenuto quello che si vuole nel case
 //quindi crea il nuovo div e e gli mette dentro i data provenienti dal COntroller
 //d'altra parte nei data deve esserci la gestione del dialog
@@ -41,9 +71,42 @@ function openPopUpWithAjaxContent(caseId,id){
 				$("<div></div>").attr('id','dialog').appendTo('body');
 			$("#dialog").html(data);
 		});
+	}else if(caseId.match("viewAppeal")){
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+"/ajax/dialog/view_appeal", "GET", "id", id);
+		ajax.done(function(data){
+			if($("#dialog").html()==undefined)
+				$("<div></div>").attr('id','dialog').appendTo('body');
+			$("#dialog").html(data);
+		});
 	}
 	
 }
+
+
+function dialogViewAppeal(){
+	$("#dialog").attr("title","View Appeal");
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#dialog");
+			commands=undefined;
+		}
+	});
+	$("#dialog").attr("title","");
+}
+
 function dialogAddAppeal(){
 	$("#dialog").attr("title","Add Appeal");
 	$("#dialog").dialog({
@@ -241,26 +304,41 @@ function dialogAddRequestedCourse(){
 	
 }
 
-function getDataFromAjax(item){
-	var id=item.id;
-	if(id.match("acourse")){
-		var idCourse=id.replace("acourse","");
-		var newId="divCourse"+idCourse;
-		if($("#"+newId).html()==undefined){
+function getDataFromAjax(pathRequ,id,idDest){
+//	var id=item.id;
+//	if(id.match(caseId)){
+		if($("#"+idDest).html()==""){
 			var conte=$("#context").attr("value");
-			var ajax=sendAJAXmessage(conte+"/ajax/course/course_details", "GET", "idCourse", idCourse);
+			var ajax=sendAJAXmessage(conte+"/ajax/"+pathRequ, "GET", "id", id);
 			ajax.done(function(data){
-//				alert(data);
-				var newDiv="<div id='"+newId+"'></div>";
-				if($("#"+newId).html()==undefined)
-					$(newDiv).insertAfter($(item));
-				$("#"+newId).html(data);
+				$("#"+idDest).html(data);
 			});
 		}else{
-			$("#"+newId).slideToggle(1000);
+//			$("#"+idDest).delay(10).slideToggle(500);
 		}
-	}
+//	}
 }
+
+//function getDataFromAjax(item){
+//	var id=item.id;
+//	if(id.match("acourse")){
+//		var idCourse=id.replace("acourse","");
+//		var newId="divCourse"+idCourse;
+//		if($("#"+newId).html()==undefined){
+//			var conte=$("#context").attr("value");
+//			var ajax=sendAJAXmessage(conte+"/ajax/course/course_details", "GET", "idCourse", idCourse);
+//			ajax.done(function(data){
+////				alert(data);
+//				var newDiv="<div id='"+newId+"'></div>";
+//				if($("#"+newId).html()==undefined)
+//					$(newDiv).insertAfter($(item));
+//				$("#"+newId).html(data);
+//			});
+//		}else{
+//			$("#"+newId).slideToggle(1000);
+//		}
+//	}
+//}
 /**
  * <span class="span_expandible" id="collapseIDTAGTOCOLLAPSE">+</span>	
  */
@@ -281,7 +359,7 @@ function initCollapsable(){
 				$(this).html("+");
 			}
 			var idd = realID;
-			$("#" + idd).toggle();
+			$("#" + idd).delay(10).slideToggle(500);
 			$(this).attr("id", newID+realID);
 		});
 	});

@@ -2,11 +2,13 @@ package it.unical.uniexam.hibernate.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,6 +20,7 @@ import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
+import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
@@ -28,6 +31,43 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
  */
 @Repository
 public class AppealDAOImpl implements AppealDAO {
+
+	@Override
+	public Set<Appeal> getAppealsFromProfessorDetails(Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Set<Appeal> res=null;
+		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			res=new HashSet<Appeal>(p.getAppeals());
+			for (Appeal appeal : res) {
+				Hibernate.initialize(appeal);
+				Hibernate.initialize(appeal.getStudentsInscribed());
+			}
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Appeal getAppealDetails(Long idAppeal) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Appeal res=null;
+		try{
+
+			res=(Appeal)session.get(Appeal.class, idAppeal);
+			Hibernate.initialize(res);
+			Hibernate.initialize(res.getStudentsInscribed());
+
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
 
 	@Override
 	public List<List<Object>> getStructureCourse_Appeal(Long idProfessor) {
@@ -49,6 +89,18 @@ public class AppealDAOImpl implements AppealDAO {
 				q.setParameter("courId", course.getId());
 				q.setParameter("idProf", idProfessor);
 				ArrayList<Appeal>ris=(ArrayList<Appeal>) q.list();
+				for (Appeal appeal : ris) {
+					Hibernate.initialize(appeal);
+					Hibernate.initialize(appeal.getStudentsInscribed());
+				}
+				Collections.sort(ris, new Comparator<Appeal>(){
+					@Override
+					public int compare(Appeal o1, Appeal o2) {
+						if(o1!=null && o2!=null)
+							return (int) (o2.getExamDate().getTime()-o1.getExamDate().getTime());
+						return 0;
+					}
+				});
 				if(ris!=null && ris.size()>0){
 					res.get(count).addAll(ris);
 				}
@@ -72,14 +124,14 @@ public class AppealDAOImpl implements AppealDAO {
 	@Deprecated
 	@Override
 	public Long addAppeal(Course course, String name,
-			Integer maxNumberOfInscribed, String location, Date examDate,
+			Integer maxNumberOfInscribed, String location,String description, Date examDate,
 			Date openDate, Date closeDate, Professor creatorProfessor) {
 		return null;
 	}
 
 	@Override
 	public Long addAppeal(Long idCourse, String name,
-			Integer maxNumberOfInscribed, String location, Date examDate,
+			Integer maxNumberOfInscribed, String location,String description, Date examDate,
 			Date openDate, Date closeDate, Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
@@ -90,7 +142,7 @@ public class AppealDAOImpl implements AppealDAO {
 			if(idCourse!=null)
 				course=(Course)session.get(Course.class, idCourse);
 			Professor creatorProfessor=(Professor)session.get(Professor.class, idProfessor);
-			Appeal a=new Appeal(course, name, maxNumberOfInscribed, location, examDate, openDate, closeDate, creatorProfessor);
+			Appeal a=new Appeal(course, name, maxNumberOfInscribed, location,description, examDate, openDate, closeDate, creatorProfessor);
 			creatorProfessor.getAppeals().add(a);
 			id=(Long)session.save(a);
 
@@ -170,6 +222,8 @@ public class AppealDAOImpl implements AppealDAO {
 				old.setCloseDate(appealNew.getCloseDate());
 			if(appealNew.getCourse()!=null && !appealNew.getCourse().equals(old.getCourse()))
 				old.setCourse(appealNew.getCourse());
+			if(appealNew.getDescription()!=null && !appealNew.getDescription().equals(old.getDescription()))
+				old.setDescription(appealNew.getDescription());
 			if(appealNew.getExamDate()!=null && appealNew.getExamDate().compareTo(old.getExamDate())!=0)
 				old.setExamDate(appealNew.getExamDate());
 			if(appealNew.getLocation()!=null && !appealNew.getLocation().equals(old.getLocation()))

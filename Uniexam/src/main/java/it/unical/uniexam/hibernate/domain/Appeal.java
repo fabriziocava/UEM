@@ -47,13 +47,14 @@ public class Appeal {
 	}
 
 	public Appeal(Course course, String name,
-			Integer maxNumberOfInscribed, String location, Date examDate,
+			Integer maxNumberOfInscribed, String location,String description, Date examDate,
 			Date openDate, Date closeDate, Professor creatorProfessor) {
 		this.course = course;
 		this.name = name;
 		this.currNumberOfInscribed = 0;
 		this.maxNumberOfInscribed = maxNumberOfInscribed;
 		this.location = location;
+		this.description=description;
 		this.examDate = examDate;
 		this.openDate = openDate;
 		this.closeDate = closeDate;
@@ -76,6 +77,9 @@ public class Appeal {
 	
 	@Column(name="MAX_INSCRIBED")
 	Integer maxNumberOfInscribed;
+	
+	@Column(name="DESCRIPTION")
+	String description;
 	
 	@Column(name="LOCATION")
 	String location;
@@ -185,7 +189,11 @@ public class Appeal {
 		this.creatorProfessor = creatorProfessor;
 	}
 	
-	
-	
-	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

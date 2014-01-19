@@ -51,6 +51,7 @@
 		$("#openDate_id").attr("value",$("#openDate_id_realy").val());
 		$("#closeDate_id").attr("value",$("#closeDate_id_realy").val());
 		$("#examDate_id").attr("value",$("#examDate_id_realy").val());
+		$("#description_id").attr("value",$("#description_id_realy").val());
 	}
 </script>
 
@@ -62,6 +63,7 @@
 <form:input id="name_id" path="name" />
 <form:input id="maxNumberOfInscribed_id" path="maxNumberOfInscribed" />
 <form:input id="location_id" path="location" />
+<form:input id="description_id" path="description" />
 <form:input id="openDate_id" path="openDate" />
 <form:input id="closeDate_id" path="closeDate" />
 <form:input id="examDate_id" path="examDate" />
@@ -81,6 +83,9 @@
 
 <tr><td><label title="<spring:message code='message.professor.appeal.add_appeal.location.description'/>" ><spring:message code="message.professor.appeal.add_appeal.location" /></label></td><td>
 <input id="location_id_realy" type="text" placeholder="<spring:message code="message.professor.appeal.add_appeal.location" />" required/></td></tr>
+
+<tr><td><label title="<spring:message code='message.professor.appeal.add_appeal.description.description'/>" ><spring:message code="message.professor.appeal.add_appeal.description" /></label></td><td>
+<input id="description_id_realy" type="text" placeholder="<spring:message code="message.professor.appeal.add_appeal.description" />" required/></td></tr>
 
 <tr><td><label title="<spring:message code='message.professor.appeal.add_appeal.openDate.description'/>" ><spring:message code="message.professor.appeal.add_appeal.openDate" /></label></td><td>
 <input id="openDate_id_realy" type="text" placeholder="<spring:message code="message.professor.appeal.add_appeal.openDate" />" required/></td></tr>

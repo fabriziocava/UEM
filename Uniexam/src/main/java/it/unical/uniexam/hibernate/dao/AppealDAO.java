@@ -5,6 +5,7 @@ import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -14,10 +15,10 @@ public interface AppealDAO {
 	//standard
 	public Long addAppeal(Appeal appeal);
 	public Long addAppeal(Course course, String name,
-			Integer maxNumberOfInscribed, String location, Date examDate, Date openDate, Date closeDate,
+			Integer maxNumberOfInscribed, String location,String description, Date examDate, Date openDate, Date closeDate,
 			Professor creatorProfessor);
 	public Long addAppeal(Long idCourse, String name,
-			Integer maxNumberOfInscribed, String location, Date examDate, Date openDate, Date closeDate,
+			Integer maxNumberOfInscribed, String location,String description, Date examDate, Date openDate, Date closeDate,
 			Long idProfessor);
 	
 	public Appeal removeAppeal(Long idAppeal);
@@ -41,5 +42,7 @@ public interface AppealDAO {
 	public boolean removeStudentAtAppeal(Long idAppeal,Long idStudent);
 	public boolean removeStudentAtAppeal(Long idAppeal,Student student);
 	public List<List<Object>> getStructureCourse_Appeal(Long p);
+	public Appeal getAppealDetails(Long idAppeal);
+	public Set<Appeal> getAppealsFromProfessorDetails(Long id);
 	
 }
