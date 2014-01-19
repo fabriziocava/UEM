@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
@@ -31,17 +32,14 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class CourseDAOImpl implements CourseDAO{
 
 	@Override
-	public Long addCourse(Long idDegreeCourse, String codeCourse,
+	public Long addCourse(String codeCourse,
 			String nameCourse, Integer creditCourse, Long idProfessorHolder,
-			Set<RequestedCourse> requestedCourses,URL webSite) {
+			Set<RequestedCourse> requestedCourses,URL webSite, DegreeCourse degreeCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Long id=null;
 		try{
 			transaction=session.beginTransaction();
-			/**
-			 * will add degreeCourse
-			 */
 			Course c=new Course();
 			c.setCode(codeCourse);
 			c.setCredits(creditCourse);
@@ -50,6 +48,7 @@ public class CourseDAOImpl implements CourseDAO{
 			c.setHolder(p);
 			c.setRequestedCourses(requestedCourses);
 			c.setWebSite(webSite);
+			c.setDegreeCourse(degreeCourse);
 
 			p.getSetHoldersCourse().add(c);
 			id=(Long) session.save(c);
@@ -63,32 +62,45 @@ public class CourseDAOImpl implements CourseDAO{
 		return id;
 	}
 
+//	@Override
+//	public Long addCourse(Course course) {
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		Transaction transaction=null;
+//		Long id=null;
+//		try{
+//			transaction=session.beginTransaction();
+//			Professor holder = course.getHolder();
+//			if(holder!=null){
+//				Professor p=(Professor) session.get(Professor.class, holder.getId());
+//				p.getSetHoldersCourse().add(course);
+//			}
+//			id=(Long) session.save(course);
+//			transaction.commit();
+//		}catch(Exception e){
+//			new MokException(e);
+//			transaction.rollback();
+//		}finally{
+//			session.close();
+//		}
+//		return id;
+//	}
+
 	@Override
 	public Long addCourse(Course course) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		Long id=null;
-		try{
-			transaction=session.beginTransaction();
-			/**
-			 * will add degreeCourse
-			 */
-			Professor holder = course.getHolder();
-			if(holder!=null){
-				Professor p=(Professor) session.get(Professor.class, holder.getId());
-				p.getSetHoldersCourse().add(course);
-			}
-			id=(Long) session.save(course);
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Long id = null;
+		try {
+			transaction = session.beginTransaction();
+			id = (Long) session.save(course);
 			transaction.commit();
-		}catch(Exception e){
-			new MokException(e);
+		} catch (Exception e) {
 			transaction.rollback();
-		}finally{
+		} finally {
 			session.close();
 		}
 		return id;
 	}
-
 
 	@Override
 	public Set<Course> getCourses() {

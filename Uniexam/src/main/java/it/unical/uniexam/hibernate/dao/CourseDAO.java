@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
@@ -17,9 +18,9 @@ public interface CourseDAO {
 	/**
 	 * Adding a Course and return the your id
 	 */
-	public Long addCourse(Long idDegreeCourse,String codeCourse,String nameCourse,
+	public Long addCourse(String codeCourse,String nameCourse,
 			Integer creditCourse,Long idProfessorHolder,
-			Set<RequestedCourse>requestedCourses,URL webSite);
+			Set<RequestedCourse>requestedCourses,URL webSite, DegreeCourse degreeCourse);
 	
 	public Long addCourse(Course course);
 	

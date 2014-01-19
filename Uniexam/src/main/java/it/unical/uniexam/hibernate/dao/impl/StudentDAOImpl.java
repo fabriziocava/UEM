@@ -38,9 +38,9 @@ public class StudentDAOImpl implements StudentDAO {
 			id = (Long) session.save(student);
 			transaction.commit();
 		} catch (Exception e) {
-			
+			transaction.rollback();
 		} finally {
-			
+			session.close();
 		}
 		return id;
 	}

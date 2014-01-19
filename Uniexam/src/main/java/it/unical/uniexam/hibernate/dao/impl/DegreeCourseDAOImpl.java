@@ -72,6 +72,24 @@ public class DegreeCourseDAOImpl implements DegreeCourseDAO {
 	}
 
 	@Override
+	public Set<DegreeCourse> getDegreeCourses(Department department) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Set<DegreeCourse> res = null;
+		try {
+			Query q= session.createQuery("from DegreeCourse where department_associated_department_id=:par");
+			q.setParameter("par", department.getId());
+			@SuppressWarnings("unchecked")
+			List<DegreeCourse> list = q.list();
+			res = new HashSet<DegreeCourse>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
 	public Set<DegreeCourse> getDegreeCourses() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Set<DegreeCourse> res = null;

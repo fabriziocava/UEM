@@ -70,7 +70,7 @@ public class Student extends User {
 //	Set<Course> carrier = new HashSet<Course>();
 	
 	@OneToMany(fetch=FetchType.LAZY)
-	@JoinTable(name="STUDENT_APPEAL-STUDENT",
+	@JoinTable(name="STUDENT_APPEALSTUDENT",
 				joinColumns={@JoinColumn(name="ID")},
 				inverseJoinColumns={@JoinColumn(name="AS_ID")}
 			)

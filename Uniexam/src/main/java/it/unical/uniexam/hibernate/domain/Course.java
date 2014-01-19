@@ -61,8 +61,7 @@ public class Course {
 
 	public Course(String code, String name, URL webSite, Integer credits,
 			Set<RequestedCourse> requestedCourses,
-			Set<Professor> commissionProfessors, Professor holder) {
-		super();
+			Set<Professor> commissionProfessors, Professor holder, DegreeCourse degreeCourse) {
 		this.code = code;
 		this.name = name;
 		this.webSite = webSite;
@@ -70,6 +69,15 @@ public class Course {
 		this.requestedCourses = requestedCourses;
 		this.commissionProfessors = commissionProfessors;
 		this.holder = holder;
+		this.degreeCourse = degreeCourse;
+	}
+	
+	public Course(String code, String name, Integer credits, Professor holder, DegreeCourse degreeCourse) {
+		this.code = code;
+		this.name = name;
+		this.credits = credits;
+		this.holder = holder;
+		this.degreeCourse = degreeCourse;
 	}
 
 	@Id

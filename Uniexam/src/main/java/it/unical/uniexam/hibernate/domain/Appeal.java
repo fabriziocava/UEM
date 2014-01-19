@@ -104,7 +104,7 @@ public class Appeal {
 	Professor creatorProfessor;
 	
 	@OneToMany(fetch=FetchType.LAZY)
-	@JoinTable(name="APPEAL_APPEAL-STUDENT",
+	@JoinTable(name="APPEAL_APPEALSTUDENT",
 	joinColumns={
 			@JoinColumn(name="APPEL_ID")
 			}, 
