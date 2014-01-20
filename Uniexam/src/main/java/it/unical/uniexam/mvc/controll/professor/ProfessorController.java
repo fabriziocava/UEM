@@ -125,7 +125,7 @@ public class ProfessorController {
 		updatePersonalizzation(model, p);
 		return ProfessorService.PROFESSOR_ACCOUNT;
 	}
-//	@Validated
+
 	@RequestMapping(value="professor/addRequestedCourseAction", method=RequestMethod.POST)
 	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
 			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{

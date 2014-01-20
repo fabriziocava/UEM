@@ -35,6 +35,35 @@ public class AjaxControllerAppeal {
 	@Autowired
 	ProfessorService professorService;
 
+	@RequestMapping("/appeal/remove_appeal")
+	public String remove_appeal(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+		String idAppea=request.getParameter("id");
+		Long idAppeal=Long.valueOf(idAppea);
+
+		Boolean res=professorService.removeAppeal(idAppeal);
+		
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res)
+				outputStream.println("ok");
+			else
+				outputStream.println("no");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
+		return null;
+	}
+	
 	@RequestMapping("/appeal/appeal_details")
 	public String appeal_details(HttpServletRequest request, Model model){
 		Professor p=null;

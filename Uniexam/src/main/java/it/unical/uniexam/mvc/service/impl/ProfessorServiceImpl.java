@@ -55,6 +55,11 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	AppealDAO appealDAO;
 
 	@Override
+	public Boolean removeAppeal(Long idAppeal) {
+		return appealDAO.removeAppeal(idAppeal)!=null;
+	}
+	
+	@Override
 	public Boolean changeAppealAttribute(Long idAppeal, String variable,String value,String clazz) {
 		Appeal ap=new Appeal(null, null, null, null, null, 
 				null, null, null, null);

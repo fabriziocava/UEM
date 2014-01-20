@@ -15,12 +15,43 @@
 
 <div>
 <script type="text/javascript">
-
+function sendDeleteAppeal(id){
+	$("<div>Sei sicuro di voler eliminare l'appello?</div>").attr('id',"divDelete").appendTo('body');
+	$("#divDelete").attr("title",'Delete?');
+	$("#divDelete").dialog({
+	      resizable: false,
+	      modal: true,
+	      buttons: {
+	        "Confirm": function() {
+	        	var ajax=sendAJAXmessage($("#context").attr("value")+"/ajax/appeal/remove_appeal","GET","id",id);
+	        	ajax.done(function(msg){
+	        		if(msg.match("no")){
+	        			alert("Errore! non ho potuto eliminare l'appello");
+	        		}else{
+	        			alert("Appello eliminato");
+	        			window.location=$("#context").attr("value")+"/appeal";
+	        		}
+	        	});
+	         	$( this ).dialog( "close" );
+	         	$("div").remove("#divDelete");
+	        },
+	        Cancel: function() {
+	          	$( this ).dialog( "close" );
+	        	$("div").remove("#divDelete");
+	        }
+	      },
+	      close:function(){
+				$( this ).dialog( "close" );
+				$("div").remove("#divDelete");
+			}
+	    });
+	$("#divDelete").attr("title","");
+}
 </script>
 <table>
 
 <tr>
-<th>Name</th><td>
+<th><spring:message code='message.professor.appeal.add_appeal.name'/></th><td>
 <div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
@@ -29,7 +60,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 </tr>
 
 <tr>
-<th>Description</th>
+<th><spring:message code='message.professor.appeal.add_appeal.description'/></th>
 <td><div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
@@ -38,21 +69,21 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 </tr>
 
 <tr>
-<th>Location</th>
+<th><spring:message code='message.professor.appeal.add_appeal.location'/></th>
 <td><div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
 onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()%>','location','String')">
 <%=appeal.getLocation() %></div></td>
 </tr>
-
+<%if(appeal.getCourse()!=null){ %>
 <tr>
-<th>Course</th>
+<th><spring:message code='label.course'/></th>
 <td><%=appeal.getCourse().getName() %></td>
 </tr>
-
+<%} %>
 <tr>
-<th>Max number of inscribes</th>
+<th><spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed'/></th>
 <td><div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
@@ -61,7 +92,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 </tr>
 
 <tr>
-<th>Date open appel</th>
+<th><spring:message code='message.professor.appeal.add_appeal.openDate'/></th>
 <td><div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
@@ -70,7 +101,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 </tr>
 
 <tr>
-<th>Date close appel</th>
+<th><spring:message code='message.professor.appeal.add_appeal.closeDate'/></th>
 <td><div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
@@ -79,7 +110,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 </tr>
 
 <tr>
-<th>Date exam</th>
+<th><spring:message code='message.professor.appeal.add_appeal.examDate'/></th>
 <td><div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
@@ -87,6 +118,10 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 <%=appeal.getExamDate() %></div></td>
 </tr>
 
+<tr>
+<td><div class="line-top"></div></td>
+<td><div class="bottonmok color_red" onclick="sendDeleteAppeal('<%=appeal.getId()%>')"><spring:message code="message.general.delete" /></div></td>
+</tr>
 </table>
 
 </div>

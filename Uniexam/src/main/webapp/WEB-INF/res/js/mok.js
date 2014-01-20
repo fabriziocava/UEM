@@ -62,6 +62,7 @@ function openPopUpWithAjaxContent(caseId,id){
 			if($("#dialog").html()==undefined)
 				$("<div></div>").attr('id','dialog').appendTo('body');
 			$("#dialog").html(data);
+
 		});
 	}else if(caseId.match("addAppeal")){
 		var conte=$("#context").attr("value");
@@ -359,7 +360,7 @@ function initCollapsable(){
 				$(this).html("+");
 			}
 			var idd = realID;
-			$("#" + idd).delay(10).slideToggle(500);
+			$("#" + idd).slideToggle(500);
 			$(this).attr("id", newID+realID);
 		});
 	});

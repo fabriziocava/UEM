@@ -21,6 +21,7 @@
 		
 	</script>
 	<script type="text/javascript">
+		
 	</script>
 	<div class="bottonmok"
 		onclick="openPopUpWithAjaxContent('addAppeal','')">Crea Appello</div>
@@ -49,10 +50,14 @@
 					<table class="tablemok">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Inscribed</th>
-								<th>Date exam</th>
-								<th>Description</th>
+								<th><spring:message
+										code='message.professor.appeal.add_appeal.name' /></th>
+								<th><spring:message
+										code='message.professor.appeal.add_appeal.maxNumberOfInscribed' /></th>
+								<th><spring:message
+										code='message.professor.appeal.add_appeal.examDate' /></th>
+								<th><spring:message
+										code='message.professor.appeal.add_appeal.description' /></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -61,10 +66,16 @@
 												Appeal appeal = ((Appeal) items.get(i));
 							%>
 							<tr class="list-item" style="text-align: center;">
-								<td title="Name appeal" class="bottonmok" onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
-								<td title="Inscribed"><%=appeal.getStudentsInscribed().size()%></td>
-								<td title="date of exam"><%=appeal.getExamDate()%></td>
-								<td title="description"><%=appeal.getDescription()%></td>
+								<td
+									title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>"
+									class="bottonmok"
+									onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
+								<td
+									title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>"><%=appeal.getStudentsInscribed().size()%></td>
+								<td
+									title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>"><%=appeal.getExamDate()%></td>
+								<td
+									title="<spring:message code='message.professor.appeal.add_appeal.description.description'/>"><%=appeal.getDescription()%></td>
 							</tr>
 							<tr>
 								<td><div class="line-top"></div></td>
@@ -73,12 +84,11 @@
 								}
 							%>
 						</tbody>
-					</table> 
-					<%
-					 	} else {
-					 %> Non ci sono appelli su questo corso <%
-					 	}
-					 %>
+					</table> <%
+ 	} else {
+ %> Non ci sono appelli su questo corso <%
+ 	}
+ %>
 				</td>
 			<tr>
 				<%
@@ -106,10 +116,14 @@
 						<table class="tablemok">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>Inscribed</th>
-									<th>Date exam</th>
-									<th>Description</th>
+									<th><spring:message
+											code='message.professor.appeal.add_appeal.name' /></th>
+									<th><spring:message
+											code='message.professor.appeal.add_appeal.maxNumberOfInscribed' /></th>
+									<th><spring:message
+											code='message.professor.appeal.add_appeal.examDate' /></th>
+									<th><spring:message
+											code='message.professor.appeal.add_appeal.description' /></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -117,10 +131,16 @@
 									for (Appeal appeal : other) {
 								%>
 								<tr class="list-item" style="text-align: center;">
-									<td title="Name appeal" class="bottonmok" onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
-									<td title="Inscribed"><%=appeal.getStudentsInscribed().size()%></td>
-									<td title="date of exam"><%=appeal.getExamDate()%></td>
-									<td title="description"><%=appeal.getDescription()%></td>
+									<td
+									title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>"
+									class="bottonmok"
+									onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
+								<td
+									title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>"><%=appeal.getStudentsInscribed().size()%></td>
+								<td
+									title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>"><%=appeal.getExamDate()%></td>
+								<td
+									title="<spring:message code='message.professor.appeal.add_appeal.description.description'/>"><%=appeal.getDescription()%></td>
 								</tr>
 								<tr>
 									<td><div class="line-top"></div></td>

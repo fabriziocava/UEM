@@ -64,4 +64,6 @@ public interface ProfessorService extends UserService{
 	public Appeal getAppealDetails(Long idAppeal);
 
 	public Boolean changeAppealAttribute(Long idAppeal, String variable,String value, String clazz);
+
+	public Boolean removeAppeal(Long idAppeal);
 }
