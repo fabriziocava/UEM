@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="manager.base" template="/WEB-INF/views/manager/base.jsp">
+		<put-attribute name="footer" value="/WEB-INF/views/manager/share/footer.jsp" />
+		<put-attribute name="container-header" value="/WEB-INF/views/manager/share/container_header.jsp" />
+		<put-attribute name="container-up" value="/WEB-INF/views/manager/share/container_up.jsp" />
+		<put-attribute name="container-left" value="" />
+		<put-attribute name="container-center" value="" />
+		<put-attribute name="container-down" value="" />
+		<put-attribute name="draggable-notify-box" value="/WEB-INF/views/manager/share/draggable_notify_box.jsp" />
+		<put-attribute name="draggable-groups-box" value=""/>
+	</definition>
+</tiles-definitions>
