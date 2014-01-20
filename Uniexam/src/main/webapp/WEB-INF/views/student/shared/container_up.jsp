@@ -3,9 +3,9 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 	<div class="container-up">
 		<ul class="dashboard">
-			<li><a class="button" href="#" id="appealsButton" title="<spring:message code='label.appeals'/>"
+			<li><a class="button" href="#" id="courseButton" title="<spring:message code='label.courses'/>"
 				onclick="selectDashBoard(this)"><spring:message
-						code="label.appeals" /></a></li>
+						code="label.courses" /></a></li>
 			<li><a class="button" href="#" id="carrierButton" title="<spring:message code='label.carrier'/>"
 				onclick="selectDashBoard(this)"><spring:message
 						code="label.carrier" /></a></li>

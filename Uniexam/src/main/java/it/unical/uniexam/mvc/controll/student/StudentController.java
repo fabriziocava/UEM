@@ -1,8 +1,16 @@
 package it.unical.uniexam.mvc.controll.student;
 
+import java.util.ArrayList;
+import java.util.Set;
+
+import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.Student;
+import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.StudentService;
+import it.unical.uniexam.mvc.service.UtilsService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,13 +26,31 @@ public class StudentController {
 	
 	@RequestMapping(value=StudentService.STUDENT_HOME, method=RequestMethod.GET)
 	public String homeStudent(HttpServletRequest request,Model model){	
+		User user = studentService.getSession(request.getSession().getId());
+		if(user==null) {
+			HttpSession session = request.getSession(false);
+			if(session!=null) {
+				session.invalidate();
+			}
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+		}
+		if(user.getClass()!=Student.class) {
+			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+		}
+		Student s = (Student) user;
+		model.addAttribute("I", s);
+		
 		return StudentService.STUDENT_HOME;
 	}
 	
-	@RequestMapping(value=StudentService.STUDENT_APPEAL, method=RequestMethod.GET)
-	public String appeal(HttpServletRequest request, Model model) {
+	@RequestMapping(value=StudentService.STUDENT_COURSE, method=RequestMethod.GET)
+	public String course(HttpServletRequest request, Model model) {
 		
-		return StudentService.STUDENT_APPEAL;
+		//ArrayList<Course> courses = studentService.getCourses();
+		ArrayList<Course> courses = studentService.getCourses();
+		model.addAttribute("courses", courses);
+		
+		return StudentService.STUDENT_COURSE;
 	}
 	
 }

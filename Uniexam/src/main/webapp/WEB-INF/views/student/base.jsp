@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${user} <spring:message code="label.welcome" /></title>
+<title><spring:message code="label.welcome" /> ${I.getName()}</title>
 
 <link href="${pageContext.request.contextPath}/res/css/student.css"
 	media="all" rel="stylesheet" type="text/css" />
@@ -33,6 +33,8 @@
 <header>
 	<tiles:insertAttribute name="container-header" />
 </header>
+	<input type="hidden" id="context"
+		value="${pageContext.request.contextPath}/student" />
 <div class="container">
 	<tiles:insertAttribute name="container-up" />
 	<tiles:insertAttribute name="container-left" />

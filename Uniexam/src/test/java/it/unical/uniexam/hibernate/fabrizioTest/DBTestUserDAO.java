@@ -36,7 +36,7 @@ public class DBTestUserDAO {
 	
 	@Test
 	public void checkUser() {
-		assertTrue(userDAO.getUser("1")!=null);
+		assertTrue(userDAO.getUser(Long.getLong("1"))!=null);
 	}
 
 }

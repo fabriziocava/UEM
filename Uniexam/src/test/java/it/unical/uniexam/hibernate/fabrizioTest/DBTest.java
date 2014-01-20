@@ -13,11 +13,13 @@ import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
 import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
+import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.DegreeCourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.DepartmentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
 import it.unical.uniexam.hibernate.dao.impl.StudentDAOImpl;
+import it.unical.uniexam.hibernate.dao.impl.UserDAOImpl;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
@@ -32,6 +34,7 @@ public class DBTest {
 	private static CourseDAO courseDAO = new CourseDAOImpl();
 	private static StudentDAO studentDAO = new StudentDAOImpl();
 	private static ProfessorDAO professorDAO = new ProfessorDAOImp();
+	private static UserDAO userDAO = new UserDAOImpl();
 	
 	@BeforeClass
 	public static void prepareDB() throws MalformedURLException {
@@ -60,6 +63,16 @@ public class DBTest {
 		phoneNumbers.add(new PhoneNumber("HOME", "0984404040"));
 		Long idStudent = studentDAO.addStundent("Fabrizio", "Cava", "CVAFRZ88D14D086G", "1234", address, emails, phoneNumbers, degreeCourse, "158658");
 	
+		/*
+		 * SECRETARY
+		 */
+		address = new Address("Cosenza", "Italy", "87100", "Piazza segreteria, 13");
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE_UFFICIAL, "segreteria@unical.it"));
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "0984123456"));
+		Long idUser = userDAO.addUser("Marco", "Polo", "1234", address, emails, phoneNumbers);
+		
 		/*
 		 * COURSE		
 		 */

@@ -24,8 +24,8 @@ public interface CourseDAO {
 	
 	public Long addCourse(Course course);
 	
-	public Set<Course> getCourses();
-	public Set<Course> getCoursesFromDegreeCourse(Long idDegreeCourse);
+	public ArrayList<Course> getCourses();
+	public ArrayList<Course> getCoursesFromDegreeCourse(Long idDegreeCourse);
 	public Course getCourse(Long idCourse);
 	public Course removeCourse(Long idCourse);
 

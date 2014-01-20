@@ -291,4 +291,10 @@ public class AppealDAOImpl implements AppealDAO {
 		return res;
 	}
 
+	@Override
+	public Set<Appeal> getAppeals(Long DegreeCourse) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

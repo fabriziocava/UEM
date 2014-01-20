@@ -1,5 +1,6 @@
 package it.unical.uniexam.mvc.service.impl;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.dao.CourseDAO;
@@ -32,7 +33,7 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	}
 	
 	@Override
-	public Set<Course> getCourses() {
+	public ArrayList<Course> getCourses() {
 		return courseDAO.getCourses();
 	}
 	

@@ -103,14 +103,14 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
-	public Set<Course> getCourses() {
+	public ArrayList<Course> getCourses() {
 		Session session =HibernateUtil.getSessionFactory().openSession();
-		HashSet<Course>res=null;
+		ArrayList<Course>res=null;
 		try{
 			Query q= session.createQuery("from Course");
 			@SuppressWarnings("unchecked")
 			List<Course> list = q.list();
-			res=new HashSet<Course>(list);
+			res=new ArrayList<Course>(list);
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
@@ -120,15 +120,15 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
-	public Set<Course> getCoursesFromDegreeCourse(Long idDegreeCourse) {
+	public ArrayList<Course> getCoursesFromDegreeCourse(Long idDegreeCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
-		HashSet<Course>res=null;
+		ArrayList<Course>res=null;
 		try{
-			Query q= session.createQuery("from Course where underDegreeCourse=:par");
+			Query q= session.createQuery("from Course where degreeCourse=:par");
 			q.setParameter("par", idDegreeCourse);
 			@SuppressWarnings("unchecked")
 			List<Course> list = q.list();
-			res=new HashSet<Course>(list);
+			res=new ArrayList<Course>(list);
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
