@@ -31,31 +31,35 @@ public class ExamSession {
 	@Column(name="DATA_FINE", nullable=false)
     Date dataFine;
 	
-	 @OneToMany(fetch=FetchType.LAZY)
-     @JoinTable(name="SESSION_APPEALS",
-     joinColumns={
-                     @JoinColumn(name="EXAM_SESSION_ID")
-     }, 
-     inverseJoinColumns={
-                     @JoinColumn(name="APPEAL_ID")
-     })
-	Set<Appeal> appelli=new HashSet<Appeal>();
-	 
-	 @OneToOne
+	 @Column(name="DESCRIPTION",nullable=false)
+	 String Description; 
+	
+	@OneToOne
 	 DegreeCourse degreecourse;
+	 
+	
 	
 	public ExamSession(){
 		
 	}
 	
-	public ExamSession(Date dataInizio,Date dataFine,DegreeCourse degreecourseAssociated){
-		
+	public ExamSession(String description,Date dataInizio,Date dataFine,DegreeCourse degreecourseAssociated){
+		this.Description=description;
 		this.dataInizio=dataInizio;
 		this.dataFine=dataFine;
 		this.degreecourse=degreecourseAssociated;
 		
 	}
 	
+	
+	public String getDescription() {
+		return Description;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -80,13 +84,7 @@ public class ExamSession {
 		this.dataFine = dataFine;
 	}
 
-	public Set<Appeal> getAppelli() {
-		return appelli;
-	}
-
-	public void setAppelli(Set<Appeal> appelli) {
-		this.appelli = appelli;
-	}
+	
 
 	public DegreeCourse getDegreecourse() {
 		return degreecourse;
