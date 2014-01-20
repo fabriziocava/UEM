@@ -27,6 +27,7 @@ public interface DepartmentDAO {
 	 * @return id of the professor added
 	 */
 	public Long addProfessorAtDepartment(Long idDepartment, Professor professor);
+	public Long addProfessorAtDepartment(Long idDepartment, Long idProfessor);
 	/**
 	 * @return id of the professor removed
 	 */

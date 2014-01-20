@@ -17,17 +17,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name="APPEAL_STUDENT")
 @PrimaryKeyJoinColumn(name="AS_ID")
-public class Appeal_Student {
+public class AppealStudent {
 	
 	public enum STATE {
-		NOT_SIGNED_BY_PROFESSOR, NOT_SIGNED_BY_COMMISSARY, AWAITING_ACKNOWLEDGMENT, LOADED_IN_SECRETERY;
+		NOT_SIGNED_BY_PROFESSOR, 
+		NOT_SIGNED_BY_COMMISSARY, 
+		AWAITING_ACKNOWLEDGMENT, 
+		LOADED_IN_SECRETERY;
 	}
 	
 	/*
 	 * CONSTRUCTORS
 	 */
-	public Appeal_Student() {
-		// TODO Auto-generated constructor stub
+	public AppealStudent() {
 	}
 	/*
 	 * END_CONSTRUCTORS
@@ -48,7 +50,20 @@ public class Appeal_Student {
 	STATE state;
 	
 	@Column(name="TEMPORANY_VOTE")
-	int temporany_vote;
+	Double temporany_vote;
+	
+	@Column(name="NOTE")
+	String note;
+
+	
+	
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
 
 	/*
 	 * GETTERS
@@ -69,7 +84,7 @@ public class Appeal_Student {
 		return state;
 	}
 
-	public int getTemporany_vote() {
+	public Double getTemporany_vote() {
 		return temporany_vote;
 	}
 	/*
@@ -95,7 +110,7 @@ public class Appeal_Student {
 		this.state = state;
 	}
 
-	public void setTemporany_vote(int temporany_vote) {
+	public void setTemporany_vote(Double temporany_vote) {
 		this.temporany_vote = temporany_vote;
 	}
 	/*

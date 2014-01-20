@@ -122,6 +122,12 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		return null;
 	}
 
+	@Override
+	public Long addProfessorAtDepartment(Long idDepartment, Long idProfessor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

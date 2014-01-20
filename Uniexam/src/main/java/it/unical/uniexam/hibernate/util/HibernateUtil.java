@@ -2,7 +2,7 @@ package it.unical.uniexam.hibernate.util;
 
 
 import it.unical.uniexam.MokException;
-import it.unical.uniexam.hibernate.domain.Appeal_Student;
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
@@ -52,7 +52,7 @@ public class HibernateUtil {
                         .addAnnotatedClass(Manager.class)
                         .addAnnotatedClass(Student.class)
                         .addAnnotatedClass(ExamSession.class)
-                        .addAnnotatedClass(Appeal_Student.class)
+                        .addAnnotatedClass(AppealStudent.class)
 			.addAnnotatedClass(Carrier.class)
                         .buildSessionFactory();
                 }catch(Exception e){
