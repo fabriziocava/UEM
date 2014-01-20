@@ -46,9 +46,10 @@ public class StudentController {
 	@RequestMapping(value=StudentService.STUDENT_COURSE, method=RequestMethod.GET)
 	public String course(HttpServletRequest request, Model model) {
 		
-		//ArrayList<Course> courses = studentService.getCourses();
 		ArrayList<Course> courses = studentService.getCourses();
 		model.addAttribute("courses", courses);
+		
+		
 		
 		return StudentService.STUDENT_COURSE;
 	}

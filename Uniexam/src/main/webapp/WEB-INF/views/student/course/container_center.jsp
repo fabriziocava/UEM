@@ -14,7 +14,7 @@
 
 <div class="container-center">
 	<div align="center">
-		<label style="text-align: center; color: maroon; text-transform: uppercase;"><b><spring:message code='label.courses'/></b></label>	
+		<label style="text-align: center; color: maroon; text-transform: uppercase;"><b><spring:message code='label.appeals'/></b></label>	
 		<br><br>
 	</div>
 	<%
@@ -22,7 +22,7 @@
 		if(courses!=null && !courses.isEmpty()) {
 			for(Course c : courses) {
 	%>
-				<a id="<%="acourse" + c.getId()%>" href="#" onclick=""><b><%=c.getName()%></b></a>
+				<a id="<%="acourse" + c.getId()%>" href="#" onclick=""><b><%=c.getName()%></b></a><label> <%=c.getDegreeCourse().getName()%></label><label> <%=c.getCredits()%></label><label> <%=c.getHolder().getName()%> <%=c.getHolder().getSurname()%></label>
 				<br>
 	<%			
 			}
