@@ -14,7 +14,7 @@
 
 <div class="container-center">
 	<fieldset>
-		<legend><spring:message code='label.appeals'/></legend>
+		<legend><spring:message code='label.courses'/></legend>
 		<ol id="#sorting">
 		<%
 			ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");

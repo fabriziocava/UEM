@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="student.dialog"
+		template="/WEB-INF/views/student/shared_dialog/dialog_base.jsp">
+		<put-attribute name="dialog_content" value="" />
+	</definition>
+	
+	<definition name="student/dialog/view_appeal" extends="student.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/student/shared_dialog/view_appeal.jsp" />
+	</definition>
+
+</tiles-definitions>

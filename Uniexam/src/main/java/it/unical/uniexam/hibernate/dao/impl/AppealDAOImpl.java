@@ -403,7 +403,7 @@ public class AppealDAOImpl implements AppealDAO {
 	}
 
 	@Override
-	public Set<Appeal> getAppeals(Long DegreeCourse) {
+	public Set<Appeal> getAppeals(Long course) {
 		// TODO Auto-generated method stub
 		return null;
 	}

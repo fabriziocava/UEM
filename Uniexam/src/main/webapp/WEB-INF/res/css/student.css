@@ -370,7 +370,7 @@ ul.dashboard {
 	width: 15%;
 	height: auto;
 	float: right;
-	overflow-y: scroll;
+/* 	overflow-y: scroll; */
 	min-height: 200px;
 	/* 	margin: 2px; */
 }

@@ -9,6 +9,7 @@
 	<%
 		Course c=(Course)request.getAttribute("course");
 	%>
+
 <div id="course_details_<%=c.getId()%>" style="display: none;">
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -19,6 +20,12 @@
 	<table class="tablemok">
 	<caption><strong><spring:message code="message.professor.course.course_details.caption" /></strong></caption>
 	<tbody>
+		<tr>
+			<th>
+			<spring:message code="label.professor" />
+			</th>
+			<td><%=c.getHolder().getName()%> <%=c.getHolder().getSurname()%></td>
+		</tr>	
 		<tr>
 			<th>
 			<spring:message code="message.professor.course.attribute.code" />
@@ -40,5 +47,5 @@
 		<tr>
 	</tbody>
 	</table>
-	<a href="#" class="bottonmok" onclick="alert('INSERIRE PAGINA APPELLI')"><spring:message code="label.appeals" /></a>
+	<a href="#" class="bottonmok" onclick="openPopUpWithAjaxContent('viewAppeal','<%=c.getId()%>')"><spring:message code="label.appeals" /></a>
 </div>

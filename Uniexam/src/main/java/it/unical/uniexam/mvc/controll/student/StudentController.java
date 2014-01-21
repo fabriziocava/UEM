@@ -52,4 +52,10 @@ public class StudentController {
 		return StudentService.STUDENT_COURSE;
 	}
 	
+//	@RequestMapping(value=StudentService.STUDENT_APPEAL, method=RequestMethod.GET)
+//	public String appeal(HttpServletRequest request, Model model) {
+//		Long idCourse = Long.valueOf(request.getParameter("id"));
+//		return StudentService.STUDENT_APPEAL;
+//	}
+	
 }
