@@ -36,9 +36,9 @@ public class DBTestManagerDAO {
      
      @BeforeClass
      public static void prepareDB() throws MalformedURLException, InterruptedException {
-             Department department = new Department("A1", "MATEMATICA E INFORMATICA", new Address("COSENZA", "ITALY", "87100", "VIA PIETRO BUCCI, 56"));
+             Department department = new Department("A2", "BIOLOGIA", new Address("COSENZA", "ITALY", "87100", "VIA PIETRO BUCCI, 56"));
              Long idDepartment = departmentDAO.addDepartment(department);
-             Long idDegreeCourse = degreeCourseDAO.addDegreeCourse("INFORMATICA", department);        
+             Long idDegreeCourse = degreeCourseDAO.addDegreeCourse("TERRA", department);        
              
              HashSet<Email> emails = new HashSet<Email>();
              emails.add(new Email(Email.TYPE_UFFICIAL, "manager@unical.it"));

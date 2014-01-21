@@ -4,6 +4,7 @@
 *.jar
 *.war
 *.ear
+*.cfg.xml
 .settings
 .project
 UEM/bin

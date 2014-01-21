@@ -76,13 +76,13 @@ public class DBTest {
 		/*
 		 * COURSE		
 		 */
-		Course course = new Course("1", "Enterprise Application", 5, professorDAO.getProfessor(idProfessor), degreeCourse);
+		Course course = new Course("773", "Enterprise Application", 5, professorDAO.getProfessor(idProfessor), degreeCourse);
 		Long idCourse = courseDAO.addCourse(course);
-		course = new Course("2", "Agent Intelligence", 5, professorDAO.getProfessor(idProfessor), degreeCourse);
+		course = new Course("774", "Agent Intelligence", 5, professorDAO.getProfessor(idProfessor), degreeCourse);
 		idCourse = courseDAO.addCourse(course);
-		course = new Course("3", "Database", 10, professorDAO.getProfessor(idProfessor), degreeCourse);
+		course = new Course("775", "Database", 10, professorDAO.getProfessor(idProfessor), degreeCourse);
 		idCourse = courseDAO.addCourse(course);
-		course = new Course("4", "Knowledge Management", 10, professorDAO.getProfessor(idProfessor), degreeCourse);
+		course = new Course("776", "Knowledge Management", 10, professorDAO.getProfessor(idProfessor), degreeCourse);
 		idCourse = courseDAO.addCourse(course);
 		
 		try {
