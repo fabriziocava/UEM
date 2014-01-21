@@ -90,6 +90,10 @@ public class ExamSession {
 		return degreecourse;
 	}
 
+	public String getNameDegreeCoures(){
+		return degreecourse.getName();
+	}
+	
 	public void setDegreecourse(DegreeCourse degreecourse) {
 		this.degreecourse = degreecourse;
 	}
