@@ -6,6 +6,7 @@ import java.util.Set;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.mvc.service.StudentService;
 
@@ -35,6 +36,11 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	@Override
 	public ArrayList<Course> getCourses() {
 		return courseDAO.getCourses();
+	}
+	
+	@Override
+	public Course getCourseDetails(Long idCourse) {	
+		return courseDAO.getCourse(idCourse);
 	}
 	
 }

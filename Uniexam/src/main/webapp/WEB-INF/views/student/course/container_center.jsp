@@ -13,20 +13,33 @@
 </script>
 
 <div class="container-center">
-	<div align="center">
-		<label style="text-align: center; color: maroon; text-transform: uppercase;"><b><spring:message code='label.appeals'/></b></label>	
-		<br><br>
-	</div>
-	<%
-		ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
-		if(courses!=null && !courses.isEmpty()) {
-			for(Course c : courses) {
-	%>
-				<a id="<%="acourse" + c.getId()%>" href="#" onclick=""><b><%=c.getName()%></b></a><label> <%=c.getDegreeCourse().getName()%></label><label> <%=c.getCredits()%></label><label> <%=c.getHolder().getName()%> <%=c.getHolder().getSurname()%></label>
-				<br>
-	<%			
+	<fieldset>
+		<legend><spring:message code='label.appeals'/></legend>
+		<ol id="#sorting">
+		<%
+			ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
+			if(courses!=null && !courses.isEmpty()) {
+				for(Course c : courses) {
+		%>
+					<li class="list-item" style="border-radius: 4px; ">
+						<article>
+							<section id="<%="course" + c.getId()%>">
+								<span class="span_expandible" id="collapsedivrse<%=c.getId()%>" onclick="getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');">+</span><%=c.getName()%>
+								<div id="divrse<%=c.getId()%>" style="display: none;"></div>
+							</section>
+						</article>
+					<br>
+					</li>
+		<%			
+				}
+			} else {
+				%>
+				<spring:message
+					code="message.professor.course.container.center.nocourse" />
+				<%				
 			}
-		}
-	%>
+		%>
+		</ol>
+	</fieldset>
 	
 </div>

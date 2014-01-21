@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
 
 public interface StudentService extends UserService {
@@ -14,5 +15,6 @@ public interface StudentService extends UserService {
 	
 	public Student getStudent(Long serialNumber);
 	public ArrayList<Course> getCourses();
-
+	
+	public Course getCourseDetails(Long idCourse);
 }
