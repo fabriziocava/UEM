@@ -11,6 +11,7 @@ import it.unical.uniexam.hibernate.domain.ExamSession;;
 public interface ExamSessionDAO {
 	
 	public Long addExamSession(String description,Date dataInizio,Date dataFine,DegreeCourse degreecourseAssociated );
+	public Long addExamSession(ExamSession examsession);
 	public boolean canRegisterCourse(Course c);
 	public Set<ExamSession> getExamsession();
 	

@@ -8,6 +8,7 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
@@ -17,8 +18,30 @@ import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
+
+@Repository
 public class ExamSessionDAOimpl implements ExamSessionDAO {
 
+	
+	@Override
+	public Long addExamSession(ExamSession examsession) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		Long id = null;
+		try {
+			transaction = session.beginTransaction();
+			id = (Long) session.save(examsession);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return id;
+	}
+	
+	
+	
 	@Override
 	public Long addExamSession(String description,Date dataInizio, Date dataFine,
 			DegreeCourse degreecourseAssociated) {
@@ -82,5 +105,7 @@ public class ExamSessionDAOimpl implements ExamSessionDAO {
 		}
 		return res;
 	}
+
+
 
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
@@ -88,6 +89,9 @@ public class ManagerController {
 		model.addAttribute("M",m);
 		updatePersonalizzation(model, m);
 		// aggiungere altre cose
+		
+		Set<ExamSession> es=managerService.getExamSession();
+		model.addAttribute("examsession", es);
 
 		return ManagerService.MANAGER_EXAM;
 	}

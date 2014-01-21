@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
+import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
 import it.unical.uniexam.hibernate.dao.ManagerDao;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.mvc.service.ManagerService;
@@ -29,6 +31,9 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 	
 	@Autowired
 	DegreeCourseDAO degreecourseDAO;
+	
+	@Autowired
+	ExamSessionDAO examsessionDAO;
 	
 	@Override
 	public Manager getManager(Long idUser) {
@@ -65,6 +70,12 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 	@Override
 	public Set<DegreeCourse> getAssociatedCourseWithDepartment(Long id) {
 		return degreecourseDAO.getDegreeCourses(id);
+	}
+
+
+	@Override
+	public Set<ExamSession> getExamSession() {
+		return examsessionDAO.getExamsession();
 	}
 
 	
