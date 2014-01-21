@@ -73,7 +73,7 @@ public class Student extends User {
 				joinColumns={@JoinColumn(name="ID")},
 				inverseJoinColumns={@JoinColumn(name="AS_ID")}
 			)
-	Set<Appeal_Student> appeal_student = new HashSet<Appeal_Student>();
+	Set<AppealStudent> appeal_student = new HashSet<AppealStudent>();
 
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="STUDENT_CARRIER",
@@ -109,7 +109,7 @@ public class Student extends User {
 		return groups;
 	}	
 	
-	public Set<Appeal_Student> getAppeal_student() {
+	public Set<AppealStudent> getAppeal_student() {
 		return appeal_student;
 	}
 	
@@ -147,7 +147,7 @@ public class Student extends User {
 		this.groups = groups;
 	}
 
-	public void setAppeal_student(Set<Appeal_Student> appeal_student) {
+	public void setAppeal_student(Set<AppealStudent> appeal_student) {
 		this.appeal_student = appeal_student;
 	}
 	

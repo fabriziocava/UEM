@@ -1,9 +1,11 @@
 package it.unical.uniexam.hibernate.mokTest;
 
+import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
+import it.unical.uniexam.hibernate.dao.impl.AppealDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
@@ -21,6 +23,8 @@ import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +48,7 @@ public class DBTestGroup2DAO {
 	private static ProfessorDAO professorDAO=new ProfessorDAOImp();
 	private static GroupDAO groupDAO= new GroupDAOImpl();
 	private static UserDAO userDAO=new UserDAOImpl();
+	private static AppealDAO appealDAO=new AppealDAOImpl();
 	static Long []ids=null;
 	
 	
@@ -176,6 +181,30 @@ public class DBTestGroup2DAO {
 		/*27*/ids[count++]=courseDAO.addCourse(new Course("INF", "Fondamenti di Informatica", new URL("http:\\www.unical.it/Fondamenti"), 5, null, null, professorDAO.getProfessor(ids[3]),null));
 		/*28*/ids[count++]=groupDAO.addGruop("Altro gruppo", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[3], Group.POLICY_1,ids[1]);
 		/*29*/ids[count++]=groupDAO.addGruop("gruppo per fondamenti", "Iscrizione", "ti devi iscrivere a questo...bla..bla", ids[3], Group.POLICY_1,ids[27]);
+		
+		/*30*/try {
+			ids[count++]=appealDAO.addAppeal(ids[0], "Appello1", 13, 
+					"MT8", "Appello per l'esame straordinario", 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("03-02-2014 09:00"), 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("31-01-2014 09:00"), 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"),  
+					ids[2]);
+			/*31*/ids[count++]=appealDAO.addAppeal(ids[0], "Appello2", 13, 
+					"MT8", "Appello alternativo uguale data,ma questo sotto", 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"), 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("31-01-2014 09:00"), 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"),  
+					ids[2]);
+			/*32*/ids[count++]=appealDAO.addAppeal(null, "Appello3", 13, 
+					"MT8", "Appello per provare il course null", 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("03-02-2014 09:00"), 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("31-01-2014 09:00"), 
+					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"),  
+					ids[2]);
+			
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
 		try{
 			Thread.sleep(3000);
 		}catch(Exception e){}

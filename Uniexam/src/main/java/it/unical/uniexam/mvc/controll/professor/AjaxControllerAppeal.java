@@ -2,6 +2,7 @@ package it.unical.uniexam.mvc.controll.professor;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
@@ -158,6 +159,26 @@ public class AjaxControllerAppeal {
 		model.addAttribute("appeal", appeal);
 		
 		return new ModelAndView("professor/dialog/view_appeal", "model", model);
+	}
+	
+	@RequestMapping("/dialog/list_student")
+	public ModelAndView dialog_list_student(HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+
+		String idAppea=(String)request.getParameter("id");
+		if(idAppea!=null){
+			Long idAppeal=Long.valueOf(idAppea);
+			ArrayList<AppealStudent> students=professorService.getListStudentFromAppeal(idAppeal);
+			model.addAttribute("appealstudents", students);
+		}
+		
+		return new ModelAndView("professor/dialog/list_student", "model", model);
 	}
 	
 	

@@ -10,9 +10,11 @@ import java.util.Set;
 import javax.servlet.ServletOutputStream;
 
 import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 
@@ -66,4 +68,6 @@ public interface ProfessorService extends UserService{
 	public Boolean changeAppealAttribute(Long idAppeal, String variable,String value, String clazz);
 
 	public Boolean removeAppeal(Long idAppeal);
+
+	public ArrayList<AppealStudent> getListStudentFromAppeal(Long idAppeal);
 }

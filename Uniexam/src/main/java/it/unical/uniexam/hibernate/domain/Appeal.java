@@ -105,7 +105,7 @@ public class Appeal {
 	inverseJoinColumns={
 			@JoinColumn(name="AS_ID")
 			})
-	Set<Appeal_Student> appeal_student = new HashSet<Appeal_Student>();
+	Set<AppealStudent> appeal_student = new HashSet<AppealStudent>();
 	
 	
 	/// Implementation
@@ -182,11 +182,11 @@ public class Appeal {
 		this.creatorProfessor = creatorProfessor;
 	}
 
-	public Set<Appeal_Student> getAppeal_student() {
+	public Set<AppealStudent> getAppeal_student() {
 		return appeal_student;
 	}
 
-	public void setAppeal_student(Set<Appeal_Student> appeal_student) {
+	public void setAppeal_student(Set<AppealStudent> appeal_student) {
 		this.appeal_student = appeal_student;
 	}
 

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -32,6 +33,24 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 @Repository
 public class AppealDAOImpl implements AppealDAO {
 
+	
+	@Override
+	public ArrayList<AppealStudent> getListStudentFromAppeal(Long idAppeal) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<AppealStudent> res=null;
+		try{
+			Appeal appeal=(Appeal)session.get(Appeal.class, idAppeal);
+			if(appeal!=null){
+				res=new ArrayList<AppealStudent>(appeal.getAppeal_student());
+			}
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
 	@Override
 	public Set<Appeal> getAppealsFromProfessorDetails(Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
