@@ -355,9 +355,10 @@ ul.dashboard {
 }
 
 .container-left {
-	background-color: red;
+	background-color: transparent;
+	border: 1px black;
 	position: relative;
-	width: 14%;
+	width: 15%;
 	height: auto;
 	float: left;
 	/* 	margin: 2px; */
@@ -366,7 +367,7 @@ ul.dashboard {
 .container-right {
 	background-color: green;
 	position: relative;
-	width: 30%;
+	width: 15%;
 	height: auto;
 	float: right;
 	overflow-y: scroll;

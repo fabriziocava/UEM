@@ -8,5 +8,7 @@
 			value="/WEB-INF/views/student/course/container_center.jsp" />
 	</definition>
 	
+	<definition name="student/course/course_details" template="/WEB-INF/views/student/course/course_details.jsp">
+	</definition>
 	
 </tiles-definitions>
