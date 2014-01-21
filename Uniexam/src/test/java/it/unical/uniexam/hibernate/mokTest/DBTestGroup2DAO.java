@@ -202,24 +202,6 @@ public class DBTestGroup2DAO {
 					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"),  
 					ids[2]);
 			
-//			ids[count++]=appealDAO.addAppeal(1L, "Appello1", 13, 
-//					"MT8", "Appello per l'esame straordinario", 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("03-02-2014 09:00"), 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("31-01-2014 09:00"), 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"),  
-//					1L);
-//			/*31*/ids[count++]=appealDAO.addAppeal(1l, "Appello2", 13, 
-//					"MT8", "Appello alternativo uguale data,ma questo sotto", 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"), 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("31-01-2014 09:00"), 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"),  
-//					1l);
-//			/*32*/ids[count++]=appealDAO.addAppeal(null, "Appello3", 13, 
-//					"MT8", "Appello per provare il course null", 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("03-02-2014 09:00"), 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("31-01-2014 09:00"), 
-//					new SimpleDateFormat("dd-MM-yyyy kk:mm").parse("02-02-2014 09:00"),  
-//					1l);
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}

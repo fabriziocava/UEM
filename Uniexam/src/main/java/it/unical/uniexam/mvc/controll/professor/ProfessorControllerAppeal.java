@@ -56,29 +56,6 @@ public class ProfessorControllerAppeal {
 	ProfessorService professorService;
 
 	
-//	appeal/list_student?appeal=
-	
-	@RequestMapping(value="/list_student" , method=RequestMethod.GET)
-	public String list_student(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
-
-		String idAppea=(String)request.getParameter("appeal");
-		if(idAppea!=null){
-			Long idAppeal=Long.valueOf(idAppea);
-			ArrayList<AppealStudent> students=professorService.getListStudentFromAppeal(idAppeal);
-			model.addAttribute("students", students);
-		}
-		
-		return ProfessorService.PROFESSOR_APPEAL;
-	}
-	
-	
 	@RequestMapping(value="" , method=RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model){
 		Professor p=null;

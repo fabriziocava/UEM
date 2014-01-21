@@ -15,8 +15,9 @@
 		initCollapsable();
 	});
 </script>
-<%Appeal appeal=(Appeal)request.getAttribute("appeal"); %>
 <div id="dialog_content">
+
+<%Appeal appeal=(Appeal)request.getAttribute("appeal"); %>
 <table class="tablemok">
 <tr><td title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>">
 <div id="name_id_realy">
@@ -31,7 +32,7 @@
 <tr>
 <th>Studenti iscritti a questo appello</th>
 <td><%=appeal.getAppeal_student().size() %></td>
-<td><a class="bottonmok" href="${pageContext.request.contextPath}/professor/appeal/list_student?appeal=<%=appeal.getId() %>" target="black">vedi lista</a></td>
+<td><a class="bottonmok" href="${pageContext.request.contextPath}/professor/appeal/list_student?appeal=<%=appeal.getId() %>" >vedi lista</a></td>
 </tr>
 </table>
 

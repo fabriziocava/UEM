@@ -29,12 +29,24 @@ public class AppealStudent {
 	/*
 	 * CONSTRUCTORS
 	 */
+	
+	
 	public AppealStudent() {
 	}
 	/*
 	 * END_CONSTRUCTORS
 	 */
 	
+	public AppealStudent(Appeal appeal, Student student, STATE state,
+			Double temporany_vote, String note) {
+		super();
+		this.appeal = appeal;
+		this.student = student;
+		this.state = state;
+		this.temporany_vote = temporany_vote;
+		this.note = note;
+	}
+
 	@Id
 	@Column(name="AS_ID", nullable=false)
 	@GeneratedValue

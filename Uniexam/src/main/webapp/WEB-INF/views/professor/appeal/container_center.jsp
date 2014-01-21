@@ -53,6 +53,8 @@
 								<th><spring:message
 										code='message.professor.appeal.add_appeal.name' /></th>
 								<th><spring:message
+										code='message.professor.appeal.add_appeal.numberOfInscribed' /></th>
+								<th><spring:message
 										code='message.professor.appeal.add_appeal.maxNumberOfInscribed' /></th>
 								<th><spring:message
 										code='message.professor.appeal.add_appeal.examDate' /></th>
@@ -70,8 +72,13 @@
 									title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>"
 									class="bottonmok"
 									onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
+								<td class="bottonmok"
+									onclick="openPopUpWithAjaxContent('viewListStudent','<%=appeal.getId()%>')"
+									title="<spring:message code='message.professor.appeal.add_appeal.numberOfInscribed.description'/>"
+									style="display: table-cell;">
+									<%=appeal.getAppeal_student().size()%></td>
 								<td
-									title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>"><%=appeal.getAppeal_student().size()%></td>
+									title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>"><%=appeal.getMaxNumberOfInscribed()%></td>
 								<td
 									title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>"><%=appeal.getExamDate()%></td>
 								<td
@@ -119,6 +126,8 @@
 									<th><spring:message
 											code='message.professor.appeal.add_appeal.name' /></th>
 									<th><spring:message
+											code='message.professor.appeal.add_appeal.numberOfInscribed' /></th>
+									<th><spring:message
 											code='message.professor.appeal.add_appeal.maxNumberOfInscribed' /></th>
 									<th><spring:message
 											code='message.professor.appeal.add_appeal.examDate' /></th>
@@ -135,8 +144,13 @@
 									title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>"
 									class="bottonmok"
 									onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
+								<td class="bottonmok"
+									onclick="openPopUpWithAjaxContent('viewListStudent','<%=appeal.getId()%>')"
+									title="<spring:message code='message.professor.appeal.add_appeal.numberOfInscribed.description'/>"
+									style="display: table-cell;">
+									<%=appeal.getAppeal_student().size()%></td>
 								<td
-									title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>"><%=appeal.getAppeal_student().size()%></td>
+									title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>"><%=appeal.getMaxNumberOfInscribed()%></td>
 								<td
 									title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>"><%=appeal.getExamDate()%></td>
 								<td
