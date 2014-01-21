@@ -49,8 +49,6 @@ public class StudentController {
 		ArrayList<Course> courses = studentService.getCourses();
 		model.addAttribute("courses", courses);
 		
-		
-		
 		return StudentService.STUDENT_COURSE;
 	}
 	

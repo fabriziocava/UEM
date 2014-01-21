@@ -15,18 +15,6 @@
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 </script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		//alert("path: ");
-		alineamentoContainer();
-		alingDashBoard();
-	});
-	$(window).bind("resize", resizeWindow);
-	function resizeWindow( e ) {
-		alineamentoContainer();
-	}
-</script>
-
 </head>
 <body>
 
