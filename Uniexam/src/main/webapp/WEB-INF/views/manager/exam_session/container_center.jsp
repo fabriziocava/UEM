@@ -66,7 +66,7 @@
 								<td
 									title="<spring:message code='message.manager.examsession.description.description'/>"
 									class="bottonmok"
-									onclick="openPopUpWithAjaxContent('viewAppeal','<%=es.getId()%>')"><%=es.getDescription()%></td>
+									onclick="openPopUpWithAjaxContent('view_examsession','<%=es.getId()%>')"><%=es.getDescription()%></td>
 								<td
 									title="<spring:message code='message.manager.examsession.startdate.description'/>"><%=es.getDataInizio()%></td>
 								<td

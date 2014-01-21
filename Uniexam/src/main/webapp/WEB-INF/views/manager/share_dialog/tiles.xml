@@ -19,5 +19,10 @@
 		<put-attribute name="dialog_content"
 			value="/WEB-INF/views/manager/share_dialog/addSession.jsp" />
 	</definition>
+	
+	<definition name="manager/dialog/view_examsession" extends="manager.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/manager/share_dialog/view_examsession.jsp" />
+	</definition>
 
 </tiles-definitions>

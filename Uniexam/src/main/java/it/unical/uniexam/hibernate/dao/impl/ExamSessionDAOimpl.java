@@ -12,10 +12,13 @@ import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
+import it.unical.uniexam.hibernate.domain.Manager;
+import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 
@@ -106,6 +109,44 @@ public class ExamSessionDAOimpl implements ExamSessionDAO {
 		return res;
 	}
 
+
+
+	@Override
+	public ExamSession removeExamSession(Long idexamsession) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		ExamSession res=null;
+		try{
+			transaction=session.beginTransaction();
+			ExamSession es=(ExamSession)session.get(ExamSession.class, idexamsession);
+			session.delete(es);
+			res=es;
+
+			transaction.commit();
+		}catch(Exception e){
+			new MokException(e);
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+
+
+	@Override
+	public ExamSession getExamsession(Long id) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ExamSession res=null;
+		try{
+			res=(ExamSession)session.get(ExamSession.class, id);
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
 
 
 }

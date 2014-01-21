@@ -78,6 +78,12 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 		return examsessionDAO.getExamsession();
 	}
 
+
+	@Override
+	public ExamSession getExamsession(Long id) {
+		return examsessionDAO.getExamsession(id);
+	}
+
 	
 
 }

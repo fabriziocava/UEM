@@ -80,7 +80,17 @@ function openPopUpWithAjaxContent(caseId,id){
 				$("<div></div>").attr('id','dialog').appendTo('body');
 			$("#dialog").html(data);
 		});
-	}else if(caseId.match("viewListStudent")){
+	}
+	else if(caseId.match("view_examsession")){
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+"/ajax/dialog/view_examsession", "GET", "id", id);
+		ajax.done(function(data){
+			if($("#dialog").html()==undefined)
+				$("<div></div>").attr('id','dialog').appendTo('body');
+			$("#dialog").html(data);
+		});
+	}
+	else if(caseId.match("viewListStudent")){
 		var conte=$("#context").attr("value");
 		var ajax=sendAJAXmessage(conte+"/ajax/dialog/list_student", "GET", "id", id);
 		ajax.done(function(data){
@@ -114,6 +124,30 @@ function dialogViewListStudent(){
 	});
 	$("#dialog").attr("title","");
 }
+
+function dialogViewExamSession(){
+	$("#dialog").attr("title","View ExamSession");
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#dialog");
+			commands=undefined;
+		}
+	});
+	$("#dialog").attr("title","");
+}
+
 
 
 function dialogViewAppeal(){

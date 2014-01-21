@@ -14,6 +14,7 @@ public interface ExamSessionDAO {
 	public Long addExamSession(ExamSession examsession);
 	public boolean canRegisterCourse(Course c);
 	public Set<ExamSession> getExamsession();
-	
+	public ExamSession removeExamSession(Long idexamsession);
+	public ExamSession getExamsession(Long id);
 
 }

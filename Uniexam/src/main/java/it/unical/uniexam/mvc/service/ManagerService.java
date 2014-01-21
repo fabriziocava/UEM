@@ -31,6 +31,6 @@ public interface ManagerService extends UserService {
 	public void updatePersonalizzationValues(String stringValues,Long id);
 	public Set<DegreeCourse> getAssociatedCourseWithDepartment(Long id);
 	public Set<ExamSession> getExamSession();
-	
+	public ExamSession getExamsession(Long id);
 
 }
