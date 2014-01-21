@@ -327,7 +327,7 @@ ul.dashboard {
 .container {
 	position: relative;
 	/* 	width: 70%; */
-	/* 	height: auto; */
+	height: auto;
 	margin: 90px 15% 10px 15%;
 	box-shadow: 0px 0px 20px 20px #d3d3d3;
 	background-color: #d3d3d3;
@@ -365,7 +365,7 @@ ul.dashboard {
 }
 
 .container-right {
-	background-color: green;
+	background-color: transparent;
 	position: relative;
 	width: 15%;
 	height: auto;

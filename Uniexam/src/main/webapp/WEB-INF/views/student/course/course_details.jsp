@@ -19,24 +19,26 @@
 	<table class="tablemok">
 	<caption><strong><spring:message code="message.professor.course.course_details.caption" /></strong></caption>
 	<tbody>
-	<tr>
-	<th>
-	<spring:message code="message.professor.course.attribute.code" />
-	</th>
-	<td><%=c.getCode() %></td>
-	</tr>
-	<tr>
-	<th>
-	<spring:message code="message.professor.course.attribute.url" />
-	</th>
-	<td><%=c.getWebSite() %></td>
-	</tr>
-	<tr>
-	<th>
-	<spring:message code="message.professor.course.attribute.credits" />
-	</th>
-	<td><%=c.getCredits() %></td>
-	</tr>
+		<tr>
+			<th>
+			<spring:message code="message.professor.course.attribute.code" />
+			</th>
+			<td><%=c.getCode() %></td>
+		</tr>
+			<tr>
+			<th>
+			<spring:message code="message.professor.course.attribute.url" />
+			</th>
+			<td><%=c.getWebSite() %></td>
+		</tr>
+		<tr>
+			<th>
+			<spring:message code="message.professor.course.attribute.credits" />
+			</th>
+			<td><%=c.getCredits() %></td>
+		</tr>
+		<tr>
 	</tbody>
 	</table>
+	<a href="#" class="bottonmok" onclick="alert('INSERIRE PAGINA APPELLI')"><spring:message code="label.appeals" /></a>
 </div>
