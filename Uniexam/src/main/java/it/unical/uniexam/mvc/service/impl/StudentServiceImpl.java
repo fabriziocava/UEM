@@ -52,22 +52,23 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	@Override
 	public ArrayList<Appeal> getAppeal(Long idCourse) {
 		ArrayList<Appeal>app = new ArrayList<Appeal>(appealDAO.getAppeals(idCourse));
-		ArrayList<Appeal>removable = new ArrayList<Appeal>();
-		for (Appeal appeal : app) {
-			if(appeal.getCourse()!=null && appeal.getCourse().getId()!=-1){
-				removable.add(appeal);
-			}
-		}
-		app.removeAll(removable);
-		Collections.sort(app, new Comparator<Appeal>(){
-			@Override
-			public int compare(Appeal o1, Appeal o2) {
-				if(o1!=null && o2!=null)
-					return (int) (o2.getExamDate().getTime()-o1.getExamDate().getTime());
-				return 0;
-			}
-		});
-		return app;
+//		ArrayList<Appeal>removable = new ArrayList<Appeal>();
+//		for (Appeal appeal : app) {
+//			if(appeal.getCourse()!=null && appeal.getCourse().getId()!=-1){
+//				removable.add(appeal);
+//			}
+//		}
+//		app.removeAll(removable);
+//		Collections.sort(app, new Comparator<Appeal>(){
+//			@Override
+//			public int compare(Appeal o1, Appeal o2) {
+//				if(o1!=null && o2!=null)
+//					return (int) (o2.getExamDate().getTime()-o1.getExamDate().getTime());
+//				return 0;
+//			}
+//		});
+//		return app;
+		return appealDAO.getAppeals(idCourse);
 	}
 	
 }

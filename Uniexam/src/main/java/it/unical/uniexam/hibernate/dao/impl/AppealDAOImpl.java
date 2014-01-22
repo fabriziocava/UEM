@@ -402,10 +402,21 @@ public class AppealDAOImpl implements AppealDAO {
 		return res;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Set<Appeal> getAppeals(Long course) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Appeal> getAppeals(Long idCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<Appeal> res=null;
+		try{
+			Query q=session.createQuery("from Appeal where course.id=:courseId");
+			q.setParameter("courseId", idCourse);
+			res=new ArrayList<Appeal>(q.list());
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
 	}
 
 }

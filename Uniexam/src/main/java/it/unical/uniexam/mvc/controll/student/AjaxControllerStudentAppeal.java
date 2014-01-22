@@ -1,7 +1,10 @@
 package it.unical.uniexam.mvc.controll.student;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.mvc.service.StudentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ public class AjaxControllerStudentAppeal {
 	public ModelAndView dialogViewAppeal(HttpServletRequest request, Model model) {
 		
 		Long idCourse = Long.valueOf(request.getParameter("id"));
+		ArrayList<Appeal> appeal = studentService.getAppeal(idCourse);
+		model.addAttribute("appeal", appeal);
 		
 		return new ModelAndView("student/dialog/view_appeal", "model", model);
 	}

@@ -19,24 +19,30 @@
 	<table border="1">
 		<thead>
 			<tr>
-				<th><spring:message
-						code='message.professor.appeal.add_appeal.name' /></th>
-				<th><spring:message
-						code='message.professor.appeal.add_appeal.numberOfInscribed' /></th>
-				<th><spring:message
-						code='message.professor.appeal.add_appeal.maxNumberOfInscribed' /></th>
-				<th><spring:message
-						code='message.professor.appeal.add_appeal.examDate' /></th>
-				<th><spring:message
-						code='message.professor.appeal.add_appeal.examDate' /></th>
-				<th><spring:message
-						code='message.professor.appeal.add_appeal.examDate' /></th>				
-<%-- aggiure una riga unica alla fine di ogni appello 				<th><spring:message --%>
-<%-- 						code='message.professor.appeal.add_appeal.description' /></th> --%>
+<%-- 				<th><spring:message --%>
+<%-- 						code='message.professor.appeal.add_appeal.name' /></th> --%>
+				<th>Prova</th>
+				<th>Data Esame</th>
+				<th>Nr. iscritti</th>		
 				<th>Iscritto</th>
 				<th><th>
-<!-- 				<td><a class="bottonmok" href="" >Iscriviti</a></td> -->
 			</tr>
+			<%
+			ArrayList<Appeal> appeal = (ArrayList<Appeal>) request.getAttribute("appeal");
+			if(appeal!=null && !appeal.isEmpty()) {
+				for(Appeal a : appeal) {
+					%>
+					<tr>
+						<td><%=a.getName()%></td>
+						<td><%=a.getExamDate()%></td>
+						<td><%=a.getCurrNumberOfInscribed()%>/<%=a.getMaxNumberOfInscribed()%></td>
+						<td>SI/NO</td>
+						<td><a class="bottonmok" href="" >Iscriviti</a></td>
+					</tr>
+					<%
+				}
+			}
+			%>
 		</thead>
 	</table>
 
