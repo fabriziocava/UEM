@@ -25,13 +25,13 @@ public class ExamSession {
     @GeneratedValue
     Long id;
 	
-	@Column(name="DATA_INIZIO", nullable=false)
+	@Column(name="DATA_INIZIO", nullable=true)
     Date dataInizio;
 	
-	@Column(name="DATA_FINE", nullable=false)
+	@Column(name="DATA_FINE", nullable=true)
     Date dataFine;
 	
-	 @Column(name="DESCRIPTION",nullable=false)
+	 @Column(name="DESCRIPTION",nullable=true)
 	 String Description; 
 	
 	@OneToOne

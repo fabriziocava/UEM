@@ -47,6 +47,8 @@ public class DBTestManagerDAO {
              DegreeCourse dg=new DegreeCourse("INFORMATICA", department);
              Long idDegreeCourse = degreeCourseDAO.addDegreeCourse(dg);
              ExamSession examsession=new ExamSession("Sessione febbraio", new Date(),new Date() , dg);
+             ExamSession examsession2=new ExamSession("Sessione luglio", new Date(),new Date() , dg);
+             Long idexamsession2=examsessionDAO.addExamSession(examsession2);
              Long idexamsession=examsessionDAO.addExamSession(examsession);
              Long idDegreeCourse2 = degreeCourseDAO.addDegreeCourse("TERRA", department);        
              

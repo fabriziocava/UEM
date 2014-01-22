@@ -32,5 +32,10 @@ public interface ManagerService extends UserService {
 	public Set<DegreeCourse> getAssociatedCourseWithDepartment(Long id);
 	public Set<ExamSession> getExamSession();
 	public ExamSession getExamsession(Long id);
+	
+	public Boolean addExamsession(ExamSession es);
+	public Boolean removeExamsession(Long id);
+	
+	public Boolean changeExamSessionField(Long idexamsession, String variable,String value, String clazz);
 
 }

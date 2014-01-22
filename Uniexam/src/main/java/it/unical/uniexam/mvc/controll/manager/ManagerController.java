@@ -2,10 +2,12 @@ package it.unical.uniexam.mvc.controll.manager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import it.unical.uniexam.MokException;
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.ExamSession;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -136,6 +139,8 @@ public class ManagerController {
 
 		return ManagerService.MANAGER_COURSELIST;
 	}
+	
+	
 	
 	
 	

@@ -16,5 +16,6 @@ public interface ExamSessionDAO {
 	public Set<ExamSession> getExamsession();
 	public ExamSession removeExamSession(Long idexamsession);
 	public ExamSession getExamsession(Long id);
+	public ExamSession modifyExamSession(Long id,ExamSession newexamsession);
 
 }

@@ -32,7 +32,7 @@
 
 <div class="container-center">
 
-		<div class="bottonmok" onclick="">Crea Sessione d'Esame</div>
+		<div class="bottonmok" onclick="openPopUpWithAjaxContent('addSession','')">Crea Sessione d'Esame</div>
 		<fieldset>
 		<legend>
 			<spring:message

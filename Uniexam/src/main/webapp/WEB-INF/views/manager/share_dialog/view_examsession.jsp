@@ -8,40 +8,81 @@
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
     
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		dialogViewExamSession();
-		initCollapsable();
+		initCollapsablePino();
 	});
+	
+	function sendDeleteAppeal(id){
+		$("<div>Sei sicuro di voler eliminare la sessione ?</div>").attr('id',"divDelete").appendTo('body');
+		$("#divDelete").attr("title",'Elimina Sessione');
+		$("#divDelete").dialog({
+		      resizable: false,
+		      modal: true,
+		      buttons: {
+		        "Conferma": function() {
+		        	var ajax=sendAJAXmessage($("#context").attr("value")+"/ajax/exam_session/remove_session","GET","id",id);
+		        	ajax.done(function(msg){
+		        		if(msg.match("no")){
+		        			alert("Errore! non ho potuto eliminare la sessione");
+		        		}else{
+		        			alert("Sessione eliminata");
+		        			window.location=$("#context").attr("value")+"/exam_session";
+		        		}
+		        	});
+		         	$( this ).dialog( "close" );
+		         	$("div").remove("#divDelete");
+		        },
+		        Cancella: function() {
+		          	$( this ).dialog( "close" );
+		        	$("div").remove("#divDelete");
+		        }
+		      },
+		      close:function(){
+					$( this ).dialog( "close" );
+					$("div").remove("#divDelete");
+				}
+		    });
+		$("#divDelete").attr("title","");
+	}
+	
+	
 </script>
 
-</head>
-<body>
+
+
+
 
 <div id="dialog_content">
+
+<script type="text/javascript">
+
+</script>
+
 <%ExamSession examsession=(ExamSession)request.getAttribute("examsession"); %>
-
-<table class="tablemok">
-
-
-</table>
 
 <table class="tablemok">
 <tr>
 <th><%=examsession.getDescription() %></th>
 <td><div class="line-top"></div></td>
-<td><div class="bottonmok color_red" onclick=""><spring:message code="message.general.delete" /></div></td>
-<td><div class="bottonmok " onclick=""><spring:message code="message.general.modify" /></div></td>
+<td><div class="bottonmok color_red" onclick="sendDeleteAppeal('<%=examsession.getId()%>')"><spring:message code="message.general.delete" /></div></td>
+
 </tr>
 </table>
-
 </div>
 
-</body>
-</html>
+<table class="tablemok">
+
+<tr><td>
+<div id="name_id_realy">
+<span class="bottonmok" id="collapsedivappealdetails" onclick="getDataFromAjax('exam_session/sessionDetails','<%=examsession.getId()%>','divappealdetails');">Modifica</span>
+
+<div id="divappealdetails" style="display: none;"></div>
+</div>
+</td></tr>
+</table>
+
+
+

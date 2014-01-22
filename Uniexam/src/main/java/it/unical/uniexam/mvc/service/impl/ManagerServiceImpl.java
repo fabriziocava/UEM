@@ -2,13 +2,18 @@ package it.unical.uniexam.mvc.service.impl;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
 import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
 import it.unical.uniexam.hibernate.dao.ManagerDao;
@@ -84,6 +89,50 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 		return examsessionDAO.getExamsession(id);
 	}
 
+
+	@Override
+	public Boolean addExamsession(ExamSession es) {
+		return examsessionDAO.addExamSession(es.getDescription(), es.getDataInizio(), es.getDataFine(), es.getDegreecourse()) != null;
+	}
+
+
+	@Override
+	public Boolean removeExamsession(Long id) {
+		return examsessionDAO.removeExamSession(id)!=null;
+	}
+
+
+	@Override
+	public Boolean changeExamSessionField(Long idexamsession, String variable,
+			String value, String clazz) {
+
+		ExamSession examsession=new ExamSession(null, null, null, null);
+		try{
+			Object valuee=null;
+			value=value.replaceAll("\n", "");
+			if(clazz.equals("Integer")){
+				valuee=Integer.valueOf(value);
+			}else if(clazz.equals("String")){
+				valuee=String.valueOf(value);
+			}else if(clazz.equals("Date")){
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+				Date result =  df.parse(value);
+				valuee=result;
+			}
+			Class<ExamSession> loadClass=ExamSession.class;
+			Field declaredField = loadClass.getDeclaredField(variable);
+			declaredField.setAccessible(true);
+			declaredField.set(examsession, valuee);
+		}catch (Exception e) {
+			new MokException(e);
+			return false;
+		}
+		
+		examsessionDAO.modifyExamSession(idexamsession, examsession);
+		return true;
+	}
+
+	
 	
 
 }

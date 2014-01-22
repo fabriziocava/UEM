@@ -149,4 +149,31 @@ public class ExamSessionDAOimpl implements ExamSessionDAO {
 	}
 
 
+
+	@Override
+	public ExamSession modifyExamSession(Long id, ExamSession newexamsession) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		ExamSession res=null;
+		try{
+			transaction=session.beginTransaction();
+			ExamSession oldexamsession=(ExamSession) session.get(ExamSession.class, id);
+			if(newexamsession.getDescription()!=null && newexamsession.getDescription().compareTo(oldexamsession.getDescription())!=0)
+				oldexamsession.setDescription(newexamsession.getDescription());
+			if(newexamsession.getDataInizio()!=null && newexamsession.getDataInizio().compareTo(oldexamsession.getDataInizio())!=0)
+				oldexamsession.setDataInizio(newexamsession.getDataInizio());
+			if(newexamsession.getDataFine()!=null && newexamsession.getDataFine().compareTo(oldexamsession.getDataFine())!=0)
+				oldexamsession.setDataFine(newexamsession.getDataFine());
+			res=oldexamsession;
+			transaction.commit();
+		}catch(Exception e){
+			new MokException(e);
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+
 }

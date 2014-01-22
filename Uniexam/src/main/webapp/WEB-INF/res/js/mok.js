@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	initDraggable();
-	initCollapsable();
+	initCollapsable();   // da kiedere a luigi ...
 });
 
 $(document).ready(function() {
@@ -43,7 +43,7 @@ function changeEditable(path,id,variable,newString,clazz){
 	ing.done(function(msg){
 		$(".processing").css("display","none");
 		if(msg.match("no")){
-			alert("Errore nel apportare le modifiche");
+			alert("Errore nell' apportare le modifiche");
 		}
 	});
 	return ing;
@@ -84,6 +84,15 @@ function openPopUpWithAjaxContent(caseId,id){
 	else if(caseId.match("view_examsession")){
 		var conte=$("#context").attr("value");
 		var ajax=sendAJAXmessage(conte+"/ajax/dialog/view_examsession", "GET", "id", id);
+		ajax.done(function(data){
+			if($("#dialog").html()==undefined)
+				$("<div></div>").attr('id','dialog').appendTo('body');
+			$("#dialog").html(data);
+		});
+	}
+	else if(caseId.match("addSession")){
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+"/ajax/dialog/addSession", "GET", "id", id);
 		ajax.done(function(data){
 			if($("#dialog").html()==undefined)
 				$("<div></div>").attr('id','dialog').appendTo('body');
@@ -196,6 +205,28 @@ function dialogAddAppeal(){
 	$("#dialog").attr("title","");
 }
 
+function dialogAddSession(){
+	$("#dialog").attr("title","Aggiungi Sessione");
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#dialog");
+			commands=undefined;
+		}
+	});
+	$("#dialog").attr("title","");
+}
 
 function Commands(name,id){
 	// scrivere la classe che prende in input il set a command e poi con un to string ritorna la stringa come commando
@@ -423,6 +454,29 @@ function initCollapsable(){
 				realID = idOld.replace("expanse", "");
 				newID="collapse";
 				$(this).html("+");
+			}
+			var idd = realID;
+			$("#" + idd).slideToggle(500);
+			$(this).attr("id", newID+realID);
+		});
+	});
+}
+
+function initCollapsablePino(){
+	$("span[id^='collapse'],span[id^='expanse']").each(function() {
+		$(this).bind("click", function() {
+			var idOld = this.id;
+//			alert(idOld+"");
+			var realID;
+			var newID;
+			if(idOld.match("collapse")){
+				realID = idOld.replace("collapse", "");
+				newID="expanse";
+				$(this).html("-");
+			}else{
+				realID = idOld.replace("expanse", "");
+				newID="collapse";
+				$(this).html("Modifica");
 			}
 			var idd = realID;
 			$("#" + idd).slideToggle(500);
