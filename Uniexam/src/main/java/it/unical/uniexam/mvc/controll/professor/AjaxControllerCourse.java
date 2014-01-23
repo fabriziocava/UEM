@@ -1,6 +1,5 @@
 package it.unical.uniexam.mvc.controll.professor;
 
-import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
@@ -10,8 +9,6 @@ import it.unical.uniexam.mvc.service.UtilsService;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;

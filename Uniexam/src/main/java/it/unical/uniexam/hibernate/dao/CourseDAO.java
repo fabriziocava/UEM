@@ -2,6 +2,7 @@ package it.unical.uniexam.hibernate.dao;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import org.hibernate.Session;
@@ -69,6 +70,8 @@ public interface CourseDAO {
 	
 	public Session getSession();
 
-	public ArrayList<String> getCoursesFromDepartment();
+	public Collection<? extends Course> getCoursesFromDepartment(Long idDepartment);
+
+	public Long getDepartmentFromCourse(Long idCourse);
 	
 }

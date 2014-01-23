@@ -2,6 +2,7 @@ package it.unical.uniexam.hibernate.dao.impl;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +32,22 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 @Repository
 public class CourseDAOImpl implements CourseDAO{
 
+	@Override
+	public Long getDepartmentFromCourse(Long idCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Long res=null;
+		try{
+			Course c=(Course)session.get(Course.class, idCourse);
+			res=c.getDegreeCourse().getDepartment_associated().getId();
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
+	
 	@Override
 	public Long addCourse(String codeCourse,
 			String nameCourse, Integer creditCourse, Long idProfessorHolder,
@@ -630,18 +647,20 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 	
 	@Override
-	public ArrayList<String> getCoursesFromDepartment() {
+	public Collection<? extends Course> getCoursesFromDepartment(Long idDepartment) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		ArrayList<String> res=null;
+		ArrayList<Course>res=null;
 		try{
-			transaction=session.beginTransaction();
-			
-//			res=
-			
-			transaction.commit();
+			Query q= session.createQuery("from Course where degreeCourse.department_associated.id=:par");
+			q.setParameter("par", idDepartment);
+			res=new ArrayList<Course>(q.list());
+			for (Course course : res) {
+				Hibernate.initialize(course);
+				Hibernate.initialize(course.getCommissionProfessors());
+				Hibernate.initialize(course.getAppeals());
+				Hibernate.initialize(course.getRequestedCourses());
+			}
 		}catch(Exception e){
-			transaction.rollback();
 			new MokException(e);
 		}finally{
 			session.close();

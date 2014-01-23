@@ -3,18 +3,16 @@ package it.unical.uniexam.mvc.service.impl;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.ServletOutputStream;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -123,7 +121,7 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	
 	@Override
 	public List<Course> getCourseAssociated(Long id) {
-		return new ArrayList<Course>(professorDAO.getCourseHolder(id));
+		return new ArrayList<Course>(professorDAO.getCourseHolder(id));//°°°°TODOMOK
 	}
 	
 	@Override
@@ -238,8 +236,7 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 
 	@Override
 	public Set<Course> getCoursesForRequestedCourseFromDepartment(Long idCourse) {
-//		return courseDAO.getCourses();
-		return null;
+		return  new HashSet<Course>(courseDAO.getCoursesFromDepartment(courseDAO.getDepartmentFromCourse(idCourse)));
 	}
 
 	@Override
