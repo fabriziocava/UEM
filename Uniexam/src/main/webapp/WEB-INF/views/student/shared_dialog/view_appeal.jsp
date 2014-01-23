@@ -16,23 +16,21 @@
 		dialogViewAppeal();
 		initCollapsable();
 	});
-</script>
-
-<script type="text/javascript">
-function inscribeToAppeal(id){
-	$("<div>Vuoi iscriverti?</div>").attr('id',"divInscribe").appendTo('body');
- 	$("#divInscribe").attr("title",'Inscribe?');
+	
+function inscribe(id) {
+	$("<div>Vuoi iscriverti all'esame?</div>").attr('id',"divInscribe").appendTo('body');
+	$("#divInscribe").attr("title",'Inscribe?');
 	$("#divInscribe").dialog({
- 	      resizable: false,
- 	      modal: true,
- 	      buttons: {
+	      resizable: false,
+	      modal: true,
+	      buttons: {
 	        "Confirm": function() {
- 	        	var ajax=sendAJAXmessage($("#context").attr("value")+"/ajax/appeal/inscribeToAppeal","GET","id",id);
- 	        	ajax.done(function(msg){
- 	        		if(msg.match("no")){
- 	        			alert("Errore! Iscrizione non riuscita");
- 	        		}else{
- 	        			alert("Iscrizione avvenuta correttamente");
+	        	var ajax=sendAJAXmessage($("#context").attr("value")+"/ajax/appeal/inscribeToAppeal","GET","appeal",id);
+	        	ajax.done(function(msg){
+	        		if(msg.match("no")){
+	        			alert("Errore! Iscrizione non riuscita");
+	        		}else{
+	        			alert("Iscrizione riuscita");
 	        			window.location=$("#context").attr("value")+"/course";
 	        		}
 	        	});
@@ -49,7 +47,7 @@ function inscribeToAppeal(id){
 				$("div").remove("#divInscribe");
 			}
 	    });
-	$("#divInscribe").attr("title","");
+	$("#divInscribe").attr("title","");	
 }
 </script>
 
@@ -82,21 +80,25 @@ function inscribeToAppeal(id){
 						<%
 						if(appealStudent!=null && !appealStudent.isEmpty()) {
 							for(AppealStudent as : appealStudent) {
-								if(a.getId()==as.getAppeal().getId()) {
-									if(as.getStudent().getId()==student.getId())
-										isInscribed=true;
+								try {
+									if(a.getId()==as.getAppeal().getId()) {
+										if(as.getStudent().getId()==student.getId())
+											isInscribed=true;
+									}
+								} catch (Exception e) {
+									
 								}
 							}					
 						}
 						if(isInscribed) {
 						%>
 							<td align="center">SI</td>
-							<td rowspan="2"><a class="bottonmok" href="" onclick="inscribeToAppeal('<%=a.getId()%>')">Cancella</a></td>
+							<td rowspan="2"><div class="bottonmok color_red" onclick="">Cancella</div></td>
 						<%
 						} else {
 							%>
 							<td align="center">NO</td>
-							<td rowspan="2"><a class="bottonmok" href="" onclick="inscribeToAppeal('<%=a.getId()%>')">Iscrivi</a></td>
+							<td rowspan="2"><div class="bottonmok" onclick="inscribe('<%=a.getId()%>')">Iscrivi</div></td>
 						<%							
 						}
 						%>

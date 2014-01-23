@@ -2,9 +2,12 @@ package it.unical.uniexam.mvc.controll.student;
 
 import java.util.ArrayList;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -49,7 +52,7 @@ public class AjaxControllerStudentAppeal {
 	}
 	
 	@RequestMapping("/appeal/inscribeToAppeal")
-	public String inscribeToAppeal(HttpServletRequest request, Model model) {
+	public String inscribeToAppeal(HttpServletRequest request, Model model, HttpServletResponse response) {
 		Student s = null;
 		String redirect = null;
 		ArrayList<Student> slist = new ArrayList<Student>();
@@ -59,6 +62,24 @@ public class AjaxControllerStudentAppeal {
 		s = slist.get(0);
 		
 		model.addAttribute("I",s);
+		
+		Appeal a = (Appeal) request.getAttribute("appeal");
+		//studentService.subscriptionToAppeal(a, s);
+		
+		Boolean res = true;
+		
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res)
+				outputStream.println("ok");
+			else
+				outputStream.println("no");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
 		
 		return null;
 	}
