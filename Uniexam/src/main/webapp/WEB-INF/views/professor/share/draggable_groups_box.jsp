@@ -8,7 +8,7 @@ ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
 %>
 <div class="box box-groups" id="box-groups">
 		<div class="box-header">
-			<span class="span_expandible" id="collapse_drag_collapsable_group">+</span>		
+			<span class="span_expandible" onclick="collapseMok(this)" id="collapse_drag_collapsable_group">+</span>		
 			<spring:message code="message.professor.course.container.center.titleBoxGroups" />
 			<span class="lock-draggable-close" id="draggablebox-groups">lock/unlock</span>
 		</div>
@@ -17,7 +17,7 @@ ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
 				for (Course c : courses) {
 			%>
 			<ol class="list-courses-box">
-				<span class="span_expandible" id="collapselist-groups-box<%=c.getId()%>">+</span>
+				<span class="span_expandible" onclick="collapseMok(this)" id="collapselist-groups-box<%=c.getId()%>">+</span>
 				<%=c.getName()%>
 				<li>
 					<ol id="list-groups-box<%=c.getId()%>" class="list-groups-box"

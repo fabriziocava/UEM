@@ -36,6 +36,41 @@ public class AjaxControllerAppeal {
 	@Autowired
 	ProfessorService professorService;
 
+	@RequestMapping("/appeal/modify_appeal_student")
+	public String modify_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+		
+		String idAppea=request.getParameter("id");
+		Long idAppeal=Long.valueOf(idAppea);
+		String variable=request.getParameter("variable");
+		String value=request.getParameter("value");
+//		String clazz=request.getParameter("clazz");
+//		clazz=clazz+".class";
+		
+		Boolean res=professorService.modifyAppealStudent(idAppeal,variable,value);
+		
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res)
+				outputStream.println("ok");
+			else
+				outputStream.println("no");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
+		return null;
+	}
+	
+	
 	@RequestMapping("/appeal/remove_appeal")
 	public String remove_appeal(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -174,10 +209,16 @@ public class AjaxControllerAppeal {
 		String idAppea=(String)request.getParameter("id");
 		if(idAppea!=null){
 			Long idAppeal=Long.valueOf(idAppea);
-			ArrayList<AppealStudent> students=professorService.getListStudentFromAppeal(idAppeal);
-			model.addAttribute("appealstudents", students);
+			ArrayList<ArrayList<Object>> students=professorService.getListStudentFromAppealRegularAndNot(idAppeal);
+//			ArrayList<ArrayList<RequestedCourse>>requestedCourses=professorService.getListOfRequestedCourseFromListStudentAndAppeal(idAppeal,students.get(1));
+			Appeal appeal=professorService.getAppealGround(idAppeal);
+			model.addAttribute("appeal", appeal);
+			model.addAttribute("appealstudentsRegAndNot", students);
+//			model.addAttribute("requestedCourses", requestedCourses);
 		}
-		
+		//devono viaggiare insieme
+//		requestedCourses  			  ArrayList<ArrayList<RequestedCourse>>requestedCourses
+//		appealstudentsNoRegular		  ArrayList<AppealStudent> appealStudentsNoRegular
 		return new ModelAndView("professor/dialog/list_student", "model", model);
 	}
 	

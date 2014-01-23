@@ -2,6 +2,7 @@ package it.unical.uniexam.hibernate.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
@@ -13,8 +14,63 @@ import it.unical.uniexam.hibernate.domain.AppealStudent.STATE;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
+/**
+ * 
+ * @author luigi
+ *
+ */
+
+@Repository
 public class AppealStudentDAOImpl implements AppealStudentDAO {
 
+	@Override
+	public Boolean modifyNote(Long idAppeal, String value) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean ris=false;
+		try{
+			transaction=session.beginTransaction();
+			
+			AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+			appealStudent.setNote(value);
+			
+			transaction.commit();
+			
+			ris=true;
+		}catch(Exception e){
+			new MokException(e);
+			ris=false;
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return ris;
+	}
+	
+	@Override
+	public Boolean modifyVote(Long idAppeal, String valu) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean ris=false;
+		try{
+			transaction=session.beginTransaction();
+			AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+			Double value=Double.valueOf(valu);
+			appealStudent.setTemporany_vote(value);
+			
+			transaction.commit();
+			
+			ris=true;
+		}catch(Exception e){
+			new MokException(e);
+			ris=false;
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return ris;
+	}
+	
 	@Override
 	public Long addAppealStudent(AppealStudent appealStudent) {
 		Session session =HibernateUtil.getSessionFactory().openSession();

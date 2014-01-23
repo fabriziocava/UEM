@@ -35,7 +35,7 @@
 			buttons:{
 				Save:function(){
 					//something else
-					if($("#policyOfRequested:radio:checked").val()!=undefined){
+					if($("input[name^='policyOfRequested']:radio:checked").val()!=undefined){
 //							alert("vado");
 						submitAddRequestedCourse();
 						$( this ).dialog( "close" );

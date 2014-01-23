@@ -11,6 +11,42 @@ html {
 	border-radius: 4px;
 }
 
+.titlemok{
+	display: none;
+	position: fixed;
+	z-index: 9;
+	background-color: gray;
+}
+
+.icon {
+	width: 16px;
+	height: 16px;
+}
+
+a.icon {
+	color: rgba(255, 255, 255, 0);
+}
+
+.img-active{
+	background-image: url(mok/ui-icons_222222_256x240.png);
+}
+.img-unactive{
+	background-image: url(mok/ui-icons_888888_256x240.png);
+}
+
+.icon-trash { background-position: -179px -94px; }
+.icon-disk { background-position: -99px -110px; }
+
+/* .icon-cancel { background-position: 0 -128px; } */
+/* .ui-icon-plus { background-position: -16px -128px; } */
+/* .ui-icon-plusthick { background-position: -32px -128px; } */
+/* .ui-icon-minus { background-position: -48px -128px; } */
+/* .ui-icon-minusthick { background-position: -64px -128px; } */
+/* .ui-icon-close { background-position: -80px -128px; } */
+/* .ui-icon-closethick { background-position: -96px -128px; } */
+/* .ui-icon-key { background-position: -112px -128px; } */
+
+
 /* label { */
 /* 	display: inline-block; */
 /* 	width: 5em; */
