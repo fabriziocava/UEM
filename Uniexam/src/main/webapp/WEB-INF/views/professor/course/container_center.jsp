@@ -39,7 +39,7 @@
 			<li class="list-item" style="border-radius: 4px; ">
 				<article>
 					<section id="<%="course" + c.getId()%>">
-					<span class="span_expandible" id="collapsedivrse<%=c.getId()%>" onclick="getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');">+</span><%=c.getName()%>
+					<span class="span_expandible" id="collapsedivrse<%=c.getId()%>" onclick="collapseMok(this); getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');">+</span><%=c.getName()%>
 <%-- 						<a id="<%="acourse" + c.getId()%>" href="#" onclick="getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');"><h1><%=c.getName()%></h1></a> --%>
 						<div id="divrse<%=c.getId()%>" style="display: none;"></div>
 					</section>

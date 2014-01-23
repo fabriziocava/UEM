@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.AppealDAO;
+import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
@@ -53,12 +54,32 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	UserDAO userDAO;
 	@Autowired
 	AppealDAO appealDAO;
+	@Autowired
+	AppealStudentDAO appealStudentDAO;
 
 	@Override
-	public ArrayList<AppealStudent> getListStudentFromAppeal(Long idAppeal) {
-		return appealDAO.getListStudentFromAppeal(idAppeal);
+	public Boolean modifyAppealStudent(Long idAppeal, String variable,
+			String value) {
+		if(variable.equals("temporany_vote")){
+			return appealStudentDAO.modifyVote(idAppeal,value);
+		}else if(variable.equals("note")){
+			return appealStudentDAO.modifyNote(idAppeal,value);
+		}
+
+		return false;
 	}
 	
+//	@Override
+//	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
+//			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular) {
+//		
+//		return null;
+//	}
+	
+	@Override
+	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNot(Long idAppeal) {
+		return appealDAO.getListStudentFromAppealRegularAndNot(idAppeal);
+	}
 	
 	@Override
 	public Boolean removeAppeal(Long idAppeal) {
@@ -91,6 +112,11 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 		}
 		appealDAO.modifyAppeal(idAppeal, ap);
 		return true;
+	}
+	
+	@Override
+	public Appeal getAppealGround(Long idAppeal) {
+		return appealDAO.getAppealGround(idAppeal);
 	}
 	
 	@Override

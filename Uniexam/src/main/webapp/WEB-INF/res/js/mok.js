@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	initDraggable();
-	initCollapsable();
+//	initCollapsable();
 });
 
 $(document).ready(function() {
@@ -18,6 +18,45 @@ $(document).ready(function() {
 		$(this).css("z-index","3");
 	});
 });
+
+//titleidOrClass è o l'id o la classe dove viene assegnato il mouse enter
+//titledivid è l'ID del div che si apparirà dal mouse 
+function titlemok(titleidOrClass,titledivid){
+	var timer;
+	var delay=500;
+	$('.'+titleidOrClass).bind('mouseenter',function(event) {
+		timer = setTimeout(function() {
+			$("#"+titledivid).css("left",event.pageX);
+			$("#"+titledivid).css("top",event.pageY);
+			$("#"+titledivid).fadeIn();
+			$("#"+titledivid).attr("display","block");
+		}, delay);
+	    
+	});
+	$('#'+titleidOrClass).bind('mouseenter',function(event) {
+		timer = setTimeout(function() {
+			$("#"+titledivid).css("left",event.pageX);
+			$("#"+titledivid).css("top",event.pageY);
+			$("#"+titledivid).fadeIn();
+			$("#"+titledivid).attr("display","block");
+		}, delay);
+	    
+	});
+	$('#'+titleidOrClass).bind('mouseleave',function(event) {
+		timer = setTimeout(function() {
+			$("#"+titledivid).fadeOut();
+			clearTimeout(timer);
+		}, delay);
+	    
+	});
+	$('.'+titleidOrClass).bind('mouseleave',function(event) {
+		timer = setTimeout(function() {
+			$("#"+titledivid).fadeOut();
+			clearTimeout(timer);
+		}, delay);
+	    
+	});
+}
 
 var oldString = "";
 function storeOld(item) {
@@ -351,6 +390,27 @@ function getDataFromAjax(pathRequ,id,idDest){
 //	}
 }
 
+/**
+ * <span class="span_expandible" onclick="collapseMok(this); otherF();" id="collapseIDTAGTOCOLLAPSE">+</span>	
+ */
+function collapseMok(item){
+		var idOld = item.id;
+		var realID;
+		var newID;
+		if(idOld.match("collapse")){
+			realID = idOld.replace("collapse", "");
+			newID="expanse";
+			$(item).html("-");
+		}else{
+			realID = idOld.replace("expanse", "");
+			newID="collapse";
+			$(item).html("+");
+		}
+		var idd = realID;
+		$("#" + idd).slideToggle(500);
+		$(item).attr("id", newID+realID);
+}
+
 //function getDataFromAjax(item){
 //	var id=item.id;
 //	if(id.match("acourse")){
@@ -374,28 +434,28 @@ function getDataFromAjax(pathRequ,id,idDest){
 /**
  * <span class="span_expandible" id="collapseIDTAGTOCOLLAPSE">+</span>	
  */
-function initCollapsable(){
-	$("span[id^='collapse'],span[id^='expanse']").each(function() {
-		$(this).bind("click", function() {
-			var idOld = this.id;
-//			alert(idOld+"");
-			var realID;
-			var newID;
-			if(idOld.match("collapse")){
-				realID = idOld.replace("collapse", "");
-				newID="expanse";
-				$(this).html("-");
-			}else{
-				realID = idOld.replace("expanse", "");
-				newID="collapse";
-				$(this).html("+");
-			}
-			var idd = realID;
-			$("#" + idd).slideToggle(500);
-			$(this).attr("id", newID+realID);
-		});
-	});
-}
+//function initCollapsable(){
+//	$("span[id^='collapse'],span[id^='expanse']").each(function() {
+//		$(this).bind("click", function() {
+//			var idOld = this.id;
+////			alert(idOld+"");
+//			var realID;
+//			var newID;
+//			if(idOld.match("collapse")){
+//				realID = idOld.replace("collapse", "");
+//				newID="expanse";
+//				$(this).html("-");
+//			}else{
+//				realID = idOld.replace("expanse", "");
+//				newID="collapse";
+//				$(this).html("+");
+//			}
+//			var idd = realID;
+//			$("#" + idd).slideToggle(500);
+//			$(this).attr("id", newID+realID);
+//		});
+//	});
+//}
 
 /**
  * <div> div da rendere draggable

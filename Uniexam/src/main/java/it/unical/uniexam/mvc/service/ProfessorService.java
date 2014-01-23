@@ -69,5 +69,15 @@ public interface ProfessorService extends UserService{
 
 	public Boolean removeAppeal(Long idAppeal);
 
-	public ArrayList<AppealStudent> getListStudentFromAppeal(Long idAppeal);
+
+	public Boolean modifyAppealStudent(Long idAppeal, String variable,
+			String value);
+
+	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNot(Long idAppeal);
+
+	public Appeal getAppealGround(Long idAppeal);
+
+//	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
+//			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);
+
 }

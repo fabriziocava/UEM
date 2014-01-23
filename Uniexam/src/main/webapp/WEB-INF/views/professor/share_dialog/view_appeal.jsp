@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		dialogViewAppeal();
-		initCollapsable();
+// 		initCollapsable();
 	});
 </script>
 <div id="dialog_content">
@@ -21,7 +21,7 @@
 <table class="tablemok">
 <tr><td title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>">
 <div id="name_id_realy">
-<span class="span_expandible" id="collapsedivappealdetails" onclick="getDataFromAjax('appeal/appeal_details','<%=appeal.getId()%>','divappealdetails');">+</span>
+<span class="span_expandible" id="collapsedivappealdetails" onclick="collapseMok(this); getDataFromAjax('appeal/appeal_details','<%=appeal.getId()%>','divappealdetails');">+</span>
 <%=appeal.getName() %>
 <div id="divappealdetails" style="display: none;"></div>
 </div>

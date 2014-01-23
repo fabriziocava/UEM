@@ -39,7 +39,7 @@
 			%>
 			<tr>
 				<td><span class="span_expandible"
-					id="collapseAppeals<%=((Course) items.get(0)).getId()%>">+</span> <%=((Course) items.get(0)).getName()%></td>
+					id="collapseAppeals<%=((Course) items.get(0)).getId()%>" onclick="collapseMok(this)">+</span> <%=((Course) items.get(0)).getName()%></td>
 			</tr>
 			<tr style="display: none;"
 				id="Appeals<%=((Course) items.get(0)).getId()%>">
@@ -112,7 +112,7 @@
 				<td><div class="line-top"></div></td>
 			</tr>
 			<tr>
-				<td><span class="span_expandible" id="collapseAppealsNoCourse">+</span>Altri
+				<td><span class="span_expandible" onclick="collapseMok(this)" id="collapseAppealsNoCourse">+</span>Altri
 					appelli</td>
 			</tr>
 			<tr style="display: none;" id="AppealsNoCourse">

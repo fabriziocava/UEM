@@ -46,6 +46,7 @@ public interface AppealDAO {
 	public List<List<Object>> getStructureCourse_Appeal(Long p);
 	public Appeal getAppealDetails(Long idAppeal);
 	public Set<Appeal> getAppealsFromProfessorDetails(Long id);
-	public ArrayList<AppealStudent> getListStudentFromAppeal(Long idAppeal);
+	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNot(Long idAppeal);
+	public Appeal getAppealGround(Long idAppeal);
 	
 }

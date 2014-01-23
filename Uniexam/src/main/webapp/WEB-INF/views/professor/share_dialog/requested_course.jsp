@@ -18,33 +18,9 @@
 			<%}else{%>
 				alert("Error in some istruction!");
 			<%}}%>
+			titlemok('square-small', "legendOfDegree");
 	});
-// 	function legendOfDegree(){
-		
-// 	}
-// 	$(".square-small")
-// 	.mouseover(function(){
-		
-// 	})
-// 	.mouseout(function(){
-		
-// 	});
-	var timer;
-	var delay=1000;
-	$('.square-small').hover(function(event) {
-	    // on mouse in, start a timeout
-// 	alert(event.pageX);
-	    
-	    timer = setTimeout(function() {
-	    	$("#legendOfDegree").css("left",event.pageX);
-	    	$("#legendOfDegree").css("top",event.pageY);
-	        $("#legendOfDegree").fadeIn();
-	        $("#legendOfDegree").attr("display","block");
-	    }, delay);
-	}, function() {
-		$("#legendOfDegree").fadeOut();
-	    clearTimeout(timer);
-	});
+
 </script>
 <%
 	Course c = (Course) request.getAttribute("course");
@@ -62,7 +38,7 @@
 		<tr>
 		<td>
 		<div>
-		<div style="display: none;position: fixed;z-index: 9;background-color: gray;" id="legendOfDegree">
+		<div class="titlemok" id="legendOfDegree">
 		<table class="tablemok">
 		<tr>
 		<th><div class="square-small strong"></div></th>

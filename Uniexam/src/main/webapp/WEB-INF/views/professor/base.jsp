@@ -12,8 +12,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="label.welcome" /> ${I.getName()}</title>
 
-<link href="${pageContext.request.contextPath}/res/css/professor.css"
-	media="all" rel="stylesheet" type="text/css" />
 <script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js">
 </script>
 <script
@@ -32,6 +30,8 @@
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 
 </script>
+<link href="${pageContext.request.contextPath}/res/css/professor.css"
+	media="all" rel="stylesheet" type="text/css" />
 <script>
   $(function() {
     $( document ).tooltip({
