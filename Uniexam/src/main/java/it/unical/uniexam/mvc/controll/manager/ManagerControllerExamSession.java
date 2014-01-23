@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.User;
@@ -44,11 +45,15 @@ public class ManagerControllerExamSession {
 		model.addAttribute("M",m);
 		updatePersonalizzation(model, m);
 
+		
 		Boolean ris=managerService.addExamsession(examsession);
 		
 		Set<ExamSession> es=managerService.getExamSession();
-		es.add(examsession);
-		model.addAttribute("examsess", es);
+		model.addAttribute("examsession", es);
+		
+		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
+		model.addAttribute("courses", courses);
+		
 		
 		return ManagerService.MANAGER_EXAM;
 	}

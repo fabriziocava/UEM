@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	initDraggable();
-	initCollapsable();   // da kiedere a luigi ...
+	initCollapsable(); 
 });
 
 $(document).ready(function() {
@@ -462,28 +462,7 @@ function initCollapsable(){
 	});
 }
 
-function initCollapsablePino(){
-	$("span[id^='collapse'],span[id^='expanse']").each(function() {
-		$(this).bind("click", function() {
-			var idOld = this.id;
-//			alert(idOld+"");
-			var realID;
-			var newID;
-			if(idOld.match("collapse")){
-				realID = idOld.replace("collapse", "");
-				newID="expanse";
-				$(this).html("-");
-			}else{
-				realID = idOld.replace("expanse", "");
-				newID="collapse";
-				$(this).html("Modifica");
-			}
-			var idd = realID;
-			$("#" + idd).slideToggle(500);
-			$(this).attr("id", newID+realID);
-		});
-	});
-}
+
 
 /**
  * <div> div da rendere draggable

@@ -24,9 +24,18 @@
 </script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/res/css/jquery-ui.css">
+	
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 
 </script>
+
+<script
+	src="${pageContext.request.contextPath}/res/js/jquery-ui-timepicker-addon.js">
+</script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/res/js/jquery-ui-timepicker-addon.css">
+
+
 <script>
   $(function() {
     $( document ).tooltip({

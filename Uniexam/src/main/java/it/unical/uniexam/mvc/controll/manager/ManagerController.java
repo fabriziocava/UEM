@@ -93,9 +93,13 @@ public class ManagerController {
 		updatePersonalizzation(model, m);
 		// aggiungere altre cose
 		
+		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
+		model.addAttribute("courses", courses);
+		
 		Set<ExamSession> es=managerService.getExamSession();
 		model.addAttribute("examsession", es);
 
+		
 		return ManagerService.MANAGER_EXAM;
 	}
 	

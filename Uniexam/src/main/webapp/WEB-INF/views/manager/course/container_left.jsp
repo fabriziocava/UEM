@@ -7,6 +7,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
+		selectingFromDashBoard(document.getElementById("courseButton"));
+		$("#sorting").tablesorter();
 		$("#nav li:has(ul)").click(function(event) {
 			if (this == event.target) {
 				$(this).toggleClass('clicked').children('ul').slideToggle();

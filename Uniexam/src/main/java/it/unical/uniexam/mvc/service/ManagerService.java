@@ -8,6 +8,7 @@ import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
+import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.User;
@@ -31,6 +32,9 @@ public interface ManagerService extends UserService {
 	public void updatePersonalizzationValues(String stringValues,Long id);
 	public Set<DegreeCourse> getAssociatedCourseWithDepartment(Long id);
 	public Set<ExamSession> getExamSession();
+	public Set<ExamSession> getExamsessionfromdepartment(Department department);
+	public Set<ExamSession> getExamSessionfromDegreeCourse(DegreeCourse degreecourse);
+	
 	public ExamSession getExamsession(Long id);
 	
 	public Boolean addExamsession(ExamSession es);

@@ -12,6 +12,7 @@ import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
+import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -57,7 +58,7 @@ public class AjaxControllerExamsession {
 	
 	
 	@RequestMapping("/dialog/addSession")
-	public ModelAndView dialog_add_session(@ModelAttribute("addsession") Appeal appeal,HttpServletRequest request, Model model){
+	public ModelAndView dialog_add_session(@ModelAttribute("addsession") ExamSession examsession,HttpServletRequest request, Model model){
 		User user=managerService.getSession(request.getSession().getId());
 		if(user==null){
 			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
@@ -72,6 +73,8 @@ public class AjaxControllerExamsession {
 		model.addAttribute("degreecourses", degreecourses);
 		
 		Set<ExamSession> es=managerService.getExamSession();
+		
+		
 		ExamSession session=new ExamSession(null, null, null, null);
 		es.add(session);
 		model.addAttribute("examsession", es);

@@ -13,6 +13,7 @@ import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 @Repository
@@ -101,6 +102,20 @@ public class DegreeCourseDAOImpl implements DegreeCourseDAO {
 		} catch (Exception e) {
 			new MokException(e);
 		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public DegreeCourse getDegreeCourse(Long id) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		DegreeCourse res=null;
+		try{
+			res=(DegreeCourse)session.get(DegreeCourse.class, id);
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
 			session.close();
 		}
 		return res;

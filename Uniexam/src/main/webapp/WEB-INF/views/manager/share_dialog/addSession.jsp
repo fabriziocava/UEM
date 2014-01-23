@@ -44,9 +44,9 @@
  modelAttribute="addsession" method="post" onsubmit="accoppia()">
  
 <div style="display: none;">
-	 <form:input id="descriptionsession_id" path="description" />
-	<form:input id="openDatesession_id" path="openDate" />
-	<form:input id="closeDatesession_id" path="closeDate" />
+	 <form:input id="descriptionsession_id" path="Description" />
+	<form:input id="openDatesession_id" path="dataInizio" />
+	<form:input id="closeDatesession_id" path="dataFine" />
 </div>
 
 <table class="tablemok">
@@ -61,9 +61,11 @@
 <input id="closeDatesession_id_realy" type="text" placeholder="<spring:message code="message.manager.examsession.enddate" />" required/></td></tr>
 
 <tr>
-<td><form:label path="course">Corso di Laurea</form:label></td>
-<td><form:select path="course" items="${model.degreecourses}" itemValue="id" itemLabel="name"></form:select></td>
+<td><form:label path="degreecourse">Corso di Laurea</form:label></td>
+<td><form:select path="degreecourse" items="${model.degreecourses}" itemValue="id" itemLabel="name"></form:select></td>
 </tr>
+
+
 
 <tr>
 </table>

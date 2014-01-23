@@ -25,13 +25,13 @@ public class ExamSession {
     @GeneratedValue
     Long id;
 	
-	@Column(name="DATA_INIZIO", nullable=true)
+	@Column(name="DATA_INIZIO", nullable=false)
     Date dataInizio;
 	
-	@Column(name="DATA_FINE", nullable=true)
+	@Column(name="DATA_FINE", nullable=false)
     Date dataFine;
 	
-	 @Column(name="DESCRIPTION",nullable=true)
+	 @Column(name="DESCRIPTION",nullable=false)
 	 String Description; 
 	
 	@OneToOne
@@ -39,6 +39,9 @@ public class ExamSession {
 	 
 	
 	
+	
+	
+
 	public ExamSession(){
 		
 	}
@@ -48,7 +51,6 @@ public class ExamSession {
 		this.dataInizio=dataInizio;
 		this.dataFine=dataFine;
 		this.degreecourse=degreecourseAssociated;
-		
 	}
 	
 	
@@ -98,6 +100,5 @@ public class ExamSession {
 		this.degreecourse = degreecourse;
 	}
 
-	
 	
 }

@@ -48,9 +48,21 @@ public class DBTestManagerDAO {
              Long idDegreeCourse = degreeCourseDAO.addDegreeCourse(dg);
              ExamSession examsession=new ExamSession("Sessione febbraio", new Date(),new Date() , dg);
              ExamSession examsession2=new ExamSession("Sessione luglio", new Date(),new Date() , dg);
+             ExamSession examsession3=new ExamSession("Sessione settembre", new Date(),new Date() , dg);
+
              Long idexamsession2=examsessionDAO.addExamSession(examsession2);
              Long idexamsession=examsessionDAO.addExamSession(examsession);
-             Long idDegreeCourse2 = degreeCourseDAO.addDegreeCourse("TERRA", department);        
+             Long idexamsession3=examsessionDAO.addExamSession(examsession3);
+          
+             DegreeCourse dg2=new DegreeCourse("TERRA", department);
+             Long idDegreeCourse2 = degreeCourseDAO.addDegreeCourse(dg2);        
+            
+             Department department2 = new Department("A3", "MATEMATICA", new Address("COSENZA", "ITALY", "87100", "VIA PIETRO BUCCI, 56"));
+             Long idDepartment2 = departmentDAO.addDepartment(department2);
+             ExamSession examsession4=new ExamSession("Sessione prova", new Date(),new Date() , dg2);
+             Long idexamsession4=examsessionDAO.addExamSession(examsession4);
+
+
              
              HashSet<Email> emails = new HashSet<Email>();
              emails.add(new Email(Email.TYPE_UFFICIAL, "manager@unical.it"));

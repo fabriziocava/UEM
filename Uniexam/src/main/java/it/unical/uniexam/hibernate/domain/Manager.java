@@ -101,6 +101,10 @@ public class Manager extends User{
 		return department_associated;
 	}
 
+	public String getNameDepartment_associated(){
+		return department_associated.getName();
+	}
+	
 	public Long getDepartmentAssociated(){
 		return department_associated.getId();
 	}

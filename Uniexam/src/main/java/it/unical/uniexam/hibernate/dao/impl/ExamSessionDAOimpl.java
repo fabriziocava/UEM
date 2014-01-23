@@ -176,4 +176,49 @@ public class ExamSessionDAOimpl implements ExamSessionDAO {
 	}
 
 
+
+	@Override
+	public Set<ExamSession> getExamsessionfromdepartment(Department department) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Set<ExamSession> res = null;
+		try {
+			Query q= session.createQuery("from ExamSession where department_department_id=:par");
+			q.setParameter("par", department.getId());
+			@SuppressWarnings("unchecked")
+			List<ExamSession> list = q.list();
+			res = new HashSet<ExamSession>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+
+
+	@Override
+	public Set<ExamSession> getExamsessionfromDegreeCourse(
+			DegreeCourse degreecourse) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Set<ExamSession> res = null;
+		try {
+			Query q= session.createQuery("from ExamSession where degreecourse_degree_course_id=:par");
+			q.setParameter("par", degreecourse.getId());
+			@SuppressWarnings("unchecked")
+			List<ExamSession> list = q.list();
+			res = new HashSet<ExamSession>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+
+
+
+
+
 }

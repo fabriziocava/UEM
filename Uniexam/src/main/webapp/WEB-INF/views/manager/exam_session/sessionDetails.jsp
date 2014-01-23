@@ -17,7 +17,7 @@
 <div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
-onblur="checkBeforeChangeEditable(this,'exam_session/modify_session','<%=examsession.getDescription()%>','description','String')">
+onblur="checkBeforeChangeEditable(this,'exam_session/modify_session','<%=examsession.getId()%>','Description','String')">
 <%=examsession.getDescription() %></div></td>
 </tr>
 
@@ -26,7 +26,7 @@ onblur="checkBeforeChangeEditable(this,'exam_session/modify_session','<%=examses
 <div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
-onblur="">
+onblur="checkBeforeChangeEditable(this,'exam_session/modify_session','<%=examsession.getId()%>','dataInizio','Date')">
 <%=examsession.getDataInizio() %></div></td>
 </tr>
 
@@ -35,7 +35,7 @@ onblur="">
 <div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
-onblur="">
+onblur=" checkBeforeChangeEditable(this,'exam_session/modify_session','<%=examsession.getId()%>','dataFine','Date')">
 <%=examsession.getDataFine() %></div></td>
 </tr>
 

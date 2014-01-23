@@ -20,6 +20,7 @@ import it.unical.uniexam.hibernate.dao.ManagerDao;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
+import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -130,6 +131,19 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 		
 		examsessionDAO.modifyExamSession(idexamsession, examsession);
 		return true;
+	}
+
+
+	@Override
+	public Set<ExamSession> getExamsessionfromdepartment(Department department) {
+		return examsessionDAO.getExamsessionfromdepartment(department);
+	}
+
+
+	@Override
+	public Set<ExamSession> getExamSessionfromDegreeCourse(
+			DegreeCourse degreecourse) {
+		return examsessionDAO.getExamsessionfromDegreeCourse(degreecourse);
 	}
 
 	
