@@ -16,20 +16,22 @@
 	});
 </script>
 <div id="dialog_content">
-	<table border="1">
-		<thead>
-			<tr>
-<%-- 				<th><spring:message --%>
-<%-- 						code='message.professor.appeal.add_appeal.name' /></th> --%>
-				<th>Prova</th>
-				<th>Data Esame</th>
-				<th>Nr. iscritti</th>		
-				<th>Iscritto</th>
-				<th><th>
-			</tr>
-			<%
-			ArrayList<Appeal> appeal = (ArrayList<Appeal>) request.getAttribute("appeal");
-			if(appeal!=null && !appeal.isEmpty()) {
+	<%
+	ArrayList<Appeal> appeal = (ArrayList<Appeal>) request.getAttribute("appeal");
+	if(appeal!=null && !appeal.isEmpty()) {
+		%>
+		<table border="1">
+			<thead>
+				<tr>
+	<%-- 				<th><spring:message --%>
+	<%-- 						code='message.professor.appeal.add_appeal.name' /></th> --%>
+					<th>Prova</th>
+					<th>Data Esame</th>
+					<th>Nr. iscritti</th>		
+					<th>Iscritto</th>
+					<th><th>
+				</tr>
+				<%
 				for(Appeal a : appeal) {
 					%>
 					<tr>
@@ -37,13 +39,24 @@
 						<td><%=a.getExamDate()%></td>
 						<td><%=a.getCurrNumberOfInscribed()%>/<%=a.getMaxNumberOfInscribed()%></td>
 						<td>SI/NO</td>
-						<td><a class="bottonmok" href="" >Iscriviti</a></td>
+						<td rowspan="2"><a class="bottonmok" href="" >Iscriviti</a></td>
+					</tr>
+					<tr>
+						<td colspan="4"><%=a.getDescription()%></td>
+					</tr>					
+					<tr>
+						<td colspan="5"></td>
 					</tr>
 					<%
 				}
+				%>
+				</thead>
+			</table>
+			<%
+			} else {
+				%>
+				<label>Non ci sono appelli</label>
+				<%
 			}
 			%>
-		</thead>
-	</table>
-
 </div>
