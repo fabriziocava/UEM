@@ -1,10 +1,16 @@
 package it.unical.uniexam.mvc.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 
+import it.unical.uniexam.hibernate.dao.AppealDAO;
+import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
+import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -26,6 +32,10 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	StudentDAO studentDAO;
 	@Autowired
 	CourseDAO courseDAO;
+	@Autowired
+	AppealDAO appealDAO;
+	@Autowired
+	AppealStudentDAO appealStudentDAO;
 	
 	
 	@Override
@@ -41,6 +51,38 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	@Override
 	public Course getCourseDetails(Long idCourse) {	
 		return courseDAO.getCourse(idCourse);
+	}
+
+	@Override
+	public ArrayList<Appeal> getAppeal(Long idCourse) {
+		ArrayList<Appeal>app = new ArrayList<Appeal>(appealDAO.getAppeals(idCourse));
+//		ArrayList<Appeal>removable = new ArrayList<Appeal>();
+//		for (Appeal appeal : app) {
+//			if(appeal.getCourse()!=null && appeal.getCourse().getId()!=-1){
+//				removable.add(appeal);
+//			}
+//		}
+//		app.removeAll(removable);
+//		Collections.sort(app, new Comparator<Appeal>(){
+//			@Override
+//			public int compare(Appeal o1, Appeal o2) {
+//				if(o1!=null && o2!=null)
+//					return (int) (o2.getExamDate().getTime()-o1.getExamDate().getTime());
+//				return 0;
+//			}
+//		});
+//		return app;
+		return appealDAO.getAppeals(idCourse);
+	}
+
+	@Override
+	public void subscriptionToAppeal(Appeal appeal, Student student) {
+		appealStudentDAO.subscriptionToAppel(appeal, student);
+	}
+
+	@Override
+	public ArrayList<AppealStudent> getAppealStudent(Long idStudent) {
+		return appealStudentDAO.getAppealStudent(idStudent);
 	}
 	
 }

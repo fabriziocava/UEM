@@ -31,7 +31,7 @@ public interface AppealDAO {
 	
 	//advanced
 	public Set<Appeal> getAppealsFromProfessor(Long idProfessor);
-	public Set<Appeal> getAppeals(Long DegreeCourse);
+	public ArrayList<Appeal> getAppeals(Long idCourse);
 	public Set<Appeal> getAppeals();
 	public Set<Student> getStudetsIscribed(Long idAppeal);
 	
