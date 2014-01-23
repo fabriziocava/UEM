@@ -1,7 +1,6 @@
 package it.unical.uniexam.mvc.controll.student;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -25,26 +24,31 @@ public class StudentController {
 	@Autowired StudentService studentService;
 	
 	@RequestMapping(value=StudentService.STUDENT_HOME, method=RequestMethod.GET)
-	public String homeStudent(HttpServletRequest request,Model model){	
-		User user = studentService.getSession(request.getSession().getId());
-		if(user==null) {
-			HttpSession session = request.getSession(false);
-			if(session!=null) {
-				session.invalidate();
-			}
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
-		}
-		if(user.getClass()!=Student.class) {
-			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
-		}
-		Student s = (Student) user;
-		model.addAttribute("I", s);
+	public String homeStudent(HttpServletRequest request,Model model){			
+		Student s = null;
+		String redirect = null;
+		ArrayList<Student> slist = new ArrayList<Student>();
+		redirect = setStudentOrRedirect(request, model, slist);
+		if(redirect!=null)
+			return redirect;
+		s = slist.get(0);
+		
+		model.addAttribute("I",s);
 		
 		return StudentService.STUDENT_HOME;
 	}
 	
 	@RequestMapping(value=StudentService.STUDENT_COURSE, method=RequestMethod.GET)
 	public String course(HttpServletRequest request, Model model) {
+		Student s = null;
+		String redirect = null;
+		ArrayList<Student> slist = new ArrayList<Student>();
+		redirect = setStudentOrRedirect(request, model, slist);
+		if(redirect!=null)
+			return redirect;
+		s = slist.get(0);
+		
+		model.addAttribute("I",s);
 		
 		ArrayList<Course> courses = studentService.getCourses();
 		model.addAttribute("courses", courses);
@@ -52,10 +56,21 @@ public class StudentController {
 		return StudentService.STUDENT_COURSE;
 	}
 	
-//	@RequestMapping(value=StudentService.STUDENT_APPEAL, method=RequestMethod.GET)
-//	public String appeal(HttpServletRequest request, Model model) {
-//		Long idCourse = Long.valueOf(request.getParameter("id"));
-//		return StudentService.STUDENT_APPEAL;
-//	}
+	
+	String setStudentOrRedirect(HttpServletRequest request,Model model, ArrayList<Student> slist) {
+		User user=studentService.getSession(request.getSession().getId());
+		if(user==null){
+			HttpSession session = request.getSession(false);
+			if(session!=null){
+				session.invalidate();
+			}
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+		}
+		if(user.getClass()!=Student.class){
+			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+		}
+		slist.add((Student)user);
+		return null;
+	}
 	
 }

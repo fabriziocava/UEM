@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -20,4 +21,6 @@ public interface StudentService extends UserService {
 	
 	public Course getCourseDetails(Long idCourse);
 	public ArrayList<Appeal> getAppeal(Long idCourse);
+	public void subscriptionToAppeal(Appeal appeal, Student student);
+	public ArrayList<AppealStudent> getAppealStudent(Long idStudent);
 }

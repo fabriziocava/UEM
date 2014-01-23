@@ -1,18 +1,21 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.util.ArrayList;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
-import it.unical.uniexam.hibernate.domain.Course;
-import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.AppealStudent.STATE;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
+@Repository
 public class AppealStudentDAOImpl implements AppealStudentDAO {
 
 	@Override
@@ -88,4 +91,37 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		return id;
 	}
 
+	@Override
+	public void subscriptionToAppel(Appeal appeal, Student student) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		try{
+			transaction=session.beginTransaction();
+			AppealStudent as = new AppealStudent(appeal, student, null, null, null);
+			session.save(as);
+			transaction.commit();
+		}catch(Exception e){
+			new MokException(e);
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<AppealStudent> getAppealStudent(Long idStudent) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<AppealStudent> res=null;
+		try{
+			Query q=session.createQuery("from AppealStudent where student.id=:studentId");
+			q.setParameter("studentId", idStudent);
+			res=new ArrayList<AppealStudent>(q.list());
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
 }

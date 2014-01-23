@@ -6,9 +6,11 @@ import java.util.Comparator;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.dao.AppealDAO;
+import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -32,6 +34,8 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	CourseDAO courseDAO;
 	@Autowired
 	AppealDAO appealDAO;
+	@Autowired
+	AppealStudentDAO appealStudentDAO;
 	
 	
 	@Override
@@ -69,6 +73,16 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 //		});
 //		return app;
 		return appealDAO.getAppeals(idCourse);
+	}
+
+	@Override
+	public void subscriptionToAppeal(Appeal appeal, Student student) {
+		appealStudentDAO.subscriptionToAppel(appeal, student);
+	}
+
+	@Override
+	public ArrayList<AppealStudent> getAppealStudent(Long idStudent) {
+		return appealStudentDAO.getAppealStudent(idStudent);
 	}
 	
 }

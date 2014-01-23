@@ -1,3 +1,5 @@
+<%@page import="it.unical.uniexam.hibernate.domain.Student"%>
+<%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Appeal"%>
 <%@page import="it.unical.uniexam.hibernate.domain.RequestedCourse"%>
 <%@page import="javassist.expr.NewArray"%>
@@ -15,9 +17,48 @@
 		initCollapsable();
 	});
 </script>
+
+<script type="text/javascript">
+function inscribeToAppeal(id){
+	$("<div>Vuoi iscriverti?</div>").attr('id',"divInscribe").appendTo('body');
+ 	$("#divInscribe").attr("title",'Inscribe?');
+	$("#divInscribe").dialog({
+ 	      resizable: false,
+ 	      modal: true,
+ 	      buttons: {
+	        "Confirm": function() {
+ 	        	var ajax=sendAJAXmessage($("#context").attr("value")+"/ajax/appeal/inscribeToAppeal","GET","id",id);
+ 	        	ajax.done(function(msg){
+ 	        		if(msg.match("no")){
+ 	        			alert("Errore! Iscrizione non riuscita");
+ 	        		}else{
+ 	        			alert("Iscrizione avvenuta correttamente");
+	        			window.location=$("#context").attr("value")+"/course";
+	        		}
+	        	});
+	         	$( this ).dialog( "close" );
+	         	$("div").remove("#divInscribe");
+	        },
+	        Cancel: function() {
+	          	$( this ).dialog( "close" );
+	        	$("div").remove("#divInscribe");
+	        }
+	      },
+	      close:function(){
+				$( this ).dialog( "close" );
+				$("div").remove("#divInscribe");
+			}
+	    });
+	$("#divInscribe").attr("title","");
+}
+</script>
+
 <div id="dialog_content">
 	<%
+	Student student = (Student) request.getAttribute("I");
 	ArrayList<Appeal> appeal = (ArrayList<Appeal>) request.getAttribute("appeal");
+	ArrayList<AppealStudent> appealStudent = (ArrayList<AppealStudent>) request.getAttribute("as");
+	boolean isInscribed = false;
 	if(appeal!=null && !appeal.isEmpty()) {
 		%>
 		<table border="1">
@@ -36,10 +77,29 @@
 					%>
 					<tr>
 						<td><%=a.getName()%></td>
-						<td><%=a.getExamDate()%></td>
-						<td><%=a.getCurrNumberOfInscribed()%>/<%=a.getMaxNumberOfInscribed()%></td>
-						<td>SI/NO</td>
-						<td rowspan="2"><a class="bottonmok" href="" >Iscriviti</a></td>
+						<td align="center"><%=a.getExamDate()%></td>
+						<td align="center"><%=a.getCurrNumberOfInscribed()%>/<%=a.getMaxNumberOfInscribed()%></td>
+						<%
+						if(appealStudent!=null && !appealStudent.isEmpty()) {
+							for(AppealStudent as : appealStudent) {
+								if(a.getId()==as.getAppeal().getId()) {
+									if(as.getStudent().getId()==student.getId())
+										isInscribed=true;
+								}
+							}					
+						}
+						if(isInscribed) {
+						%>
+							<td align="center">SI</td>
+							<td rowspan="2"><a class="bottonmok" href="" onclick="inscribeToAppeal('<%=a.getId()%>')">Cancella</a></td>
+						<%
+						} else {
+							%>
+							<td align="center">NO</td>
+							<td rowspan="2"><a class="bottonmok" href="" onclick="inscribeToAppeal('<%=a.getId()%>')">Iscrivi</a></td>
+						<%							
+						}
+						%>
 					</tr>
 					<tr>
 						<td colspan="4"><%=a.getDescription()%></td>
