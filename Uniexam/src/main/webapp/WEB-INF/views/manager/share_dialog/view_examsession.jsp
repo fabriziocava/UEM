@@ -12,7 +12,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		dialogViewExamSession();
-		initCollapsable();
 	});
 	
 	function sendDeleteAppeal(id){
@@ -77,7 +76,7 @@
 
 <tr><td>
 <div id="name_id_realy">
-<span class="bottonmok" id="collapsedivappealdetails" onclick="getDataFromAjax('exam_session/sessionDetails','<%=examsession.getId()%>','divappealdetails');">Modifica</span>
+<span class="bottonmok" id="collapsedivappealdetails"      onclick="getDataFromAjax('exam_session/sessionDetails','<%=examsession.getId()%>','divappealdetails'); collapseMok(this)">Modifica</span>
 
 <div id="divappealdetails" style="display: none;"></div>
 </div>

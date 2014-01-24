@@ -32,6 +32,7 @@ public interface CourseDAO {
 	public ArrayList<Course> getCoursesFromDegreeCourse(Long idDegreeCourse);
 	public Course getCourse(Long idCourse);
 	public Course getCourseAll(Long idCourse);
+	public Course getCourseDetailforManager(Long idCourse);
 	public Course removeCourse(Long idCourse);
 
 	/**

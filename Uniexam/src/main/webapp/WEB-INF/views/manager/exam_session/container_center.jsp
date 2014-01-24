@@ -53,7 +53,7 @@
 					
 		%>
 		<tr>
-				<td><span class="span_expandible"
+				<td><span class="span_expandible" onclick="collapseMok(this)"
 					id="collapseSessions<%= (dg.getId()) %>">+</span> <%= dg.getName()%></td>
 		</tr>
 		<tr style="display: none;"

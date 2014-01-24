@@ -156,6 +156,14 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 		return courseDAO.getCourses();
 	}
 
+
+	@Override
+	public Course getCourseDetails(Long idCourse) {
+
+		return courseDAO.getCourseDetailforManager(idCourse);
+	
+	}
+
 	
 	
 

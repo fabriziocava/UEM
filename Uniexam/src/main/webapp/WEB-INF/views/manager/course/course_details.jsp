@@ -58,15 +58,6 @@
 	<%} %>
 	</td>
 	</tr><tr>
-	<th>
-	<spring:message code="message.professor.course.attribute.groups" />
-	</th>
-	<td><%if(c.getGroups()!=null && c.getGroups().size()>0){%>
-	<a href="#" class="bottonmok"><spring:message code="message.professor.course.course_details.button_yes" /></a>
-	<%}else{ %>
-	<a href="#" class="bottonmok"><spring:message code="message.professor.course.course_details.button_no" /></a>
-	<%} %>
-	</td>
 	</tr>
 	<% %>
 	</tbody>

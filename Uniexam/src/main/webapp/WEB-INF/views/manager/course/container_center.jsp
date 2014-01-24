@@ -11,6 +11,12 @@
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 
+<script type="text/javascript">
+	$(document).ready(function () {
+		selectingFromDashBoard(document.getElementById("courseButton"));
+	});
+</script>
+
 <div class="container-center">
 
 	<fieldset>
@@ -24,7 +30,7 @@
 			%>
 			
 			<tr>
-				<td><span class="span_expandible"
+				<td><span class="span_expandible" onclick="collapseMok(this)"
 					id="collapseSessions<%= (c.getId()) %>">+</span> <%= c.getName()%></td>
 			</tr>
 			
@@ -41,6 +47,22 @@
 					
 					%>
 			
+			
+				
+				<ol id="#sorting" >
+				
+				<li class="list-item" style="border-radius: 4px; ">
+						<article>
+							<section id="<%="course" + C.getId()%>">
+								<span class="span_expandible" id="collapsedivrse<%=C.getId()%>" onclick="getDataFromAjax('course/course_details','<%=C.getId()%>','divrse<%=C.getId()%>');">+</span><%=C.getName()%>
+								<div id="divrse<%=C.getId()%>" style="display: none;"></div>
+							</section>
+						</article>
+					<br>
+					</li>
+				
+				
+				</ol>
 				<table class="tablemok">
 						<thead>
 							<tr>

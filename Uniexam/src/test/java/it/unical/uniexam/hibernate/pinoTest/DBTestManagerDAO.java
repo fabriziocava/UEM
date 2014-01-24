@@ -15,12 +15,14 @@ import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
 import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
 import it.unical.uniexam.hibernate.dao.ManagerDao;
+import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.DegreeCourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.DepartmentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ExamSessionDAOimpl;
 import it.unical.uniexam.hibernate.dao.impl.ManagerDAOImpl;
+import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
 import it.unical.uniexam.hibernate.dao.impl.StudentDAOImpl;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
@@ -40,6 +42,8 @@ public class DBTestManagerDAO {
      private static DegreeCourseDAO degreeCourseDAO = new DegreeCourseDAOImpl();
      private static ExamSessionDAO examsessionDAO=new ExamSessionDAOimpl();
      private static StudentDAO studentDAO = new StudentDAOImpl();
+ 	private static ProfessorDAO professorDAO=new ProfessorDAOImp();
+
      
      @BeforeClass
      public static void prepareDB() throws MalformedURLException, InterruptedException {
@@ -72,6 +76,14 @@ public class DBTestManagerDAO {
              Long idcourse3=courseDAO.addCourse(c3);
 
              
+     		 HashSet<Email> emails3 = new HashSet<Email>();
+     		 emails3.add(new Email(Email.TYPE_UFFICIAL, "cali@gmail.com"));
+
+             Long idprofessor=professorDAO.addProfessor("Ciccio", "Calimeri", new URL("http:\\www.cali.com"),  
+     				"mero", new Address("Cs", "Italia", "87036", "Asia"),emails3,new HashSet<PhoneNumber>(), null);
+             
+             courseDAO.setHolderProfessor(idcourse, idprofessor);
+             courseDAO.setHolderProfessor(idcourse2, idprofessor);
              
              HashSet<Email> emails = new HashSet<Email>();
              emails.add(new Email(Email.TYPE_UFFICIAL, "manager@unical.it"));

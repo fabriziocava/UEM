@@ -198,6 +198,25 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
+	public Course getCourseDetailforManager(Long idCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Course res=null;
+		try{
+			Course c1=(Course) session.get(Course.class, idCourse);
+			Hibernate.initialize(c1);
+			Hibernate.initialize(c1.getCommissionProfessors());
+			Hibernate.initialize(c1.getRequestedCourses());
+			Hibernate.initialize(c1.getDegreeCourse());
+			res=c1;
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
 	public Course removeCourse(Long idCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
@@ -687,6 +706,9 @@ public class CourseDAOImpl implements CourseDAO{
 		}
 		return res;
 	}
+
+
+	
 	
 }
 
