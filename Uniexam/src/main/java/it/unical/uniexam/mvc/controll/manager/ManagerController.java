@@ -141,6 +141,9 @@ public class ManagerController {
 		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
 		model.addAttribute("courses", courses);
 
+		ArrayList<Course> c=managerService.getCourses();
+		model.addAttribute("c", c);
+		
 		return ManagerService.MANAGER_COURSELIST;
 	}
 	

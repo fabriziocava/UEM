@@ -42,4 +42,6 @@ public interface ManagerService extends UserService {
 	
 	public Boolean changeExamSessionField(Long idexamsession, String variable,String value, String clazz);
 
+	public ArrayList<Course> getCourses();
+	
 }

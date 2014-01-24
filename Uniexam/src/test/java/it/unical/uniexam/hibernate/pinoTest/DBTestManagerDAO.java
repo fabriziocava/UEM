@@ -22,6 +22,7 @@ import it.unical.uniexam.hibernate.dao.impl.DepartmentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ExamSessionDAOimpl;
 import it.unical.uniexam.hibernate.dao.impl.ManagerDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.StudentDAOImpl;
+import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
@@ -62,7 +63,15 @@ public class DBTestManagerDAO {
              ExamSession examsession4=new ExamSession("Sessione prova", new Date(),new Date() , dg2);
              Long idexamsession4=examsessionDAO.addExamSession(examsession4);
 
+           
+             Course c=new Course("A", "Data mining", null, 5, null, null, null, dg);
+             Long idcourse=courseDAO.addCourse(c);
+             Course c2=new Course("A", "Data warehouse", null, 5, null, null, null, dg);
+             Long idcourse2=courseDAO.addCourse(c2);
+             Course c3=new Course("B", "Chimica", null, 5, null, null, null, dg2);
+             Long idcourse3=courseDAO.addCourse(c3);
 
+             
              
              HashSet<Email> emails = new HashSet<Email>();
              emails.add(new Email(Email.TYPE_UFFICIAL, "manager@unical.it"));

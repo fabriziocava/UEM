@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.uniexam.MokException;
+import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
 import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
 import it.unical.uniexam.hibernate.dao.ManagerDao;
@@ -40,6 +41,9 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 	
 	@Autowired
 	ExamSessionDAO examsessionDAO;
+	
+	@Autowired
+	CourseDAO courseDAO;
 	
 	@Override
 	public Manager getManager(Long idUser) {
@@ -144,6 +148,12 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 	public Set<ExamSession> getExamSessionfromDegreeCourse(
 			DegreeCourse degreecourse) {
 		return examsessionDAO.getExamsessionfromDegreeCourse(degreecourse);
+	}
+
+
+	@Override
+	public ArrayList<Course> getCourses() {
+		return courseDAO.getCourses();
 	}
 
 	
