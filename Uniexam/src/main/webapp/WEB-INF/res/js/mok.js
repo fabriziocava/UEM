@@ -67,6 +67,11 @@ function checkBeforeChangeEditable(item,path,id,variable,clazz) {
 	if (newString == oldString || newString == "") {
 		return;
 	}
+	if(newString.length>254){
+		var differenza=newString.length-254;
+		alert("Il testo non può superare i 254 caratteri!\n devi eliminare almeno "+differenza);
+		return;
+	}
 	changeEditable(path,id,variable,newString,clazz);
 //	changeNote(item, idCourse);
 }

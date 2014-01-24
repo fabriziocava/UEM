@@ -235,8 +235,15 @@ public class AppealDAOImpl implements AppealDAO {
 		try{
 			transaction=session.beginTransaction();
 			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
+			
 			Professor p=a.getCreatorProfessor();
 			p.getAppeals().remove(a);
+			
+			for(AppealStudent app:a.getAppeal_student()){
+				app.getStudent().getAppeal_student().remove(app);
+				session.delete(app);
+			}
+
 			session.delete(a);
 			res=a;
 

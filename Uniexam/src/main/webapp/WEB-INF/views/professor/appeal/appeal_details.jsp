@@ -50,7 +50,7 @@ function sendDeleteAppeal(id){
 </script>
 <table>
 
-<tr>
+<tr title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>">
 <th><spring:message code='message.professor.appeal.add_appeal.name'/></th><td>
 <div 
 contenteditable="true" 
@@ -59,7 +59,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 <%=appeal.getName() %></div></td>
 </tr>
 
-<tr>
+<tr title="<spring:message code='message.professor.appeal.add_appeal.description.description'/>">
 <th><spring:message code='message.professor.appeal.add_appeal.description'/></th>
 <td><div 
 contenteditable="true" 
@@ -68,13 +68,14 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 <%=appeal.getDescription() %></div></td>
 </tr>
 
-<tr>
+<tr title="<spring:message code='message.professor.appeal.add_appeal.location.description'/>">
 <th><spring:message code='message.professor.appeal.add_appeal.location'/></th>
 <td><div 
 contenteditable="true" 
 onfocus="storeOld(this)" 
 onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()%>','location','String')">
-<%=appeal.getLocation() %></div></td>
+<%=appeal.getLocation() %></div>
+</td>
 </tr>
 <%if(appeal.getCourse()!=null){ %>
 <tr>
@@ -82,7 +83,8 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 <td><%=appeal.getCourse().getName() %></td>
 </tr>
 <%} %>
-<tr>
+
+<tr title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>">
 <th><spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed'/></th>
 <td><div 
 contenteditable="true" 
@@ -91,7 +93,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 <%=appeal.getMaxNumberOfInscribed() %></div></td>
 </tr>
 
-<tr>
+<tr title="<spring:message code='message.professor.appeal.add_appeal.openDate.description'/>">
 <th><spring:message code='message.professor.appeal.add_appeal.openDate'/></th>
 <td><div 
 contenteditable="true" 
@@ -100,7 +102,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 <%=appeal.getOpenDate() %></div></td>
 </tr>
 
-<tr>
+<tr title="<spring:message code='message.professor.appeal.add_appeal.closeDate.description'/>">
 <th><spring:message code='message.professor.appeal.add_appeal.closeDate'/></th>
 <td><div 
 contenteditable="true" 
@@ -109,7 +111,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 <%=appeal.getCloseDate() %></div></td>
 </tr>
 
-<tr>
+<tr title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>">
 <th><spring:message code='message.professor.appeal.add_appeal.examDate'/></th>
 <td><div 
 contenteditable="true" 

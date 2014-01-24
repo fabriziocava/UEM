@@ -16,10 +16,10 @@
 	});
 </script>
 <div id="dialog_content">
-
+<%-- title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>" --%>
 <%Appeal appeal=(Appeal)request.getAttribute("appeal"); %>
 <table class="tablemok">
-<tr><td title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>">
+<tr><td>
 <div id="name_id_realy">
 <span class="span_expandible" id="collapsedivappealdetails" onclick="collapseMok(this); getDataFromAjax('appeal/appeal_details','<%=appeal.getId()%>','divappealdetails');">+</span>
 <%=appeal.getName() %>
@@ -32,7 +32,9 @@
 <tr>
 <th>Studenti iscritti a questo appello</th>
 <td><%=appeal.getAppeal_student().size() %></td>
-<td><a class="bottonmok" href="${pageContext.request.contextPath}/professor/appeal/list_student?appeal=<%=appeal.getId() %>" >vedi lista</a></td>
+<td>
+<%-- <a class="bottonmok" href="${pageContext.request.contextPath}/professor/appeal/list_student?appeal=<%=appeal.getId() %>" >vedi lista</a> --%>
+</td>
 </tr>
 </table>
 

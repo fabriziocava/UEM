@@ -93,7 +93,7 @@
 						</tbody>
 					</table> <%
  	} else {
- %> Non ci sono appelli su questo corso <%
+ %> <spring:message code="message.professor.course.container.center.nocourse" /> <%
  	}
  %>
 				</td>
@@ -102,8 +102,7 @@
 					}
 					} else {
 				%>
-				<spring:message
-					code="message.professor.course.container.center.nocourse" />
+				<spring:message code="message.professor.course.container.center.nocourse" />
 				<%
 					}
 				%>
@@ -167,12 +166,11 @@
 						<%
 							} else {
 						%>
-					</div></td>
-				<spring:message
-					code="message.professor.course.container.center.nocourse" />
+				<spring:message code="message.professor.course.container.center.nocourse" />
 				<%
 					}
 				%>
+					</div></td>
 			</tr>
 		</table>
 	</fieldset>
