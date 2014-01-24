@@ -76,13 +76,24 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	}
 
 	@Override
-	public void subscriptionToAppeal(Appeal appeal, Student student) {
-		appealStudentDAO.subscriptionToAppel(appeal, student);
+	public Boolean inscriptionToAppeal(Long idAppeal, Long idStudent) {
+		Long id = appealStudentDAO.addAppealStudent(null, idAppeal, idStudent, null, null);
+		if(id!=null)
+			return true;
+		return false;
 	}
 
 	@Override
 	public ArrayList<AppealStudent> getAppealStudent(Long idStudent) {
 		return appealStudentDAO.getAppealStudent(idStudent);
+	}
+
+	@Override
+	public Boolean removeInscriptionToAppeal(Long idAppealStudent) {
+		AppealStudent appealStudent = appealStudentDAO.removeAppealStudent(idAppealStudent);
+		if(appealStudent!=null)
+			return true;
+		return false;
 	}
 	
 }

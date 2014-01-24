@@ -78,6 +78,8 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			app.getAppeal_student().add(appealStudent);
 			stud.getAppeal_student().add(appealStudent);
 			
+			app.setCurrNumberOfInscribed(app.getCurrNumberOfInscribed()+1);
+			
 			id=(Long)session.save(appealStudent);	
 			
 			transaction.commit();
@@ -89,23 +91,6 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			session.close();
 		}
 		return id;
-	}
-
-	@Override
-	public void subscriptionToAppel(Appeal appeal, Student student) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		try{
-			transaction=session.beginTransaction();
-			AppealStudent as = new AppealStudent(appeal, student, null, null, null);
-			session.save(as);
-			transaction.commit();
-		}catch(Exception e){
-			new MokException(e);
-			transaction.rollback();
-		}finally{
-			session.close();
-		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -123,5 +108,34 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			session.close();
 		}
 		return res;
+	}
+
+	@Override
+	public AppealStudent removeAppealStudent(Long idAppealStudent) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		AppealStudent appealStudent = null;
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			appealStudent = (AppealStudent) session.get(AppealStudent.class, idAppealStudent);
+			Student student = (Student) session.get(Student.class, appealStudent.getStudent().getId());
+			Appeal appeal = (Appeal) session.get(Appeal.class, appealStudent.getAppeal().getId());
+			student.getAppeal_student().remove(appealStudent);
+			appeal.getAppeal_student().remove(appealStudent);
+			
+			appeal.setCurrNumberOfInscribed(appeal.getCurrNumberOfInscribed()-1);
+			if(appeal.getCurrNumberOfInscribed()<0)
+				appeal.setCurrNumberOfInscribed(0);
+			
+			session.delete(appealStudent);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+			appealStudent = null;
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return appealStudent;
 	}
 }

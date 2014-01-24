@@ -51,7 +51,7 @@ public class AjaxControllerStudentAppeal {
 		return new ModelAndView("student/dialog/view_appeal", "model", model);
 	}
 	
-	@RequestMapping("/appeal/inscribeToAppeal")
+	@RequestMapping("/appeal/inscriptionToAppeal")
 	public String inscribeToAppeal(HttpServletRequest request, Model model, HttpServletResponse response) {
 		Student s = null;
 		String redirect = null;
@@ -62,12 +62,9 @@ public class AjaxControllerStudentAppeal {
 		s = slist.get(0);
 		
 		model.addAttribute("I",s);
-		
-		Appeal a = (Appeal) request.getAttribute("appeal");
-		//studentService.subscriptionToAppeal(a, s);
-		
-		Boolean res = true;
-		
+
+		Long idAppeal = Long.valueOf(request.getParameter("id"));
+		Boolean res = studentService.inscriptionToAppeal(idAppeal, s.getId());
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();
@@ -84,6 +81,35 @@ public class AjaxControllerStudentAppeal {
 		return null;
 	}
 	
+	@RequestMapping("/appeal/removeInscription")
+	public String removeInscription(HttpServletRequest request, Model model, HttpServletResponse response) {
+		Student s = null;
+		String redirect = null;
+		ArrayList<Student> slist = new ArrayList<Student>();
+		redirect = setStudentOrRedirect(request, model, slist);
+		if(redirect!=null)
+			return redirect;
+		s = slist.get(0);
+		
+		model.addAttribute("I",s);
+
+		Long idAppealStudent = Long.valueOf(request.getParameter("id"));
+		Boolean res = studentService.removeInscriptionToAppeal(idAppealStudent);
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res)
+				outputStream.println("ok");
+			else
+				outputStream.println("no");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
+		
+		return null;
+	}
 	
 	String setStudentOrRedirect(HttpServletRequest request,Model model, ArrayList<Student> slist) {
 		User user=studentService.getSession(request.getSession().getId());

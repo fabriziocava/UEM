@@ -11,7 +11,6 @@ public interface AppealStudentDAO {
 	Long addAppealStudent(AppealStudent appealStudent);
 	Long addAppealStudent(AppealStudent.STATE state,Long idAppeal,Long idStudent,
 			String note,Double vote);
-	void subscriptionToAppel(Appeal appeal, Student student);
 	ArrayList<AppealStudent> getAppealStudent(Long idStudent);
-	
+	AppealStudent removeAppealStudent(Long idAppealStudent);
 }

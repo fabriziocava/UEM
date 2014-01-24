@@ -17,15 +17,15 @@
 		initCollapsable();
 	});
 	
-function inscribe(id) {
-	$("<div>Vuoi iscriverti all'esame?</div>").attr('id',"divInscribe").appendTo('body');
-	$("#divInscribe").attr("title",'Inscribe?');
-	$("#divInscribe").dialog({
+function inscription(id) {
+	$("<div>Vuoi iscriverti all'esame?</div>").attr('id',"divInscription").appendTo('body');
+	$("#divInscription").attr("title",'Inscription?');
+	$("#divInscription").dialog({
 	      resizable: false,
 	      modal: true,
 	      buttons: {
 	        "Confirm": function() {
-	        	var ajax=sendAJAXmessage($("#context").attr("value")+"/ajax/appeal/inscribeToAppeal","GET","appeal",id);
+	        	var ajax=sendAJAXmessage($("#context").attr("value")+"/ajax/appeal/inscriptionToAppeal","GET","id",id);
 	        	ajax.done(function(msg){
 	        		if(msg.match("no")){
 	        			alert("Errore! Iscrizione non riuscita");
@@ -35,11 +35,11 @@ function inscribe(id) {
 	        		}
 	        	});
 	         	$( this ).dialog( "close" );
-	         	$("div").remove("#divInscribe");
+	         	$("div").remove("#divInscription");
 	        },
 	        Cancel: function() {
 	          	$( this ).dialog( "close" );
-	        	$("div").remove("#divInscribe");
+	        	$("div").remove("#divInscription");
 	        }
 	      },
 	      close:function(){
@@ -47,7 +47,40 @@ function inscribe(id) {
 				$("div").remove("#divInscribe");
 			}
 	    });
-	$("#divInscribe").attr("title","");	
+	$("#divInscription").attr("title","");	
+}
+
+function removeInscription(id) {
+	$("<div>Vuoi cancellare l'iscrizione all'esame?</div>").attr('id',"divRemoveInscription").appendTo('body');
+	$("#divRemoveInscription").attr("title",'Remove inscription?');
+	$("#divRemoveInscription").dialog({
+	      resizable: false,
+	      modal: true,
+	      buttons: {
+	        "Confirm": function() {
+	        	var ajax=sendAJAXmessage($("#context").attr("value")+"/ajax/appeal/removeInscription","GET","id",id);
+	        	ajax.done(function(msg){
+	        		if(msg.match("no")){
+	        			alert("Errore! Cancellazione non riuscita");
+	        		}else{
+	        			alert("Cancellazione riuscita");
+	        			window.location=$("#context").attr("value")+"/course";
+	        		}
+	        	});
+	         	$( this ).dialog( "close" );
+	         	$("div").remove("#divRemoveInscription");
+	        },
+	        Cancel: function() {
+	          	$( this ).dialog( "close" );
+	        	$("div").remove("#divRemoveInscription");
+	        }
+	      },
+	      close:function(){
+				$( this ).dialog( "close" );
+				$("div").remove("#divRemoveInscription");
+			}
+	    });
+	$("#divRemoveInscription").attr("title","");	
 }
 </script>
 
@@ -57,6 +90,7 @@ function inscribe(id) {
 	ArrayList<Appeal> appeal = (ArrayList<Appeal>) request.getAttribute("appeal");
 	ArrayList<AppealStudent> appealStudent = (ArrayList<AppealStudent>) request.getAttribute("as");
 	boolean isInscribed = false;
+	Long idAppealStudent = null;
 	if(appeal!=null && !appeal.isEmpty()) {
 		%>
 		<table border="1">
@@ -64,26 +98,33 @@ function inscribe(id) {
 				<tr>
 	<%-- 				<th><spring:message --%>
 	<%-- 						code='message.professor.appeal.add_appeal.name' /></th> --%>
-					<th>Prova</th>
-					<th>Data Esame</th>
-					<th>Nr. iscritti</th>		
-					<th>Iscritto</th>
-					<th><th>
+					<th rowspan="2">Prova</th>
+					<th rowspan="2">Data Esame</th>
+					<th rowspan="2">Nr. iscritti</th>
+					<th>Apertura</th>		
+					<th rowspan="2">Iscritto</th>
+					<th rowspan="2"><th>
+				</tr>
+				<tr>
+					<th>Chiusura</th>
 				</tr>
 				<%
 				for(Appeal a : appeal) {
 					%>
 					<tr>
-						<td><%=a.getName()%></td>
-						<td align="center"><%=a.getExamDate()%></td>
-						<td align="center"><%=a.getCurrNumberOfInscribed()%>/<%=a.getMaxNumberOfInscribed()%></td>
+						<td rowspan="2"><%=a.getName()%></td>
+						<td rowspan="2" align="center"><%=a.getExamDate()%></td>
+						<td rowspan="2" align="center"><%=a.getCurrNumberOfInscribed()%>/<%=a.getMaxNumberOfInscribed()%></td>
+						<td align="center"><%=a.getOpenDate()%></td>
 						<%
 						if(appealStudent!=null && !appealStudent.isEmpty()) {
 							for(AppealStudent as : appealStudent) {
 								try {
 									if(a.getId()==as.getAppeal().getId()) {
-										if(as.getStudent().getId()==student.getId())
+										if(as.getStudent().getId()==student.getId()) {
 											isInscribed=true;
+											idAppealStudent = as.getId();
+										}
 									}
 								} catch (Exception e) {
 									
@@ -91,23 +132,28 @@ function inscribe(id) {
 							}					
 						}
 						if(isInscribed) {
+							isInscribed = false;
 						%>
-							<td align="center">SI</td>
-							<td rowspan="2"><div class="bottonmok color_red" onclick="">Cancella</div></td>
+							<td rowspan="2" align="center">SI</td>
+							<td rowspan="3"><div class="bottonmok color_red" onclick="removeInscription('<%=idAppealStudent%>')">Cancella</div></td>
 						<%
+							idAppealStudent = null;
 						} else {
 							%>
-							<td align="center">NO</td>
-							<td rowspan="2"><div class="bottonmok" onclick="inscribe('<%=a.getId()%>')">Iscrivi</div></td>
+							<td rowspan="2" align="center">NO</td>
+							<td rowspan="3"><div class="bottonmok" onclick="inscription('<%=a.getId()%>')">Iscrivi</div></td>
 						<%							
 						}
 						%>
 					</tr>
 					<tr>
-						<td colspan="4"><%=a.getDescription()%></td>
+						<td align="center"><%=a.getCloseDate()%></td>
 					</tr>					
 					<tr>
-						<td colspan="5"></td>
+						<td colspan="5"><%=a.getDescription()%></td>
+					</tr>
+					<tr>
+						<td colspan="6"></td>
 					</tr>
 					<%
 				}
