@@ -222,6 +222,32 @@ public class AjaxControllerAppeal {
 		return new ModelAndView("professor/dialog/list_student", "model", model);
 	}
 	
+	@RequestMapping("/dialog/appeal/add_student")
+	public ModelAndView dialog_add_student(HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+
+		String idAppea=(String)request.getParameter("id");
+//		if(idAppea!=null){
+//			Long idAppeal=Long.valueOf(idAppea);
+//			ArrayList<ArrayList<Object>> students=professorService.getListStudentFromAppealRegularAndNot(idAppeal);
+////			ArrayList<ArrayList<RequestedCourse>>requestedCourses=professorService.getListOfRequestedCourseFromListStudentAndAppeal(idAppeal,students.get(1));
+//			Appeal appeal=professorService.getAppealGround(idAppeal);
+//			model.addAttribute("appeal", appeal);
+//			model.addAttribute("appealstudentsRegAndNot", students);
+////			model.addAttribute("requestedCourses", requestedCourses);
+//		}
+		//devono viaggiare insieme
+//		requestedCourses  			  ArrayList<ArrayList<RequestedCourse>>requestedCourses
+//		appealstudentsNoRegular		  ArrayList<AppealStudent> appealStudentsNoRegular
+		model.addAttribute("idAppeal", idAppea);
+		return new ModelAndView("professor/dialog/appeal/add_student", "model", model);
+	}
 	
 	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
 		User user=professorService.getSession(request.getSession().getId());

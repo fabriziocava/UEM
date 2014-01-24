@@ -114,8 +114,6 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		try{
 			transaction=session.beginTransaction();
 			
-			
-			
 			if(idAppeal==null)
 				return null;
 			if(idStudent==null)

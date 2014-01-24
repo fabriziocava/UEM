@@ -172,6 +172,10 @@
 					} else{%>
 					No irregular student
 					<%} %>
+					<tr><td><div class="line-top"></div></td></tr>
+					<tr><td><div class="bottonmok" onclick="">
+					Aggiungi studente					
+					</div></td></tr>
 		</table>
 
 	</fieldset>

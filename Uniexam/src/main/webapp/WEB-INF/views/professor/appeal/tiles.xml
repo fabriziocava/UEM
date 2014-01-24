@@ -8,9 +8,4 @@
 		<put-attribute name="container-center" value="/WEB-INF/views/professor/appeal/container_center.jsp" />
 	</definition>
 	
-<!-- 	<definition name="professor/appeal/list_student" extends="professor.base"> -->
-<!-- 		<put-attribute name="container-center" value="/WEB-INF/views/professor/appeal/list_student.jsp" /> -->
-<!-- 	</definition> -->
-	
-	
 </tiles-definitions>

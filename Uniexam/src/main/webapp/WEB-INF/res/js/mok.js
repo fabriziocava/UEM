@@ -93,6 +93,69 @@ function changeEditable(path,id,variable,newString,clazz){
 	return ing;
 }
 
+function openAddStudentToAppeal(idAppeal){
+	names=new Array();
+	names.push("id");
+	values=new Array();
+	values.push(idAppeal);
+	var title="Aggiungi Studente";
+	var path="/dialog/appeal/add_student";
+	var type="GET";
+	var arrayObj=openDialogWithAjaxContent(path, type, names, values, title);
+	arrayObj[0].done(function(){
+		arrayObj[1].dialog({
+			buttons:{
+				"Aggiungi":function(){
+					alert("Aggiunto");
+				}
+			}
+				
+		});
+	});
+}
+
+var dialogCount=0;
+//ritorna l'oggetto ajax e
+//ritorna l'id del div dialog in modo da poterlo utilizzare per
+//aggiungere e personalizzare il diagol
+function openDialogWithAjaxContent(path,type,names,values,title){
+	var conte=$("#context").attr("value");
+	var dati=new FormData();
+	for(var i=0; i<names.length;i++){
+		dati.append(names[i],values[i]);
+	}
+	var ajax=sendAJAXmessage(conte+path, type, dati);
+	ajax.done(function(data){
+		while($("#dialog"+dialogCount).html()!=undefined)
+			dialogCount++;
+		if($("#dialog"+dialogCount).html()==undefined)
+			$("<div></div>").attr('id','dialog'+dialogCount).appendTo('body');
+		$("#dialog"+dialogCount).html(data);
+		$("#dialog"+dialogCount).attr("title",title);
+		$("#dialog"+dialogCount).dialog({
+			autoOpen : true,
+			modal: true,
+			width:"auto",
+			show : {
+				effect : "blind",
+				duration : 500
+			},
+			hide : {
+				effect : "explode",
+				duration : 500
+			},
+			close:function(){
+				$("#dialog"+dialogCount).dialog( "close" );
+				$("div").remove("#dialog"+dialogCount);
+			}
+		});
+		$("#dialog").attr("title","");
+	});
+	var arrObj=new Array();
+	arrObj.push(ajax);
+	arrObj.push("#dialog"+dialogCount);
+	return arrObj;
+}
 //apre un popUp con il contenuto quello che si vuole nel case
 //quindi crea il nuovo div e e gli mette dentro i data provenienti dal COntroller
 //d'altra parte nei data deve esserci la gestione del dialog
@@ -588,6 +651,20 @@ function sendAJAXmessage(url,type,name,value){
 	});
 	return ing;
 }
+
+function sendAJAXmessage(url,type,data){
+	var ing=$.ajax({
+		type: type,
+		url: url,
+		data:data
+	});
+	$(".processing").css("display","block");
+	ing.done(function(msg){
+		$(".processing").css("display","none");
+	});
+	return ing;
+}
+
 
 function changeNote(item,idCourse){
 	var idd=item.id;

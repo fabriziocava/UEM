@@ -34,5 +34,10 @@
 		<put-attribute name="dialog_content"
 			value="/WEB-INF/views/professor/share_dialog/list_student.jsp" />
 	</definition>
+	
+	<definition name="professor/dialog/appeal/add_student" extends="professor.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/professor/share_dialog/appeal/add_student.jsp" />
+	</definition>
 
 </tiles-definitions>
