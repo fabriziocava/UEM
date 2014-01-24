@@ -91,21 +91,24 @@ function removeInscription(id) {
 	ArrayList<AppealStudent> appealStudent = (ArrayList<AppealStudent>) request.getAttribute("as");
 	boolean isInscribed = false;
 	Long idAppealStudent = null;
+	Double vote = null;
 	if(appeal!=null && !appeal.isEmpty()) {
 		%>
+		<label><%=appeal.get(0).getCourse().getName()%></label>
+		<br><br>
 		<table border="1">
 			<thead>
 				<tr>
-	<%-- 				<th><spring:message --%>
-	<%-- 						code='message.professor.appeal.add_appeal.name' /></th> --%>
 					<th rowspan="2">Prova</th>
-					<th rowspan="2">Data Esame</th>
+					<th>Data Esame</th>
 					<th rowspan="2">Nr. iscritti</th>
 					<th>Apertura</th>		
 					<th rowspan="2">Iscritto</th>
-					<th rowspan="2"><th>
+					<th rowspan="2">Voto</th>
+ 					<th rowspan="2"><th>
 				</tr>
 				<tr>
+					<th>Luogo</th>
 					<th>Chiusura</th>
 				</tr>
 				<%
@@ -113,7 +116,7 @@ function removeInscription(id) {
 					%>
 					<tr>
 						<td rowspan="2"><%=a.getName()%></td>
-						<td rowspan="2" align="center"><%=a.getExamDate()%></td>
+						<td align="center"><%=a.getExamDate()%></td>
 						<td rowspan="2" align="center"><%=a.getCurrNumberOfInscribed()%>/<%=a.getMaxNumberOfInscribed()%></td>
 						<td align="center"><%=a.getOpenDate()%></td>
 						<%
@@ -124,6 +127,7 @@ function removeInscription(id) {
 										if(as.getStudent().getId()==student.getId()) {
 											isInscribed=true;
 											idAppealStudent = as.getId();
+											vote = as.getTemporany_vote();
 										}
 									}
 								} catch (Exception e) {
@@ -135,25 +139,29 @@ function removeInscription(id) {
 							isInscribed = false;
 						%>
 							<td rowspan="2" align="center">SI</td>
+							<td rowspan="2" align="center"><%=vote!=null ? vote : "-"%></td>
 							<td rowspan="3"><div class="bottonmok color_red" onclick="removeInscription('<%=idAppealStudent%>')">Cancella</div></td>
 						<%
 							idAppealStudent = null;
+							vote = null;
 						} else {
 							%>
 							<td rowspan="2" align="center">NO</td>
+							<td rowspan="2" align="center">-</td>
 							<td rowspan="3"><div class="bottonmok" onclick="inscription('<%=a.getId()%>')">Iscrivi</div></td>
 						<%							
 						}
 						%>
 					</tr>
 					<tr>
+						<td><%=a.getLocation()%></td>
 						<td align="center"><%=a.getCloseDate()%></td>
 					</tr>					
 					<tr>
-						<td colspan="5"><%=a.getDescription()%></td>
+						<td colspan="6"><%=a.getDescription()%></td>
 					</tr>
 					<tr>
-						<td colspan="6"></td>
+						<td colspan="7"></td>
 					</tr>
 					<%
 				}
