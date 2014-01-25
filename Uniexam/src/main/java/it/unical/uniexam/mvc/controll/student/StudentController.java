@@ -1,8 +1,10 @@
 package it.unical.uniexam.mvc.controll.student;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.StudentService;
@@ -54,6 +56,24 @@ public class StudentController {
 		model.addAttribute("courses", courses);
 		
 		return StudentService.STUDENT_COURSE;
+	}
+	
+	@RequestMapping(value=StudentService.STUDENT_GROUP, method=RequestMethod.GET)
+	public String group(HttpServletRequest request, Model model) {
+		Student s = null;
+		String redirect = null;
+		ArrayList<Student> slist = new ArrayList<Student>();
+		redirect = setStudentOrRedirect(request, model, slist);
+		if(redirect!=null)
+			return redirect;
+		s = slist.get(0);
+		
+		model.addAttribute("I",s);
+		
+		Set<Group> groups = studentService.getGroups();
+		model.addAttribute("groups", groups);
+		
+		return StudentService.STUDENT_GROUP;
 	}
 	
 	

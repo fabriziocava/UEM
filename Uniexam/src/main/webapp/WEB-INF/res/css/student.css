@@ -326,7 +326,7 @@ ul.dashboard {
 
 .container {
 	position: relative;
-	/* 	width: 70%; */
+	width: 70%;
 	height: auto;
 	margin: 90px 15% 10px 15%;
 	box-shadow: 0px 0px 20px 20px #d3d3d3;
@@ -338,7 +338,7 @@ ul.dashboard {
 	background-color: #d3d3d3;
 	position: relative;
 	width: 100%;
-	/* 	height: auto; */
+	height: auto;
 	/* 	float: left; */
 	margin: 2px;
 	padding-bottom: 10px;

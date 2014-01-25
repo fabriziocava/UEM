@@ -14,7 +14,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		dialogViewAppeal();
-		initCollapsable();
+	//	initCollapsable();
 	});
 	
 function inscription(id) {

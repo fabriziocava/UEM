@@ -24,11 +24,11 @@
 					<li class="list-item" style="border-radius: 4px; ">
 						<article>
 							<section id="<%="course" + c.getId()%>">
-								<span class="span_expandible" id="collapsedivrse<%=c.getId()%>" onclick="getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');">+</span><%=c.getName()%>
+								<span class="span_expandible" id="collapsedivrse<%=c.getId()%>" onclick="collapseMok(this); getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');">+</span><%=c.getName()%>
 								<div id="divrse<%=c.getId()%>" style="display: none;"></div>
 							</section>
 						</article>
-					<br>
+						<br>
 					</li>
 		<%			
 				}
