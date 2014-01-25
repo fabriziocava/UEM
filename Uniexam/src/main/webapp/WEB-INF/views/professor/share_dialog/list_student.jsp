@@ -118,8 +118,8 @@
 				for (Object appObj : appealStudents) {
 					AppealStudent app=(AppealStudent)appObj;
 			%>
-			<tr style="text-align: center;">
-				<td></td>
+			<tr class="line-top" style="text-align: center;">
+				<td style="display: inline-block;" ></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%> <%=app.getStudent().getSurname()%></td>
 				<td style="padding: 0px 20px 0px 20px;" 
@@ -160,7 +160,7 @@
 						}
 							
 			%>
-			<tr style="text-align: center;">
+			<tr class="line-top" style="text-align: center;">
 				<td><div class="square-small <%=policy%>">
 						<div>
 						<div style="display: none;" class="titlemok" id="titleN<%=app.getStudent().getSerialNumber()%>">

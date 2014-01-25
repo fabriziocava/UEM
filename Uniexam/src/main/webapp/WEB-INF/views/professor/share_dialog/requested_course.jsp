@@ -142,7 +142,7 @@ function deleteRequestedCourse(id,idCourse){
 		<div id="requestedCourse<%=req.getCourse().getId()%>"><%=req.getCourse().getName()%></div>
 		<ul class="links-user">
 		<li><spring:message code='message.general.options' /> :</li> 
-		<li class="bottonmok" id="deleteRequest<%=req.getCourse().getId()%>$<%=c.getId()%>"><spring:message code='message.general.remove' /></li>
+		<li class="bottonmok" onclick="deleteRequestedCourse('<%=req.getCourse().getId()%>','<%=c.getId()%>')" ><spring:message code='message.general.remove' /></li>
 		<li class="bottonmok" onclick="modifyRequestedCourse('<%=req.getCourse().getId()%>','<%=req.getPolicyOfRequested()%>','<%=c.getId()%>')" ><spring:message code='message.general.modify' /></li>
 		</ul>
 <%-- 		id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequested()%>$<%=c.getId()%>" --%>

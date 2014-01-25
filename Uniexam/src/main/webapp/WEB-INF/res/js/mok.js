@@ -4,6 +4,18 @@ $(document).ready(function() {
 	alingDashBoard();
 });
 
+function colorBi(){
+	var c=0;
+	$('td').each(function(){
+		if (c==0) {
+			c++;
+			$(this).css('background-color','bisque');
+		}else{ 
+			c--;
+		}
+	});
+}
+
 $(document).ready(function() {
 	initDraggable();
 //	initCollapsable();
@@ -395,22 +407,22 @@ function dialogModifyRequestedCourse(){
 //		$("#divRequestCourseChange").attr("title","");
 //		$("#setRequestCourseChange").css('height',"auto");
 //	});
-	$("li[id^='deleteRequest']").bind("click", function(event) {
-		var ids=this.id;
-		ids=ids.replace("deleteRequest","");
-		var id=ids.split("$")[0];
-		var idCourse=ids.split("$")[1];
-		try{
-			if(commands==null);
-		}catch(ERR){
-			commands=new Commands("sendRequestedCourse",idCourse);
-		}
-		commands.add(id, "remove", "no");
-		$(".alertSomeModifyRequestCourse").each(function(){
-			$(this).slideDown(); 
-		});
-		dirtingTheElement();
-	});
+//	$("li[id^='deleteRequest']").bind("click", function(event) {
+//		var ids=this.id;
+//		ids=ids.replace("deleteRequest","");
+//		var id=ids.split("$")[0];
+//		var idCourse=ids.split("$")[1];
+//		try{
+//			if(commands==null);
+//		}catch(ERR){
+//			commands=new Commands("sendRequestedCourse",idCourse);
+//		}
+//		commands.add(id, "remove", "no");
+//		$(".alertSomeModifyRequestCourse").each(function(){
+//			$(this).slideDown(); 
+//		});
+//		dirtingTheElement();
+//	});
 }
 
 
