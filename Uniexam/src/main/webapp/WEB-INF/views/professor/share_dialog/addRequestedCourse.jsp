@@ -37,7 +37,14 @@
 					//something else
 					if($("input[name^='policyOfRequested']:radio:checked").val()!=undefined){
 //							alert("vado");
-						submitAddRequestedCourse();
+						var conte=$("#context").attr("value");
+//	$("#addrequestedCourse").submit();
+						var ajax=$.post(conte+'/ajax/course/addRequestedCourseAction', $('#addrequestedCourse').serialize());
+						ajax.done(function(data){
+						if($("#dialog").html()==undefined)
+								$("<div></div>").attr('id','dialog').appendTo('body');
+						$("#dialog").html(data);
+						});
 						$( this ).dialog( "close" );
 						$("div").remove("#dialogAddRequested");
 					}else{

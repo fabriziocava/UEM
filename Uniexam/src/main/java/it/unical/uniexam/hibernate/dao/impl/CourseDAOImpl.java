@@ -545,6 +545,7 @@ public class CourseDAOImpl implements CourseDAO{
 				transaction.commit();
 			}
 		}catch(Exception e){
+			System.err.println("idCourse = "+idCourse+" idCorR = "+idCourseRequested);
 			transaction.rollback();
 			new MokException(e);
 		}finally{

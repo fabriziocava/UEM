@@ -1,5 +1,7 @@
 package it.unical.uniexam.hibernate.dao;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Course;
@@ -18,6 +20,12 @@ public interface StudentDAO {
 	public Student getStudent(Long serialNumber);
 	
 	public Set<Course> getCarrier(Long serialNumber);
-	public Set<Group> getGroups(Long serialNumber);	
+	public Set<Group> getGroups(Long serialNumber);
+	
+	//MOk
+	public ArrayList<Student> getStudentsMatch(String idStud);
+	public Long addStundent(String name, String surname, String fiscalCode,
+			String password, Address address, HashSet<Email> emails,
+			HashSet<PhoneNumber> numbers, Long l, String serialNumber);	
 }
 

@@ -19,6 +19,14 @@ $(document).ready(function() {
 	});
 });
 
+function ajaxAutoComplete(){
+	var conte=$("#context").attr("value");
+	var ajax=sendAJAXmessage(conte+"/ajax/appeal/auto_complete_student", "GET", "id", $("#idComplete").val());
+	ajax.done(function(data){
+		$("#complete").html(data);
+	});
+}
+
 //titleidOrClass è o l'id o la classe dove viene assegnato il mouse enter
 //titledivid è l'ID del div che si apparirà dal mouse 
 function titlemok(titleidOrClass,titledivid){
@@ -31,7 +39,7 @@ function titlemok(titleidOrClass,titledivid){
 			$("#"+titledivid).fadeIn();
 			$("#"+titledivid).attr("display","block");
 		}, delay);
-	    
+
 	});
 	$('#'+titleidOrClass).bind('mouseenter',function(event) {
 		timer = setTimeout(function() {
@@ -40,21 +48,21 @@ function titlemok(titleidOrClass,titledivid){
 			$("#"+titledivid).fadeIn();
 			$("#"+titledivid).attr("display","block");
 		}, delay);
-	    
+
 	});
 	$('#'+titleidOrClass).bind('mouseleave',function(event) {
 		timer = setTimeout(function() {
 			$("#"+titledivid).fadeOut();
 			clearTimeout(timer);
 		}, delay);
-	    
+
 	});
 	$('.'+titleidOrClass).bind('mouseleave',function(event) {
 		timer = setTimeout(function() {
 			$("#"+titledivid).fadeOut();
 			clearTimeout(timer);
 		}, delay);
-	    
+
 	});
 }
 
@@ -73,7 +81,6 @@ function checkBeforeChangeEditable(item,path,id,variable,clazz) {
 		return;
 	}
 	changeEditable(path,id,variable,newString,clazz);
-//	changeNote(item, idCourse);
 }
 
 function changeEditable(path,id,variable,newString,clazz){
@@ -99,21 +106,21 @@ function openAddStudentToAppeal(idAppeal){
 	values=new Array();
 	values.push(idAppeal);
 	var title="Aggiungi Studente";
-	var path="/dialog/appeal/add_student";
-	var type="GET";
+	var path="/ajax/dialog/appeal/add_student";
+	var type="POST";
 	var arrayObj=openDialogWithAjaxContent(path, type, names, values, title);
 	arrayObj[0].done(function(){
-		arrayObj[1].dialog({
-			buttons:{
-				"Aggiungi":function(){
-					alert("Aggiunto");
-				}
-			}
-				
-		});
+		var dial=arrayObj[1];
+		var buttons={};
+		buttons.Aggiungi = function() { 
+			var chiudi=aggiungi();
+			if(chiudi)
+				dial.dialog("close");
+			};
+		dial.dialog("option", "buttons", buttons);
 	});
 }
-
+var arrObj;
 var dialogCount=0;
 //ritorna l'oggetto ajax e
 //ritorna l'id del div dialog in modo da poterlo utilizzare per
@@ -124,15 +131,17 @@ function openDialogWithAjaxContent(path,type,names,values,title){
 	for(var i=0; i<names.length;i++){
 		dati.append(names[i],values[i]);
 	}
-	var ajax=sendAJAXmessage(conte+path, type, dati);
+	var ajax=sendAJAXmessage2(conte+path, type, dati);
 	ajax.done(function(data){
 		while($("#dialog"+dialogCount).html()!=undefined)
 			dialogCount++;
 		if($("#dialog"+dialogCount).html()==undefined)
 			$("<div></div>").attr('id','dialog'+dialogCount).appendTo('body');
-		$("#dialog"+dialogCount).html(data);
-		$("#dialog"+dialogCount).attr("title",title);
-		$("#dialog"+dialogCount).dialog({
+		var dial=$("#dialog"+dialogCount);
+		dial.html(data);
+		dial.attr("title",title);
+		dial=$("#dialog"+dialogCount).dialog();
+		dial.dialog({
 			autoOpen : true,
 			modal: true,
 			width:"auto",
@@ -145,21 +154,21 @@ function openDialogWithAjaxContent(path,type,names,values,title){
 				duration : 500
 			},
 			close:function(){
-				$("#dialog"+dialogCount).dialog( "close" );
+				dial.dialog( "close" );
 				$("div").remove("#dialog"+dialogCount);
 			}
 		});
 		$("#dialog").attr("title","");
+		arrObj.push($("#dialog"+dialogCount));
 	});
-	var arrObj=new Array();
+	arrObj=new Array();
 	arrObj.push(ajax);
-	arrObj.push("#dialog"+dialogCount);
 	return arrObj;
 }
 //apre un popUp con il contenuto quello che si vuole nel case
 //quindi crea il nuovo div e e gli mette dentro i data provenienti dal COntroller
 //d'altra parte nei data deve esserci la gestione del dialog
-// importante alla chiusura di esso deve eliminare l'elemento creato qui
+//importante alla chiusura di esso deve eliminare l'elemento creato qui
 //ovvero $("div").remove("#dialog");
 function openPopUpWithAjaxContent(caseId,id){
 	if(caseId.match("requested_course")){
@@ -196,8 +205,10 @@ function openPopUpWithAjaxContent(caseId,id){
 			$("#dialog").html(data);
 		});
 	}
-	
+
 }
+
+
 
 function dialogViewListStudent(){
 	$("#dialog").attr("title","List Student");
@@ -277,7 +288,7 @@ function Commands(name,id){
 	this.id1=new Array();
 	this.command=new Array();
 	this.id2=new Array();
-	
+
 	this.add=function(id11,command2,id22){
 		for(var i=0;i<this.id1.length;i++){
 			if(this.id1[i]==id11){
@@ -312,29 +323,6 @@ function dirtingTheElement(){
 	}
 }
 
-function submitCommandRequestedCourse(){
-	var data=commands.toString();
-	var conte=$("#context").attr("value");
-	var ajax=sendAJAXmessage(conte+"/ajax/dialog/requested_course/command", "POST", "data", data);
-	ajax.done(function(data){
-		if($("#dialog").html()==undefined)
-			$("<div></div>").attr('id','dialog').appendTo('body');
-		$("#dialog").html(data);
-	});
-//	alert(data);
-}
-
-function submitAddRequestedCourse(){
-	var conte=$("#context").attr("value");
-//	$("#addrequestedCourse").submit();
-	var ajax=$.post(conte+'/addRequestedCourseAction', $('#addrequestedCourse').serialize());
-	ajax.done(function(data){
-		if($("#dialog").html()==undefined)
-			$("<div></div>").attr('id','dialog').appendTo('body');
-		$("#dialog").html(data);
-	});
-}
-
 function dialogModifyRequestedCourse(){
 	$("#dialog").attr("title","Requested Course");
 	$("#dialog").dialog({
@@ -356,60 +344,57 @@ function dialogModifyRequestedCourse(){
 		}
 	});
 	$("#dialog").attr("title","");
-	
-	$("li[id^='modifyRequest']").bind("click", function(event) {
-		var ids=this.id;
-		ids=ids.replace("modifyRequest","");
-		var id=ids.split("$")[0];
-		var degree=ids.split("$")[1];
-		var idCourse=ids.split("$")[2];
-//		alert("id is: "+id+" and degree is: "+degree);
-//		if($("#sendRequestCourseChange").html()==undefined){
-//			$("<input></input>").attr('id','sendRequestCourseChange').attr('name','setCommand').appendTo('body');
-			try{
-			if(commands==null);
+
+//	$("li[id^='modifyRequest']").bind("click", function(event) {
+//		var ids=this.id;
+//		ids=ids.replace("modifyRequest","");
+//		var id=ids.split("$")[0];
+//		var degree=ids.split("$")[1];
+//		var idCourse=ids.split("$")[2];
+//		try{
+//			if(commands==undefined)
 //				commands=new Commands("sendRequestedCourse",idCourse);
-			}catch(ERR){
-				commands=new Commands("sendRequestedCourse",idCourse);
-			}
+//		}catch(ERR){
+//			commands=new Commands("sendRequestedCourse",idCourse);
 //		}
-//			creare il div che apparirà d'avanti al mouse
-		$("<div></div>")
-		.attr('id','divRequestCourseChange')
-		.appendTo('body').html($("#radio"+degree).html());
-		$("#divRequestCourseChange").attr("title",$(this).html());
-		$("#divRequestCourseChange").dialog({
-		      resizable: false,
-		      modal: true,
-		      buttons: {
-		        "Save": function() {
-		          var newVal=$("input[name='choose']:radio:checked").val();
-		          commands.add(id, "change", newVal);
-		          $(".alertSomeModifyRequestCourse").each(function(){
-		        	 $(this).slideDown(); 
-		          });
-		          dirtingTheElement();
-//		          requested_courseAddIfNotAddAlready ///strutturaaaa!!! classeEEEEE
-//		          var comm="%requested"+id+"$change"+newVal+"%";
-		          $( this ).dialog( "close" );
-		          $("div").remove("#divRequestCourseChange");
-		        },
-		        Cancel: function() {
-		          $( this ).dialog( "close" );
-		        	if($("#sendRequestCourseChange").val()==""){
-		        		$("input").remove("#sendRequestCourseChange");
-		        	}
-		        	$("div").remove("#divRequestCourseChange");
-		        }
-		      },
-		      close:function(){
-					$( this ).dialog( "close" );
-					$("div").remove("#divRequestCourseChange");
-				}
-		    });
-		$("#divRequestCourseChange").attr("title","");
-		$("#setRequestCourseChange").css('height',"auto");
-	});
+////		}
+////		creare il div che apparirà d'avanti al mouse
+//		$("<div></div>")
+//		.attr('id','divRequestCourseChange')
+//		.appendTo('body').html($("#radio"+degree).html());
+//		$("#divRequestCourseChange").attr("title",$(this).html());
+//		$("#divRequestCourseChange").dialog({
+//			resizable: false,
+//			modal: true,
+//			buttons: {
+//				"Save": function() {
+//					var newVal=$("input[name='choose']:radio:checked").val();
+//					commands.add(id, "change", newVal);
+//					$(".alertSomeModifyRequestCourse").each(function(){
+//						$(this).slideDown(); 
+//					});
+//					dirtingTheElement();
+////					requested_courseAddIfNotAddAlready ///strutturaaaa!!! classeEEEEE
+////					var comm="%requested"+id+"$change"+newVal+"%";
+//					$( this ).dialog( "close" );
+//					$("div").remove("#divRequestCourseChange");
+//				},
+//				Cancel: function() {
+//					$( this ).dialog( "close" );
+//					if($("#sendRequestCourseChange").val()==""){
+//						$("input").remove("#sendRequestCourseChange");
+//					}
+//					$("div").remove("#divRequestCourseChange");
+//				}
+//			},
+//			close:function(){
+//				$( this ).dialog( "close" );
+//				$("div").remove("#divRequestCourseChange");
+//			}
+//		});
+//		$("#divRequestCourseChange").attr("title","");
+//		$("#setRequestCourseChange").css('height',"auto");
+//	});
 	$("li[id^='deleteRequest']").bind("click", function(event) {
 		var ids=this.id;
 		ids=ids.replace("deleteRequest","");
@@ -420,41 +405,28 @@ function dialogModifyRequestedCourse(){
 		}catch(ERR){
 			commands=new Commands("sendRequestedCourse",idCourse);
 		}
-		 commands.add(id, "remove", "no");
-         $(".alertSomeModifyRequestCourse").each(function(){
-        	 $(this).slideDown(); 
-         });
-         dirtingTheElement();
-	});
-	$("div[id^='addRequested']").bind("click", function(event) {
-		var conte=$("#context").attr("value");
-		var id=this.id;
-		var idCourse=id.replace("addRequested","");
-		var ajax=sendAJAXmessage(conte+"/ajax/dialog/addRequestedCourse", "GET", "id", idCourse);
-		ajax.done(function(data){
-			if($("#dialogAddRequested").html()==undefined)
-				$("<div></div>").attr('id','dialogAddRequested').appendTo('body');
-			$("#dialogAddRequested").html(data);
+		commands.add(id, "remove", "no");
+		$(".alertSomeModifyRequestCourse").each(function(){
+			$(this).slideDown(); 
 		});
+		dirtingTheElement();
 	});
 }
 
-function dialogAddRequestedCourse(){
-	
-}
+
 
 function getDataFromAjax(pathRequ,id,idDest){
 //	var id=item.id;
 //	if(id.match(caseId)){
-		if($("#"+idDest).html()==""){
-			var conte=$("#context").attr("value");
-			var ajax=sendAJAXmessage(conte+"/ajax/"+pathRequ, "GET", "id", id);
-			ajax.done(function(data){
-				$("#"+idDest).html(data);
-			});
-		}else{
-//			$("#"+idDest).delay(10).slideToggle(500);
-		}
+	if($("#"+idDest).html()==""){
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+"/ajax/"+pathRequ, "GET", "id", id);
+		ajax.done(function(data){
+			$("#"+idDest).html(data);
+		});
+	}else{
+//		$("#"+idDest).delay(10).slideToggle(500);
+	}
 //	}
 }
 
@@ -462,67 +434,67 @@ function getDataFromAjax(pathRequ,id,idDest){
  * <span class="span_expandible" onclick="collapseMok(this); otherF();" id="collapseIDTAGTOCOLLAPSE">+</span>	
  */
 function collapseMok(item){
-		var idOld = item.id;
-		var realID;
-		var newID;
-		if(idOld.match("collapse")){
-			realID = idOld.replace("collapse", "");
-			newID="expanse";
-			$(item).html("-");
-		}else{
-			realID = idOld.replace("expanse", "");
-			newID="collapse";
-			$(item).html("+");
-		}
-		var idd = realID;
-		$("#" + idd).slideToggle(500);
-		$(item).attr("id", newID+realID);
+	var idOld = item.id;
+	var realID;
+	var newID;
+	if(idOld.match("collapse")){
+		realID = idOld.replace("collapse", "");
+		newID="expanse";
+		$(item).html("-");
+	}else{
+		realID = idOld.replace("expanse", "");
+		newID="collapse";
+		$(item).html("+");
+	}
+	var idd = realID;
+	$("#" + idd).slideToggle(500);
+	$(item).attr("id", newID+realID);
 }
 
 //function getDataFromAjax(item){
-//	var id=item.id;
-//	if(id.match("acourse")){
-//		var idCourse=id.replace("acourse","");
-//		var newId="divCourse"+idCourse;
-//		if($("#"+newId).html()==undefined){
-//			var conte=$("#context").attr("value");
-//			var ajax=sendAJAXmessage(conte+"/ajax/course/course_details", "GET", "idCourse", idCourse);
-//			ajax.done(function(data){
-////				alert(data);
-//				var newDiv="<div id='"+newId+"'></div>";
-//				if($("#"+newId).html()==undefined)
-//					$(newDiv).insertAfter($(item));
-//				$("#"+newId).html(data);
-//			});
-//		}else{
-//			$("#"+newId).slideToggle(1000);
-//		}
-//	}
+//var id=item.id;
+//if(id.match("acourse")){
+//var idCourse=id.replace("acourse","");
+//var newId="divCourse"+idCourse;
+//if($("#"+newId).html()==undefined){
+//var conte=$("#context").attr("value");
+//var ajax=sendAJAXmessage(conte+"/ajax/course/course_details", "GET", "idCourse", idCourse);
+//ajax.done(function(data){
+////alert(data);
+//var newDiv="<div id='"+newId+"'></div>";
+//if($("#"+newId).html()==undefined)
+//$(newDiv).insertAfter($(item));
+//$("#"+newId).html(data);
+//});
+//}else{
+//$("#"+newId).slideToggle(1000);
+//}
+//}
 //}
 /**
  * <span class="span_expandible" id="collapseIDTAGTOCOLLAPSE">+</span>	
  */
 //function initCollapsable(){
-//	$("span[id^='collapse'],span[id^='expanse']").each(function() {
-//		$(this).bind("click", function() {
-//			var idOld = this.id;
-////			alert(idOld+"");
-//			var realID;
-//			var newID;
-//			if(idOld.match("collapse")){
-//				realID = idOld.replace("collapse", "");
-//				newID="expanse";
-//				$(this).html("-");
-//			}else{
-//				realID = idOld.replace("expanse", "");
-//				newID="collapse";
-//				$(this).html("+");
-//			}
-//			var idd = realID;
-//			$("#" + idd).slideToggle(500);
-//			$(this).attr("id", newID+realID);
-//		});
-//	});
+//$("span[id^='collapse'],span[id^='expanse']").each(function() {
+//$(this).bind("click", function() {
+//var idOld = this.id;
+////alert(idOld+"");
+//var realID;
+//var newID;
+//if(idOld.match("collapse")){
+//realID = idOld.replace("collapse", "");
+//newID="expanse";
+//$(this).html("-");
+//}else{
+//realID = idOld.replace("expanse", "");
+//newID="collapse";
+//$(this).html("+");
+//}
+//var idd = realID;
+//$("#" + idd).slideToggle(500);
+//$(this).attr("id", newID+realID);
+//});
+//});
 //}
 
 /**
@@ -652,11 +624,13 @@ function sendAJAXmessage(url,type,name,value){
 	return ing;
 }
 
-function sendAJAXmessage(url,type,data){
+function sendAJAXmessage2(url,type,data){
 	var ing=$.ajax({
-		type: type,
 		url: url,
-		data:data
+		type: type,
+		data:data,
+		processData: false,
+		contentType: false
 	});
 	$(".processing").css("display","block");
 	ing.done(function(msg){

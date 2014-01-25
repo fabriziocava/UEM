@@ -381,34 +381,58 @@ public class AppealDAOImpl implements AppealDAO {
 		}
 		return res;
 	}
+//
+//	@Override
+//	public Appeal addStudentAtAppeal(Long idAppeal, Long idStudent) {
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		Transaction transaction=null;
+//		Appeal res=null;
+//		try{
+//			transaction=session.beginTransaction();
+//
+//			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
+//			Student s=(Student)session.get(Student.class, idStudent);
+//			AppealStudent app=new AppealStudent(a, s, null, null, null);
+//				a.getAppeal_student().add(app);
+//				s.getAppeal_student().add(app);
+//			res=a;
+//			transaction.commit();
+//		}catch(Exception e){
+//			new MokException(e);
+//			transaction.rollback();
+//		}finally{
+//			session.close();
+//		}
+//		return res;
+//	}
 
-	@Override
-	public Appeal addStudentAtAppeal(Long idAppeal, Long idStudent) {
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		Appeal res=null;
-		try{
-			transaction=session.beginTransaction();
-
-			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
-			Student s=(Student)session.get(Student.class, idStudent);
-			//	a.getStudentsInscribed().add(s); CORREGGERE
-			res=a;
-			transaction.commit();
-		}catch(Exception e){
-			new MokException(e);
-			transaction.rollback();
-		}finally{
-			session.close();
-		}
-		return res;
-	}
-
-	@Deprecated
-	@Override
-	public Appeal addStudentAtAppeal(Long idAppeal, Student student) {
-		return null;
-	}
+//	@Override
+//	public Appeal addStudentAtAppeal(Long idAppeal, Long idStudent) {
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		Transaction transaction=null;
+//		Appeal res=null;
+//		try{
+//			transaction=session.beginTransaction();
+//
+//			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
+//			Student s=(Student)session.get(Student.class, idStudent);
+//			//	a.getStudentsInscribed().add(s); CORREGGERE
+//			res=a;
+//			transaction.commit();
+//		}catch(Exception e){
+//			new MokException(e);
+//			transaction.rollback();
+//		}finally{
+//			session.close();
+//		}
+//		return res;
+//	}
+//
+//	@Deprecated
+//	@Override
+//	public Appeal addStudentAtAppeal(Long idAppeal, Student student) {
+//		return null;
+//	}
 
 	@Override
 	public boolean removeStudentAtAppeal(Long idAppeal, Long idStudent) {

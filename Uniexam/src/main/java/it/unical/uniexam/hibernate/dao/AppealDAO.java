@@ -38,8 +38,8 @@ public interface AppealDAO {
 	public Appeal setProfessor(Long idAppeal,Professor professor);
 	public Appeal setProfessor(Long idAppeal,Long idProfessor);
 	
-	public Appeal addStudentAtAppeal(Long idAppeal,Long idStudent);
-	public Appeal addStudentAtAppeal(Long idAppeal,Student student);
+//	public Appeal addStudentAtAppeal(Long idAppeal,Long idStudent);
+//	public Appeal addStudentAtAppeal(Long idAppeal,Student student);
 	
 	public boolean removeStudentAtAppeal(Long idAppeal,Long idStudent);
 	public boolean removeStudentAtAppeal(Long idAppeal,Student student);

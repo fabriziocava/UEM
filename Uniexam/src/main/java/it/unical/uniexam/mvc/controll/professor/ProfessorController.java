@@ -126,26 +126,26 @@ public class ProfessorController {
 		return ProfessorService.PROFESSOR_ACCOUNT;
 	}
 
-	@RequestMapping(value="professor/addRequestedCourseAction", method=RequestMethod.POST)
-	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
-			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
-		
-		String idCours=request.getParameter("idCourse");
-		
-		Long idCourse=Long.valueOf(idCours);
-		
-		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
-		
-//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
-		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
-	}
+//	@RequestMapping(value="professor/addRequestedCourseAction", method=RequestMethod.POST)
+//	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
+//			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+//		
+//		String idCours=request.getParameter("idCourse");
+//		
+//		Long idCourse=Long.valueOf(idCours);
+//		
+//		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
+//		
+////		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
+//		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
+//	}
 
 	
 	//Pagine Secondarie

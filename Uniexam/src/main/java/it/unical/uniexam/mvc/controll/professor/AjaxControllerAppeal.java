@@ -6,6 +6,7 @@ import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.ProfessorService;
 import it.unical.uniexam.mvc.service.UtilsService;
@@ -36,6 +37,64 @@ public class AjaxControllerAppeal {
 	@Autowired
 	ProfessorService professorService;
 
+	@RequestMapping("/appeal/add_student")
+	public ModelAndView add_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+
+		String idStud=request.getParameter("idStudent");
+		Long idStudent=Long.valueOf(idStud);
+		String idAppe=request.getParameter("idAppeal");
+		Long idAppeal=Long.valueOf(idAppe);
+		Boolean res= professorService.addStudentToAppeal(idAppeal,idStudent);
+		return new ModelAndView("redirect:/professor/ajax/dialog/list_student?id="+idAppe+"&ris="+res, "model", model);
+	}
+	
+	@RequestMapping("/appeal/remove_student")
+	public ModelAndView remove_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+
+		String idAppe=request.getParameter("idAppeal");
+		
+		String idAppeS=request.getParameter("idAppealStudent");
+		Long idAppealStudent=Long.valueOf(idAppeS);
+		Boolean res= professorService.removeStudentToAppeal(idAppealStudent);
+		return new ModelAndView("redirect:/professor/ajax/dialog/list_student?id="+idAppe+"&ris="+res, "model", model);
+	}
+	
+	@RequestMapping("/appeal/auto_complete_student")
+	public String autocomplete_student(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+
+		String idStud=request.getParameter("id");
+
+		if(idStud!=null && !idStud.equals("")){
+			ArrayList<Student>studentsMatch=professorService.getStudentsMatch(idStud);
+			model.addAttribute("list", studentsMatch);
+			System.out.println(studentsMatch.size());
+			return "professor/appeal/list_autocomplete";
+		}
+			return null;
+	}
+
+
 	@RequestMapping("/appeal/modify_appeal_student")
 	public String modify_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -45,16 +104,16 @@ public class AjaxControllerAppeal {
 		if(redirect!=null)
 			return redirect;
 		p=plist.get(0);
-		
+
 		String idAppea=request.getParameter("id");
 		Long idAppeal=Long.valueOf(idAppea);
 		String variable=request.getParameter("variable");
 		String value=request.getParameter("value");
-//		String clazz=request.getParameter("clazz");
-//		clazz=clazz+".class";
-		
+		//		String clazz=request.getParameter("clazz");
+		//		clazz=clazz+".class";
+
 		Boolean res=professorService.modifyAppealStudent(idAppeal,variable,value);
-		
+
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();
@@ -69,8 +128,8 @@ public class AjaxControllerAppeal {
 		}
 		return null;
 	}
-	
-	
+
+
 	@RequestMapping("/appeal/remove_appeal")
 	public String remove_appeal(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -84,7 +143,7 @@ public class AjaxControllerAppeal {
 		Long idAppeal=Long.valueOf(idAppea);
 
 		Boolean res=professorService.removeAppeal(idAppeal);
-		
+
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();
@@ -99,7 +158,7 @@ public class AjaxControllerAppeal {
 		}
 		return null;
 	}
-	
+
 	@RequestMapping("/appeal/appeal_details")
 	public String appeal_details(HttpServletRequest request, Model model){
 		Professor p=null;
@@ -115,7 +174,7 @@ public class AjaxControllerAppeal {
 		model.addAttribute("appeal", appeal);
 		return "professor/appeal/appeal_details";
 	}
-	
+
 	@RequestMapping("/appeal/modify_appeal")
 	public String modify_appeal(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -125,23 +184,23 @@ public class AjaxControllerAppeal {
 		if(redirect!=null)
 			return redirect;
 		p=plist.get(0);
-		
-//		Enumeration parameterNames = request.getParameterNames();
-//		while (parameterNames.hasMoreElements()) {
-//			String object = (String) parameterNames.nextElement();
-//			System.out.println(object);
-//		}
-		
+
+		//		Enumeration parameterNames = request.getParameterNames();
+		//		while (parameterNames.hasMoreElements()) {
+		//			String object = (String) parameterNames.nextElement();
+		//			System.out.println(object);
+		//		}
+
 		String idAppea=request.getParameter("id");
 		Long idAppeal=Long.valueOf(idAppea);
 		String variable=request.getParameter("variable");
 		String value=request.getParameter("value");
 		String clazz=request.getParameter("clazz");
-//		clazz=clazz+".class";
-		
+		//		clazz=clazz+".class";
+
 		Boolean res=professorService.changeAppealAttribute(idAppeal,variable,value,clazz);
-		
-		
+
+
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();
@@ -156,8 +215,8 @@ public class AjaxControllerAppeal {
 		}
 		return null;
 	}
-	
-//	/ajax/course/course_details/dialog
+
+	//	/ajax/course/course_details/dialog
 
 	@RequestMapping("/dialog/add_appeal")
 	public ModelAndView dialog_add_appeal(@ModelAttribute("appeal") Appeal appeal,HttpServletRequest request, Model model){
@@ -168,16 +227,16 @@ public class AjaxControllerAppeal {
 		if(redirect!=null)
 			return new ModelAndView(redirect);
 		p=plist.get(0);
-		
+
 		List<Course> courses=professorService.getCourseAssociated(p.getId());
 		Course course = new Course(null, "NO", null, null, null, null, null,null);
 		course.setId(-1L);
 		courses.add(0, course);
 		model.addAttribute("courses", courses);
-		
+
 		return new ModelAndView("professor/dialog/add_appeal", "model", model);
 	}
-	
+
 	@RequestMapping("/dialog/view_appeal")
 	public ModelAndView dialog_view_appeal(HttpServletRequest request, Model model){
 		Professor p=null;
@@ -192,10 +251,10 @@ public class AjaxControllerAppeal {
 		Long idAppeal=Long.valueOf(idApp);
 		Appeal appeal=professorService.getAppealDetails(idAppeal);
 		model.addAttribute("appeal", appeal);
-		
+
 		return new ModelAndView("professor/dialog/view_appeal", "model", model);
 	}
-	
+
 	@RequestMapping("/dialog/list_student")
 	public ModelAndView dialog_list_student(HttpServletRequest request, Model model){
 		Professor p=null;
@@ -210,18 +269,18 @@ public class AjaxControllerAppeal {
 		if(idAppea!=null){
 			Long idAppeal=Long.valueOf(idAppea);
 			ArrayList<ArrayList<Object>> students=professorService.getListStudentFromAppealRegularAndNot(idAppeal);
-//			ArrayList<ArrayList<RequestedCourse>>requestedCourses=professorService.getListOfRequestedCourseFromListStudentAndAppeal(idAppeal,students.get(1));
+			//			ArrayList<ArrayList<RequestedCourse>>requestedCourses=professorService.getListOfRequestedCourseFromListStudentAndAppeal(idAppeal,students.get(1));
 			Appeal appeal=professorService.getAppealGround(idAppeal);
 			model.addAttribute("appeal", appeal);
 			model.addAttribute("appealstudentsRegAndNot", students);
-//			model.addAttribute("requestedCourses", requestedCourses);
+			//			model.addAttribute("requestedCourses", requestedCourses);
 		}
 		//devono viaggiare insieme
-//		requestedCourses  			  ArrayList<ArrayList<RequestedCourse>>requestedCourses
-//		appealstudentsNoRegular		  ArrayList<AppealStudent> appealStudentsNoRegular
+		//		requestedCourses  			  ArrayList<ArrayList<RequestedCourse>>requestedCourses
+		//		appealstudentsNoRegular		  ArrayList<AppealStudent> appealStudentsNoRegular
 		return new ModelAndView("professor/dialog/list_student", "model", model);
 	}
-	
+
 	@RequestMapping("/dialog/appeal/add_student")
 	public ModelAndView dialog_add_student(HttpServletRequest request, Model model){
 		Professor p=null;
@@ -231,24 +290,11 @@ public class AjaxControllerAppeal {
 		if(redirect!=null)
 			return new ModelAndView(redirect);
 		p=plist.get(0);
-
 		String idAppea=(String)request.getParameter("id");
-//		if(idAppea!=null){
-//			Long idAppeal=Long.valueOf(idAppea);
-//			ArrayList<ArrayList<Object>> students=professorService.getListStudentFromAppealRegularAndNot(idAppeal);
-////			ArrayList<ArrayList<RequestedCourse>>requestedCourses=professorService.getListOfRequestedCourseFromListStudentAndAppeal(idAppeal,students.get(1));
-//			Appeal appeal=professorService.getAppealGround(idAppeal);
-//			model.addAttribute("appeal", appeal);
-//			model.addAttribute("appealstudentsRegAndNot", students);
-////			model.addAttribute("requestedCourses", requestedCourses);
-//		}
-		//devono viaggiare insieme
-//		requestedCourses  			  ArrayList<ArrayList<RequestedCourse>>requestedCourses
-//		appealstudentsNoRegular		  ArrayList<AppealStudent> appealStudentsNoRegular
 		model.addAttribute("idAppeal", idAppea);
 		return new ModelAndView("professor/dialog/appeal/add_student", "model", model);
 	}
-	
+
 	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
 		User user=professorService.getSession(request.getSession().getId());
 		if(user==null){

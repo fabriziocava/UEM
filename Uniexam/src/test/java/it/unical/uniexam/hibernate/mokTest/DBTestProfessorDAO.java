@@ -5,12 +5,14 @@ import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
+import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.dao.impl.AppealDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.AppealStudentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
+import it.unical.uniexam.hibernate.dao.impl.StudentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.UserDAOImpl;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
@@ -52,6 +54,7 @@ public class DBTestProfessorDAO {
 	private static UserDAO userDAO=new UserDAOImpl();
 	private static AppealDAO appealDAO=new AppealDAOImpl();
 	private static AppealStudentDAO appealStudentDAO=new AppealStudentDAOImpl();
+	private static StudentDAO studentDAO=new StudentDAOImpl();
 	static Long []ids=null;
 	
 	
@@ -89,9 +92,33 @@ public class DBTestProfessorDAO {
 //			e1.printStackTrace();
 //		}
 		
-		appealStudentDAO.addAppealStudent(null, 1l, 8l, "uno studente", 30.8);
-		appealStudentDAO.addAppealStudent(null, 2l, 8l, "sempre lo stesso studente", 30.8);
-		appealStudentDAO.addAppealStudent(null, 3l, 8l, "idem studente", 30.8);
+//		appealStudentDAO.addAppealStudent(null, 1l, 8l, "uno studente", 30.8);
+//		appealStudentDAO.addAppealStudent(null, 2l, 8l, "sempre lo stesso studente", 30.8);
+//		appealStudentDAO.addAppealStudent(null, 3l, 8l, "idem studente", 30.8);
+//		
+		HashSet< Email> emails=new HashSet<Email>();
+		emails.add(new Email(Email.TYPE_UFFICIAL, "mok.luigi@gmail.com"));
+		HashSet<PhoneNumber>numbers=new HashSet<PhoneNumber>();
+		numbers.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "+393891535996"));
+		Long id=studentDAO.addStundent("Luigi", "Molinaro", "MLNLGU89P16B774U", "mok", 
+				new Address("Acri", "Italy", "87041", "via Europa, 284")
+		, emails, numbers, 1L, "158786");
+		
+		HashSet< Email> emails2=new HashSet<Email>();
+		emails2.add(new Email(Email.TYPE_UFFICIAL, "muk.maria@gmail.com"));
+		HashSet<PhoneNumber>numbers2=new HashSet<PhoneNumber>();
+		numbers2.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "+393891535996"));
+		Long id2=studentDAO.addStundent("Maria", "Gerace", "GRCMRAP16B774U", "muk", 
+				new Address("Acri", "Italy", "87041", "via Rosati, 1")
+		, emails2, numbers2, 1L, "158797");
+		
+		HashSet< Email> emails3=new HashSet<Email>();
+		emails3.add(new Email(Email.TYPE_UFFICIAL, "mik.angelo@gmail.com"));
+		HashSet<PhoneNumber>numbers3=new HashSet<PhoneNumber>();
+		numbers3.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "+393891535996"));
+		Long id3=studentDAO.addStundent("Angelo", "Molinaro", "MLNANG89P16B774U", "mik", 
+				new Address("Acri", "Italy", "87041", "via Europa, 284")
+		, emails3, numbers3, 1L, "158978");
 		
 		
 		try{

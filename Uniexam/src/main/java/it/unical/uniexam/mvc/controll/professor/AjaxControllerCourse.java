@@ -103,6 +103,27 @@ public class AjaxControllerCourse {
 		return new ModelAndView("professor/dialog/addRequestedCourse", "model", model);
 	}
 	
+	@RequestMapping(value="/course/addRequestedCourseAction", method=RequestMethod.POST)
+	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
+			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+		
+		String idCours=request.getParameter("idCourse");
+		
+		Long idCourse=Long.valueOf(idCours);
+		
+		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
+		
+//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
+		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
+	}
+	
 	@RequestMapping(value="/dialog/requested_course/command", method=RequestMethod.POST)
 	public String dialog_requested_course_command(HttpServletRequest request, Model model){
 		Professor p=null;

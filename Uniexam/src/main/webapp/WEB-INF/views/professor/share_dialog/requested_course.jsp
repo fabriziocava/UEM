@@ -20,6 +20,88 @@
 			<%}}%>
 			titlemok('square-small', "legendOfDegree");
 	});
+function addRequestedCourseF(id){
+	var conte=$("#context").attr("value");
+	var idCourse=id;
+	var ajax=sendAJAXmessage(conte+"/ajax/dialog/addRequestedCourse", "GET", "id", idCourse);
+	ajax.done(function(data){
+		if($("#dialogAddRequested").html()==undefined)
+			$("<div></div>").attr('id','dialogAddRequested').appendTo('body');
+		$("#dialogAddRequested").html(data);
+	});
+}
+
+function submitCommandRequestedCourse(){
+	var data=commands.toString();
+	commands=undefined;
+	var conte=$("#context").attr("value");
+	var ajax=sendAJAXmessage(conte+"/ajax/dialog/requested_course/command", "POST", "data", data);
+	ajax.done(function(data){
+		if($("#dialog").html()==undefined)
+			$("<div></div>").attr('id','dialog').appendTo('body');
+		$("#dialog").html(data);
+	});
+//	alert(data);
+}
+
+function modifyRequestedCourse(id,degree,idCourse){
+	try{
+		if(commands==undefined)
+			commands=new Commands("sendRequestedCourse",idCourse);
+	}catch(ERR){
+		commands=new Commands("sendRequestedCourse",idCourse);
+	}
+	$("<div></div>")
+	.attr('id','divRequestCourseChange')
+	.appendTo('body').html($("#radio"+degree).html());
+	$("#divRequestCourseChange").attr("title","Modify Requested Course");
+	var dial=$("#divRequestCourseChange");
+	dial.dialog({
+		resizable: false,
+		modal: true,
+		buttons: {
+			"Save": function() {
+				var newVal=$("input[name='choose']:radio:checked").val();
+				commands.add(id, "change", newVal);
+				$(".alertSomeModifyRequestCourse").each(function(){
+					$(this).slideDown(); 
+				});
+				dirtingTheElement();
+//				requested_courseAddIfNotAddAlready ///strutturaaaa!!! classeEEEEE
+//				var comm="%requested"+id+"$change"+newVal+"%";
+				dial.dialog( "close" );
+				$("div").remove("#divRequestCourseChange");
+			},
+			Cancel: function() {
+				dial.dialog( "close" );
+				if($("#sendRequestCourseChange").val()==""){
+					$("input").remove("#sendRequestCourseChange");
+				}
+				$("div").remove("#divRequestCourseChange");
+			}
+		},
+		close:function(){
+			dial.dialog( "close" );
+			$("div").remove("#divRequestCourseChange");
+		}
+	});
+	$("#divRequestCourseChange").attr("title","");
+	$("#setRequestCourseChange").css('height',"auto");
+}
+
+function deleteRequestedCourse(id,idCourse){
+	try{
+		if(commands==undefined)
+			commands=new Commands("sendRequestedCourse",idCourse);
+	}catch(ERR){
+		commands=new Commands("sendRequestedCourse",idCourse);
+	}
+	commands.add(id, "remove", "no");
+	$(".alertSomeModifyRequestCourse").each(function(){
+		$(this).slideDown(); 
+	});
+	dirtingTheElement();
+}
 
 </script>
 <%
@@ -54,14 +136,16 @@
 		</tr>
 		</table>
 		</div>
+		
 		<div class="line-top"></div>
 		<div class="square-small <%=req.getPolicyOfRequested()%>"></div>
 		<div id="requestedCourse<%=req.getCourse().getId()%>"><%=req.getCourse().getName()%></div>
 		<ul class="links-user">
 		<li><spring:message code='message.general.options' /> :</li> 
 		<li class="bottonmok" id="deleteRequest<%=req.getCourse().getId()%>$<%=c.getId()%>"><spring:message code='message.general.remove' /></li>
-		<li class="bottonmok" id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequested()%>$<%=c.getId()%>"><spring:message code='message.general.modify' /></li>
+		<li class="bottonmok" onclick="modifyRequestedCourse('<%=req.getCourse().getId()%>','<%=req.getPolicyOfRequested()%>','<%=c.getId()%>')" ><spring:message code='message.general.modify' /></li>
 		</ul>
+<%-- 		id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequested()%>$<%=c.getId()%>" --%>
 		</div>
 		</td>
 		</tr>
@@ -76,7 +160,7 @@
 			<tr>
 			<td>
 			<div class="line-top"></div>
-			<div class="bottonmok" id="addRequested<%=c.getId()%>"><spring:message code='message.general.add' /></div>
+			<div class="bottonmok" onclick="addRequestedCourseF('<%=c.getId()%>')"><spring:message code='message.general.add' /></div>
 			</td>
 			</tr>
 			<%

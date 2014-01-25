@@ -9,6 +9,7 @@ public interface AppealStudentDAO {
 			String note,Double vote);
 	Boolean modifyVote(Long idAppeal, String value);
 	Boolean modifyNote(Long idAppeal, String value);
+	Boolean removeAppealStudent(Long idAppeal);
 	
 }
 

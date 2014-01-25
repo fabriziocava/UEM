@@ -24,6 +24,34 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class AppealStudentDAOImpl implements AppealStudentDAO {
 
 	@Override
+	public Boolean removeAppealStudent(Long idAppeal) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean ris=false;
+		try{
+			transaction=session.beginTransaction();
+			
+			AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+			Student s=appealStudent.getStudent();
+			Appeal a=appealStudent.getAppeal();
+			s.getAppeal_student().remove(appealStudent);
+			a.getAppeal_student().remove(appealStudent);
+			session.delete(appealStudent);
+			
+			transaction.commit();
+			
+			ris=true;
+		}catch(Exception e){
+			new MokException(e);
+			ris=false;
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return ris;
+	}
+	
+	@Override
 	public Boolean modifyNote(Long idAppeal, String value) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;

@@ -25,6 +25,7 @@ import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
+import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
@@ -56,7 +57,24 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	AppealDAO appealDAO;
 	@Autowired
 	AppealStudentDAO appealStudentDAO;
-
+	@Autowired
+	StudentDAO studentDAO;
+	
+	@Override
+	public Boolean removeStudentToAppeal(Long idAppeal) {
+		return appealStudentDAO.removeAppealStudent(idAppeal);
+	}
+	
+	@Override
+	public Boolean addStudentToAppeal(Long idAppeal, Long idStudent) {
+		return appealStudentDAO.addAppealStudent(null, idAppeal, idStudent, null, null)!=null;
+	}
+	
+	@Override
+	public ArrayList<Student> getStudentsMatch(String idStud) {
+		return studentDAO.getStudentsMatch(idStud);
+	}
+	
 	@Override
 	public Boolean modifyAppealStudent(Long idAppeal, String variable,
 			String value) {

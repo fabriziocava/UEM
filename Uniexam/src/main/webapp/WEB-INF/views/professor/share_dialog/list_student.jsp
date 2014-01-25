@@ -10,10 +10,17 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
+<% Appeal appeal=(Appeal)request.getAttribute("appeal"); %>
+
 <script type="text/javascript">
 	$(document).ready(function(){
+		<%Boolean ris=(Boolean)request.getAttribute("ris");
+		if(ris!=null && ris){%>
+		alert("Modifiche apportate con successo");
+		<%}else if(ris!=null && !ris){%>
+		alert("Errore nell'apportare le modifiche");
+		<%}%>
 		dialogViewListStudent();
-// 		initCollapsable();
 		$(document).ready(function(){
 			$('.titlemok').each(function(item,element){
 // 				alert(element.id);
@@ -46,6 +53,22 @@
 			},
 			buttons:{
 				"Confirm":function(){
+					var conte=$("#context").attr("value");
+					var dati=new FormData();
+					dati.append("idAppealStudent",id);
+					dati.append("idAppeal",'<%=appeal.getId()%>');
+					var ing=$.ajax({
+						url: conte+'/ajax/appeal/remove_student',
+						type: "POST",
+						data:dati,
+						processData: false,
+						contentType: false
+					});
+					ing.done(function(data){
+						if($("#dialog").html()==undefined)
+							$("<div></div>").attr('id','dialog').appendTo('body');
+						$("#dialog").html(data);
+					});
 					
 					$( this ).dialog( "close" );
 					$("div").remove("#flashDialog");
@@ -64,13 +87,12 @@
 
 <div id="dialog_content">
 
-
 		<%
 			ArrayList<ArrayList<Object>> appealStudentsRegAndNot = (ArrayList<ArrayList<Object>>) request
 					.getAttribute("appealstudentsRegAndNot");
 		ArrayList<Object> appealStudents = appealStudentsRegAndNot.get(0);
 		ArrayList<Object> appealStudentsNoRegular = appealStudentsRegAndNot.get(1);
-		Appeal appeal=(Appeal)request.getAttribute("appeal");
+		
 		
 		%>
 		<div><%=appeal.getName()%>
@@ -173,7 +195,7 @@
 					No irregular student
 					<%} %>
 					<tr><td><div class="line-top"></div></td></tr>
-					<tr><td><div class="bottonmok" onclick="">
+					<tr><td><div class="bottonmok" onclick="openAddStudentToAppeal(<%=appeal.getId()%>)">
 					Aggiungi studente					
 					</div></td></tr>
 		</table>
