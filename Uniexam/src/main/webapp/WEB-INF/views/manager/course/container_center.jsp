@@ -38,6 +38,8 @@
 			id="Sessions<%=( c.getId()) %>">
 		
 			<td>	
+			
+			
 			<%
 				if (Courses !=null && Courses.size()!=0) {
 					
@@ -48,59 +50,23 @@
 					%>
 			
 			
-				
-				<ol id="#sorting" >
+				<ol id="#sorting"   >
 				
 				<li class="list-item" style="border-radius: 4px; ">
 						<article>
 							<section id="<%="course" + C.getId()%>">
-								<span class="span_expandible" id="collapsedivrse<%=C.getId()%>" onclick="getDataFromAjax('course/course_details','<%=C.getId()%>','divrse<%=C.getId()%>');">+</span><%=C.getName()%>
+								<span class="span_expandible" id="collapsedivrse<%=C.getId()%>" onclick="collapseMok(this); getDataFromAjax('course/course_details','<%=C.getId()%>','divrse<%=C.getId()%>');">+</span><%=C.getName()%>
 								<div id="divrse<%=C.getId()%>" style="display: none;"></div>
 							</section>
 						</article>
-					<br>
 					</li>
 				
 				
 				</ol>
-				<table class="tablemok">
-						<thead>
-							<tr>
-								<th><spring:message
-										code='message.manager.course.name' /></th>
-								<th><spring:message
-										code='message.manager.course.code' /></th>
-								<th><spring:message
-										code='message.manager.course.credit' /></th>
-								<th><spring:message
-										code='message.manager.course.holder' /></th>
-							</tr>
-						</thead>
-						<tbody>
-						
-						<tr class="list-item" style="text-align: center;">
-								<td
-									title="<spring:message code='message.manager.course.name.description'/>"
-									class="bottonmok"
-									onclick=""><%=C.getName()%></td>
-								<td
-									title="<spring:message code='message.manager.course.code.description'/>"><%=C.getCode()%></td>
-								<td
-									title="<spring:message code='message.manager.course.credit.description'/>"><%=C.getCredits()%></td>
-								<td
-									title="<spring:message code='message.manager.course.holder.description'/>"></td>
-							</tr>
-							<tr>
-								<td><div class="line-top"></div></td>
-							</tr>
-						
-						</tbody>
-						
-					</table>
 			<% } %>
 		<%} }  else { %>
 					
-				Non ci sono sessioni
+				Non ci sono corsi
 				
 				<%} %>
 
