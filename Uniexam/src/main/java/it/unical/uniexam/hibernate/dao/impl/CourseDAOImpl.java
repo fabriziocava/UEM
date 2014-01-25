@@ -655,12 +655,12 @@ public class CourseDAOImpl implements CourseDAO{
 			Query q= session.createQuery("from Course where degreeCourse.department_associated.id=:par");
 			q.setParameter("par", idDepartment);
 			res=new ArrayList<Course>(q.list());
-			for (Course course : res) {
-				Hibernate.initialize(course);
-				Hibernate.initialize(course.getCommissionProfessors());
-				Hibernate.initialize(course.getAppeals());
-				Hibernate.initialize(course.getRequestedCourses());
-			}
+//			for (Course course : res) {
+//				Hibernate.initialize(course);
+//				Hibernate.initialize(course.getCommissionProfessors());
+//				Hibernate.initialize(course.getAppeals());
+//				Hibernate.initialize(course.getRequestedCourses());
+//			}
 		}catch(Exception e){
 			new MokException(e);
 		}finally{

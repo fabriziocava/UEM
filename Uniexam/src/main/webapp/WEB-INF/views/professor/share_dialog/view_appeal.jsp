@@ -33,7 +33,6 @@
 <th>Studenti iscritti a questo appello</th>
 <td><%=appeal.getAppeal_student().size() %></td>
 <td>
-<%-- <a class="bottonmok" href="${pageContext.request.contextPath}/professor/appeal/list_student?appeal=<%=appeal.getId() %>" >vedi lista</a> --%>
 </td>
 </tr>
 </table>

@@ -122,7 +122,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 
 <tr>
 <td><div class="line-top"></div></td>
-<td><div class="bottonmok color_red" onclick="sendDeleteAppeal('<%=appeal.getId()%>')"><spring:message code="message.general.delete" /></div></td>
+<td><buttonmok class="color_red" onclick="sendDeleteAppeal('<%=appeal.getId()%>')"><spring:message code="message.general.delete" /></buttonmok></td>
 </tr>
 </table>
 

@@ -142,8 +142,8 @@ function deleteRequestedCourse(id,idCourse){
 		<div id="requestedCourse<%=req.getCourse().getId()%>"><%=req.getCourse().getName()%></div>
 		<ul class="links-user">
 		<li><spring:message code='message.general.options' /> :</li> 
-		<li class="bottonmok" onclick="deleteRequestedCourse('<%=req.getCourse().getId()%>','<%=c.getId()%>')" ><spring:message code='message.general.remove' /></li>
-		<li class="bottonmok" onclick="modifyRequestedCourse('<%=req.getCourse().getId()%>','<%=req.getPolicyOfRequested()%>','<%=c.getId()%>')" ><spring:message code='message.general.modify' /></li>
+		<li class="buttonmok" onclick="deleteRequestedCourse('<%=req.getCourse().getId()%>','<%=c.getId()%>')" ><spring:message code='message.general.remove' /></li>
+		<li class="buttonmok" onclick="modifyRequestedCourse('<%=req.getCourse().getId()%>','<%=req.getPolicyOfRequested()%>','<%=c.getId()%>')" ><spring:message code='message.general.modify' /></li>
 		</ul>
 <%-- 		id="modifyRequest<%=req.getCourse().getId()%>$<%=req.getPolicyOfRequested()%>$<%=c.getId()%>" --%>
 		</div>
@@ -160,7 +160,7 @@ function deleteRequestedCourse(id,idCourse){
 			<tr>
 			<td>
 			<div class="line-top"></div>
-			<div class="bottonmok" onclick="addRequestedCourseF('<%=c.getId()%>')"><spring:message code='message.general.add' /></div>
+			<buttonmok onclick="addRequestedCourseF('<%=c.getId()%>')"><spring:message code='message.general.add' /></buttonmok>
 			</td>
 			</tr>
 			<%

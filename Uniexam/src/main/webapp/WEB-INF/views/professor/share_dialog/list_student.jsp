@@ -14,6 +14,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		
 		<%Boolean ris=(Boolean)request.getAttribute("ris");
 		if(ris!=null && ris){%>
 		alert("Modifiche apportate con successo");
@@ -21,13 +22,11 @@
 		alert("Errore nell'apportare le modifiche");
 		<%}%>
 		dialogViewListStudent();
-		$(document).ready(function(){
-			$('.titlemok').each(function(item,element){
-// 				alert(element.id);
-				titlemok('square-small', element.id);
-			});
-<%-- 			titlemok('square-small', "titleN<%=app.getStudent().getSerialNumber()%>"); --%>
+		$('.titlemok').each(function(item,element){
+			titlemok('square-small', element.id);
 		});
+		
+		$("#tableSortable").tablesorter();
 	});
 	
 	function removeStudent(id){
@@ -104,22 +103,25 @@
 		<legend>
 			<spring:message code="message.professor.course.container.center.legendCourses" />
 		</legend>
-		<table class="tablemok">
+		<table class="tablemok" id="tableSortable">
+		<thead>
 			<tr style="text-align: center;">
-				<th style="padding: 0px 20px 0px 20px;"></th>
+				<th style="padding: 0px 20px 0px 20px;">Stato</th>
 				<th style="padding: 0px 20px 0px 20px;">Matricola</th>
 				<th style="padding: 0px 20px 0px 20px;">Nome</th>
 				<th style="padding: 0px 20px 0px 20px;">Voto</th>
 				<th style="padding: 0px 20px 0px 20px;">Nota</th>
-				<th style="padding: 0px 20px 0px 20px;"></th>
+				<th style="padding: 0px 20px 0px 20px;">Elimina</th>
 			</tr>
+		</thead>
+		<tbody>
 			<%
 			if (appealStudents != null && appealStudents.size() > 0) {
 				for (Object appObj : appealStudents) {
 					AppealStudent app=(AppealStudent)appObj;
 			%>
 			<tr class="line-top" style="text-align: center;">
-				<td style="display: inline-block;" ></td>
+				<td></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%> <%=app.getStudent().getSurname()%></td>
 				<td style="padding: 0px 20px 0px 20px;" 
@@ -136,7 +138,7 @@
 			</tr>
 			<%} %>
 			<%}else{%>
-				No Regular students
+<!-- 				No Regular students -->
 			<%} %>
 			<% 
 				if(appealStudentsNoRegular!=null && appealStudentsNoRegular.size()>0){
@@ -161,7 +163,7 @@
 							
 			%>
 			<tr class="line-top" style="text-align: center;">
-				<td><div class="square-small <%=policy%>">
+				<td style="display: inline-block" ><div class="square-small <%=policy%>">
 						<div>
 						<div style="display: none;" class="titlemok" id="titleN<%=app.getStudent().getSerialNumber()%>">
 							<table class="tablemok">
@@ -192,13 +194,14 @@
 			</tr>
 			<%}
 					} else{%>
-					No irregular student
+<!-- 					No irregular student -->
 					<%} %>
-					<tr><td><div class="line-top"></div></td></tr>
-					<tr><td><div class="bottonmok" onclick="openAddStudentToAppeal(<%=appeal.getId()%>)">
-					Aggiungi studente					
-					</div></td></tr>
+			</tbody>
 		</table>
+					<div class="line-top"></div>
+					<buttonmok onclick="openAddStudentToAppeal(<%=appeal.getId()%>)">
+					Aggiungi studente					
+					</buttonmok>
 
 	</fieldset>
 

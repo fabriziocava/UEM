@@ -37,6 +37,9 @@ public class AjaxControllerAppeal {
 	@Autowired
 	ProfessorService professorService;
 
+	//mok structures
+	ArrayList<ArrayList<Object>> lastListStudents;
+	
 	@RequestMapping("/appeal/add_student")
 	public ModelAndView add_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -85,8 +88,35 @@ public class AjaxControllerAppeal {
 
 		String idStud=request.getParameter("id");
 
+		ArrayList<Student>studentsRANR=new ArrayList<Student>();
+		try{
+		if(lastListStudents!=null && lastListStudents.size()>1){
+			ArrayList<Object>studReg=lastListStudents.get(0);
+			ArrayList<Object>studNotReg=new ArrayList<Object>();
+			ArrayList<Object>studNotRegTemp=lastListStudents.get(1);
+			for (Object object : studNotRegTemp) {
+				ArrayList<Object>stud=(ArrayList<Object>)object;
+				studNotReg.add(stud.get(0));
+			}
+			for (Object object : studReg) {
+				AppealStudent a=(AppealStudent)object;
+				studentsRANR.add(a.getStudent());
+			}
+			for (Object object : studNotReg) {
+				AppealStudent a=(AppealStudent)object;
+				studentsRANR.add(a.getStudent());
+			}
+		}
+		}catch(Exception e){new MokException(e);}
 		if(idStud!=null && !idStud.equals("")){
 			ArrayList<Student>studentsMatch=professorService.getStudentsMatch(idStud);
+			ArrayList<Student>removable=new ArrayList<Student>();
+			for (Student student : studentsMatch) {
+				if(studentsRANR.contains(student)){
+					removable.add(student);
+				}
+			}
+			studentsMatch.removeAll(removable);
 			model.addAttribute("list", studentsMatch);
 			System.out.println(studentsMatch.size());
 			return "professor/appeal/list_autocomplete";
@@ -273,6 +303,7 @@ public class AjaxControllerAppeal {
 			Appeal appeal=professorService.getAppealGround(idAppeal);
 			model.addAttribute("appeal", appeal);
 			model.addAttribute("appealstudentsRegAndNot", students);
+			lastListStudents=students;
 			//			model.addAttribute("requestedCourses", requestedCourses);
 		}
 		//devono viaggiare insieme
@@ -281,6 +312,8 @@ public class AjaxControllerAppeal {
 		return new ModelAndView("professor/dialog/list_student", "model", model);
 	}
 
+	
+	
 	@RequestMapping("/dialog/appeal/add_student")
 	public ModelAndView dialog_add_student(HttpServletRequest request, Model model){
 		Professor p=null;

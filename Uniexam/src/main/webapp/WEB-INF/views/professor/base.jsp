@@ -48,9 +48,9 @@
 	<div class="processing">
 		<img /> Loading ...
 	</div>
-	<header>
+	<headerMok>
 		<tiles:insertAttribute name="container-header" />
-	</header>
+	</headerMok>
 	<input type="hidden" id="context"
 		value="${pageContext.request.contextPath}/professor" />
 	<input type="hidden" id="contextPath"

@@ -220,16 +220,8 @@ public class Course {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
-		result = prime
-				* result
-				+ ((commissionProfessors == null) ? 0 : commissionProfessors
-						.hashCode());
 		result = prime * result + ((credits == null) ? 0 : credits.hashCode());
-		result = prime * result + ((holder == null) ? 0 : holder.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime
-				* result
-				+ ((requestedCourses == null) ? 0 : requestedCourses.hashCode());
 		result = prime * result + ((webSite == null) ? 0 : webSite.hashCode());
 		return result;
 	}

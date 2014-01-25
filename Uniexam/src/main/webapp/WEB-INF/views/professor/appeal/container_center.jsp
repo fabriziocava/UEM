@@ -23,8 +23,8 @@
 	<script type="text/javascript">
 		
 	</script>
-	<div class="bottonmok"
-		onclick="openPopUpWithAjaxContent('addAppeal','')">Crea Appello</div>
+	<buttonmok 
+		onclick="openPopUpWithAjaxContent('addAppeal','')">Crea Appello</buttonmok>
 	<fieldset>
 		<legend>
 			<spring:message
@@ -70,9 +70,9 @@
 							<tr class="list-item" style="text-align: center;">
 								<td
 									title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>"
-									class="bottonmok"
+									class="buttonmok"
 									onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
-								<td class="bottonmok"
+								<td class="buttonmok"
 									onclick="openPopUpWithAjaxContent('viewListStudent','<%=appeal.getId()%>')"
 									title="<spring:message code='message.professor.appeal.add_appeal.numberOfInscribed.description'/>"
 									style="display: table-cell;">
@@ -141,9 +141,9 @@
 								<tr class="list-item" style="text-align: center;">
 									<td
 									title="<spring:message code='message.professor.appeal.add_appeal.name.description'/>"
-									class="bottonmok"
+									class="buttonmok"
 									onclick="openPopUpWithAjaxContent('viewAppeal','<%=appeal.getId()%>')"><%=appeal.getName()%></td>
-								<td class="bottonmok"
+								<td class="buttonmok"
 									onclick="openPopUpWithAjaxContent('viewListStudent','<%=appeal.getId()%>')"
 									title="<spring:message code='message.professor.appeal.add_appeal.numberOfInscribed.description'/>"
 									style="display: table-cell;">

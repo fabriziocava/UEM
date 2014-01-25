@@ -30,6 +30,8 @@ public class AjaxControllerCourse {
 	@Autowired
 	ProfessorService professorService;
 
+	ArrayList<Course>courseAlreadyRequested;
+	
 	@RequestMapping("/course/course_details")
 	public String course_details(HttpServletRequest request, Model model){
 		Professor p=null;
@@ -59,6 +61,14 @@ public class AjaxControllerCourse {
 		String idCours=request.getParameter("id");
 		Long idCourse=Long.valueOf(idCours);
 		Course c=professorService.getCourseDetails(p,idCourse);
+		
+		ArrayList<Course>requested=new ArrayList<Course>();
+		for(RequestedCourse r:c.getRequestedCourses()){
+			requested.add(r.getCourse());
+		}
+		requested.add(c);
+		courseAlreadyRequested=requested;
+		
 		model.addAttribute("course", c);
 		
 		String ris=request.getParameter("ris");
@@ -91,6 +101,8 @@ public class AjaxControllerCourse {
 			degree.add(RequestedCourse.POLICY_STRONG);
 			model.addAttribute("degree", degree);
 			Set<Course> courses=professorService.getCoursesForRequestedCourseFromDepartment(idCourse);
+			if(courseAlreadyRequested!=null && courseAlreadyRequested.size()>0)
+				courses.removeAll(courseAlreadyRequested);
 			model.addAttribute("courses", courses);
 			
 			model.addAttribute("idCourse", idCourse);
@@ -113,15 +125,14 @@ public class AjaxControllerCourse {
 		if(redirect!=null)
 			return new ModelAndView(redirect);
 		p=plist.get(0);
-		
+		Boolean ris=false;
 		String idCours=request.getParameter("idCourse");
-		
-		Long idCourse=Long.valueOf(idCours);
-		
-		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
-		
+		if(idCours!= null && !idCours.equals("")){
+			Long idCourse=Long.valueOf(idCours);
+			ris=professorService.addRequestedCourse(idCourse,requestedCourse);
+		}
 //		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
-		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
+		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCours+"&ris="+ris, "model", model);
 	}
 	
 	@RequestMapping(value="/dialog/requested_course/command", method=RequestMethod.POST)
