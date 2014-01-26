@@ -66,7 +66,7 @@ public class Appeal {
 	@Column(name="APPEAL_ID")
 	Long id;
 
-	@ManyToOne
+	@ManyToOne(optional=true)
 	Course course;
 	
 	@Column(name="CURR_INSCRIBED")

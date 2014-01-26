@@ -48,7 +48,7 @@ public class AjaxControllerSign {
 			String appealString=request.getParameter("id");
 			Long idAppeal=Long.valueOf(appealString);
 			if(appealString!=null && appealString.length()>0){
-				ArrayList<AppealStudent> appealStudents=professorService.getAppealStudentsForPrepareSign(idAppeal);
+				ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForPrepareSign(idAppeal);
 				model.addAttribute("appealStudents", appealStudents);
 				Appeal appeal=professorService.getAppealGround(idAppeal);
 				model.addAttribute("appeal", appeal);
@@ -69,7 +69,7 @@ public class AjaxControllerSign {
 		p=plist.get(0);
 		String appealString=request.getParameter("id");
 		if(appealString!=null && appealString.length()>0){
-			ArrayList<Appeal>appeanls=professorService.getAppealsMatch(appealString);
+			ArrayList<Appeal>appeanls=professorService.getAppealsMatch(p.getId(),appealString);
 			model.addAttribute("listAppeals", appeanls);
 		}
 		

@@ -18,7 +18,7 @@
 <tr onmouseout="deselemok(this)" onmouseover="selemok(this)" onclick="selectmok(this,'idComplete','appealID','risTable')" style="text-align: left;" id="<%=app.getId() %>">
 	<td style="padding: 0px 20px 0px 0px;"><%=app.getName() %></td>
 	<td style="padding: 0px 20px 0px 0px;"><%=app.getLocation() %></td>
-	<td style="padding: 0px 20px 0px 0px;"><%=app.getCourse().getName() %></td>
+	<td style="padding: 0px 20px 0px 0px;"><%if(app.getCourse()!=null){%><%=app.getCourse().getName() %><%}else{ %>No Course<%} %></td>
 </tr>
 </table>
 </td></tr>

@@ -47,7 +47,7 @@
 	}
 </script>
 
-<div id="dialog_content">
+<div id="dialog_content" >
 <input type="text" min="3" maxlength="8" 
 name="matricola" id="idComplete" 
 onkeyup="ajaxAutoComplete('/ajax/appeal/auto_complete_student',this.value,'risTable')"/>

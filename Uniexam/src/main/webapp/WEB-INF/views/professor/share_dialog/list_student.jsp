@@ -163,21 +163,21 @@
 							
 			%>
 			<tr class="line-top" style="text-align: center;">
-				<td style="display: inline-block" ><div class="square-small <%=policy%>">
-						<div>
-						<div style="display: none;" class="titlemok" id="titleN<%=app.getStudent().getSerialNumber()%>">
-							<table class="tablemok">
+				<td style="display: inline-block">
+				<div class="square-small <%=policy%>" onclick="openDiv('titleN<%=app.getStudent().getSerialNumber()%>')"></div>
+				<div style="display: none;" class="titlemok" id="titleN<%=app.getStudent().getSerialNumber()%>">
+					<buttonmok onclick="closeDiv(this)" class="closeButton">X</buttonmok>
+						<table class="tablemok" >
 							<tr><th>Lo studente non ha sostenuto i seguenti insegnamenti richiesti:</th></tr>
 							<%for(RequestedCourse r:requestedCourses){ %>
 							<tr><td>
 							<%=r.getCourse().getName() %>
 							</td></tr>
 							<%} %>
-							</table>
-						</div>
-						</div>
-						</div>
+						</table>
+				</div>
 				</td>
+				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%> <%=app.getStudent().getSurname()%></td>
 				<td style="padding: 0px 20px 0px 20px;" 

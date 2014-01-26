@@ -11,6 +11,12 @@ html {
 	border-radius: 4px;
 }
 
+.closeButton{
+	position:absolute;
+	right: 10px;
+	top:-18px; 
+}
+
 .aligncenter{
 	display: -webkit-box;
 	display: -moz-box;

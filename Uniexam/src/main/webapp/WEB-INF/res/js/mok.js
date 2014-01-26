@@ -31,6 +31,23 @@ $(document).ready(function() {
 	});
 });
 
+function openDiv(item){
+	var timer;
+	var delay=50;
+	var x=this.event.pageX;
+	var y=this.event.pageY;
+	timer = setTimeout(function() {
+		$("#"+item).css("left",x);
+		$("#"+item).css("top",y);
+		$("#"+item).fadeIn();
+		$("#"+item).attr("display","block");
+	}, delay);
+}
+
+function closeDiv(item){
+	$(item).parent().fadeOut();
+}
+
 //**list-autocomplete
 //<tr><td>
 //<table>
@@ -74,43 +91,53 @@ function ajaxAutoComplete(path,value,idRis){
 	}
 }
 
+
 //titleidOrClass è o l'id o la classe dove viene assegnato il mouse enter
 //titledivid è l'ID del div che si apparirà dal mouse 
 function titlemok(titleidOrClass,titledivid){
-	var timer;
-	var delay=500;
-	$('.'+titleidOrClass).bind('mouseenter',function(event) {
-		timer = setTimeout(function() {
-			$("#"+titledivid).css("left",event.pageX);
-			$("#"+titledivid).css("top",event.pageY);
-			$("#"+titledivid).fadeIn();
-			$("#"+titledivid).attr("display","block");
-		}, delay);
-
-	});
-	$('#'+titleidOrClass).bind('mouseenter',function(event) {
-		timer = setTimeout(function() {
-			$("#"+titledivid).css("left",event.pageX);
-			$("#"+titledivid).css("top",event.pageY);
-			$("#"+titledivid).fadeIn();
-			$("#"+titledivid).attr("display","block");
-		}, delay);
-
-	});
-	$('#'+titleidOrClass).bind('mouseleave',function(event) {
-		timer = setTimeout(function() {
-			$("#"+titledivid).fadeOut();
-			clearTimeout(timer);
-		}, delay);
-
-	});
-	$('.'+titleidOrClass).bind('mouseleave',function(event) {
-		timer = setTimeout(function() {
-			$("#"+titledivid).fadeOut();
-			clearTimeout(timer);
-		}, delay);
-
-	});
+//	var timer;
+//	var delay=50;
+//	$('.'+titleidOrClass).bind('click',function(event) {
+//		timer = setTimeout(function() {
+//			$("#"+titledivid).css("left",event.pageX);
+//			$("#"+titledivid).css("top",event.pageY);
+//			$("#"+titledivid).fadeIn();
+//			$("#"+titledivid).attr("display","block");
+//		}, delay);
+//
+//	});
+//	$('.'+titleidOrClass).bind('mouseenter',function(event) {
+//		timer = setTimeout(function() {
+//			$("#"+titledivid).css("left",event.pageX);
+//			$("#"+titledivid).css("top",event.pageY);
+//			$("#"+titledivid).fadeIn();
+//			$("#"+titledivid).attr("display","block");
+//		}, delay);
+//
+//	});
+//	$('#'+titleidOrClass).bind('mouseenter',function(event) {
+//		timer = setTimeout(function() {
+//			$("#"+titledivid).css("left",event.pageX);
+//			$("#"+titledivid).css("top",event.pageY);
+//			$("#"+titledivid).fadeIn();
+//			$("#"+titledivid).attr("display","block");
+//		}, delay);
+//
+//	});
+//	$('#'+titleidOrClass).bind('mouseleave',function(event) {
+//		timer = setTimeout(function() {
+//			$("#"+titledivid).fadeOut();
+//			clearTimeout(timer);
+//		}, delay);
+//
+//	});
+//	$('.'+titleidOrClass).bind('mouseleave',function(event) {
+//		timer = setTimeout(function() {
+//			$("#"+titledivid).fadeOut();
+//			clearTimeout(timer);
+//		}, delay);
+//
+//	});
 }
 
 var oldString = "";
