@@ -52,7 +52,7 @@ public class AppealDAOImpl implements AppealDAO {
 					ArrayList<RequestedCourse>requested=new ArrayList<RequestedCourse>(c1.getRequestedCourses());
 					ArrayList<AppealStudent> list=new ArrayList<AppealStudent>(appeal.getAppeal_student());
 					for (AppealStudent appealStudent : list) {
-						if(appealStudent.getState()==AppealStudent.STATE.NO_STATE || appealStudent.getState()==AppealStudent.STATE.NOT_SIGNED_BY_PROFESSOR){
+						if(appealStudent.getState()==AppealStudent.STATE.NO_STATE){
 							ArrayList<Carrier> carrier=new ArrayList<Carrier>(appealStudent.getStudent().getCarrier());
 							ArrayList<RequestedCourse>miss=new ArrayList<RequestedCourse>();
 							boolean good=false;
@@ -98,7 +98,7 @@ public class AppealDAOImpl implements AppealDAO {
 			Appeal appeal=(Appeal)session.get(Appeal.class, idAppeal);
 			ArrayList<AppealStudent>appealStudent=new ArrayList<AppealStudent>(appeal.getAppeal_student());
 			for (AppealStudent appealStudent2 : appealStudent) {
-				if(appealStudent2.getState()==AppealStudent.STATE.NO_STATE || appealStudent2.getState()==AppealStudent.STATE.NOT_SIGNED_BY_PROFESSOR){
+				if(appealStudent2.getState()==AppealStudent.STATE.NO_STATE){
 					res.add(appealStudent2);
 				}
 			}

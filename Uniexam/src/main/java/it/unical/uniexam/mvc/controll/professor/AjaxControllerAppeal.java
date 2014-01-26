@@ -39,7 +39,7 @@ public class AjaxControllerAppeal {
 
 	//mok structures
 	ArrayList<ArrayList<Object>> lastListStudents;
-	
+
 	@RequestMapping("/appeal/add_student")
 	public ModelAndView add_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -57,7 +57,7 @@ public class AjaxControllerAppeal {
 		Boolean res= professorService.addStudentToAppeal(idAppeal,idStudent);
 		return new ModelAndView("redirect:/professor/ajax/dialog/list_student?id="+idAppe+"&ris="+res, "model", model);
 	}
-	
+
 	@RequestMapping("/appeal/remove_student")
 	public ModelAndView remove_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -68,14 +68,25 @@ public class AjaxControllerAppeal {
 			return new ModelAndView(redirect);
 		p=plist.get(0);
 
+		ArrayList<Long>removeStudents=new ArrayList<Long>();
+		Enumeration parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			String object = (String) parameterNames.nextElement();
+			if(object.contains("idAppealStudent")){
+				String idd=request.getParameter(object);
+				Long id=null;
+				try{
+					id=Long.valueOf(idd);
+					removeStudents.add(id);
+				}catch(Exception e){new MokException(e);}
+			}
+		}
 		String idAppe=request.getParameter("idAppeal");
-		
-		String idAppeS=request.getParameter("idAppealStudent");
-		Long idAppealStudent=Long.valueOf(idAppeS);
-		Boolean res= professorService.removeStudentToAppeal(idAppealStudent);
+
+		Boolean res= professorService.removeStudentsToAppeal(removeStudents);
 		return new ModelAndView("redirect:/professor/ajax/dialog/list_student?id="+idAppe+"&ris="+res, "model", model);
 	}
-	
+
 	@RequestMapping("/appeal/auto_complete_student")
 	public String autocomplete_student(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -90,23 +101,23 @@ public class AjaxControllerAppeal {
 
 		ArrayList<Student>studentsRANR=new ArrayList<Student>();
 		try{
-		if(lastListStudents!=null && lastListStudents.size()>1){
-			ArrayList<Object>studReg=lastListStudents.get(0);
-			ArrayList<Object>studNotReg=new ArrayList<Object>();
-			ArrayList<Object>studNotRegTemp=lastListStudents.get(1);
-			for (Object object : studNotRegTemp) {
-				ArrayList<Object>stud=(ArrayList<Object>)object;
-				studNotReg.add(stud.get(0));
+			if(lastListStudents!=null && lastListStudents.size()>1){
+				ArrayList<Object>studReg=lastListStudents.get(0);
+				ArrayList<Object>studNotReg=new ArrayList<Object>();
+				ArrayList<Object>studNotRegTemp=lastListStudents.get(1);
+				for (Object object : studNotRegTemp) {
+					ArrayList<Object>stud=(ArrayList<Object>)object;
+					studNotReg.add(stud.get(0));
+				}
+				for (Object object : studReg) {
+					AppealStudent a=(AppealStudent)object;
+					studentsRANR.add(a.getStudent());
+				}
+				for (Object object : studNotReg) {
+					AppealStudent a=(AppealStudent)object;
+					studentsRANR.add(a.getStudent());
+				}
 			}
-			for (Object object : studReg) {
-				AppealStudent a=(AppealStudent)object;
-				studentsRANR.add(a.getStudent());
-			}
-			for (Object object : studNotReg) {
-				AppealStudent a=(AppealStudent)object;
-				studentsRANR.add(a.getStudent());
-			}
-		}
 		}catch(Exception e){new MokException(e);}
 		if(idStud!=null && !idStud.equals("")){
 			ArrayList<Student>studentsMatch=professorService.getStudentsMatch(idStud);
@@ -121,7 +132,7 @@ public class AjaxControllerAppeal {
 			System.out.println(studentsMatch.size());
 			return "professor/appeal/list_autocomplete";
 		}
-			return null;
+		return null;
 	}
 
 
@@ -312,8 +323,8 @@ public class AjaxControllerAppeal {
 		return new ModelAndView("professor/dialog/list_student", "model", model);
 	}
 
-	
-	
+
+
 	@RequestMapping("/dialog/appeal/add_student")
 	public ModelAndView dialog_add_student(HttpServletRequest request, Model model){
 		Professor p=null;

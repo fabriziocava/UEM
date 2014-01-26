@@ -131,7 +131,7 @@
 				onfocus="storeOld(this)" 
 				onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal_student','<%=app.getId()%>','note','S')">
 				<%=app.getNote()%></td>
-				<td style="padding: 0px 20px 0px 20px;"><a class="img-active icon icon-trash clickable" onclick="removeStudent('<%=app.getId()%>')">r</a></td>
+				<td style="padding: 0px 20px 0px 20px;"><a class="img-active icon icon-trash clickable" onclick="removeStudent('<%=app.getId()%>')">re</a></td>
 			</tr>
 			<%} %>
 			<%}else{%>
@@ -186,7 +186,7 @@
 				onfocus="storeOld(this)" 
 				onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal_student','<%=app.getId()%>','note','S')">
 				<%=app.getNote()%></td>
-				<td style="padding: 0px 20px 0px 20px;"><a class="img-active icon icon-trash clickable" onclick="removeStudent('<%=app.getId()%>')">r</a></td>
+				<td style="padding: 0px 20px 0px 20px;"><a class="img-active icon icon-trash clickable" onclick="removeStudent('<%=app.getId()%>')">re</a></td>
 			</tr>
 			<%}
 					} else{%>

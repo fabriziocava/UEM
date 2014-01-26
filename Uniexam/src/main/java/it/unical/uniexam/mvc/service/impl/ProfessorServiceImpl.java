@@ -61,6 +61,11 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	StudentDAO studentDAO;
 	
 	@Override
+	public Boolean applyPrepareAppealStudent(ArrayList<Long> prepareStudents) {
+		return appealStudentDAO.prepareAppealStudentsForSign(prepareStudents);
+	}
+	
+	@Override
 	public ArrayList<ArrayList<Object>> getAppealStudentsForPrepareSign(Long idAppeal) {
 		return appealDAO.getListStudentFromAppealRegularAndNotForSign(idAppeal);
 	}
@@ -72,8 +77,8 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	}
 	
 	@Override
-	public Boolean removeStudentToAppeal(Long idAppeal) {
-		return appealStudentDAO.removeAppealStudent(idAppeal);
+	public Boolean removeStudentsToAppeal(ArrayList<Long> idAppealStudents) {
+		return appealStudentDAO.removeAppealStudents(idAppealStudents);
 	}
 	
 	@Override

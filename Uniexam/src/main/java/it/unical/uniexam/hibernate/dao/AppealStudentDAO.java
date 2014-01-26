@@ -1,5 +1,7 @@
 package it.unical.uniexam.hibernate.dao;
 
+import java.util.ArrayList;
+
 import it.unical.uniexam.hibernate.domain.AppealStudent;
 
 public interface AppealStudentDAO {
@@ -9,7 +11,8 @@ public interface AppealStudentDAO {
 			String note,Double vote);
 	Boolean modifyVote(Long idAppeal, String value);
 	Boolean modifyNote(Long idAppeal, String value);
-	Boolean removeAppealStudent(Long idAppeal);
+	Boolean removeAppealStudents(ArrayList<Long> idAppealStudents);
+	Boolean prepareAppealStudentsForSign(ArrayList<Long> prepareStudents);
 	
 }
 

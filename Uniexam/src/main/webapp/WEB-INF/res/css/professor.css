@@ -16,7 +16,28 @@ html {
 	right: 10px;
 	top:-18px; 
 }
-
+.alignstart{
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-align: start;
+	-moz-box-align: start;
+	flex-align: start;
+	-webkit-box-pack: start;
+	-moz-box-pack: start;
+	flex-pack: start;	
+}
+.alignend{
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-align: end;
+	-moz-box-align: end;
+	flex-align: end;
+	-webkit-box-pack: end;
+	-moz-box-pack: end;
+	flex-pack: end;	
+}
 .aligncenter{
 	display: -webkit-box;
 	display: -moz-box;
@@ -306,6 +327,15 @@ ul.dashboard {
 .dashboard>li {
 	position: relative;
 	float: left;
+}
+
+.trasparent030{
+	background-color: rgba(0, 0, 0, 0.30);
+}
+
+.linkNoMNoP{
+	margin:0px;
+	padding:0px;
 }
 
 .links-user {
