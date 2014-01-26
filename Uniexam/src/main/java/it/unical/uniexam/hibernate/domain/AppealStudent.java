@@ -20,6 +20,7 @@ import javax.persistence.Table;
 public class AppealStudent {
 	
 	public enum STATE {
+		NO_STATE,
 		NOT_SIGNED_BY_PROFESSOR, 
 		NOT_SIGNED_BY_COMMISSARY, 
 		AWAITING_ACKNOWLEDGMENT, 
@@ -54,6 +55,8 @@ public class AppealStudent {
 
 	@ManyToOne
 	Appeal appeal;
+
+	
 	
 	@ManyToOne
 	Student student;
