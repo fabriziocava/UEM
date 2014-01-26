@@ -101,6 +101,16 @@ public class Professor extends User{
 	@Lob
 	private Blob fileimage;
 	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="PROFESSOR_SINGLESIGN",
+	joinColumns={
+			@JoinColumn(name="PROFESSOR_ID")
+	}, 
+	inverseJoinColumns={
+			@JoinColumn(name="AS_ID")
+	})
+	Set<AppealStudent>singleSign=new HashSet<AppealStudent>();
+	
 	/**
 	 * Implementation
 	 */

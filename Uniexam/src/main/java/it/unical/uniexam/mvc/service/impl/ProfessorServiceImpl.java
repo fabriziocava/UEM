@@ -61,6 +61,17 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	StudentDAO studentDAO;
 	
 	@Override
+	public ArrayList<AppealStudent> getAppealStudentsForPrepareSign(Long idAppeal) {
+		return appealDAO.getAppealForPrepareSign(idAppeal);
+	}
+	
+	
+	@Override
+	public ArrayList<Appeal> getAppealsMatch(String appealString) {
+		return appealDAO.getAppealsMatch(appealString);
+	}
+	
+	@Override
 	public Boolean removeStudentToAppeal(Long idAppeal) {
 		return appealStudentDAO.removeAppealStudent(idAppeal);
 	}

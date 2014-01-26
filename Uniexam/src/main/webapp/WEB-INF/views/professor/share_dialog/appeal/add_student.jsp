@@ -22,18 +22,6 @@
 			var dati=new FormData();
 			dati.append("idAppeal",idAppeal);
 			dati.append("idStudent",idStudent);
-// 			sendAJAXmessage2(conte+"/ajax/appeal/add_student", "POST", dati);
-// 			var aj=sendAJAXmessage2(conte+"/ajax/appeal/add_student", "POST", dati);
-// 			aj.done(function(msg){
-// 				if(msg.match("ok"))
-// 					alert("Aggiunto");
-// 				else
-// 					alert("Errore nell'aggiunzione");
-// 			});
-// 			aj.error(function(){
-// 				alert("Errore nell'aggiunzione");
-// 			});
-// 			var ajax=$.post(conte+'/ajax/appeal/add_student', dati.serialize());
 			var ing=$.ajax({
 				url: conte+'/ajax/appeal/add_student',
 				type: "POST",
@@ -57,29 +45,17 @@
 			return false;
 		}
 	}
-	function selemok(item){
-		$(item).parent().css('background-color','red');
-	}
-	function deselemok(item){
-		$(item).parent().css('background-color',' white');
-	}
-	function selectmok(item){
-		$(item).parent().css('background-color',"green");
-		$("input[name='matricola']").val($(item).children().html());
-		$("#studentID").attr('value',item.id);
-		$("#complete").delay(200).html("");
-	}
 </script>
 
 <div id="dialog_content">
 <input type="text" min="3" maxlength="8" 
 name="matricola" id="idComplete" 
-ondblclick="ajaxAutoComplete()"/>
+onkeyup="ajaxAutoComplete('/ajax/appeal/auto_complete_student',this.value,'risTable')"/>
 <input id="studentID" name="studentID" type="hidden"/>
 <!-- <div id="complete" style="position: fixed"></div> -->
 <!-- <div style="position: fixed;"> -->
 <div>
-<table class="tablemok" style="background-color: white; display:table-row-group" id="complete">
+<table class="tablemok" style="background-color: white; display:table-row-group" id="risTable">
 </table>
 </div>
 </div>

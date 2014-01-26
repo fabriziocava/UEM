@@ -31,12 +31,47 @@ $(document).ready(function() {
 	});
 });
 
-function ajaxAutoComplete(){
-	var conte=$("#context").attr("value");
-	var ajax=sendAJAXmessage(conte+"/ajax/appeal/auto_complete_student", "GET", "id", $("#idComplete").val());
-	ajax.done(function(data){
-		$("#complete").html(data);
-	});
+//**list-autocomplete
+//<tr><td>
+//<table>
+//<tr onmouseout="deselemok(this)" onmouseover="selemok(this)" 
+//   onclick="selectmok(this,'inputIdInId','inputIdOutId','risTable')" 
+//   style="text-align: left;" id="<%=obj.getId() %>">
+//	<td style="padding: 0px 20px 0px 0px;"><%=obj.getSerialNumber() %></td>
+//</tr>
+//</table>
+//</td></tr>
+//**
+//<input type="text" min="3" maxlength="8" 
+//  name="matricola" id="inputIdInId" 
+//	onkeyup="ajaxAutoComplete('/ajax/appeal/auto_complete_student',this.value,'risTable')"/>
+//	<input id="inputIdOutId" name="studentID" type="hidden"/>
+//	<!-- <div id="complete" style="position: fixed"></div> -->
+//	<!-- <div style="position: fixed;"> -->
+//	<div>
+//	<table class="tablemok" style="background-color: white; display:table-row-group" id="risTable">
+//	</table>
+//	</div>
+function selemok(item){
+	$(item).parent().css('background-color','red');
+}
+function deselemok(item){
+	$(item).parent().css('background-color',' white');
+}
+function selectmok(item,inputIdInId,inputIdOutId,risTableId){
+	$(item).parent().css('background-color',"green");
+	$("#"+inputIdInId).val($(item).children().html());
+	$("#"+inputIdOutId).attr('value',item.id);
+	$("#"+risTableId).delay(200).html("");
+}
+function ajaxAutoComplete(path,value,idRis){
+	if(value.length>1){
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+path, "GET", "id", value);
+		ajax.done(function(data){
+			$("#"+idRis).html(data);
+		});
+	}
 }
 
 //titleidOrClass è o l'id o la classe dove viene assegnato il mouse enter
@@ -425,7 +460,14 @@ function dialogModifyRequestedCourse(){
 //	});
 }
 
-
+function getDataFromAjaxForce(pathRequ,id,idDest){
+	var conte=$("#context").attr("value");
+	var ajax=sendAJAXmessage(conte+"/ajax/"+pathRequ, "GET", "id", id);
+	ajax.done(function(data){
+		$("#"+idDest).html(data);
+	});
+	return ajax;
+}
 
 function getDataFromAjax(pathRequ,id,idDest){
 //	var id=item.id;

@@ -83,6 +83,10 @@ public interface ProfessorService extends UserService{
 
 	public Boolean removeStudentToAppeal(Long idAppeal);
 
+	public ArrayList<Appeal> getAppealsMatch(String appealString);
+
+	public ArrayList<AppealStudent> getAppealStudentsForPrepareSign(Long idAppeal);
+
 //	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
 //			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);
 

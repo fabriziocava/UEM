@@ -36,6 +36,44 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class AppealDAOImpl implements AppealDAO {
 
 	@Override
+	public ArrayList<AppealStudent> getAppealForPrepareSign(Long idAppeal) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<AppealStudent> res=null;
+		try{
+			
+			Appeal appeal=(Appeal)session.get(Appeal.class, idAppeal);
+			ArrayList<AppealStudent>appealStudent=new ArrayList<AppealStudent>(appeal.getAppeal_student());
+			
+			
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
+	public ArrayList<Appeal> getAppealsMatch(String appealString) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		ArrayList<Appeal> res = null;
+		try {
+			Query q = session.createQuery("from Appeal where lower(name) like :id or lower(location) like :id2 or lower(course.name) like :id3");
+			q.setParameter("id", "%"+appealString.toLowerCase()+"%");
+			q.setParameter("id2", "%"+appealString.toLowerCase()+"%");
+			q.setParameter("id3", "%"+appealString.toLowerCase()+"%");
+			@SuppressWarnings("unchecked")
+			List<Appeal> list = q.list();
+			res = new ArrayList<Appeal>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
 	public Appeal getAppealGround(Long idAppeal) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Appeal res=null;
