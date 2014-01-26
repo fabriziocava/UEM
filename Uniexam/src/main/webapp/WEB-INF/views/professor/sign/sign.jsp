@@ -46,11 +46,9 @@
 			buttons.Seleziona = function() {
 				var idAppeal=$("#appealID").attr('value');
 				if(idAppeal!=undefined){
-					getDataFromAjaxForce("sign/prepare_from_appeal",idAppeal,'container-center');
-// 					var ajax=getDataFromAjaxForce("sign/prepare_from_appeal",idAppeal,'container-center');
-// 					ajax.done(function(data){
-// 						alert("ok");
-// 					});
+// 					getDataFromAjaxForce("sign/prepare_from_appeal",idAppeal,'container-center');
+					var conte=$("#context").attr("value");
+					window.location=conte+"/sign/prepare_from_appeal?id="+idAppeal;
 					dial.dialog("close");
 				}
 			};

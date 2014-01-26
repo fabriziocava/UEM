@@ -9,6 +9,11 @@
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <!-- from Controller attribute course that contains the all details for Course -->
 
+<%
+		Appeal appeal=(Appeal) request.getAttribute("appeal");
+		if(appeal!=null){
+	%>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#tableSortable").tablesorter();
@@ -16,14 +21,59 @@ $(document).ready(function(){
 		titlemok('square-small', element.id);
 	});
 });
+function removeStudent(id){
+	$('<div></div>')
+	.attr('id','flashDialog')
+	.attr('title','remove student?')
+	.appendTo('body');
+	$('#flashDialog').dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#flashDialog");
+		},
+		buttons:{
+			"Confirm":function(){
+				var conte=$("#context").attr("value");
+				var dati=new FormData();
+				dati.append("idAppealStudent",id);
+				dati.append("idAppeal",'<%=appeal.getId()%>');
+				var ing=$.ajax({
+					url: conte+'/ajax/appeal/remove_student',
+					type: "POST",
+					data:dati,
+					processData: false,
+					contentType: false
+				});
+				ing.done(function(data){
+					location.reload();
+				});
+				
+				$( this ).dialog( "close" );
+				$("div").remove("#flashDialog");
+			},
+			"Cancel":function(){
+				$( this ).dialog( "close" );
+				$("div").remove("#flashDialog");
+			}
+		}
+	});
+}
 </script>
 
-<%
-		Appeal appeal=(Appeal) request.getAttribute("appeal");
-		if(appeal!=null){
-	%>
-
 <% %>
+<div class="container-center">
+
 <div class="aligncenter">
 <h2 style="text-align: center;"><%=appeal.getName() %></h2>
 </div>
@@ -135,6 +185,7 @@ $(document).ready(function(){
 			</tbody>
 		</table>
 	</fieldset>
+</div>
 </div>
 <%
 }else{%>

@@ -11,7 +11,11 @@
 	<definition name="professor/sign/list_autocomplete" template="/WEB-INF/views/professor/sign/list_autocomplete.jsp">
 	</definition>
 	
-	<definition name="professor/sign/prepare_from_appeal" template="/WEB-INF/views/professor/sign/prepare_from_appeal.jsp">
+<!-- 	<definition name="professor/sign/prepare_from_appeal" template="/WEB-INF/views/professor/sign/prepare_from_appeal.jsp"> -->
+<!-- 	</definition> -->
+	
+	<definition name="professor/sign/prepare_from_appeal" extends="professor.base">
+	    <put-attribute name="container-center" value="/WEB-INF/views/professor/sign/prepare_from_appeal.jsp" />
 	</definition>
 	
 </tiles-definitions>

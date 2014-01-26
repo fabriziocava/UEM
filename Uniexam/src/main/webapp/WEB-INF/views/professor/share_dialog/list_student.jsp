@@ -79,9 +79,6 @@
 			}
 		});
 	}
-	function almok(){
-		alert("ciao");
-	}
 </script>
 
 <div id="dialog_content">
@@ -177,7 +174,6 @@
 						</table>
 				</div>
 				</td>
-				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%> <%=app.getStudent().getSurname()%></td>
 				<td style="padding: 0px 20px 0px 20px;" 

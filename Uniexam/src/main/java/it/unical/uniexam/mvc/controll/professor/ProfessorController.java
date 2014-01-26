@@ -49,31 +49,6 @@ public class ProfessorController {
 	@Autowired
 	ProfessorService professorService;
 	
-
-	@RequestMapping(value="professor/sign" , method=RequestMethod.GET)
-	public String sign(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
-
-		model.addAttribute("I",p);
-		updateNotification(model, p);
-		updatePersonalizzation(model, p);
-		// aggiungere altre cose
-		/**
-		 * qui all'ingresso io metterei un calendario con le lezioni che il professore ha
-		 * con la possibilità di aggiungere note, o di progammare l'invio di email,
-		 * o di progammare avvisi per lui su un certo evento! un calendario in pratica
-		 * ******questo se rimane tempo è ne ho la possibilità
-		 */
-
-		return "professor/sign";
-	}
-	
 	@RequestMapping(value=ProfessorService.PROFESSOR_HOME , method=RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model){
 		Professor p=null;

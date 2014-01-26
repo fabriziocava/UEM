@@ -34,30 +34,6 @@ public class AjaxControllerSign {
 	@Autowired
 	ProfessorService professorService;
 
-	@RequestMapping("/prepare_from_appeal")
-	public String prepare_from_appeal(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
-		
-		try{
-			String appealString=request.getParameter("id");
-			Long idAppeal=Long.valueOf(appealString);
-			if(appealString!=null && appealString.length()>0){
-				ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForPrepareSign(idAppeal);
-				model.addAttribute("appealStudents", appealStudents);
-				Appeal appeal=professorService.getAppealGround(idAppeal);
-				model.addAttribute("appeal", appeal);
-			}
-		}catch(Exception e){new MokException(e);}
-		
-		return "professor/sign/prepare_from_appeal";
-	}
-	
 	@RequestMapping("/list_appeals")
 	public String list_appeals(HttpServletRequest request, Model model){
 		Professor p=null;
