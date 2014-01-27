@@ -69,7 +69,7 @@
 	</script>
 
 	<div id="from_appeal" style="display: none;">
-		<input type="text" min="3" maxlength="8" id="idComplete"
+		<input type="text" min="3" maxlength="8" id="idComplete" placeholder="Nome, Aula, Corso"
 			onkeyup="ajaxAutoComplete('/ajax/sign/list_appeals',this.value,'risTable')" />
 		<input id="appealID" name="appealID" type="hidden" />
 		<div>

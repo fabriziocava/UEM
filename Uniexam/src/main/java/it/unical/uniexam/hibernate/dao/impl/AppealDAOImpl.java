@@ -123,13 +123,13 @@ public class AppealDAOImpl implements AppealDAO {
 		try {
 			//			Query q = session.createQuery("from Appeal where creatorProfessor.id =:idProfessor and "
 			//					+ "(lower(name) like :id or lower(location) like :id2 or (course is not null and lower(course.name) like :id3))");
-			Query q = session.createQuery("from Appeal where creatorProfessor.id =:idProfessor and course is not null and"
-					+ "(lower(name) like :id or lower(location) like :id2)");
+			Query q = session.createQuery("from Appeal where creatorProfessor.id =:idProfessor and"
+					+ "(lower(name) like :id or lower(location) like :id2 or (course is not null and lower(course.name) like :id3))");
 
 			q.setParameter("idProfessor", idProfessor);
 			q.setParameter("id", "%"+appealString.toLowerCase()+"%");
 			q.setParameter("id2", "%"+appealString.toLowerCase()+"%");
-			//			q.setParameter("id3", "%"+appealString.toLowerCase()+"%");
+			q.setParameter("id3", "%"+appealString.toLowerCase()+"%");
 			@SuppressWarnings("unchecked")
 			List<Appeal> list = q.list();
 			res = new ArrayList<Appeal>(list);

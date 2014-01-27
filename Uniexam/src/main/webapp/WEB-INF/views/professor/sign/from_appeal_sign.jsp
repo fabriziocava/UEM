@@ -184,16 +184,19 @@ function dialogRemoveStudent(id){
 			<buttonmok onclick="applySign('selctedStudent')"
 				style="margin-top:20px">Apply Sign</buttonmok>
 			<br>
+			<input type="text" 
+			onkeyup="filterMok('#tableSortable tbody tr.table-item-space',this.value)"
+			placeholder="search"/>
 			<table class="tablemok" id="tableSortable">
 				<thead>
-					<tr style="text-align: center;">
-						<th style="padding: 0px 20px 0px 20px;">Stato</th>
-						<th style="padding: 0px 20px 0px 20px;">Matricola</th>
-						<th style="padding: 0px 20px 0px 20px;">Nome</th>
-						<th style="padding: 0px 20px 0px 20px;">Voto</th>
-						<th style="padding: 0px 20px 0px 20px;">Nota</th>
-						<th style="padding: 0px 20px 0px 20px;">Elimina</th>
-						<th style="padding: 0px 20px 0px 20px;">Seleziona</th>
+					<tr style="text-align: center;" class="table-item-space">
+						<th >Stato</th>
+						<th >Matricola</th>
+						<th >Nome</th>
+						<th >Voto</th>
+						<th >Nota</th>
+						<th >Elimina</th>
+						<th >Seleziona</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -202,19 +205,19 @@ function dialogRemoveStudent(id){
 								for (Object appObj : appealStudents) {
 									AppealStudent app = (AppealStudent) appObj;
 					%>
-					<tr class="line-top" style="text-align: center;">
+					<tr class="line-top table-item-space" style="text-align: center;">
 						<td></td>
-						<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
-						<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%>
+						<td ><%=app.getStudent().getSerialNumber()%></td>
+						<td ><%=app.getStudent().getName()%>
 							<%=app.getStudent().getSurname()%></td>
-						<td style="padding: 0px 20px 0px 20px;" >
+						<td  >
 							<%=app.getTemporany_vote()%></td>
-						<td style="padding: 0px 20px 0px 20px;" >
+						<td  >
 							<%=app.getNote()%></td>
-						<td style="padding: 0px 20px 0px 20px;"><a
+						<td ><a
 							class="img-active icon icon-trash clickable"
 							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td>
-						<td style="padding: 0px 20px 0px 20px;"><input
+						<td ><input
 							type="checkbox" name="selctedStudent" value="<%=app.getId()%>" /></td>
 					</tr>
 					<%
@@ -252,7 +255,7 @@ function dialogRemoveStudent(id){
 										}
 									}
 					%>
-					<tr class="line-top" style="text-align: center;">
+					<tr class="line-top table-item-space" style="text-align: center;">
 						<td style="display: inline-block">
 							<div class="square-small <%=policy%>"
 								onclick="openDiv('titleN<%=app.getStudent().getSerialNumber()%>')"></div>
@@ -276,17 +279,17 @@ function dialogRemoveStudent(id){
 								</table>
 							</div>
 						</td>
-						<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
-						<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%>
+						<td ><%=app.getStudent().getSerialNumber()%></td>
+						<td ><%=app.getStudent().getName()%>
 							<%=app.getStudent().getSurname()%></td>
-						<td style="padding: 0px 20px 0px 20px;" >
+						<td  >
 							<%=app.getTemporany_vote()%></td>
-						<td style="padding: 0px 20px 0px 20px;" >
+						<td  >
 							<%=app.getNote()%></td>
-						<td style="padding: 0px 20px 0px 20px;"><a
+						<td ><a
 							class="img-active icon icon-trash clickable"
 							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td>
-						<td style="padding: 0px 20px 0px 20px;"><input
+						<td ><input
 							type="checkbox" name="selctedStudent" value="<%=app.getId()%>"/></td>
 					</tr>
 					<%

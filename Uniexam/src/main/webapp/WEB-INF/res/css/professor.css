@@ -32,6 +32,10 @@ border-spacing: 0px;
 	cursor: pointer;
 }
 
+.table-item-space td{
+	padding: 0px 20px 0px 20px;
+}
+
 .table-list tr td{
 	border-radius: 0px;
 }

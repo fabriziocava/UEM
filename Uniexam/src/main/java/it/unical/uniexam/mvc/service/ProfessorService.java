@@ -93,6 +93,9 @@ public interface ProfessorService extends UserService{
 
 	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents, Long idProfessor);
 
+	public Boolean signAppealStudentsList(
+			ArrayList<Long> listSignAppealStudents, Long id);
+
 //	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
 //			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);
 

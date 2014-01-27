@@ -89,7 +89,7 @@ public class AjaxControllerSign {
 			return new ModelAndView(redirect);
 		p=plist.get(0);
 
-		ArrayList<Long>removeStudents=new ArrayList<Long>();
+		ArrayList<Long>listSignAppealStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
 		while (parameterNames.hasMoreElements()) {
 			String object = (String) parameterNames.nextElement();
@@ -98,12 +98,12 @@ public class AjaxControllerSign {
 				Long id=null;
 				try{
 					id=Long.valueOf(idd);
-					removeStudents.add(id);
+					listSignAppealStudents.add(id);
 				}catch(Exception e){new MokException(e);}
 			}
 		}
 
-		Boolean res=false; 
+		Boolean res=professorService.signAppealStudentsList(listSignAppealStudents,p.getId());
 //				professorService.removeStudentsToAppeal(removeStudents);
 		
 		ServletOutputStream outputStream = null;

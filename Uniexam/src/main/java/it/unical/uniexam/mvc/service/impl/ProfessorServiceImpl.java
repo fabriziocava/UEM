@@ -62,6 +62,12 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	StudentDAO studentDAO;
 	
 	@Override
+	public Boolean signAppealStudentsList(
+			ArrayList<Long> listSignAppealStudents, Long idProfessor) {
+		return appealStudentDAO.signAppealStudentsByProfessor(listSignAppealStudents, idProfessor);
+	}
+	
+	@Override
 	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents,
 			Long idProfessor) {
 		return appealStudentDAO.declassifyStudents(listAppealStudents,idProfessor);

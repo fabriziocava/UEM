@@ -4,6 +4,22 @@ $(document).ready(function() {
 	alingDashBoard();
 });
 
+function filterMok(query,value){
+	var values=value.split(" ");
+	var si=0;
+	$(""+query).each(function(){
+		for(var i=0;i<values.length;i++){
+			si=0;
+			if($(this).is(":contains('"+value+"')")){
+				$(this).show();
+				si=1;
+			}
+		}
+		if(si==0)
+			$(this).hide();
+		});
+}
+
 function removeNoSelected(name) {
 	$("input[name='" + name + "']:checkbox").each(function() {
 		if (this.checked)
