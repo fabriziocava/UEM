@@ -50,14 +50,14 @@ function dialogRemoveStudent(id){
 			$("div").remove("#flashDialog");
 		},
 		buttons:{
-			"Confirm":function(){
+			"<spring:message code='message.general.confirm'/>":function(){
 					listRemove.append((count++)+"idAppealStudent",id);
 					actionAppealStudents(listRemove,'sign/remove_students');
 					count=0;
 					$(this).dialog("close");
 					$("div").remove("#flashDialog");
 				},
-				"Cancel" : function() {
+				"<spring:message code='message.general.cancel'/>" : function() {
 					$(this).dialog("close");
 					$("div").remove("#flashDialog");
 				}
@@ -166,18 +166,14 @@ function dialogRemoveStudent(id){
 						<legend>Local modification</legend>
 						<ul style="padding: 10px" class="linkNoMNoP">
 							<li class="aligncenter" style="float: left; margin-right: 60px;"><buttonmok
-									onclick="removeNoSelected('selctedStudent')">Remove
-								Unselected</buttonmok></li>
+									onclick="removeNoSelected('selctedStudent')">Remove Unselected</buttonmok></li>
 							<li class="alignend"><buttonmok
-									onclick="removeSelected('selctedStudent')">Remove
-								Selected</buttonmok></li>
+									onclick="removeSelected('selctedStudent')">Remove Selected</buttonmok></li>
 								<li class="alignend" style="float: left;margin-top: 10px;margin-right: 60px;">
 								<buttonmok
-									onclick="selectAll('selctedStudent')">Select
-								All</buttonmok></li>
+									onclick="selectAll('selctedStudent')">Select All</buttonmok></li>
 								<li class="alignend" style="margin-top: 10px;"><buttonmok
-									onclick="deselectAll('selctedStudent')">Deselect
-								All</buttonmok></li>
+									onclick="deselectAll('selctedStudent')">Deselect All</buttonmok></li>
 						</ul>
 						<br>
 					</fieldset>
@@ -191,11 +187,9 @@ function dialogRemoveStudent(id){
 						<legend>Persistent modification</legend>
 						<ul style="padding: 10px" class="linkNoMNoP">
 							<li class="aligncenter" style="float: left; margin-right: 60px;"><buttonmok
-									onclick="deleteNoSelected('selctedStudent')">Delete
-								Unselected</buttonmok></li>
+									onclick="deleteNoSelected('selctedStudent')">Delete Unselected</buttonmok></li>
 							<li class="alignend"><buttonmok
-									onclick="deleteSelected('selctedStudent')">Delete
-								Selected</buttonmok></li>
+									onclick="deleteSelected('selctedStudent')">Delete Selected</buttonmok></li>
 						</ul>
 						<br>
 					</fieldset>

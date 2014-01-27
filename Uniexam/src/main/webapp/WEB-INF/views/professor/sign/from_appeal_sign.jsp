@@ -50,7 +50,7 @@ function dialogRemoveStudent(id){
 			$("div").remove("#flashDialog");
 		},
 		buttons:{
-			"Confirm":function(){
+			"<spring:message code='message.general.confirm'/>":function(){
 					listRemove.append((count++)+"idAppealStudent",id);
 					actionAppealStudents(listRemove,'sign/remove_students');
 					count=0;
