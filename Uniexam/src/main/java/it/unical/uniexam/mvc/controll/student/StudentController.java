@@ -3,6 +3,7 @@ package it.unical.uniexam.mvc.controll.student;
 import java.util.ArrayList;
 import java.util.Set;
 
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -74,6 +75,45 @@ public class StudentController {
 		model.addAttribute("groups", groups);
 		
 		return StudentService.STUDENT_GROUP;
+	}
+
+	
+	@RequestMapping(value=StudentService.STUDENT_CARRIER, method=RequestMethod.GET)
+	public String carrier(HttpServletRequest request, Model model) {
+		Student s = null;
+		String redirect = null;
+		ArrayList<Student> slist = new ArrayList<Student>();
+		redirect = setStudentOrRedirect(request, model, slist);
+		if(redirect!=null)
+			return redirect;
+		s = slist.get(0);
+		
+		model.addAttribute("I",s);
+		
+		Long idStudent = s.getId();
+		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudentForCarrier(idStudent);
+		model.addAttribute("as", appealStudent);
+		
+		return StudentService.STUDENT_CARRIER;
+	}
+
+	@RequestMapping(value=StudentService.STUDENT_VERBALTOBESIGNED, method=RequestMethod.GET)
+	public String verbalToBeSigned(HttpServletRequest request, Model model) {
+		Student s = null;
+		String redirect = null;
+		ArrayList<Student> slist = new ArrayList<Student>();
+		redirect = setStudentOrRedirect(request, model, slist);
+		if(redirect!=null)
+			return redirect;
+		s = slist.get(0);
+		
+		model.addAttribute("I",s);
+		
+		Long idStudent = s.getId();
+		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudentForVerbalToBeSigned(idStudent);
+		model.addAttribute("as", appealStudent);
+		
+		return StudentService.STUDENT_VERBALTOBESIGNED;
 	}
 	
 	

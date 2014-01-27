@@ -13,4 +13,8 @@ public interface AppealStudentDAO {
 			String note,Double vote);
 	ArrayList<AppealStudent> getAppealStudent(Long idStudent);
 	AppealStudent removeAppealStudent(Long idAppealStudent);
+    Boolean prepareAppealStudentsForSign(ArrayList<Long> prepareStudents);
+    ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent);
+    ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(Long idStudent);
+    
 }

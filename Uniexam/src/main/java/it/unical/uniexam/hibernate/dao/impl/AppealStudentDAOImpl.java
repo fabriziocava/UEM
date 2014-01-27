@@ -31,7 +31,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			if(appealStudent.getStudent().getId()==null)
 				return null;
 			if(appealStudent.getState()==null)
-				appealStudent.setState(AppealStudent.STATE.NOT_SIGNED_BY_PROFESSOR);
+				appealStudent.setState(AppealStudent.STATE.NO_STATE);
 			
 			Appeal app=(Appeal)session.get(Appeal.class, appealStudent.getAppeal().getId());
 			Student stud=(Student)session.get(Student.class, appealStudent.getStudent().getId());
@@ -73,7 +73,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			AppealStudent appealStudent=new AppealStudent(app, stud, state, vote, note);
 			
 			if(state==null)
-				appealStudent.setState(AppealStudent.STATE.NOT_SIGNED_BY_PROFESSOR);
+				appealStudent.setState(AppealStudent.STATE.NO_STATE);
 			
 			app.getAppeal_student().add(appealStudent);
 			stud.getAppeal_student().add(appealStudent);
@@ -138,4 +138,67 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		}
 		return appealStudent;
 	}
+	
+    @Override
+    public Boolean prepareAppealStudentsForSign(ArrayList<Long> prepareStudents) {
+            Session session =HibernateUtil.getSessionFactory().openSession();
+            Transaction transaction=null;
+            Boolean ris=false;
+            try{
+                    transaction=session.beginTransaction();
+
+                    for (Long idAppeal : prepareStudents) {
+                            AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+                            appealStudent.setState(STATE.NOT_SIGNED_BY_PROFESSOR);
+                    }
+
+                    transaction.commit();
+
+                    ris=true;
+            }catch(Exception e){
+                    new MokException(e);
+                    ris=false;
+                    transaction.rollback();
+            }finally{
+                    session.close();
+            }
+            return ris;
+    }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<AppealStudent> res=null;
+		try{
+			Query q=session.createQuery("from AppealStudent where student.id = :studentId and state <> :appealState");
+			q.setParameter("studentId", idStudent);
+			q.setParameter("appealState", AppealStudent.STATE.NO_STATE);
+			res=new ArrayList<AppealStudent>(q.list());
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(
+			Long idStudent) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<AppealStudent> res=null;
+		try{
+			Query q=session.createQuery("from AppealStudent where student.id = :studentId and state = :appealState");
+			q.setParameter("studentId", idStudent);
+			q.setParameter("appealState", AppealStudent.STATE.AWAITING_ACKNOWLEDGMENT);
+			res=new ArrayList<AppealStudent>(q.list());
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
 }

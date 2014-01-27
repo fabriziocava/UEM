@@ -111,6 +111,7 @@ function removeInscription(id) {
 					<th>Luogo</th>
 					<th>Chiusura</th>
 				</tr>
+			</thead>
 				<%
 				for(Appeal a : appeal) {
 					%>
@@ -166,7 +167,6 @@ function removeInscription(id) {
 					<%
 				}
 				%>
-				</thead>
 			</table>
 			<%
 			} else {

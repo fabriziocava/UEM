@@ -82,7 +82,7 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 
 	@Override
 	public Boolean inscriptionToAppeal(Long idAppeal, Long idStudent) {
-		Long id = appealStudentDAO.addAppealStudent(null, idAppeal, idStudent, null, null);
+		Long id = appealStudentDAO.addAppealStudent(AppealStudent.STATE.NO_STATE, idAppeal, idStudent, null, null);
 		if(id!=null)
 			return true;
 		return false;
@@ -92,7 +92,18 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	public ArrayList<AppealStudent> getAppealStudent(Long idStudent) {
 		return appealStudentDAO.getAppealStudent(idStudent);
 	}
+	
+	@Override
+	public ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent) {
+		return appealStudentDAO.getAppealStudentForCarrier(idStudent);
+	}
 
+	@Override
+	public ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(
+			Long idStudent) {
+		return appealStudentDAO.getAppealStudentForVerbalToBeSigned(idStudent);
+	}
+	
 	@Override
 	public Boolean removeInscriptionToAppeal(Long idAppealStudent) {
 		AppealStudent appealStudent = appealStudentDAO.removeAppealStudent(idAppealStudent);
