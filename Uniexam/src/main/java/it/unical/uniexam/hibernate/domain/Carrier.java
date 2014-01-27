@@ -16,7 +16,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="CARRIER")
-@PrimaryKeyJoinColumn(name="CARRIER_ID")
 public class Carrier {
 
 	@Id

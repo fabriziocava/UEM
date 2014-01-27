@@ -16,6 +16,8 @@ public interface StudentService extends UserService {
 	public static final String STUDENT_COURSE = "student/course";
 	public static final String STUDENT_APPEAL = "student/appeal";
 	public static final String STUDENT_GROUP = "student/group";
+	public static final String STUDENT_CARRIER = "student/carrier";
+	public static final String STUDENT_VERBALTOBESIGNED = "student/verbalToBeSigned";
 	
 	public Student getStudent(Long serialNumber);
 	public ArrayList<Course> getCourses();

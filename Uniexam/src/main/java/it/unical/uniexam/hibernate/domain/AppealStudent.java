@@ -16,7 +16,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="APPEAL_STUDENT")
-@PrimaryKeyJoinColumn(name="AS_ID")
 public class AppealStudent {
 	
 	public enum STATE {
