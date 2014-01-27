@@ -200,6 +200,12 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 		return professorDAO.getProfessors();
 	}
 
+
+	@Override
+	public boolean removeHolderProfessor(Long idCourse, Long professor) {
+		return courseDAO.removeHolderProfessor(idCourse, professor);
+	}
+
 	
 	
 

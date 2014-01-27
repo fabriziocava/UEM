@@ -385,6 +385,20 @@ function submitAddRequestedCourse(){
 	});
 }
 
+function submitAssignCourse(){
+	var conte=$("#context").attr("value");
+//	$("#addrequestedCourse").submit();
+	var ajax=$.post(conte+'/assegnaCorsoAction', $('#addrequestedCourse').serialize());
+	ajax.done(function(data){
+		if($("#dialog").html()==undefined)
+			$("<div></div>").attr('id','dialog').appendTo('body');
+		$("#dialog").html(data);
+	});
+}
+
+
+
+
 function dialogModifyRequestedCourse(){
 	$("#dialog").attr("title","Requested Course");
 	$("#dialog").dialog({

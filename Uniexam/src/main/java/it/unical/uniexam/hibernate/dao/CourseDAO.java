@@ -49,6 +49,7 @@ public interface CourseDAO {
 	
 	public boolean setHolderProfessor(Long idCourse,Long idProfessor);
 	public boolean setHolderProfessor(Long idCourse, Professor professor);
+	public boolean removeHolderProfessor(Long idCourse,Long idprofessor);
 	public Professor getHolderProfessor(Long idCourse);
 	
 	//commission

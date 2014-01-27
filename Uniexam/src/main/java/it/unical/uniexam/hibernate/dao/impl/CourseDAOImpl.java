@@ -315,6 +315,32 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
+	public boolean removeHolderProfessor(Long idCourse, Long idprofessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		boolean ok=false;
+		try{
+			transaction = session.beginTransaction();
+			Course c1=(Course) session.get(Course.class, idCourse);
+			Professor p=(Professor) session.get(Professor.class, idprofessor);
+			if(c1!=null){
+				c1.setHolder(null);
+				p.getSetHoldersCourse().remove(c1);
+				transaction.commit();
+				ok=true;			
+			}
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		if(!ok) return false;
+		else return true;
+	}
+	
+	
+	@Override
 	public Professor getHolderProfessor(Long idCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Professor res=null;
@@ -737,6 +763,9 @@ public class CourseDAOImpl implements CourseDAO{
 		}
 		return res;
 	}
+
+
+	
 
 
 	

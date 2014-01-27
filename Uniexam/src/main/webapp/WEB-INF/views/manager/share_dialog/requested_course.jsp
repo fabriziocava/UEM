@@ -79,7 +79,7 @@
 		<div id="requestedCourse<%=req.getCourse().getId()%>"><%=req.getCourse().getName()%></div>
 		<ul class="links-user">
 		<li><spring:message code='message.general.options' /> :</li> 
-		<li class="bottonmok" onclick="sendDeleteAppeal('<%=c.getId()%>','<%=req.getId()%>')"><spring:message code='message.general.remove' /></li>
+		<li class="bottonmok color_red" onclick="sendDeleteAppeal('<%=c.getId()%>','<%=req.getId()%>')"><spring:message code='message.general.remove' /></li>
 		</ul>
 		</div>
 		</td>

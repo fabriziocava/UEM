@@ -54,6 +54,8 @@ public interface ManagerService extends UserService {
 	public Set<Professor> getProfessors();
 
 	public boolean setHolderProfessor(Long idCourse, Long idProfessor);
+	public boolean removeHolderProfessor(Long idCourse,Long idprofessor);
+
 	
 	
 }

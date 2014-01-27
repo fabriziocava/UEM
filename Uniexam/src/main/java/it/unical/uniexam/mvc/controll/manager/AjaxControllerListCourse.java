@@ -207,4 +207,39 @@ public class AjaxControllerListCourse {
 		return null;
 	}
 	
+	
+	@RequestMapping("/course/remove_courseAsHolder")
+	public String remove_courseasHolder(HttpServletRequest request, Model model,HttpServletResponse response){
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+		}
+		if(user.getClass()!=Manager.class){
+			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+		}
+		Manager m=(Manager)user;
+		model.addAttribute("M",m);
+		
+		String idcourse=request.getParameter("id");
+		Long idc=Long.valueOf(idcourse);
+
+		String idcourserequested=request.getParameter("id2");
+		Long idcr=Long.valueOf(idcourserequested);
+		Boolean res=managerService.removeHolderProfessor(idc, idcr);
+		
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res)
+				outputStream.println("ok");
+			else
+				outputStream.println("no");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
+		return null;
+	}
+	
 }

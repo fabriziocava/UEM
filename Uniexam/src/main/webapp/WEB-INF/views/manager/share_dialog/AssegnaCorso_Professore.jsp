@@ -32,16 +32,16 @@
 			buttons:{
 				Save:function(){
 					//something else
-					if($("input[name^='policyOfRequested']:radio:checked").val()!=undefined){
+					
 //							alert("vado");
-						submitAddRequestedCourse();
+						submitAssignCourse();
 						$( this ).dialog( "close" );
 						$("div").remove("#dialogAddRequested");
-					}else{
-						alert("choose a policy");
+								}
+						
+					
 					}
-				}
-			}
+			
 		});
 		$("#dialogAddRequested").attr("title","");
 	});
@@ -52,18 +52,21 @@
 	
 %>
 <div id="dialog_content">
-<form:form id="assegnacorso" modelAttribute="assegnaCorso" method="post" action="assegnaCorsoAction">
+<form:form id=" addrequestedCourse " action="${pageContext.request.contextPath}/manager/assegnaCorsoAction" modelAttribute="assegnaCorso" method="post" >
 <table class="tablemok">
 
 <tr>
 <td><form:label path="holder">Assegna corso a professore</form:label></td>
-<td><form:select path="holder" items="${model.professors}" itemLabel="name" itemValue="id"></form:select></td>
+<td><form:select path="holder" items="${model.professors}" itemLabel="name"  itemValue="id"></form:select></td>
 <td><input type="hidden" name="idCourse" value="${model.idcourse}"/></td>
 </tr>
 <tr><td></td><td>
 <!-- <input type="submit" value="Register" /> -->
 </td></tr>
 </table>
+
+
+
 </form:form>
 <br>
 
