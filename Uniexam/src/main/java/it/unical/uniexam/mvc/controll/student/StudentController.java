@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -115,6 +116,22 @@ public class StudentController {
 		
 		return StudentService.STUDENT_VERBALTOBESIGNED;
 	}	
+	
+	@RequestMapping(value=StudentService.STUDENT_VERBALTOBESIGNED+"/sign", method=RequestMethod.POST)
+	String signVerbal(HttpServletRequest request, Model model) {
+		Student s = null;
+		String redirect = null;
+		ArrayList<Student> slist = new ArrayList<Student>();
+		redirect = setStudentOrRedirect(request, model, slist);
+		if(redirect!=null)
+			return redirect;
+		s = slist.get(0);
+		
+		model.addAttribute("I",s);
+		
+		return carrier(request, model);
+	}
+	
 	
 	String setStudentOrRedirect(HttpServletRequest request,Model model, ArrayList<Student> slist) {
 		User user=studentService.getSession(request.getSession().getId());

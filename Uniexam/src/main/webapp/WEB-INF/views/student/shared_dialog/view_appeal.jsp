@@ -91,7 +91,7 @@ function removeInscription(id) {
 	ArrayList<AppealStudent> appealStudent = (ArrayList<AppealStudent>) request.getAttribute("as");
 	boolean isInscribed = false;
 	Long idAppealStudent = null;
-	Double vote = null;
+	String vote = null;
 	if(appeal!=null && !appeal.isEmpty()) {
 		%>
 		<label><%=appeal.get(0).getCourse().getName()%></label>
@@ -128,7 +128,10 @@ function removeInscription(id) {
 										if(as.getStudent().getId()==student.getId()) {
 											isInscribed=true;
 											idAppealStudent = as.getId();
-											vote = as.getTemporany_vote();
+											if(as.getTemporany_vote()>30.0)
+												vote = "30 L";
+											else
+												vote = String.valueOf(as.getTemporany_vote().intValue());
 										}
 									}
 								} catch (Exception e) {
