@@ -18,4 +18,8 @@
 	    <put-attribute name="container-center" value="/WEB-INF/views/professor/sign/prepare_from_appeal.jsp" />
 	</definition>
 	
+	<definition name="professor/sign/from_appeal_sign" extends="professor.base">
+	    <put-attribute name="container-center" value="/WEB-INF/views/professor/sign/from_appeal_sign.jsp" />
+	</definition>
+	
 </tiles-definitions>

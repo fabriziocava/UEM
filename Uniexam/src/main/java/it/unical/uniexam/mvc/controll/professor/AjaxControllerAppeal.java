@@ -83,7 +83,7 @@ public class AjaxControllerAppeal {
 		}
 		String idAppe=request.getParameter("idAppeal");
 
-		Boolean res= professorService.removeStudentsToAppeal(removeStudents);
+		Boolean res= professorService.removeStudentsToAppeal(removeStudents,p.getId());
 		return new ModelAndView("redirect:/professor/ajax/dialog/list_student?id="+idAppe+"&ris="+res, "model", model);
 	}
 

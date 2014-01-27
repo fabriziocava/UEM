@@ -29,6 +29,7 @@ import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
+import it.unical.uniexam.hibernate.domain.AppealStudent.STATE;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
@@ -61,13 +62,24 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	StudentDAO studentDAO;
 	
 	@Override
-	public Boolean applyPrepareAppealStudent(ArrayList<Long> prepareStudents) {
-		return appealStudentDAO.prepareAppealStudentsForSign(prepareStudents);
+	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents,
+			Long idProfessor) {
+		return appealStudentDAO.declassifyStudents(listAppealStudents,idProfessor);
+	}
+	
+	@Override
+	public Boolean applyPrepareAppealStudent(ArrayList<Long> prepareStudents,Long idProfessor) {
+		return appealStudentDAO.prepareAppealStudentsForSign(prepareStudents,idProfessor);
+	}
+	
+	@Override
+	public ArrayList<ArrayList<Object>> getAppealStudentsForSign(Long idAppeal) {
+		return appealDAO.getListStudentFromAppealRegularAndNotForState(idAppeal,STATE.NOT_SIGNED_BY_PROFESSOR);
 	}
 	
 	@Override
 	public ArrayList<ArrayList<Object>> getAppealStudentsForPrepareSign(Long idAppeal) {
-		return appealDAO.getListStudentFromAppealRegularAndNotForSign(idAppeal);
+		return appealDAO.getListStudentFromAppealRegularAndNotForState(idAppeal,STATE.NO_STATE);
 	}
 	
 	
@@ -77,8 +89,8 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	}
 	
 	@Override
-	public Boolean removeStudentsToAppeal(ArrayList<Long> idAppealStudents) {
-		return appealStudentDAO.removeAppealStudents(idAppealStudents);
+	public Boolean removeStudentsToAppeal(ArrayList<Long> idAppealStudents,Long idProfessor) {
+		return appealStudentDAO.removeAppealStudents(idAppealStudents,idProfessor);
 	}
 	
 	@Override

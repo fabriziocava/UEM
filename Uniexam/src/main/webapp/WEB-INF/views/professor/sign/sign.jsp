@@ -40,15 +40,27 @@
 			return dial;
 		}
 
-		function dialogFromAppeal() {
+		function dialogFromAppealPrepare() {
 			var dial = openDialogFromDiv('from_appeal', 'From Appeal');
 			var buttons = {};
 			buttons.Seleziona = function() {
 				var idAppeal=$("#appealID").attr('value');
 				if(idAppeal!=undefined){
-// 					getDataFromAjaxForce("sign/prepare_from_appeal",idAppeal,'container-center');
 					var conte=$("#context").attr("value");
 					window.location=conte+"/sign/prepare_from_appeal?id="+idAppeal;
+					dial.dialog("close");
+				}
+			};
+			dial.dialog("option", "buttons", buttons);
+		}
+		function dialogFromAppealSign() {
+			var dial = openDialogFromDiv('from_appeal', 'From Appeal');
+			var buttons = {};
+			buttons.Seleziona = function() {
+				var idAppeal=$("#appealID").attr('value');
+				if(idAppeal!=undefined){
+					var conte=$("#context").attr("value");
+					window.location=conte+"/sign/from_appeal_sign?id="+idAppeal;
 					dial.dialog("close");
 				}
 			};
@@ -57,12 +69,11 @@
 	</script>
 
 	<div id="from_appeal" style="display: none;">
-		<input type="text" min="3" maxlength="8" 
-		id="idComplete" 
-		onkeyup="ajaxAutoComplete('/ajax/sign/list_appeals',this.value,'risTable')" /> 
-			<input id="appealID" name="appealID" type="hidden" />
+		<input type="text" min="3" maxlength="8" id="idComplete"
+			onkeyup="ajaxAutoComplete('/ajax/sign/list_appeals',this.value,'risTable')" />
+		<input id="appealID" name="appealID" type="hidden" />
 		<div>
-			<table class="tablemok"
+			<table class="table-list tablemok"
 				style="background-color: white; display: table-row-group"
 				id="risTable">
 			</table>
@@ -74,7 +85,7 @@
 			<li>
 				<fieldset>
 					<legend>Prepare</legend>
-					<buttonmok onclick="dialogFromAppeal()">From Appeals</buttonmok>
+					<buttonmok onclick="dialogFromAppealPrepare()">From Appeals</buttonmok>
 					<br />
 					<buttonmok>Single Sign</buttonmok>
 				</fieldset>
@@ -83,7 +94,7 @@
 			<li>
 				<fieldset>
 					<legend>Sign</legend>
-					<buttonmok>From Appeals</buttonmok>
+					<buttonmok onclick="dialogFromAppealSign()">From Appeals</buttonmok>
 					<br />
 					<buttonmok>Single Sign</buttonmok>
 				</fieldset>

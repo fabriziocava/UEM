@@ -55,7 +55,7 @@ onkeyup="ajaxAutoComplete('/ajax/appeal/auto_complete_student',this.value,'risTa
 <!-- <div id="complete" style="position: fixed"></div> -->
 <!-- <div style="position: fixed;"> -->
 <div>
-<table class="tablemok" style="background-color: white; display:table-row-group" id="risTable">
+<table class="table-list tablemok" style="background-color: white; display:table-row-group" id="risTable">
 </table>
 </div>
 </div>

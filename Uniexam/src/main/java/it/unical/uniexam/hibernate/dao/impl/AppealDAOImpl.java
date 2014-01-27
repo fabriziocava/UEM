@@ -36,8 +36,9 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 @Repository
 public class AppealDAOImpl implements AppealDAO {
 
+	
 	@Override
-	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForSign(Long idAppeal) {
+	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForState(Long idAppeal,STATE state) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		ArrayList<ArrayList<Object>> res=new ArrayList<ArrayList<Object>>();
 		ArrayList<Object> reg=new ArrayList<Object>();
@@ -47,12 +48,12 @@ public class AppealDAOImpl implements AppealDAO {
 		try{
 			Appeal appeal=(Appeal)session.get(Appeal.class, idAppeal);
 			if(appeal!=null){
+				ArrayList<AppealStudent> list=new ArrayList<AppealStudent>(appeal.getAppeal_student());
 				if(appeal.getCourse()!=null){
 					Course c1=(Course) session.get(Course.class, appeal.getCourse().getId());
 					ArrayList<RequestedCourse>requested=new ArrayList<RequestedCourse>(c1.getRequestedCourses());
-					ArrayList<AppealStudent> list=new ArrayList<AppealStudent>(appeal.getAppeal_student());
 					for (AppealStudent appealStudent : list) {
-						if(appealStudent.getState()==AppealStudent.STATE.NO_STATE){
+						if(appealStudent.getState()==state){
 							ArrayList<Carrier> carrier=new ArrayList<Carrier>(appealStudent.getStudent().getCarrier());
 							ArrayList<RequestedCourse>miss=new ArrayList<RequestedCourse>();
 							boolean good=false;
@@ -78,7 +79,11 @@ public class AppealDAOImpl implements AppealDAO {
 						}
 					}
 				}else{
-					reg.addAll(appeal.getAppeal_student());
+					for (AppealStudent appealStudent : list) {
+						if(appealStudent.getState()==state){
+							reg.add(appealStudent);
+						}
+					}
 				}
 			}
 		}catch(Exception e){
@@ -118,7 +123,7 @@ public class AppealDAOImpl implements AppealDAO {
 		try {
 			//			Query q = session.createQuery("from Appeal where creatorProfessor.id =:idProfessor and "
 			//					+ "(lower(name) like :id or lower(location) like :id2 or (course is not null and lower(course.name) like :id3))");
-			Query q = session.createQuery("from Appeal where creatorProfessor.id =:idProfessor and "
+			Query q = session.createQuery("from Appeal where creatorProfessor.id =:idProfessor and course is not null and"
 					+ "(lower(name) like :id or lower(location) like :id2)");
 
 			q.setParameter("idProfessor", idProfessor);

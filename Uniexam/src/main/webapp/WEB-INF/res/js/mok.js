@@ -4,6 +4,28 @@ $(document).ready(function() {
 	alingDashBoard();
 });
 
+function removeNoSelected(name) {
+	$("input[name='" + name + "']:checkbox").each(function() {
+		if (this.checked)
+			;
+		else {
+			$(this).parent().parent().remove();
+		}
+	});
+}
+function removeSelected(name) {
+	$("input[name='" + name + "']:checkbox").each(function() {
+		if (this.checked)
+			$(this).parent().parent().remove();
+	});
+}
+function selectAll(name){
+	$("input[name='"+name+"']:checkbox").prop("checked",true);
+}
+function deselectAll(name){
+	$("input[name='"+name+"']:checkbox").prop("checked",false);
+}
+
 function colorBi(){
 	var c=0;
 	$('td').each(function(){
@@ -70,13 +92,13 @@ function closeDiv(item){
 //	</table>
 //	</div>
 function selemok(item){
-	$(item).parent().css('background-color','red');
+	$(item).css('background-color','rgb(223, 207, 207)');
 }
 function deselemok(item){
-	$(item).parent().css('background-color',' white');
+	$(item).css('background-color',' white');
 }
 function selectmok(item,inputIdInId,inputIdOutId,risTableId){
-	$(item).parent().css('background-color',"green");
+	$(item).css('background-color',"green");
 	$("#"+inputIdInId).val($(item).children().html());
 	$("#"+inputIdOutId).attr('value',item.id);
 	$("#"+risTableId).delay(200).html("");

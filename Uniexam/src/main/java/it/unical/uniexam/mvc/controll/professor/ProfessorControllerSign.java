@@ -51,6 +51,35 @@ public class ProfessorControllerSign {
 	@Autowired
 	ProfessorService professorService;
 	
+	
+	@RequestMapping("/from_appeal_sign")
+	public String from_appeal_sign(HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+		
+		model.addAttribute("I",p);
+		updateNotification(model, p);
+		updatePersonalizzation(model, p);
+		
+		try{
+			String appealString=request.getParameter("id");
+			Long idAppeal=Long.valueOf(appealString);
+			if(appealString!=null && appealString.length()>0){
+				ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForSign(idAppeal);
+				model.addAttribute("appealStudents", appealStudents);
+				Appeal appeal=professorService.getAppealGround(idAppeal);
+				model.addAttribute("appeal", appeal);
+			}
+		}catch(Exception e){new MokException(e);}
+		
+		return "professor/sign/from_appeal_sign";
+	}
+	
 	@RequestMapping("/prepare_from_appeal")
 	public String prepare_from_appeal(HttpServletRequest request, Model model){
 		Professor p=null;

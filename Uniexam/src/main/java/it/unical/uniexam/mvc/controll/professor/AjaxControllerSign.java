@@ -36,6 +36,92 @@ public class AjaxControllerSign {
 	@Autowired
 	ProfessorService professorService;
 
+	
+	
+	@RequestMapping("/declassify_students")
+	public ModelAndView declassify_students(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+
+		ArrayList<Long>listAppealStudents=new ArrayList<Long>();
+		Enumeration parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			String object = (String) parameterNames.nextElement();
+			if(object.contains("idAppealStudent")){
+				String idd=request.getParameter(object);
+				Long id=null;
+				try{
+					id=Long.valueOf(idd);
+					listAppealStudents.add(id);
+				}catch(Exception e){new MokException(e);}
+			}
+		}
+
+		Boolean res=professorService.declassifyStudents(listAppealStudents,p.getId());
+		
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res)
+				outputStream.println("ok");
+			else
+				outputStream.println("no");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
+		return null;
+	}
+	
+	@RequestMapping("/sign_appealstudents")
+	public ModelAndView sign_appealstudents(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+
+		ArrayList<Long>removeStudents=new ArrayList<Long>();
+		Enumeration parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			String object = (String) parameterNames.nextElement();
+			if(object.contains("idAppealStudent")){
+				String idd=request.getParameter(object);
+				Long id=null;
+				try{
+					id=Long.valueOf(idd);
+					removeStudents.add(id);
+				}catch(Exception e){new MokException(e);}
+			}
+		}
+
+		Boolean res=false; 
+//				professorService.removeStudentsToAppeal(removeStudents);
+		
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res)
+				outputStream.println("ok");
+			else
+				outputStream.println("no");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
+		return null;
+	}
+	
+	
 	@RequestMapping("/prepare_students")
 	public String prepare_students(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;
@@ -59,9 +145,8 @@ public class AjaxControllerSign {
 				}catch(Exception e){new MokException(e);}
 			}
 		}
-//		String idAppe=request.getParameter("idAppeal");
 		
-		Boolean res=professorService.applyPrepareAppealStudent(prepareStudents);
+		Boolean res=professorService.applyPrepareAppealStudent(prepareStudents,p.getId());
 		
 		ServletOutputStream outputStream = null;
 		try {
@@ -101,9 +186,8 @@ public class AjaxControllerSign {
 				}catch(Exception e){new MokException(e);}
 			}
 		}
-//		String idAppe=request.getParameter("idAppeal");
-
-		Boolean res= professorService.removeStudentsToAppeal(removeStudents);
+		
+		Boolean res= professorService.removeStudentsToAppeal(removeStudents,p.getId());
 		
 		ServletOutputStream outputStream = null;
 		try {

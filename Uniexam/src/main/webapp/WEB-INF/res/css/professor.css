@@ -11,6 +11,31 @@ html {
 	border-radius: 4px;
 }
 
+.tablemok{
+	border-collapse: separate; 
+	border-spacing: 5px;
+	width: 100%;
+}
+
+thead tr .header {
+	background-image: url("../img/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+.table-list{
+border-spacing: 0px;	
+}
+
+.table-list tr{
+	cursor: pointer;
+}
+
+.table-list tr td{
+	border-radius: 0px;
+}
+
 .closeButton{
 	position:absolute;
 	right: 10px;
@@ -92,19 +117,6 @@ a.icon {
 /* } */
 
 .clickable{
-	cursor: pointer;
-}
-
-.tablemok{
-	border-collapse: separate; 
-	border-spacing: 5px;
-	width: 100%;
-}
-
-thead tr .header {
-	background-image: url("../img/bg.gif);
-	background-repeat: no-repeat;
-	background-position: center right;
 	cursor: pointer;
 }
 

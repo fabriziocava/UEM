@@ -26,16 +26,102 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class AppealStudentDAOImpl implements AppealStudentDAO {
 
 	@Override
-	public Boolean prepareAppealStudentsForSign(ArrayList<Long> prepareStudents) {
+	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents,
+			Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Boolean ris=false;
 		try{
 			transaction=session.beginTransaction();
 
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			for (Long idAppeal : listAppealStudents) {
+				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+				if(p.getAppeals().contains(appealStudent.getAppeal())){
+					appealStudent.setState(STATE.NO_STATE);
+				}else{
+					throw new Exception("This appeal isn't of the professor");
+				}
+			}
+
+			transaction.commit();
+
+			ris=true;
+		}catch(Exception e){
+			new MokException(e);
+			ris=false;
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return ris;
+	}
+	
+	@Override
+	public Boolean signAppealStudentsByProfessor(ArrayList<Long> signStudents,Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean ris=false;
+		try{
+			transaction=session.beginTransaction();
+
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			for (Long idAppeal : signStudents) {
+				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+				if(p.getAppeals().contains(appealStudent.getAppeal())){
+					if(
+					(appealStudent.getAppeal()!=null 
+					&& appealStudent.getAppeal().getCourse()!=null && appealStudent.getCourse().getId()!=null)
+					|| 
+					(appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)
+					)
+						appealStudent.setState(STATE.NOT_SIGNED_BY_COMMISSARY);
+					else
+						throw new Exception("Don't have a course");
+					//invio email ai commissari
+				}else{
+					throw new Exception("This appeal isn't of the professor");
+				}
+			}
+			transaction.commit();
+
+			ris=true;
+		}catch(Exception e){
+			new MokException(e);
+			ris=false;
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return ris;
+	}
+	
+	@Override
+	public Boolean prepareAppealStudentsForSign(ArrayList<Long> prepareStudents,Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean ris=false;
+		try{
+			transaction=session.beginTransaction();
+
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			for (Long idAppeal : prepareStudents) {
 				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
-				appealStudent.setState(STATE.NOT_SIGNED_BY_PROFESSOR);
+				if(p.getAppeals().contains(appealStudent.getAppeal())){
+					if(
+					((appealStudent.getAppeal()!=null 
+					&& appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)
+					|| 
+					(appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null))
+					&& appealStudent.getTemporany_vote()!=null && appealStudent.getTemporany_vote()>=18
+					&& appealStudent.getTemporany_vote()<=31
+					)
+						appealStudent.setState(STATE.NOT_SIGNED_BY_PROFESSOR);
+					else
+						throw new Exception("Don't have a course or vote is less than 18 or greater than 31");
+				}else{
+					throw new Exception("This appeal isn't of the professor");
+				}
 			}
 
 			transaction.commit();
@@ -51,22 +137,26 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		return ris;
 	}
 
-	
+
 	@Override
-	public Boolean removeAppealStudents(ArrayList<Long> idAppeals) {
+	public Boolean removeAppealStudents(ArrayList<Long> idAppeals, Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Boolean ris=false;
 		try{
 			transaction=session.beginTransaction();
-
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			for (Long idAppeal : idAppeals) {
 				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
-				Student s=appealStudent.getStudent();
-				Appeal a=appealStudent.getAppeal();
-				s.getAppeal_student().remove(appealStudent);
-				a.getAppeal_student().remove(appealStudent);
-				session.delete(appealStudent);
+				if(p.getAppeals().contains(appealStudent.getAppeal())){
+					Student s=appealStudent.getStudent();
+					Appeal a=appealStudent.getAppeal();
+					s.getAppeal_student().remove(appealStudent);
+					a.getAppeal_student().remove(appealStudent);
+					session.delete(appealStudent);
+				}else{
+					throw new Exception("This appeal isn't of the professor");
+				}
 			}
 
 			transaction.commit();

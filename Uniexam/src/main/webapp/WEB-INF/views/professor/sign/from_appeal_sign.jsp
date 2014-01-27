@@ -22,11 +22,11 @@ $(document).ready(function(){
 	});
 	listRemove=new FormData();
 	count=1;
-<%-- 	listRemove.append("idAppeal",'<%=appeal.getId()%>'); --%>
+	listRemove.append("idAppeal",'<%=appeal.getId()%>');
 	
-	listPrepare=new FormData();
+	listSign=new FormData();
 	count=1;
-<%-- 	listPrepare.append("idAppeal",'<%=appeal.getId()%>'); --%>
+	listSign.append("idAppeal",'<%=appeal.getId()%>');
 });
 function dialogRemoveStudent(id){
 	$('<div></div>')
@@ -64,12 +64,12 @@ function dialogRemoveStudent(id){
 			}
 		});
 	}
-	function actionAppealStudents(listRemove,path){
+	function actionAppealStudents(list,path){
 		var conte=$("#context").attr("value");
 			var ing = $.ajax({
 				url : conte + '/ajax/'+path,
 				type : "POST",
-				data : listRemove,
+				data : list,
 				processData : false,
 				contentType : false
 			});
@@ -82,7 +82,7 @@ function dialogRemoveStudent(id){
 				}
 			});
 	}
-	function deleteNoSelected(name) {
+	function declassifyNoSelect(name) {
 		$("input[name='" + name + "']:checkbox").each(function() {
 			if (this.checked);
 			else {
@@ -91,47 +91,27 @@ function dialogRemoveStudent(id){
 				
 			}
 		});
-		actionAppealStudents(listRemove,'sign/remove_students');
+		actionAppealStudents(listRemove,'sign/declassify_students');
 		count=0;
 	}
-	function deleteSelected(name) {
+	function declassifySelected(name) {
 		$("input[name='" + name + "']:checkbox").each(function() {
 			if (this.checked){
 				$(this).parent().parent().remove();
 				listRemove.append((count++)+'idAppealStudent',this.value);
 			}
 		});
-		actionAppealStudents(listRemove,'sign/remove_students');
+		actionAppealStudents(listRemove,'sign/declassify_students');
 		count=0;
 	}
-	function applyPrepare(name){
+	function applySign(name){
 		$("input[name='" + name + "']:checkbox").each(function() {
 			if (this.checked){
-				if(count==-1)
-					return;
-				var element=$(this).parent().parent();
-				var id=element.attr('id');
-				var vote=$('#vote'+id).html();
-				vote=parseInt(vote);
-				if(vote>=18 && vote <=31){
-					listPrepare.append((count++)+'idAppealStudent',this.value);
-				}else{
-					var color=element.css('background-color');
-					element.css('background-color','red');
-					var delay=5000;
-					alert("Voti non corretti!");
-					timer=setTimeout(function() {
-						element.css('background-color',color);
-					}, delay);
-					listPrepare=new FormData();
-					count=-1;
-					return;
-				}
+				$(this).parent().parent().remove();
+				listSign.append((count++)+'idAppealStudent',this.value);
 			}
 		});
-		if(count>1)
-			actionAppealStudents(listPrepare,'sign/prepare_students');
-//			alert("si va");
+		actionAppealStudents(listSign,'sign/sign_appealstudents');
 		count=0;
 	}
 </script>
@@ -191,18 +171,18 @@ function dialogRemoveStudent(id){
 						<legend>Persistent modification</legend>
 						<ul style="padding: 10px" class="linkNoMNoP">
 							<li class="aligncenter" style="float: left; margin-right: 60px;"><buttonmok
-									onclick="deleteNoSelected('selctedStudent')">Delete
+									onclick="declassifyNoSelect('selctedStudent')">Declassify
 								Unselected</buttonmok></li>
 							<li class="alignend"><buttonmok
-									onclick="deleteSelected('selctedStudent')">Delete
+									onclick="declassifySelected('selctedStudent')">Declassify
 								Selected</buttonmok></li>
 						</ul>
 						<br>
 					</fieldset>
 				</div>
 			</div>
-			<buttonmok onclick="applyPrepare('selctedStudent')"
-				style="margin-top:20px">Apply Prepare</buttonmok>
+			<buttonmok onclick="applySign('selctedStudent')"
+				style="margin-top:20px">Apply Sign</buttonmok>
 			<br>
 			<table class="tablemok" id="tableSortable">
 				<thead>
@@ -222,18 +202,14 @@ function dialogRemoveStudent(id){
 								for (Object appObj : appealStudents) {
 									AppealStudent app = (AppealStudent) appObj;
 					%>
-					<tr class="line-top" style="text-align: center;" id="<%=app.getId()%>">
+					<tr class="line-top" style="text-align: center;">
 						<td></td>
 						<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 						<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%>
 							<%=app.getStudent().getSurname()%></td>
-						<td style="padding: 0px 20px 0px 20px;" contenteditable="true" id="vote<%=app.getId()%>"
-							onfocus="storeOld(this)"
-							onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal_student','<%=app.getId()%>','temporany_vote','D')">
+						<td style="padding: 0px 20px 0px 20px;" >
 							<%=app.getTemporany_vote()%></td>
-						<td style="padding: 0px 20px 0px 20px;" contenteditable="true"
-							onfocus="storeOld(this)"
-							onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal_student','<%=app.getId()%>','note','S')">
+						<td style="padding: 0px 20px 0px 20px;" >
 							<%=app.getNote()%></td>
 						<td style="padding: 0px 20px 0px 20px;"><a
 							class="img-active icon icon-trash clickable"
@@ -276,7 +252,7 @@ function dialogRemoveStudent(id){
 										}
 									}
 					%>
-					<tr class="line-top" style="text-align: center;" id="<%=app.getId()%>">
+					<tr class="line-top" style="text-align: center;">
 						<td style="display: inline-block">
 							<div class="square-small <%=policy%>"
 								onclick="openDiv('titleN<%=app.getStudent().getSerialNumber()%>')"></div>
@@ -303,13 +279,9 @@ function dialogRemoveStudent(id){
 						<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 						<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%>
 							<%=app.getStudent().getSurname()%></td>
-						<td style="padding: 0px 20px 0px 20px;" contenteditable="true" id="vote<%=app.getId()%>"
-							onfocus="storeOld(this)"
-							onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal_student','<%=app.getId()%>','temporany_vote','D')">
+						<td style="padding: 0px 20px 0px 20px;" >
 							<%=app.getTemporany_vote()%></td>
-						<td style="padding: 0px 20px 0px 20px;" contenteditable="true"
-							onfocus="storeOld(this)"
-							onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal_student','<%=app.getId()%>','note','S')">
+						<td style="padding: 0px 20px 0px 20px;" >
 							<%=app.getNote()%></td>
 						<td style="padding: 0px 20px 0px 20px;"><a
 							class="img-active icon icon-trash clickable"

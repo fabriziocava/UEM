@@ -2,6 +2,7 @@ package it.unical.uniexam.hibernate.dao;
 
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
+import it.unical.uniexam.hibernate.domain.AppealStudent.STATE;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -50,5 +51,6 @@ public interface AppealDAO {
 	public Appeal getAppealGround(Long idAppeal);
 	public ArrayList<Appeal> getAppealsMatch(Long idProfessor,String appealString);
 	public ArrayList<AppealStudent> getAppealForPrepareSign(Long idAppeal);
-	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForSign(Long idAppeal);
+	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForState(Long idAppeal,STATE state);
+//	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForSign(Long idAppeal);
 }

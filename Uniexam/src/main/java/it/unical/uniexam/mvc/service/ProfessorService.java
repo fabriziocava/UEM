@@ -81,13 +81,17 @@ public interface ProfessorService extends UserService{
 
 	public Boolean addStudentToAppeal(Long idAppeal, Long idStudent);
 
-	public Boolean removeStudentsToAppeal(ArrayList<Long> removeStudents);
+	public Boolean removeStudentsToAppeal(ArrayList<Long> removeStudents, Long idProfessor);
 
 	public ArrayList<Appeal> getAppealsMatch(Long idPorfessor,String appealString);
 
 	public ArrayList<ArrayList<Object>> getAppealStudentsForPrepareSign(Long idAppeal);
 
-	public Boolean applyPrepareAppealStudent(ArrayList<Long> prepareStudents);
+	public Boolean applyPrepareAppealStudent(ArrayList<Long> prepareStudents, Long idProfessor);
+
+	public ArrayList<ArrayList<Object>> getAppealStudentsForSign(Long idAppeal);
+
+	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents, Long idProfessor);
 
 //	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
 //			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);
