@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@page import="it.unical.uniexam.MokException"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Group"%>
@@ -91,31 +90,5 @@
 				<td style="padding-left: 1.5em;" ><label style="text-align: justify; font-size: 10pt">l'esame è stato caricato nella propria carriera ufficiale in Segreteria Studenti.</label></td>
 			</tr>
 		</table>
-	</fieldset>	
-=======
-<%@page import="it.unical.uniexam.hibernate.domain.Group"%>
-<%@page import="java.util.Set"%>
-<%@page import="it.unical.uniexam.hibernate.domain.Course"%>
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		selectingFromDashBoard(document.getElementById("carrierButton"));
-		$("#sorting").tablesorter();
-	});
-</script>
-
-<div class="container-center">
-	<fieldset>
-		<legend><spring:message code='label.carrier'/></legend>
-		<ol id="#sorting">
-			
-		</ol>
 	</fieldset>
-	
->>>>>>> branch 'Fabrizio3' of https://github.com/mok89/UEM.git
-</div>
+</div>	

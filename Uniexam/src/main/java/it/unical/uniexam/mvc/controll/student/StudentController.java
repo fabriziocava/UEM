@@ -112,7 +112,8 @@ public class StudentController {
 		Long idStudent = s.getId();
 		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudentForVerbalToBeSigned(idStudent);
 		model.addAttribute("as", appealStudent);
-		return StudentService.STUDENT_CARRIER;
+		
+		return StudentService.STUDENT_VERBALTOBESIGNED;
 	}	
 	
 	String setStudentOrRedirect(HttpServletRequest request,Model model, ArrayList<Student> slist) {
