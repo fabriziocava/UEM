@@ -13,6 +13,7 @@ import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.ManagerService;
 import it.unical.uniexam.mvc.service.ProfessorService;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ManagerController {
@@ -148,7 +150,54 @@ public class ManagerController {
 	}
 	
 	
+	@RequestMapping(value="manager/addRequestedCourseAction", method=RequestMethod.POST)
+	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
+			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+		}
+		if(user.getClass()!=Manager.class){
+			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+		}
+		Manager m=(Manager)user;
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		
+		String idCours=request.getParameter("idCourse");
+		
+		Long idCourse=Long.valueOf(idCours);
+		
+		Boolean ris=managerService.addRequestedCourse(idCourse, requestedCourse);
+		
+//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
+		return new ModelAndView("redirect:/manager/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
+	}
 	
+	
+	@RequestMapping(value="manager/assegnaCorsoAction", method=RequestMethod.POST)
+	public ModelAndView assegnaCorsoaction(@ModelAttribute("assegnaCorso") Professor professor,
+			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+		}
+		if(user.getClass()!=Manager.class){
+			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+		}
+		Manager m=(Manager)user;
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		
+		String idCours=request.getParameter("idCourse");
+		
+		Long idCourse=Long.valueOf(idCours);
+		
+		Boolean ris=managerService.setHolderProfessor(idCourse, professor.getId());
+		
+//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
+		return new ModelAndView("redirect:/manager/ajax/dialog/AssegnaCorso?id="+idCourse+"&ris="+ris, "model", model);
+	}
 	
 	
 	

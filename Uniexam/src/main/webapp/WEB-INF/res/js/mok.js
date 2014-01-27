@@ -138,6 +138,15 @@ function openPopUpWithAjaxContent(caseId,id){
 			$("#dialog").html(data);
 		});
 	}
+	else if(caseId.match("AssegnaCorso")){
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+"/ajax/dialog/AssegnaCorso", "GET", "id", id);
+		ajax.done(function(data){
+			if($("#dialog").html()==undefined)
+				$("<div></div>").attr('id','dialog').appendTo('body');
+			$("#dialog").html(data);
+		});
+	}
 	else if(caseId.match("viewListStudent")){
 		var conte=$("#context").attr("value");
 		var ajax=sendAJAXmessage(conte+"/ajax/dialog/list_student", "GET", "id", id);
@@ -174,7 +183,7 @@ function dialogViewListStudent(){
 }
 
 function dialogViewExamSession(){
-	$("#dialog").attr("title","View ExamSession");
+	$("#dialog").attr("title","Sessione esame");
 	$("#dialog").dialog({
 		autoOpen : true,
 		modal: true,
@@ -196,7 +205,51 @@ function dialogViewExamSession(){
 	$("#dialog").attr("title","");
 }
 
+function dialogAssegnaCorso(){
+	$("#dialog").attr("title","Assegna Corso");
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#dialog");
+			commands=undefined;
+		}
+	});
+	$("#dialog").attr("title","");
+}
 
+function dialogAssegnaCorsoProfessore(){
+	$("#dialog").attr("title","Assegna Corso a Professore");
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#dialog");
+			commands=undefined;
+		}
+	});
+	$("#dialog").attr("title","");
+}
 
 function dialogViewAppeal(){
 	$("#dialog").attr("title","View Appeal");
@@ -436,6 +489,48 @@ function dialogModifyRequestedCourse(){
 	});
 }
 
+
+function dialogModifyCourse(){
+	$("#dialog").attr("title","Assegna Corso");
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#dialog");
+			commands=undefined;
+		}
+	});
+	$("#dialog").attr("title","");
+	
+	$("div[id^='addRequested']").bind("click", function(event) {
+		var conte=$("#context").attr("value");
+		var id=this.id;
+		var idCourse=id.replace("addRequested","");
+		var ajax=sendAJAXmessage(conte+"/ajax/dialog/AssegnaCorso_Professore", "GET", "id", idCourse);
+		ajax.done(function(data){
+			if($("#dialogAddRequested").html()==undefined)
+				$("<div></div>").attr('id','dialogAddRequested').appendTo('body');
+			$("#dialogAddRequested").html(data);
+		});
+	});
+}
+
+
+function dialogAssegnaCorso_Professore(){
+	
+}
+
+
 function dialogAddRequestedCourse(){
 	
 }
@@ -650,6 +745,21 @@ function sendAJAXmessage(url,type,name,value){
 	});
 	return ing;
 }
+
+function sendAJAXmessagePino(url,type,name,value,name2,value2){
+	var ing=$.ajax({
+		type: type,
+		url: url,
+		data: {id:value, id2:value2},
+	});
+	$(".processing").css("display","block");
+	ing.done(function(msg){
+		$(".processing").css("display","none");
+	});
+	return ing;
+}
+
+
 
 function changeNote(item,idCourse){
 	var idd=item.id;

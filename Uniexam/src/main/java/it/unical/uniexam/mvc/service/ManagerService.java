@@ -12,6 +12,7 @@ import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
 
 
@@ -44,6 +45,15 @@ public interface ManagerService extends UserService {
 	public Boolean changeExamSessionField(Long idexamsession, String variable,String value, String clazz);
 
 	public ArrayList<Course> getCourses();
+	
 	public Course getCourseDetails(Long idCourse);
+	public Boolean addRequestedCourse(Long idCourse,RequestedCourse requestedCourse);
+	public Boolean removeRequestedCourse(Long idcourse,Long idcourserequested);
+	
+	public Set<Professor> getProfessorfromDepartment(Long idDep);
+	public Set<Professor> getProfessors();
+
+	public boolean setHolderProfessor(Long idCourse, Long idProfessor);
+	
 	
 }

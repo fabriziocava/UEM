@@ -57,9 +57,9 @@
 	<spring:message code="message.manager.course.holder" />
 	</th>
 	<td><%if(c.getHolder()!=null ){%>
-	<a  href="#" class="bottonmok"><spring:message code="message.general.manage" /> </a> 
+	<a  href="#" class="bottonmok" onclick="openPopUpWithAjaxContent('AssegnaCorso',<%=c.getId()%>)"><spring:message code="message.general.manage" /> </a> 
 	<%}else{ %>
-	<a href="#" class="bottonmok"><spring:message code="message.general.add" /></a>
+	<a href="#" class="bottonmok" onclick="openPopUpWithAjaxContent('AssegnaCorso',<%=c.getId()%>)"><spring:message code="message.general.add" /></a>
 	<%} %>
 	</td>
 	</tr>

@@ -18,6 +18,7 @@ import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
 import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
 import it.unical.uniexam.hibernate.dao.ManagerDao;
+import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
@@ -25,6 +26,7 @@ import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.mvc.service.ManagerService;
 
 @Service
@@ -44,6 +46,9 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 	
 	@Autowired
 	CourseDAO courseDAO;
+	
+	@Autowired
+	ProfessorDAO professorDAO;
 	
 	@Override
 	public Manager getManager(Long idUser) {
@@ -162,6 +167,37 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 
 		return courseDAO.getCourseDetailforManager(idCourse);
 	
+	}
+
+
+	@Override
+	public Boolean addRequestedCourse(Long idCourse,
+			RequestedCourse requestedCourse) {
+		return courseDAO.addRequestedCourse(idCourse, requestedCourse.getCourse().getId(), requestedCourse.getPolicyOfRequested());
+	}
+
+
+	@Override
+	public Boolean removeRequestedCourse(Long idcourse,Long idcourserequested) {
+		return courseDAO.removeRequestedCourseforManager(idcourse, idcourserequested)!=null;
+	}
+
+
+	@Override
+	public Set<Professor> getProfessorfromDepartment(Long idDep) {
+		return professorDAO.getProfessorsFromDepartment(idDep);
+	}
+
+
+	@Override
+	public boolean setHolderProfessor(Long idCourse, Long idProfessor) {
+		return courseDAO.setHolderProfessor(idCourse, idProfessor);
+	}
+
+
+	@Override
+	public Set<Professor> getProfessors() {
+		return professorDAO.getProfessors();
 	}
 
 	

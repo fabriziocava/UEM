@@ -204,7 +204,7 @@ public class CourseDAOImpl implements CourseDAO{
 		try{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			Hibernate.initialize(c1);
-			Hibernate.initialize(c1.getCommissionProfessors());
+		//	Hibernate.initialize(c1.getCommissionProfessors());
 			Hibernate.initialize(c1.getRequestedCourses());
 			Hibernate.initialize(c1.getDegreeCourse());
 			res=c1;
@@ -572,6 +572,37 @@ public class CourseDAOImpl implements CourseDAO{
 		return res;
 	}
 
+	@Override
+	public RequestedCourse removeRequestedCourseforManager(Long idCourse, Long idCourseRequested) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		RequestedCourse res=null;
+		try{
+			transaction = session.beginTransaction();
+			Course c1=(Course) session.get(Course.class, idCourse);
+			if(c1!=null){
+				for(RequestedCourse r : c1.getRequestedCourses()){
+					if(r.getId()==idCourseRequested){
+						res=r;
+						break;
+					}
+				}
+				c1.getRequestedCourses().remove(res);
+				session.delete(res);
+				transaction.commit();
+			}
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	
+	
+	
 	@Override
 	public Boolean modifyDegreeRequestedCourse(Long idCourse,Long idCourseRequested, String degree) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
