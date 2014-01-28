@@ -178,5 +178,5 @@ public class Professor extends User{
 	public void setSetAsCommission(Set<Course> asCommission) {
 		this.asCommission = asCommission;
 	}
-
+	
 }

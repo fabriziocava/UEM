@@ -41,7 +41,7 @@
 				<td><span class="span_expandible"
 					id="collapseAppeals<%=((Course) items.get(0)).getId()%>" onclick="collapseMok(this)">+</span> <%=((Course) items.get(0)).getName()%></td>
 			</tr>
-			<tr style="display: none;"
+			<tr class="startHide"
 				id="Appeals<%=((Course) items.get(0)).getId()%>">
 				<td>
 					<%
@@ -114,7 +114,7 @@
 				<td><span class="span_expandible" onclick="collapseMok(this)" id="collapseAppealsNoCourse">+</span>Altri
 					appelli</td>
 			</tr>
-			<tr style="display: none;" id="AppealsNoCourse">
+			<tr class="startHide" id="AppealsNoCourse">
 				<td><div>
 						<%
 							if (other != null && other.size() > 0) {

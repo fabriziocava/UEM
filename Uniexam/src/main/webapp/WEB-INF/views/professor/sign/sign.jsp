@@ -41,7 +41,7 @@
 		}
 
 		function dialogFromAppealPrepare() {
-			var dial = openDialogFromDiv('from_appeal', 'From Appeal');
+			var dial = openDialogFromDiv('from_appeal', "<spring:message code='message.professor.fromappeal'/>");
 			var buttons = {};
 			buttons.Seleziona = function() {
 				var idAppeal=$("#appealID").attr('value');
@@ -54,7 +54,7 @@
 			dial.dialog("option", "buttons", buttons);
 		}
 		function dialogFromAppealSign() {
-			var dial = openDialogFromDiv('from_appeal', 'From Appeal');
+			var dial = openDialogFromDiv('from_appeal', "<spring:message code='message.professor.fromappeal'/>");
 			var buttons = {};
 			buttons.Seleziona = function() {
 				var idAppeal=$("#appealID").attr('value');
@@ -68,9 +68,10 @@
 		}
 	</script>
 
-	<div id="from_appeal" style="display: none;">
-		<input type="text" min="3" maxlength="8" id="idComplete" placeholder="Nome, Aula, Corso"
-			onkeyup="ajaxAutoComplete('/ajax/sign/list_appeals',this.value,'risTable')" />
+	<div id="from_appeal" class="startHide">
+		<input type="text" min="3" maxlength="8" id="idComplete" placeholder="<spring:message code='message.professor.name.room.course'/>"
+			onkeyup="ajaxAutoComplete('/ajax/sign/list_appeals',this.value,'risTable')" 
+			onblur="clearContent('risTable')"/>
 		<input id="appealID" name="appealID" type="hidden" />
 		<div>
 			<table class="table-list tablemok"
@@ -84,19 +85,25 @@
 		<ul class="links-user" style="margin: 0px; padding: 0px;">
 			<li>
 				<fieldset>
-					<legend>Prepare</legend>
-					<buttonmok onclick="dialogFromAppealPrepare()">From Appeals</buttonmok>
+					<legend><spring:message code='message.professor.prepare'/></legend>
+					<buttonmok onclick="dialogFromAppealPrepare()"><spring:message code='message.professor.fromappeals'/></buttonmok>
 					<br />
-					<buttonmok>Single Sign</buttonmok>
+					<buttonmok onclick="go('/sign/singleprepare')"><spring:message code='message.professor.siglesign'/></buttonmok>
 				</fieldset>
 			</li>
 
 			<li>
 				<fieldset>
-					<legend>Sign</legend>
-					<buttonmok onclick="dialogFromAppealSign()">From Appeals</buttonmok>
+					<legend><spring:message code='message.professor.sign'/></legend>
+					<buttonmok onclick="dialogFromAppealSign()"><spring:message code='message.professor.fromappeals'/></buttonmok>
 					<br />
-					<buttonmok>Single Sign</buttonmok>
+					<buttonmok onclick="go('/sign/singlesign')"><spring:message code='message.professor.siglesign'/></buttonmok>
+				</fieldset>
+			</li>
+			<li>
+				<fieldset>
+					<legend><spring:message code='message.professor.signascommissionar'/></legend>
+					<buttonmok onclick="go('/sign/signAsCommissionar')"><spring:message code='message.professor.siglesign'/></buttonmok>
 				</fieldset>
 			</li>
 		</ul>

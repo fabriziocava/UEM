@@ -4,9 +4,10 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 	
-	<definition name="professor/appeal" extends="professor.base">
-		<put-attribute name="container-center" value="/WEB-INF/views/professor/appeal/container_center.jsp" />
+	<definition name="professor/autocomplete/students" template="/WEB-INF/views/professor/autocomplete_list/students.jsp">
 	</definition>
 	
-		
+	<definition name="professor/autocomplete/appeals" template="/WEB-INF/views/professor/autocomplete_list/appeals.jsp">
+	</definition>	
+	
 </tiles-definitions>

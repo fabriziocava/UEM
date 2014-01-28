@@ -130,7 +130,7 @@ public class AjaxControllerAppeal {
 			studentsMatch.removeAll(removable);
 			model.addAttribute("list", studentsMatch);
 			System.out.println(studentsMatch.size());
-			return "professor/appeal/list_autocomplete";
+			return "professor/autocomplete/students";
 		}
 		return null;
 	}

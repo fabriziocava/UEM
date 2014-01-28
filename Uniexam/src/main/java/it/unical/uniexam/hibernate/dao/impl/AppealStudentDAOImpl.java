@@ -1,17 +1,23 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
+import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.AppealStudent.STATE;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
@@ -26,7 +32,136 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class AppealStudentDAOImpl implements AppealStudentDAO {
 
 	@Override
-	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents,
+	public ArrayList<ArrayList<Object>> getListStudentFromProfessorRegularAndNotForCommissionar(
+			Long idProfessor, STATE state) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<ArrayList<Object>> res=new ArrayList<ArrayList<Object>>();
+		ArrayList<Object> reg=new ArrayList<Object>();
+		ArrayList<Object> noreg=new ArrayList<Object>();
+		res.add(reg);
+		res.add(noreg);
+		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			/**
+			 * non posso fare una query unica poichè: essendo che uno dei due
+			 * appello o corso è null, quando vado a mettere nella query che bisigna fare
+			 * un controllo su entrambi allora hibernate mette nella clausola from
+			 * appealstudent in join sia con appeal che con course quindi essendo che almeno 
+			 * uno dei due sarà null il join fallisce e come risultato non da nulla 
+			 */
+			
+			Professor comm=(Professor)session.get(Professor.class, idProfessor);
+			List<AppealStudent> list1=session.createCriteria(AppealStudent.class)
+//					.add(Restrictions.eq("course", "is not null"))
+					.add(Restrictions.eq("state", AppealStudent.STATE.NOT_SIGNED_BY_COMMISSARY)).list();
+//			List<AppealStudent> list2=session.createCriteria(AppealStudent.class)
+//					.add(Restrictions.eq("appeal", "is not null"))
+//					.add(Restrictions.eq("state", AppealStudent.STATE.NOT_SIGNED_BY_COMMISSARY)).list();
+			List<AppealStudent> list=new ArrayList<AppealStudent>();
+			for (AppealStudent appealStudent : list1) {
+				Course c=null;
+				if(appealStudent.getCourse()!=null){
+					c=appealStudent.getCourse();
+				}
+				else if(appealStudent.getAppeal()!=null){
+					c=appealStudent.getAppeal().getCourse();
+				}
+				if(c!=null){
+					if(c.getCommissionProfessors().contains(comm))
+						list.add(appealStudent);
+				}
+			}
+			for (AppealStudent appealStudent2 : list) {
+				Course c1=appealStudent2.getCourse();
+				if(c1==null)
+					c1=appealStudent2.getAppeal().getCourse();
+				ArrayList<RequestedCourse>requested=new ArrayList<RequestedCourse>(c1.getRequestedCourses());
+				if(appealStudent2.getState()==state){
+					ArrayList<Carrier> carrier=new ArrayList<Carrier>(appealStudent2.getStudent().getCarrier());
+					ArrayList<RequestedCourse>miss=new ArrayList<RequestedCourse>();
+					boolean good=false;
+					for (RequestedCourse requestedCourse : requested) {
+						good=false;
+						for (Carrier carrier2 : carrier) {
+							if(requestedCourse.getCourse().getId()==carrier2.getCourse().getId()){
+								good=true; break;
+							}
+						}
+						if(!good){
+							miss.add(requestedCourse);
+						}
+					}
+					if(miss.size()==0)
+						reg.add(appealStudent2);
+					else{
+						ArrayList<Object>tuple=new ArrayList<Object>();
+						tuple.add(appealStudent2);
+						tuple.add(miss);
+						noreg.add(tuple);
+					}
+				}
+			}
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public ArrayList<ArrayList<Object>> getListStudentFromProfessorRegularAndNotForState(
+			Long idProfessor, STATE state) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<ArrayList<Object>> res=new ArrayList<ArrayList<Object>>();
+		ArrayList<Object> reg=new ArrayList<Object>();
+		ArrayList<Object> noreg=new ArrayList<Object>();
+		res.add(reg);
+		res.add(noreg);
+		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			List<AppealStudent> list=session.createCriteria(AppealStudent.class)
+					.add(Restrictions.eq("professor", p)).list();
+			for (AppealStudent appealStudent2 : list) {
+				Course c1=appealStudent2.getCourse();
+				if(c1==null)
+					c1=appealStudent2.getAppeal().getCourse();
+				ArrayList<RequestedCourse>requested=new ArrayList<RequestedCourse>(c1.getRequestedCourses());
+				if(appealStudent2.getState()==state){
+					ArrayList<Carrier> carrier=new ArrayList<Carrier>(appealStudent2.getStudent().getCarrier());
+					ArrayList<RequestedCourse>miss=new ArrayList<RequestedCourse>();
+					boolean good=false;
+					for (RequestedCourse requestedCourse : requested) {
+						good=false;
+						for (Carrier carrier2 : carrier) {
+							if(requestedCourse.getCourse().getId()==carrier2.getCourse().getId()){
+								good=true; break;
+							}
+						}
+						if(!good){
+							miss.add(requestedCourse);
+						}
+					}
+					if(miss.size()==0)
+						reg.add(appealStudent2);
+					else{
+						ArrayList<Object>tuple=new ArrayList<Object>();
+						tuple.add(appealStudent2);
+						tuple.add(miss);
+						noreg.add(tuple);
+					}
+				}
+			}
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public Boolean prepareForSignAppealStudent(AppealStudent appealStudent,
 			Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
@@ -35,13 +170,13 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			transaction=session.beginTransaction();
 
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
-			for (Long idAppeal : listAppealStudents) {
-				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
-				if(p.getAppeals().contains(appealStudent.getAppeal())){
-					appealStudent.setState(STATE.NO_STATE);
-				}else{
-					throw new Exception("This appeal isn't of the professor");
-				}
+
+			if(p.getSetHoldersCourse().contains(appealStudent.getCourse())){
+				appealStudent.setState(STATE.NOT_SIGNED_BY_PROFESSOR);
+				appealStudent.setProfessor(p);
+				session.save(appealStudent);
+			}else{
+				throw new Exception("This course isn't of the professor");
 			}
 
 			transaction.commit();
@@ -56,7 +191,44 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		}
 		return ris;
 	}
-	
+
+	@Override
+	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents,
+			Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Boolean ris=false;
+		try{
+			transaction=session.beginTransaction();
+
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			ArrayList<Long>removable=new ArrayList<Long>();
+			for (Long idAppeal : listAppealStudents) {
+				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+				if(p.getAppeals().contains(appealStudent.getAppeal())){
+					appealStudent.setState(STATE.NO_STATE);
+				}else{
+					if(p.getSetHoldersCourse().contains(appealStudent.getCourse())){
+						removable.add(appealStudent.getId());
+					}
+					else
+						throw new Exception("This appeal isn't of the professor");
+				}
+			}
+			if(removable.size()>0)
+				removeAppealStudents(removable, idProfessor);
+			transaction.commit();
+			ris=true;
+		}catch(Exception e){
+			new MokException(e);
+			ris=false;
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return ris;
+	}
+
 	@Override
 	public Boolean signAppealStudentsByProfessor(ArrayList<Long> signStudents,Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -68,13 +240,14 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			for (Long idAppeal : signStudents) {
 				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
-				if(p.getAppeals().contains(appealStudent.getAppeal())){
+				if(p.getAppeals().contains(appealStudent.getAppeal()) ||
+						p.getSetHoldersCourse().contains(appealStudent.getCourse())){
 					if(
-					(appealStudent.getAppeal()!=null 
-					&& appealStudent.getAppeal().getCourse()!=null && appealStudent.getCourse().getId()!=null)
-					|| 
-					(appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)
-					)
+							(appealStudent.getAppeal()!=null 
+							&& appealStudent.getAppeal().getCourse()!=null && appealStudent.getCourse().getId()!=null)
+							|| 
+							(appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)
+							)
 						appealStudent.setState(STATE.NOT_SIGNED_BY_COMMISSARY);
 					else
 						throw new Exception("Don't have a course");
@@ -95,7 +268,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		}
 		return ris;
 	}
-	
+
 	@Override
 	public Boolean prepareAppealStudentsForSign(ArrayList<Long> prepareStudents,Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -108,14 +281,13 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			for (Long idAppeal : prepareStudents) {
 				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
 				if(p.getAppeals().contains(appealStudent.getAppeal())){
-					if(
-					((appealStudent.getAppeal()!=null 
-					&& appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)
-					|| 
-					(appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null))
-					&& appealStudent.getTemporany_vote()!=null && appealStudent.getTemporany_vote()>=18
-					&& appealStudent.getTemporany_vote()<=31
-					)
+					if(((appealStudent.getAppeal()!=null 
+							&& appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)
+							|| 
+							(appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null))
+							&& appealStudent.getTemporany_vote()!=null && appealStudent.getTemporany_vote()>=18
+							&& appealStudent.getTemporany_vote()<=31
+							)
 						appealStudent.setState(STATE.NOT_SIGNED_BY_PROFESSOR);
 					else
 						throw new Exception("Don't have a course or vote is less than 18 or greater than 31");

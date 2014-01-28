@@ -38,7 +38,7 @@ public class AppealDAOImpl implements AppealDAO {
 
 	
 	@Override
-	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForState(Long idAppeal,STATE state) {
+	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForState(Long idProfessor,Long idAppeal,STATE state) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		ArrayList<ArrayList<Object>> res=new ArrayList<ArrayList<Object>>();
 		ArrayList<Object> reg=new ArrayList<Object>();
@@ -46,8 +46,9 @@ public class AppealDAOImpl implements AppealDAO {
 		res.add(reg);
 		res.add(noreg);
 		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			Appeal appeal=(Appeal)session.get(Appeal.class, idAppeal);
-			if(appeal!=null){
+			if(appeal!=null && appeal.getCreatorProfessor().equals(p)){
 				ArrayList<AppealStudent> list=new ArrayList<AppealStudent>(appeal.getAppeal_student());
 				if(appeal.getCourse()!=null){
 					Course c1=(Course) session.get(Course.class, appeal.getCourse().getId());
@@ -79,11 +80,11 @@ public class AppealDAOImpl implements AppealDAO {
 						}
 					}
 				}else{
-					for (AppealStudent appealStudent : list) {
-						if(appealStudent.getState()==state){
-							reg.add(appealStudent);
-						}
-					}
+//					for (AppealStudent appealStudent : list) {
+//						if(appealStudent.getState()==state){
+//							reg.add(appealStudent);
+//						}
+//					}
 				}
 			}
 		}catch(Exception e){

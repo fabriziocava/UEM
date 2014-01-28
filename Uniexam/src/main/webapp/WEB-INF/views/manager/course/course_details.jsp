@@ -10,7 +10,7 @@
 	<%
 	Course c=(Course)request.getAttribute("course"); 
 	%>
-<div id="course_details_<%=c.getId()%>" style="display: none;">
+<div id="course_details_<%=c.getId()%>" class="startHide">
 	<script type="text/javascript">
 	$(document).ready(function(){
 		//go this in fade in

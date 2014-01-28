@@ -62,14 +62,28 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	StudentDAO studentDAO;
 	
 	@Override
+	public ArrayList<ArrayList<Object>> getAppealStudentsForSignAdCommission(Long idProfessor) {
+		return appealStudentDAO.getListStudentFromProfessorRegularAndNotForCommissionar(idProfessor,STATE.NOT_SIGNED_BY_COMMISSARY);
+	}
+	
+	@Override
+	public ArrayList<ArrayList<Object>> getAppealStudentsForSign(Long idProfessor) {
+		return appealStudentDAO.getListStudentFromProfessorRegularAndNotForState(idProfessor,STATE.NOT_SIGNED_BY_PROFESSOR);
+	}
+	
+	@Override
+	public Boolean addPrepareSign(AppealStudent appealStudent,Long idProfessor) {
+		return appealStudentDAO.prepareForSignAppealStudent(appealStudent,idProfessor);
+	}
+	
+	@Override
 	public Boolean signAppealStudentsList(
 			ArrayList<Long> listSignAppealStudents, Long idProfessor) {
 		return appealStudentDAO.signAppealStudentsByProfessor(listSignAppealStudents, idProfessor);
 	}
 	
 	@Override
-	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents,
-			Long idProfessor) {
+	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents, Long idProfessor) {
 		return appealStudentDAO.declassifyStudents(listAppealStudents,idProfessor);
 	}
 	
@@ -79,13 +93,13 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	}
 	
 	@Override
-	public ArrayList<ArrayList<Object>> getAppealStudentsForSign(Long idAppeal) {
-		return appealDAO.getListStudentFromAppealRegularAndNotForState(idAppeal,STATE.NOT_SIGNED_BY_PROFESSOR);
+	public ArrayList<ArrayList<Object>> getAppealStudentsForSignFromAppeal(Long idProfessor,Long idAppeal) {
+		return appealDAO.getListStudentFromAppealRegularAndNotForState(idProfessor,idAppeal,STATE.NOT_SIGNED_BY_PROFESSOR);
 	}
 	
 	@Override
-	public ArrayList<ArrayList<Object>> getAppealStudentsForPrepareSign(Long idAppeal) {
-		return appealDAO.getListStudentFromAppealRegularAndNotForState(idAppeal,STATE.NO_STATE);
+	public ArrayList<ArrayList<Object>> getAppealStudentsForPrepareSign(Long idProfessor,Long idAppeal) {
+		return appealDAO.getListStudentFromAppealRegularAndNotForState(idProfessor,idAppeal,STATE.NO_STATE);
 	}
 	
 	
@@ -198,8 +212,8 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	}
 	
 	@Override
-	public List<Course> getCourseAssociated(Long id) {
-		return new ArrayList<Course>(professorDAO.getCourseHolder(id));//°°°°TODOMOK
+	public List<Course> getCourseAssociated(Long idProfessor) {
+		return new ArrayList<Course>(professorDAO.getCourseHolder(idProfessor));//°°°°TODOMOK
 	}
 	
 	@Override

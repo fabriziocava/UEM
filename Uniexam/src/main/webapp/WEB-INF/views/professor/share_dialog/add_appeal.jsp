@@ -59,7 +59,7 @@
 <!-- <a href="#" onclick="accoppia()">accoppia</a> -->
 <form:form action="${pageContext.request.contextPath}/professor/appeal/add" id="add_appeal_form"
  modelAttribute="appeal" method="post" onsubmit="accoppia()">
-<div style="display: none;">
+<div class="startHide">
 <form:input id="name_id" path="name" />
 <form:input id="maxNumberOfInscribed_id" path="maxNumberOfInscribed" />
 <form:input id="location_id" path="location" />

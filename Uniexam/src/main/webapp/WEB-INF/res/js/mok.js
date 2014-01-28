@@ -4,6 +4,67 @@ $(document).ready(function() {
 	alingDashBoard();
 });
 
+function go(url){
+	var conte=$("#context").attr("value");
+	window.location=conte+url;
+}
+
+function actionAppealStudents(list,path){
+	var conte=$("#context").attr("value");
+		var ing = $.ajax({
+			url : conte + '/ajax/'+path,
+			type : "POST",
+			data : list,
+			processData : false,
+			contentType : false
+		});
+		ing.done(function(data) {
+			if(data.match("ok")){
+				alert(multilang['message.professor.modify.success']);
+			}else if(data.match("passwd")){
+				alert(multilang['message.professor.passwd.error']);
+			}else{
+				alert(multilang['message.professor.modify.error']);
+			}
+			location.reload();
+		});
+}
+
+function applySign(name){
+	$("#passwdDIV").dialog({
+		modal:true,
+		buttons:{
+			"OK": function() {
+				$("input[name='" + name + "']:checkbox").each(function() {
+					if (this.checked){
+						$(this).parent().parent().remove();
+						listSign.append((count++)+'idAppealStudent',this.value);
+					}
+				});
+				listSign.append('passwd',$("#passwd").val());
+				actionAppealStudents(listSign,'sign/sign_appealstudents');
+				count=0;
+			}
+		}
+	});
+}
+
+function delayCssProp(idElem,delay,nameCss,valueCss){
+	var valueCSSold=$("#"+idElem).css(nameCss);
+	$("#"+idElem).css(nameCss,valueCss);
+	timer = setTimeout(function() {
+		$("#"+idElem).css(nameCss,valueCSSold);
+	}, delay);
+}
+
+function clearContent(idDiv){
+	var timer;
+	var delay=500;
+	timer = setTimeout(function() {
+		$("#"+idDiv).html("");
+	}, delay);
+}
+
 function filterMok(query,value){
 	var values=value.split(" ");
 	var si=0;
@@ -59,7 +120,7 @@ $(document).ready(function() {
 //	initCollapsable();
 });
 
-$(document).ready(function() {
+$(document).ready(function() {'risTable'
 	$(".box-header").css("width","+=10px");
 	var conte=$("#contextPath").attr("value");
 	$(".processing").children().attr("src",conte+"/res/img/spinner36_39.gif");
@@ -119,6 +180,20 @@ function selectmok(item,inputIdInId,inputIdOutId,risTableId){
 	$("#"+inputIdOutId).attr('value',item.id);
 	$("#"+risTableId).delay(200).html("");
 }
+
+//<div>
+//<input type="text" min="3" maxlength="8" id="RESPECT_TO_LIST_RESULTING"
+//	placeholder="Matricola, name"
+//	onkeyup="ajaxAutoComplete('/ajax/sign/autocomplete/students',this.value,'risTable')" />
+//<input id="RESPECT_TO_LIST_RESULTING" type="hidden" />
+//<div>
+//	<table class="table-list tablemok"
+//		style="background-color: white; display: table-row-group"
+//		id="risTable">
+//	</table>
+//</div>
+//</div>
+
 function ajaxAutoComplete(path,value,idRis){
 	if(value.length>1){
 		var conte=$("#context").attr("value");

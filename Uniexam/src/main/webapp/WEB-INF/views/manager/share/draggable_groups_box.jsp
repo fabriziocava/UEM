@@ -20,8 +20,7 @@ ArrayList<Course> courses = (ArrayList<Course>) request.getAttribute("courses");
 				<span class="span_expandible" id="collapselist-groups-box<%=c.getId()%>">+</span>
 				<%=c.getName()%>
 				<li>
-					<ol id="list-groups-box<%=c.getId()%>" class="list-groups-box"
-						style="display: none;">
+					<ol id="list-groups-box<%=c.getId()%>" class="list-groups-box startHide">
 						<%
 							for (Group g : c.getGroups()) {
 						%>

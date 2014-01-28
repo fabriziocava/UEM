@@ -23,7 +23,7 @@
 <div id="name_id_realy">
 <span class="span_expandible" id="collapsedivappealdetails" onclick="collapseMok(this); getDataFromAjax('appeal/appeal_details','<%=appeal.getId()%>','divappealdetails');">+</span>
 <%=appeal.getName() %>
-<div id="divappealdetails" style="display: none;"></div>
+<div id="divappealdetails" class="startHide"></div>
 </div>
 </td></tr>
 </table>

@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Appeal;
+import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
 import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
@@ -28,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +57,108 @@ public class ProfessorControllerSign {
 	ProfessorService professorService;
 	
 	
+	@RequestMapping("/signAsCommissionar")
+	public ModelAndView signAsCommissionar(HttpServletRequest request, Model model,BindingResult result){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+		
+		model.addAttribute("I",p);
+		updateNotification(model, p);
+		updatePersonalizzation(model, p);
+		
+		try{
+			ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForSignAdCommission(p.getId());
+			model.addAttribute("appealStudents", appealStudents);
+		}catch(Exception e){new MokException(e);}
+		
+		return new ModelAndView("professor/sign/singlesignAsCommissionar","model",model);
+	}
+	
+	@RequestMapping("/add_single_sign")
+	public ModelAndView add_single_sign(@ModelAttribute("appealStudent")AppealStudent appealStudent, 
+			HttpServletRequest request, Model model,BindingResult result){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+		
+		model.addAttribute("I",p);
+		updateNotification(model, p);
+		updatePersonalizzation(model, p);
+		
+		try{
+			ArrayList<Course>courses=(ArrayList<Course>) professorService.getCourseAssociated(p.getId());
+			model.addAttribute("courses", courses);
+		}catch(Exception e){new MokException(e);}
+		
+		Boolean ris=false;
+		try{
+			AppealStudenValidator appealStudentValidator = new AppealStudenValidator();
+	        appealStudentValidator.validate(appealStudent, result);
+	        if(!result.hasErrors())
+	        	ris=professorService.addPrepareSign(appealStudent,p.getId());
+	        else{
+	        	return new ModelAndView("professor/sign/prepare_sign","model",model);
+	        }
+		}catch(Exception e){new MokException(e);}
+		model.addAttribute("ris", ris);
+		return new ModelAndView("professor/sign/prepare_sign","model",model);
+	}
+	
+	@RequestMapping("/singlesign")
+	public ModelAndView singlesign(@ModelAttribute("appealStudent")AppealStudent appealStudent, 
+			HttpServletRequest request, Model model,BindingResult result){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+		
+		model.addAttribute("I",p);
+		updateNotification(model, p);
+		updatePersonalizzation(model, p);
+		
+		try{
+			ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForSign(p.getId());
+			model.addAttribute("appealStudents", appealStudents);
+		}catch(Exception e){new MokException(e);}
+		
+		return new ModelAndView("professor/sign/singlesign","model",model);
+	}
+	
+	@RequestMapping("/singleprepare")
+	public ModelAndView singleprepare(@ModelAttribute("appealStudent")AppealStudent appealStudent, 
+			HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+		
+		model.addAttribute("I",p);
+		updateNotification(model, p);
+		updatePersonalizzation(model, p);
+		
+		try{
+			ArrayList<Course>courses=(ArrayList<Course>) professorService.getCourseAssociated(p.getId());
+			model.addAttribute("courses", courses);
+		}catch(Exception e){new MokException(e);}
+		
+		return new ModelAndView("professor/sign/prepare_sign","model",model);
+	}
+	
 	@RequestMapping("/from_appeal_sign")
 	public String from_appeal_sign(HttpServletRequest request, Model model){
 		Professor p=null;
@@ -70,7 +177,7 @@ public class ProfessorControllerSign {
 			String appealString=request.getParameter("id");
 			Long idAppeal=Long.valueOf(appealString);
 			if(appealString!=null && appealString.length()>0){
-				ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForSign(idAppeal);
+				ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForSignFromAppeal(p.getId(),idAppeal);
 				model.addAttribute("appealStudents", appealStudents);
 				Appeal appeal=professorService.getAppealGround(idAppeal);
 				model.addAttribute("appeal", appeal);
@@ -98,7 +205,7 @@ public class ProfessorControllerSign {
 			String appealString=request.getParameter("id");
 			Long idAppeal=Long.valueOf(appealString);
 			if(appealString!=null && appealString.length()>0){
-				ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForPrepareSign(idAppeal);
+				ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForPrepareSign(p.getId(),idAppeal);
 				model.addAttribute("appealStudents", appealStudents);
 				Appeal appeal=professorService.getAppealGround(idAppeal);
 				model.addAttribute("appeal", appeal);

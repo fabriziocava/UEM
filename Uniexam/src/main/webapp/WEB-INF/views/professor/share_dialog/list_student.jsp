@@ -162,7 +162,7 @@
 			<tr class="line-top" style="text-align: center;">
 				<td style="display: inline-block">
 				<div class="square-small <%=policy%>" onclick="openDiv('titleN<%=app.getStudent().getSerialNumber()%>')"></div>
-				<div style="display: none;" class="titlemok" id="titleN<%=app.getStudent().getSerialNumber()%>">
+				<div class="titlemok startHide" id="titleN<%=app.getStudent().getSerialNumber()%>">
 					<buttonmok onclick="closeDiv(this)" class="closeButton">X</buttonmok>
 						<table class="tablemok" >
 							<tr><th>Lo studente non ha sostenuto i seguenti insegnamenti richiesti:</th></tr>

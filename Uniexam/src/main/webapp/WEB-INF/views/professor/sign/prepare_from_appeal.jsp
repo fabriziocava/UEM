@@ -31,7 +31,7 @@ $(document).ready(function(){
 function dialogRemoveStudent(id){
 	$('<div></div>')
 	.attr('id','flashDialog')
-	.attr('title','remove student?')
+	.attr('title','<spring:message code='message.professor.remove.student'/>')
 	.appendTo('body');
 	$('#flashDialog').dialog({
 		autoOpen : true,
@@ -76,9 +76,9 @@ function dialogRemoveStudent(id){
 			ing.done(function(data) {
 				if(data.match("ok")){
 					location.reload();
-					alert("Modifiche apportate!");
+					alert("<spring:message code='message.professor.modify.success'/>");
 				}else{
-					alert("Errore nell'apportate le modifiche!");
+					alert("<spring:message code='message.professor.modify.error'/>");
 				}
 			});
 	}
@@ -119,7 +119,7 @@ function dialogRemoveStudent(id){
 					var color=element.css('background-color');
 					element.css('background-color','red');
 					var delay=5000;
-					alert("Voti non corretti!");
+					alert("<spring:message code='message.professor.nocorrectvote'/>");
 					timer=setTimeout(function() {
 						element.css('background-color',color);
 					}, delay);
@@ -163,17 +163,17 @@ function dialogRemoveStudent(id){
 					<span style="margin-top: 10px;margin-left: -20px" 
 					class="lock-draggable-close" id="draggabledragButton1">lock/unlock</span>
 					<fieldset class="aligncenter linkNoMNoP trasparent030">
-						<legend>Local modification</legend>
+						<legend><spring:message code='message.professor.localmodification'/></legend>
 						<ul style="padding: 10px" class="linkNoMNoP">
 							<li class="aligncenter" style="float: left; margin-right: 60px;"><buttonmok
-									onclick="removeNoSelected('selctedStudent')">Remove Unselected</buttonmok></li>
+									onclick="removeNoSelected('selctedStudent')"><spring:message code='message.professor.removeunselected'/></buttonmok></li>
 							<li class="alignend"><buttonmok
-									onclick="removeSelected('selctedStudent')">Remove Selected</buttonmok></li>
+									onclick="removeSelected('selctedStudent')"><spring:message code='message.professor.removeselected'/></buttonmok></li>
 								<li class="alignend" style="float: left;margin-top: 10px;margin-right: 60px;">
 								<buttonmok
-									onclick="selectAll('selctedStudent')">Select All</buttonmok></li>
+									onclick="selectAll('selctedStudent')"><spring:message code='message.professor.selectall'/></buttonmok></li>
 								<li class="alignend" style="margin-top: 10px;"><buttonmok
-									onclick="deselectAll('selctedStudent')">Deselect All</buttonmok></li>
+									onclick="deselectAll('selctedStudent')"><spring:message code='message.professor.deselectall'/></buttonmok></li>
 						</ul>
 						<br>
 					</fieldset>
@@ -184,19 +184,19 @@ function dialogRemoveStudent(id){
 					<span style="margin-top: 10px;margin-left: -20px"
 					 class="lock-draggable-close" id="draggabledragButton2">lock/unlock</span>
 					<fieldset class="aligncenter linkNoMNoP trasparent030">
-						<legend>Persistent modification</legend>
+						<legend><spring:message code='message.professor.persistentmodification'/></legend>
 						<ul style="padding: 10px" class="linkNoMNoP">
 							<li class="aligncenter" style="float: left; margin-right: 60px;"><buttonmok
-									onclick="deleteNoSelected('selctedStudent')">Delete Unselected</buttonmok></li>
+									onclick="deleteNoSelected('selctedStudent')"><spring:message code='message.professor.deleteunselected'/></buttonmok></li>
 							<li class="alignend"><buttonmok
-									onclick="deleteSelected('selctedStudent')">Delete Selected</buttonmok></li>
+									onclick="deleteSelected('selctedStudent')"><spring:message code='message.professor.deleteselected'/></buttonmok></li>
 						</ul>
 						<br>
 					</fieldset>
 				</div>
 			</div>
 			<buttonmok onclick="applyPrepare('selctedStudent')"
-				style="margin-top:20px">Apply Prepare</buttonmok>
+				style="margin-top:20px"><spring:message code='message.professor.applyprepare'/></buttonmok>
 			<br>
 			<input type="text" 
 			onkeyup="filterMok('#tableSortable tbody tr.table-item-space',this.value)"
@@ -204,13 +204,13 @@ function dialogRemoveStudent(id){
 			<table class="tablemok" id="tableSortable">
 				<thead>
 					<tr style="text-align: center;" class="table-item-space">
-						<th >Stato</th>
-						<th >Matricola</th>
-						<th >Nome</th>
-						<th >Voto</th>
-						<th >Nota</th>
-						<th >Elimina</th>
-						<th >Seleziona</th>
+						<th ><spring:message code='message.professor.general.state'/></th>
+						<th ><spring:message code='message.professor.general.serialnumber'/></th>
+						<th ><spring:message code='message.professor.general.name'/></th>
+						<th ><spring:message code='message.professor.general.vote'/></th>
+						<th ><spring:message code='message.professor.general.note'/></th>
+						<th ><spring:message code='message.general.delete'/></th>
+						<th ><spring:message code='message.professor.general.select'/></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -277,13 +277,12 @@ function dialogRemoveStudent(id){
 						<td style="display: inline-block">
 							<div class="square-small <%=policy%>"
 								onclick="openDiv('titleN<%=app.getStudent().getSerialNumber()%>')"></div>
-							<div style="display: none;" class="titlemok"
+							<div class="titlemok startHide"
 								id="titleN<%=app.getStudent().getSerialNumber()%>">
 								<buttonmok onclick="closeDiv(this)" class="closeButton">X</buttonmok>
 								<table class="tablemok">
 									<tr>
-										<th>Lo studente non ha sostenuto i seguenti insegnamenti
-											richiesti:</th>
+										<th><spring:message code='message.professor.requestedcoursealert'/></th>
 									</tr>
 									<%
 										for (RequestedCourse r : requestedCourses) {

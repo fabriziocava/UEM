@@ -49,8 +49,9 @@
 
 <div id="dialog_content" >
 <input type="text" min="3" maxlength="8" placeholder="Matricola, Nome, Cognome"
-name="matricola" id="idComplete" 
-onkeyup="ajaxAutoComplete('/ajax/appeal/auto_complete_student',this.value,'risTable')"/>
+name="matricola" id="idCompleteStudent" 
+onkeyup="ajaxAutoComplete('/ajax/appeal/auto_complete_student',this.value,'risTable')"
+onblur="clearContent('risTable')"/>
 <input id="studentID" name="studentID" type="hidden"/>
 <!-- <div id="complete" style="position: fixed"></div> -->
 <!-- <div style="position: fixed;"> -->

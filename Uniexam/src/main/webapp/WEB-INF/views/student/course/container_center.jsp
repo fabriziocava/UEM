@@ -25,7 +25,7 @@
 						<article>
 							<section id="<%="course" + c.getId()%>">
 								<span class="span_expandible" id="collapsedivrse<%=c.getId()%>" onclick="getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');">+</span><%=c.getName()%>
-								<div id="divrse<%=c.getId()%>" style="display: none;"></div>
+								<div id="divrse<%=c.getId()%>" class="startHide"></div>
 							</section>
 						</article>
 					<br>

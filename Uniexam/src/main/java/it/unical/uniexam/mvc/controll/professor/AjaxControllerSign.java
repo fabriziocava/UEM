@@ -36,7 +36,26 @@ public class AjaxControllerSign {
 	@Autowired
 	ProfessorService professorService;
 
-	
+	@RequestMapping("/autocomplete/students")
+	public String autocomplete_student(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+
+		String idStud=request.getParameter("id");
+
+		if(idStud!=null && !idStud.equals("")){
+			ArrayList<Student>studentsMatch=professorService.getStudentsMatch(idStud);
+			model.addAttribute("list", studentsMatch);
+//			System.out.println(studentsMatch.size());
+			return "professor/autocomplete/students";
+		}
+		return null;
+	}
 	
 	@RequestMapping("/declassify_students")
 	public ModelAndView declassify_students(HttpServletRequest request, Model model,HttpServletResponse response){
@@ -102,17 +121,25 @@ public class AjaxControllerSign {
 				}catch(Exception e){new MokException(e);}
 			}
 		}
-
-		Boolean res=professorService.signAppealStudentsList(listSignAppealStudents,p.getId());
+		String passwd=request.getParameter("passwd");
+		String res="no";
+		if(passwd!=null && passwd.equals(p.getPassword())){
+			if(professorService.signAppealStudentsList(listSignAppealStudents,p.getId()))
+				res="si";
+		}else
+			res="passwd";
 //				professorService.removeStudentsToAppeal(removeStudents);
 		
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();
-			if(res)
+			if(res.equals("si"))
 				outputStream.println("ok");
 			else
-				outputStream.println("no");
+				if(res.equals("no"))
+					outputStream.println("no");
+				else
+					outputStream.println("passwd");
 			outputStream.flush();
 			outputStream.close();
 		} catch (Exception e) {
@@ -219,7 +246,7 @@ public class AjaxControllerSign {
 			model.addAttribute("listAppeals", appeanls);
 		}
 		
-		return "professor/sign/list_autocomplete";
+		return "professor/autocomplete/appeals";
 	}
 
 	

@@ -51,6 +51,6 @@ public interface AppealDAO {
 	public Appeal getAppealGround(Long idAppeal);
 	public ArrayList<Appeal> getAppealsMatch(Long idProfessor,String appealString);
 	public ArrayList<AppealStudent> getAppealForPrepareSign(Long idAppeal);
-	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForState(Long idAppeal,STATE state);
+	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForState(Long idProfessor,Long idAppeal, STATE state);
 //	public ArrayList<ArrayList<Object>> getListStudentFromAppealRegularAndNotForSign(Long idAppeal);
 }

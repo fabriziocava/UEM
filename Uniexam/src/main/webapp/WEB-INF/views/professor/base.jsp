@@ -27,6 +27,13 @@
 	href="${pageContext.request.contextPath}/res/js/jquery-ui-timepicker-addon.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/res/css/jquery-ui.css">
+<script type="text/javascript">
+	multilang = new Array();
+	multilang['message.professor.modify.success'] = "<spring:message code='message.professor.modify.success'/>";
+	multilang['message.professor.passwd.error'] = "<spring:message code='message.professor.passwd.error'/>";
+	multilang['message.professor.modify.error'] = "<spring:message code='message.professor.modify.error'/>";
+	
+</script>
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 
 </script>

@@ -41,7 +41,7 @@
 					<section id="<%="course" + c.getId()%>">
 					<span class="span_expandible" id="collapsedivrse<%=c.getId()%>" onclick="collapseMok(this); getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');">+</span><%=c.getName()%>
 <%-- 						<a id="<%="acourse" + c.getId()%>" href="#" onclick="getDataFromAjax('course/course_details','<%=c.getId()%>','divrse<%=c.getId()%>');"><h1><%=c.getName()%></h1></a> --%>
-						<div id="divrse<%=c.getId()%>" style="display: none;"></div>
+						<div id="divrse<%=c.getId()%>" class="startHide"></div>
 					</section>
 					<section id="<%="note" + c.getId()%>" contenteditable="true" spellcheck="true"
 						onfocus="storeOld(this)"

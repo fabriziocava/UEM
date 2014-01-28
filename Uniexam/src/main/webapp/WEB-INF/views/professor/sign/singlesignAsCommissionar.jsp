@@ -10,8 +10,7 @@
 <!-- from Controller attribute course that contains the all details for Course -->
 
 <%
-	Appeal appeal=(Appeal) request.getAttribute("appeal");
-		if(appeal!=null){
+
 %>
 
 <script type="text/javascript">
@@ -22,11 +21,9 @@ $(document).ready(function(){
 	});
 	listRemove=new FormData();
 	count=1;
-	listRemove.append("idAppeal",'<%=appeal.getId()%>');
 	
 	listSign=new FormData();
 	count=1;
-	listSign.append("idAppeal",'<%=appeal.getId()%>');
 });
 function dialogRemoveStudent(id){
 	$('<div></div>')
@@ -94,7 +91,7 @@ function dialogRemoveStudent(id){
 <div class="container-center">
 
 	<div class="aligncenter">
-		<h2 style="text-align: center;"><%=appeal.getName()%></h2>
+		<h2 style="text-align: center;">Titolo</h2>
 	</div>
 	<div class="aligncenter">
 		<%
@@ -154,9 +151,7 @@ function dialogRemoveStudent(id){
 			onkeyup="filterMok('#tableSortable tbody tr.table-item-space',this.value)"
 			placeholder="search"/>
 			<table class="tablemok" id="tableSortable">
-				<thead><div id="passwdDIV" title="Inserisci password">
-<input id="passwd" placeholder="password" type="password">
-</div>
+				<thead>
 					<tr style="text-align: center;" class="table-item-space">
 						<th ><spring:message code='message.professor.general.state'/></th>
 						<th ><spring:message code='message.professor.general.serialnumber'/></th>
@@ -272,11 +267,6 @@ function dialogRemoveStudent(id){
 		</fieldset>
 	</div>
 </div>
-<%
-	} else {
-%>
-Errore!
-<%}%>
 <div id="passwdDIV" title="Inserisci password" class="startHide">
 <input id="passwd" placeholder="password" type="password">
 </div>

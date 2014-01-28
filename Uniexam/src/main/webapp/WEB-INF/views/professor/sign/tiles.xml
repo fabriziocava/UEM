@@ -8,18 +8,24 @@
 		<put-attribute name="container-center" value="/WEB-INF/views/professor/sign/sign.jsp" />
 	</definition>
 	
-	<definition name="professor/sign/list_autocomplete" template="/WEB-INF/views/professor/sign/list_autocomplete.jsp">
-	</definition>
-	
-<!-- 	<definition name="professor/sign/prepare_from_appeal" template="/WEB-INF/views/professor/sign/prepare_from_appeal.jsp"> -->
-<!-- 	</definition> -->
-	
 	<definition name="professor/sign/prepare_from_appeal" extends="professor.base">
 	    <put-attribute name="container-center" value="/WEB-INF/views/professor/sign/prepare_from_appeal.jsp" />
 	</definition>
 	
 	<definition name="professor/sign/from_appeal_sign" extends="professor.base">
 	    <put-attribute name="container-center" value="/WEB-INF/views/professor/sign/from_appeal_sign.jsp" />
+	</definition>
+	
+	<definition name="professor/sign/prepare_sign" extends="professor.base">
+	    <put-attribute name="container-center" value="/WEB-INF/views/professor/sign/prepare_sign.jsp" />
+	</definition>
+	
+	<definition name="professor/sign/singlesign" extends="professor.base">
+	    <put-attribute name="container-center" value="/WEB-INF/views/professor/sign/singlesign.jsp" />
+	</definition>
+	
+	<definition name="professor/sign/singlesignAsCommissionar" extends="professor.base">
+	    <put-attribute name="container-center" value="/WEB-INF/views/professor/sign/singlesignAsCommissionar.jsp" />
 	</definition>
 	
 </tiles-definitions>

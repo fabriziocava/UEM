@@ -140,7 +140,7 @@
 	</div>
 
 	<h1 align="center"><%=c.getName()%></h1>
-	<p class="alertSomeModifyRequestCourse" style="display: none;">
+	<p class="alertSomeModifyRequestCourse startHide" >
 		<span class="ui-icon ui-icon-alert"
 			style="float: left; margin: 0 7px 20px 0;"></span>
 		<spring:message
@@ -196,25 +196,24 @@
 			<!-- 			</tr> -->
 		</table>
 	</div>
-	<div class="alertSomeModifyRequestCourse line-top"
-		style="display: none;">
+	<div class="alertSomeModifyRequestCourse line-top startHide">
 		<input type="button" onclick="submitCommandRequestedCourse()"
 			value="<spring:message code='message.general.Save' />">
 	</div>
 
 </div>
 
-<div id="radiostrong" style="display: none;">
+<div id="radiostrong" class="startHide">
 	<label><input type='radio' name='choose' value="light" />light</label>
 	<label><input type='radio' name='choose' value="medium" />medium</label>
 </div>
 
-<div id="radiolight" style="display: none;">
+<div id="radiolight" class="startHide">
 	<label><input type='radio' name='choose' value="medium" />medium</label>
 	<label><input type='radio' name='choose' value="strong" />strong</label>
 </div>
 
-<div id="radiomedium" style="display: none;">
+<div id="radiomedium" class="startHide">
 	<label><input type='radio' name='choose' value="light" />light</label>
 	<label><input type='radio' name='choose' value="strong" />strong</label>
 </div>
