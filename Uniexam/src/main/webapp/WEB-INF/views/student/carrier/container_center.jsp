@@ -21,6 +21,8 @@
 		<legend><spring:message code='label.carrier'/></legend>
 		<%
 		ArrayList<AppealStudent> appealStudent = (ArrayList<AppealStudent>) request.getAttribute("as");
+		Double weightedVote = 0.0;
+		Double nCredits = 0.0;
 		if(appealStudent!=null && !appealStudent.isEmpty()) {
 			%>
 				<table border="1" style="width: 100%">
@@ -47,11 +49,31 @@
 							<td align="center"><%=as.getAppeal().getExamDate()%></td>
 						</tr>
 						<%
+						if(as.getState()==AppealStudent.STATE.LOADED_IN_SECRETERY) {
+							weightedVote += as.getTemporany_vote()*as.getAppeal().getCourse().getCredits();
+							nCredits += as.getAppeal().getCourse().getCredits();
+						}
 					} catch (Exception e) {
 						new MokException(e);
 					}
 				}
 			%>
+				</table>
+				<br>
+				<%
+				Double avarage = weightedVote/nCredits;
+				if(avarage>30.0)
+					avarage = 30.0;
+				%>
+				<table>
+					<tr>
+						<td align="left"><label>Media su base esame:</label></td>
+						<td align="right"><label><%=avarage%> / 30</label></td>
+					</tr>
+					<tr>
+						<td align="left"><label>Media su base titolo:</label></td>
+						<td align="right"><label><%=avarage*110/30%> / 110</label></td>
+					</tr>
 				</table>
 			<%
 		} else {
