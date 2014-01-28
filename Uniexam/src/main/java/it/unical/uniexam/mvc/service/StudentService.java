@@ -29,6 +29,7 @@ public interface StudentService extends UserService {
 	public ArrayList<AppealStudent> getAppealStudent(Long idStudent);
 	public ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent);
 	public ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(Long idStudent);
+	public boolean setStateAppealStudent(ArrayList<Long> idAppealStudentList);
 	
 	public Set<Group> getGroups();
 }

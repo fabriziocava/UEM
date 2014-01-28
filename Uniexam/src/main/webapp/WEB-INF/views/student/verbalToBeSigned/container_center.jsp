@@ -16,11 +16,30 @@
 		$("#sorting").tablesorter();
 	});
 	
-	function toggle(source) {
-		  checkboxes = document.getElementsByName('appealStudent');
-		  for(var i=0, n=checkboxes.length;i<n;i++) {
-			  checkboxes[i].checked = source.checked;
-			  }
+	$(document).ready(function() {
+	    $('#selectall').click(function(event) {  //on click 
+	        if(this.checked) { // check select status
+	            $('.checkbox').each(function() { //loop through each checkbox
+	                this.checked = true;  //select all checkboxes with class "checkbox"               
+	            });
+	        }else{
+	            $('.checkbox').each(function() { //loop through each checkbox
+	                this.checked = false; //deselect all checkboxes with class "checkbox"                       
+	            });         
+	        }
+	    });
+	    
+	});
+	
+	function verify() {
+		var isCorrect = false;
+		$('.checkbox').each(function() {
+			if(this.checked)
+				isCorrect = true;
+		});
+		if(!isCorrect)
+			alert("Selezionare almeno un esame!");
+		return isCorrect;
 	}
 </script>
 
@@ -31,11 +50,11 @@
 		ArrayList<AppealStudent> appealStudent = (ArrayList<AppealStudent>) request.getAttribute("as");
 		if(appealStudent!=null && !appealStudent.isEmpty()) {
 			%>
-				<form:form action="${pageContext.request.contextPath}/student/verbalToBeSigned/sign">
-					<table border="1" style="width: 100%">
+				<form:form action="${pageContext.request.contextPath}/student/verbalToBeSigned/sign" id="verbalSign" modelAttribute="idAppealStudent" method="post" onsubmit="return verify()">
+					<table id="table" border="1" style="width: 100%">
 						<thead>
 							<tr>
-								<th><input name="selectAll" type="checkbox" value="selectAll" title="Select all" onclick="toggle(this)" /></th>
+								<th><input type="checkbox" id="selectall" /></th>
 								<th><spring:message	code="label.code" /></th>
 								<th><spring:message	code="label.course" /></th>
 								<th><spring:message	code="message.professor.course.attribute.credits" /></th>
@@ -48,7 +67,7 @@
 						try {
 						%>
 							<tr>
-								<td align="center"><input id="appealStudent_id" name="appealStudent" type="checkbox" value="<%=as.getId()%>" title="<%=as.getAppeal().getCourse().getName()%>" />
+								<td align="center"><input class="checkbox" name="appealStudent<%=as.getId()%>" type="checkbox" value="<%=as.getId()%>" title="<%=as.getAppeal().getCourse().getName()%>" />
 								<td align="center"><%=as.getAppeal().getCourse().getCode()%></td>
 								<td><%=as.getAppeal().getCourse().getName()%></td>
 								<td align="center"><%=as.getAppeal().getCourse().getCredits()%></td>
@@ -66,8 +85,16 @@
 					<table>
 						<tr>
 							<td><label>Password:</label></td>
-							<td><input name="password" type="password" required="required" placeholder="password"></td>
+							<td><input name="password" type="password" id="password" required="required" placeholder="password"></td>
 							<td><input type="submit" id="submit" value="<spring:message code='label.sign'/>" style="background-color: green; color: white; font-size: 18px"></td>
+							<%
+							Boolean error = (Boolean) request.getAttribute("error");
+							if(error!=null && error) {
+								%>
+								<td><label style="color: red;">Password errata! Riprovare.</label></td>
+								<%
+							}
+							%>
 						</tr>
 					</table>
 				</form:form>

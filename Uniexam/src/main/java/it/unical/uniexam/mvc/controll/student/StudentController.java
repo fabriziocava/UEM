@@ -1,6 +1,8 @@
 package it.unical.uniexam.mvc.controll.student;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.AppealStudent;
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,9 +40,8 @@ public class StudentController {
 		if(redirect!=null)
 			return redirect;
 		s = slist.get(0);
-		
 		model.addAttribute("I",s);
-		
+				
 		return StudentService.STUDENT_HOME;
 	}
 	
@@ -51,7 +54,6 @@ public class StudentController {
 		if(redirect!=null)
 			return redirect;
 		s = slist.get(0);
-		
 		model.addAttribute("I",s);
 		
 		ArrayList<Course> courses = studentService.getCourses();
@@ -69,7 +71,6 @@ public class StudentController {
 		if(redirect!=null)
 			return redirect;
 		s = slist.get(0);
-		
 		model.addAttribute("I",s);
 		
 		Set<Group> groups = studentService.getGroups();
@@ -88,7 +89,6 @@ public class StudentController {
 		if(redirect!=null)
 			return redirect;
 		s = slist.get(0);
-		
 		model.addAttribute("I",s);
 		
 		Long idStudent = s.getId();
@@ -115,7 +115,24 @@ public class StudentController {
 		model.addAttribute("as", appealStudent);
 		
 		return StudentService.STUDENT_VERBALTOBESIGNED;
-	}	
+	}
+	
+//	@RequestMapping(value=StudentService.STUDENT_VERBALTOBESIGNED)
+//	public ModelAndView verbalToBeSigned(HttpServletRequest request, Model model) {
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		s = slist.get(0);
+//		model.addAttribute("I",s);
+//		
+//		Long idStudent = s.getId();
+//		Map<String, Object> modelMap = new HashMap<String, Object>();
+//		modelMap.put("appealStudent", studentService.getAppealStudentForVerbalToBeSigned(idStudent));
+//		return new ModelAndView(StudentService.STUDENT_VERBALTOBESIGNED, modelMap);
+//	}	
 	
 	@RequestMapping(value=StudentService.STUDENT_VERBALTOBESIGNED+"/sign", method=RequestMethod.POST)
 	String signVerbal(HttpServletRequest request, Model model) {
@@ -126,10 +143,33 @@ public class StudentController {
 		if(redirect!=null)
 			return redirect;
 		s = slist.get(0);
-		
+	
 		model.addAttribute("I",s);
 		
-		return carrier(request, model);
+		String password = request.getParameter("password");
+		if(s.getPassword().equals(password)) {
+			Long idStudent = s.getId();
+			ArrayList<AppealStudent> appealStudent = studentService.getAppealStudentForVerbalToBeSigned(idStudent);
+			Long idAppealStudent = null;
+			ArrayList<Long> idAppealStudentList = new ArrayList<Long>();
+			for(AppealStudent as : appealStudent) {
+				try {
+					idAppealStudent = Long.valueOf(request.getParameter("appealStudent"+as.getId()));
+					if(idAppealStudent==as.getId()) {
+						idAppealStudentList.add(as.getId());
+					}
+				} catch (Exception e) {
+					
+				}
+			}
+			studentService.setStateAppealStudent(idAppealStudentList);
+			return carrier(request, model);
+		}
+		else {
+			Boolean error = true;
+			model.addAttribute("error", error);
+			return verbalToBeSigned(request, model);
+		}
 	}
 	
 	

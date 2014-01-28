@@ -201,4 +201,27 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		return res;
 	}
 
+	@Override
+	public boolean setState(ArrayList<Long> idAppealStudentList) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        Boolean ris = false;
+        try {
+        	transaction=session.beginTransaction();
+        	for (Long idAppeal : idAppealStudentList) {
+        		AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+        		appealStudent.setState(STATE.LOADED_IN_SECRETERY);
+        	}
+        	transaction.commit();
+        	ris=true;
+        } catch(Exception e){
+        	new MokException(e);
+        	ris=false;
+        	transaction.rollback();
+        } finally {
+        	session.close();
+        }
+        return ris;
+	}
+
 }

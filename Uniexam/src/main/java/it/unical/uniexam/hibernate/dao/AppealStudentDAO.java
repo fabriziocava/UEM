@@ -16,5 +16,5 @@ public interface AppealStudentDAO {
     Boolean prepareAppealStudentsForSign(ArrayList<Long> prepareStudents);
     ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent);
     ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(Long idStudent);
-    
+    boolean setState(ArrayList<Long> idAppealStudentList);
 }
