@@ -49,7 +49,15 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			 * appealstudent in join sia con appeal che con course quindi essendo che almeno 
 			 * uno dei due sarà null il join fallisce e come risultato non da nulla 
 			 */
-			
+			/**
+			 * quindi adesso devo:
+			 * 	provare che questa funzione funzioni!
+			 * 	fare effettuare il sign al comissario nello stesso modo di come
+			 * 		lo effettua il professore con l'inserimento della passwd
+			 * 	
+			 * 	Lavorare sui gruppi, ma mi sa che non c'è tempo..quindi non so
+			 * 
+			 */
 			Professor comm=(Professor)session.get(Professor.class, idProfessor);
 			List<AppealStudent> list1=session.createCriteria(AppealStudent.class)
 //					.add(Restrictions.eq("course", "is not null"))
