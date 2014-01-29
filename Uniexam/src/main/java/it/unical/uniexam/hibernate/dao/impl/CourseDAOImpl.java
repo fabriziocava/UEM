@@ -19,6 +19,7 @@ import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
@@ -664,6 +665,24 @@ public class CourseDAOImpl implements CourseDAO{
 			transaction.rollback();
 			new MokException(e);
 		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Course> getCoursesFromStudent(Long idStudent) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		ArrayList<Course> res = null;
+		try {
+			Query q= session.createQuery("from Course where degreeCourse.id=:par");
+			Student student = (Student) session.get(Student.class, idStudent);
+			q.setParameter("par", student.getDegreeCourse_registered().getId());
+			res = new ArrayList<Course>(q.list());
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
 			session.close();
 		}
 		return res;

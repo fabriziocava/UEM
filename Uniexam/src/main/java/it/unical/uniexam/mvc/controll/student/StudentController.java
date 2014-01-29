@@ -91,7 +91,8 @@ public class StudentController {
 		s = slist.get(0);
 		model.addAttribute("I",s);
 		
-		ArrayList<Course> courses = studentService.getCourses();
+		Long idStudent = s.getId();
+		ArrayList<Course> courses = studentService.getCourses(idStudent);
 		model.addAttribute("courses", courses);
 		
 		return StudentService.STUDENT_COURSE;

@@ -71,4 +71,6 @@ public interface CourseDAO {
 
 	public ArrayList<String> getCoursesFromDepartment();
 	
+	public ArrayList<Course> getCoursesFromStudent(Long idStudent);
+	
 }

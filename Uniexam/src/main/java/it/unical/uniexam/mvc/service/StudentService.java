@@ -21,7 +21,7 @@ public interface StudentService extends UserService {
 	public static final String STUDENT_VERBALTOBESIGNED = "student/verbalToBeSigned";
 	
 	public Student getStudent(Long serialNumber);
-	public ArrayList<Course> getCourses();
+	public ArrayList<Course> getCourses(Long idStudent);
 	
 	public Course getCourseDetails(Long idCourse);
 	public ArrayList<Appeal> getAppeal(Long idCourse);

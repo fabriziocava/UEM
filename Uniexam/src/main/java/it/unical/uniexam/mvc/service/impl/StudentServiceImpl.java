@@ -48,8 +48,12 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	}
 	
 	@Override
-	public ArrayList<Course> getCourses() {
-		return courseDAO.getCourses();
+	public ArrayList<Course> getCourses(Long idStudent) {
+		ArrayList<Course> courses = courseDAO.getCoursesFromStudent(idStudent);
+		ArrayList<Carrier> carrier = carrierDAO.getCarrierList(idStudent);
+		for(Carrier c : carrier)
+			courses.remove(c.getCourse());
+		return courses;
 	}
 	
 	@Override
