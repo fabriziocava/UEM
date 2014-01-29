@@ -2,6 +2,8 @@
 <%@page import="javassist.expr.NewArray"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Group"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Course"%>
+<%@page import="it.unical.uniexam.hibernate.domain.Professor "%>
+<%@page import="java.util.Set"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -29,18 +31,7 @@
 				$( this ).dialog( "close" );
 				$("div").remove("#dialogAddRequested");
 			},
-			buttons:{
-				Save:function(){
-					//something else
-					
-//							alert("vado");
-						submitAssignCourse();
-						$( this ).dialog( "close" );
-						$("div").remove("#dialogAddRequested");
-								}
-						
-					
-					}
+	
 			
 		});
 		$("#dialogAddRequested").attr("title","");
@@ -49,25 +40,41 @@
 	
 </script>
 <%
-	
+Set<Professor> professor=(Set<Professor>)request.getAttribute("professors");
+Long c =(Long) request.getAttribute("idcourse");
+
 %>
+
+
 <div id="dialog_content">
-<form:form id=" addrequestedCourse " action="${pageContext.request.contextPath}/manager/assegnaCorsoAction" modelAttribute="assegnaCorso" method="post" >
+<form id=" setholder " action="${pageContext.request.contextPath}/manager/assegnaCorsoAction"  method="post" >
 <table class="tablemok">
 
 <tr>
-<td><form:label path="holder">Assegna corso a professore</form:label></td>
-<td><form:select path="holder" items="${model.professors}" itemLabel="name"  itemValue="id"></form:select></td>
-<td><input type="hidden" name="idCourse" value="${model.idcourse}"/></td>
+
+<td><label >Assegna Corso a Professore</label></td>
+
+<td><select name="idprofessor"> 
+<%for(Professor p:professor){	%>
+<option   value="<%=p.getId() %>"  >  <%= p.getName() + " "+ p.getSurname() %>  </option>       
+
+<%} %>
+
+ </select></td>
+
+<td><input type="hidden" name="idCourse" value="<%=c %>"/></td>
+
+
 </tr>
+
 <tr><td></td><td>
-<!-- <input type="submit" value="Register" /> -->
 </td></tr>
 </table>
 
+<input type="submit" id="submit" value="Salva"> 
 
 
-</form:form>
+</form>
 <br>
 
 </div>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.DegreeCourse;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
@@ -129,8 +131,9 @@ public class AjaxControllerListCourse {
 		Long idc=Long.valueOf(idcourse);
 		model.addAttribute("idcourse",idc);
 		
-		Set<Professor> p=managerService.getProfessors();
+		Set<Professor> p=managerService.getProfessorfromDepartment(m.getDepartmentAssociated());
 		model.addAttribute("professors", p);
+		
 		String ris=request.getParameter("ris");
 		if(ris!=null){
 			if(ris.equals("true"))
@@ -155,15 +158,23 @@ public class AjaxControllerListCourse {
 		}
 		Manager m=(Manager)user;
 		model.addAttribute("M",m);
-		//riempire una mappa da dove posso sceliere i corsi che possono essere richiesti 
 		String idCours=request.getParameter("id");
 		if(idCours!=null){
 			Long idCoursereq=Long.valueOf(idCours);
 			ArrayList<String> degree = new ArrayList<String>();
 			degree.add(RequestedCourse.POLICY_STRONG);
 			model.addAttribute("degree", degree);
+			
 			ArrayList<Course> courses=managerService.getCourses();
-			model.addAttribute("courses", courses);
+			DegreeCourse dg=null;
+			for(Course c: courses){
+				if(c.getId()==idCoursereq){
+					
+					dg=c.getDegreeCourse();
+				}
+			}
+			ArrayList<Course> courses2=managerService.getCoursesFromDegreeCourse(dg.getId());
+			model.addAttribute("courses", courses2);
 			
 			model.addAttribute("idCoursereq", idCoursereq);
 		}else{
@@ -207,6 +218,40 @@ public class AjaxControllerListCourse {
 		return null;
 	}
 	
+	@RequestMapping("/course/remove_courseALL")
+	public String remove_courseALL(HttpServletRequest request, Model model,HttpServletResponse response){
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+		}
+		if(user.getClass()!=Manager.class){
+			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+		}
+		Manager m=(Manager)user;
+		model.addAttribute("M",m);
+		
+		String idcourse=request.getParameter("id");
+		Long idc=Long.valueOf(idcourse);
+
+		String idcourserequested=request.getParameter("id2");
+		Long idcr=Long.valueOf(idcourserequested);
+		
+		Boolean res=managerService.removeCourse(idc,idcr);
+		
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res)
+				outputStream.println("ok");
+			else
+				outputStream.println("no");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
+		return null;
+	}
 	
 	@RequestMapping("/course/remove_courseAsHolder")
 	public String remove_courseasHolder(HttpServletRequest request, Model model,HttpServletResponse response){
@@ -241,5 +286,37 @@ public class AjaxControllerListCourse {
 		}
 		return null;
 	}
+	
+	@RequestMapping("/dialog/addCourse")
+	public ModelAndView dialog_add_session(@ModelAttribute("addcourse") Course course,HttpServletRequest request, Model model){
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+		}
+		if(user.getClass()!=Manager.class){
+			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+		}
+		Manager m=(Manager)user;
+		model.addAttribute("M",m);
+		
+		Set<DegreeCourse> degreecourses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
+		model.addAttribute("degreecourses", degreecourses);
+		
+//		Set<Professor> professors=managerService.getProfessors();
+//		model.addAttribute("professors", professors);
+		
+		ArrayList<Course> courses=managerService.getCourses();
+		
+//		Course c=new Course(null, null, null, null, null, null, null, null);
+//		courses.add(c);
+		
+		model.addAttribute("courses", courses);
+		
+		
+		return new ModelAndView("manager/dialog/addCourse", "model", model);
+		
+	}
+	
+	
 	
 }

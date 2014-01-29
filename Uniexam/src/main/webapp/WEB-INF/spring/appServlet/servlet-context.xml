@@ -24,6 +24,7 @@
 	<beans:bean id="courseFormatter" class="it.unical.uniexam.mvc.service.CourseFormatter"></beans:bean>
 	<beans:bean id="dateFormatter" class="it.unical.uniexam.mvc.service.DateFormatter"></beans:bean>
 	<beans:bean id="degreecourseFormatter" class="it.unical.uniexam.mvc.service.DegreeCourseFormatter"></beans:bean>
+	<beans:bean id="professorFormatter" class="it.unical.uniexam.mvc.service.ProfessorFormatter"></beans:bean>
 	
 	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
       <beans:property name="formatters">
@@ -31,6 +32,7 @@
                  <beans:ref bean="courseFormatter"/>
                  <beans:ref bean="dateFormatter"/>
                  <beans:ref bean="degreecourseFormatter"/>
+                 <beans:ref bean="professorFormatter"/>
              
                  
            </beans:set>
@@ -75,6 +77,8 @@
 				<beans:value>/WEB-INF/views/manager/account/tiles.xml</beans:value>
 				<beans:value>/WEB-INF/views/manager/share_dialog/tiles.xml</beans:value>
 				<beans:value>/WEB-INF/views/manager/exam_session/tiles.xml</beans:value>
+				<beans:value>/WEB-INF/views/manager/assignCourse/tiles.xml</beans:value>
+				<beans:value>/WEB-INF/views/manager/ordinamento/tiles.xml</beans:value>
 				
 			</beans:list>
 		</beans:property>

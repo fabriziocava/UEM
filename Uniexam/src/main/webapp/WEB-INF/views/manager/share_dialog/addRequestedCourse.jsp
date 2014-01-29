@@ -67,7 +67,8 @@
 </tr>
 <tr>
 <td><form:label path="Course">Course</form:label></td>
-<td><form:select path="Course" items="${model.courses}" itemLabel="name"></form:select></td>
+<td><form:select  path="Course" items="${model.courses}" itemLabel="name"></form:select></td>
+
 <td><input type="hidden" name="idCourse" value="${model.idCoursereq}"/></td>
 </tr>
 <tr><td></td><td>

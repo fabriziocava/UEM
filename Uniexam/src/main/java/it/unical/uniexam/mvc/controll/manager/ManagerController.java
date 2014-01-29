@@ -105,6 +105,33 @@ public class ManagerController {
 		return ManagerService.MANAGER_EXAM;
 	}
 	
+	@RequestMapping(value=ManagerService.MANAGER_ORDINAMENTO , method=RequestMethod.GET)
+	public String ordinamento(HttpServletRequest request, Model model){
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+		}
+		if(user.getClass()!=Manager.class){
+			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+		}
+		Manager m=(Manager)user;
+
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		// aggiungere altre cose
+		
+		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
+		model.addAttribute("courses", courses);
+
+		ArrayList<Course> c=managerService.getCourses();
+		model.addAttribute("c", c);
+		
+		
+
+		
+		return ManagerService.MANAGER_ORDINAMENTO;
+	}
+	
 	
 	@RequestMapping(value=ManagerService.MANAGER_COURSE , method=RequestMethod.GET)
 	public String course(HttpServletRequest request, Model model){
@@ -149,6 +176,28 @@ public class ManagerController {
 		return ManagerService.MANAGER_COURSELIST;
 	}
 	
+	@RequestMapping(value=ManagerService.MANAGER_ASSIGNCOURSE , method=RequestMethod.GET)
+	public String assigncourse(HttpServletRequest request, Model model){
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+		}
+		if(user.getClass()!=Manager.class){
+			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+		}
+		Manager m=(Manager)user;
+
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		// aggiungere altre cose
+		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
+		model.addAttribute("courses", courses);
+
+		ArrayList<Course> c=managerService.getCourses();
+		model.addAttribute("c", c);
+		
+		return ManagerService.MANAGER_ASSIGNCOURSE;
+	}
 	
 	@RequestMapping(value="manager/addRequestedCourseAction", method=RequestMethod.POST)
 	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
@@ -176,14 +225,14 @@ public class ManagerController {
 	
 	
 	@RequestMapping(value="manager/assegnaCorsoAction", method=RequestMethod.POST)
-	public ModelAndView assegnaCorsoaction(@ModelAttribute("assegnaCorso") Professor professor,
+	public String assegnaCorsoaction(
 			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
 		User user=managerService.getSession(request.getSession().getId());
 		if(user==null){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+			return (UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
 		}
 		if(user.getClass()!=Manager.class){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+			return (UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
 		}
 		Manager m=(Manager)user;
 		model.addAttribute("M",m);
@@ -193,10 +242,14 @@ public class ManagerController {
 		
 		Long idCourse=Long.valueOf(idCours);
 		
-		Boolean ris=managerService.setHolderProfessor(idCourse, professor.getId());
+
 		
-//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
-		return new ModelAndView("redirect:/manager/ajax/dialog/AssegnaCorso?id="+idCourse+"&ris="+ris, "model", model);
+		String idprofessor=request.getParameter("idprofessor");
+		Long idprof=Long.valueOf(idprofessor);
+		
+		Boolean ris=managerService.setHolderProfessor(idCourse, idprof);
+		
+		return managerService.MANAGER_COURSE;
 	}
 	
 	
@@ -221,7 +274,7 @@ public class ManagerController {
 		} else {
 			//            return "You failed to upload because the file was empty.";
 		}
-		return "redirect:"+ManagerService.MANAGER_ACCOUNT;
+		return ManagerService.MANAGER_ACCOUNT;
 	}
 	
 	

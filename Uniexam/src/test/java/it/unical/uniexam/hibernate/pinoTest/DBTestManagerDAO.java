@@ -48,6 +48,7 @@ public class DBTestManagerDAO {
      @BeforeClass
      public static void prepareDB() throws MalformedURLException, InterruptedException {
              Department department = new Department("A2", "BIOLOGIA", new Address("COSENZA", "ITALY", "87100", "VIA PIETRO BUCCI, 56"));
+             
              Long idDepartment = departmentDAO.addDepartment(department);
              DegreeCourse dg=new DegreeCourse("INFORMATICA", department);
              Long idDegreeCourse = degreeCourseDAO.addDegreeCourse(dg);
@@ -80,10 +81,18 @@ public class DBTestManagerDAO {
      		 emails3.add(new Email(Email.TYPE_UFFICIAL, "cali@gmail.com"));
 
              Long idprofessor=professorDAO.addProfessor("Ciccio", "Calimeri", new URL("http:\\www.cali.com"),  
-     				"mero", new Address("Cs", "Italia", "87036", "Asia"),emails3,new HashSet<PhoneNumber>(), null);
+     				"mero", new Address("Cs", "Italia", "87036", "Asia"),emails3,new HashSet<PhoneNumber>(), department);
              
+             HashSet<Email> emails4 = new HashSet<Email>();
+     		 emails4.add(new Email(Email.TYPE_UFFICIAL, "ricca@gmail.com"));
+             
+     		 Long idprofessor2=professorDAO.addProfessor("Ciccio", "Ricca", new URL("http:\\www.cali.com"),  
+      				"mero", new Address("Cs", "Italia", "87036", "Asia"),emails4,new HashSet<PhoneNumber>(), department2);
+              
+     		 
              courseDAO.setHolderProfessor(idcourse, idprofessor);
              courseDAO.setHolderProfessor(idcourse2, idprofessor);
+             courseDAO.setHolderProfessor(idcourse2, idprofessor2);
              
              HashSet<Email> emails = new HashSet<Email>();
              emails.add(new Email(Email.TYPE_UFFICIAL, "manager@unical.it"));

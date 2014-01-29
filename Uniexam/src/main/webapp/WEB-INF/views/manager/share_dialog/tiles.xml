@@ -40,5 +40,9 @@
 			value="/WEB-INF/views/manager/share_dialog/AssegnaCorso_Professore.jsp" />
 	</definition>
 	
+	<definition name="manager/dialog/addCourse" extends="manager.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/manager/share_dialog/addCourse.jsp" />
+	</definition>
 
 </tiles-definitions>

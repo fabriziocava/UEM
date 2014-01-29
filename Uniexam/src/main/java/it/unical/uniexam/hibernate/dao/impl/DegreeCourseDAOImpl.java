@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
+import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
@@ -120,5 +121,7 @@ public class DegreeCourseDAOImpl implements DegreeCourseDAO {
 		}
 		return res;
 	}
+
+
 
 }

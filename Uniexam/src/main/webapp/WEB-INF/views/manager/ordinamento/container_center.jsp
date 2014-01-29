@@ -13,12 +13,17 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
-		selectingFromDashBoard(document.getElementById("courseButton"));
+		selectingFromDashBoard(document.getElementById("ordinamentiButton"));
 	});
 </script>
 
 <div class="container-center">
 
+	<table class="tablemok">
+			
+			<td> <a class="bottonmok" onclick="openPopUpWithAjaxContent('addCourse','')">Aggiungi Corso </a></td>
+
+	</table>
 
 	<fieldset>
 	
@@ -38,6 +43,8 @@
 			
 			<tr style="display: none;"
 			id="Sessions<%=( c.getId()) %>">
+			
+			
 		
 			<td>	
 			
@@ -51,13 +58,13 @@
 					
 					%>
 			
-			
+				
 				<ol id="#sorting"   >
 				
 				<li class="list-item" style="border-radius: 4px; ">
 						<article>
 							<section id="<%="course" + C.getId()%>">
-								<span class="span_expandible" id="collapsedivrse<%=C.getId()%>" onclick="collapseMok(this); getDataFromAjax('course/course_details','<%=C.getId()%>','divrse<%=C.getId()%>');">+</span><%=C.getName()%>
+								<span class="span_expandible" id="collapsedivrse<%=C.getId()%>" onclick="collapseMok(this); getDataFromAjax('ordinamento/course_details','<%=C.getId()%>','divrse<%=C.getId()%>');">+</span><%=C.getName()%>
 								<div id="divrse<%=C.getId()%>" style="display: none;"></div>
 							</section>
 						</article>
@@ -65,7 +72,11 @@
 				
 				
 				</ol>
+				
+				
 			<% } %>
+			
+			
 		<%} }  else { %>
 					
 				Non ci sono corsi

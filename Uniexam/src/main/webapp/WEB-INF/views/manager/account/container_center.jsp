@@ -8,7 +8,7 @@
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <script type="text/javascript">
 	$(document).ready(function() {
-		selectingFromDashBoard(document.getElementById("courseButton"));
+
 	});
 </script>
 <div class="container-center">

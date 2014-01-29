@@ -12,16 +12,15 @@
 
 
 <script type="text/javascript">
-	$(document).ready(function () {
-		selectingFromDashBoard(document.getElementById("courseButton"));
-	});
+
+$(document).ready(function () {
+	selectingFromDashBoard(document.getElementById("assignButton"));
+});
 </script>
 
 <div class="container-center">
 
-
 	<fieldset>
-	
 		<legend><spring:message 	code="message.manager.course.container.center.legendCourses" /></legend>
 		<table id="#sorting" class="tablemok">
 			<%
@@ -52,12 +51,12 @@
 					%>
 			
 			
-				<ol id="#sorting"   >
+					<ol id="#sorting"   >
 				
 				<li class="list-item" style="border-radius: 4px; ">
 						<article>
 							<section id="<%="course" + C.getId()%>">
-								<span class="span_expandible" id="collapsedivrse<%=C.getId()%>" onclick="collapseMok(this); getDataFromAjax('course/course_details','<%=C.getId()%>','divrse<%=C.getId()%>');">+</span><%=C.getName()%>
+								<span class="span_expandible" id="collapsedivrse<%=C.getId()%>" onclick="collapseMok(this); getDataFromAjax('assignCourse/course_details','<%=C.getId()%>','divrse<%=C.getId()%>');">+</span><%=C.getName()%>
 								<div id="divrse<%=C.getId()%>" style="display: none;"></div>
 							</section>
 						</article>

@@ -26,6 +26,8 @@ public interface CourseDAO {
 			Integer creditCourse,Long idProfessorHolder,
 			Set<RequestedCourse>requestedCourses,URL webSite, DegreeCourse degreeCourse);
 	
+	public Long addCourseforManager(String code,String name,Integer credits,DegreeCourse degreeCourse);
+	
 	public Long addCourse(Course course);
 	
 	public ArrayList<Course> getCourses();
@@ -34,6 +36,7 @@ public interface CourseDAO {
 	public Course getCourseAll(Long idCourse);
 	public Course getCourseDetailforManager(Long idCourse);
 	public Course removeCourse(Long idCourse);
+	public Course removeCourse(Long idCourse,Long idDegreecourse);
 
 	/**
 	 * Advanced method 

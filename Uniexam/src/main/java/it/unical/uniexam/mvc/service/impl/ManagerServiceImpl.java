@@ -190,7 +190,7 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 
 
 	@Override
-	public boolean setHolderProfessor(Long idCourse, Long idProfessor) {
+	public Boolean setHolderProfessor(Long idCourse, Long idProfessor) {
 		return courseDAO.setHolderProfessor(idCourse, idProfessor);
 	}
 
@@ -202,9 +202,29 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 
 
 	@Override
-	public boolean removeHolderProfessor(Long idCourse, Long professor) {
+	public Boolean removeHolderProfessor(Long idCourse, Long professor) {
 		return courseDAO.removeHolderProfessor(idCourse, professor);
 	}
+
+
+	@Override
+	public Boolean removeCourse(Long idCourse,Long idDegreeCourse) {
+		return courseDAO.removeCourse(idCourse,idDegreeCourse)!=null;
+	}
+
+
+	@Override
+	public Boolean addCourse(Course course) {
+		return courseDAO.addCourseforManager(course.getCode(), course.getName(),course.getCredits(),course.getDegreeCourse())!=null;
+	}
+
+
+	@Override
+	public ArrayList<Course> getCoursesFromDegreeCourse(Long idDegreeCourse) {
+		return courseDAO.getCoursesFromDegreeCourse(idDegreeCourse);
+	}
+
+
 
 	
 	

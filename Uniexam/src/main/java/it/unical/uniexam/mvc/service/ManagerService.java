@@ -26,6 +26,8 @@ public interface ManagerService extends UserService {
 	public static final String MANAGER_EXAM ="manager/exam_session";
 	public static final String MANAGER_COURSE ="manager/course";
 	public static final String MANAGER_COURSELIST= "manager/course/list";
+	public static final String MANAGER_ASSIGNCOURSE="manager/assignCourse";
+	public static final String MANAGER_ORDINAMENTO="manager/ordinamento";
 	
 	public Manager getManager(Long idUser);
 	public Boolean streamImage(Manager m, OutputStream outputStream);
@@ -45,16 +47,24 @@ public interface ManagerService extends UserService {
 	public Boolean changeExamSessionField(Long idexamsession, String variable,String value, String clazz);
 
 	public ArrayList<Course> getCourses();
+	public ArrayList<Course> getCoursesFromDegreeCourse(Long idDegreeCourse);
+
+	
+	
 	
 	public Course getCourseDetails(Long idCourse);
+	public Boolean addCourse(Course course);
+
+	public Boolean removeCourse(Long idCourse,Long idDegreeCourse);
+
 	public Boolean addRequestedCourse(Long idCourse,RequestedCourse requestedCourse);
 	public Boolean removeRequestedCourse(Long idcourse,Long idcourserequested);
 	
 	public Set<Professor> getProfessorfromDepartment(Long idDep);
 	public Set<Professor> getProfessors();
 
-	public boolean setHolderProfessor(Long idCourse, Long idProfessor);
-	public boolean removeHolderProfessor(Long idCourse,Long idprofessor);
+	public Boolean setHolderProfessor(Long idCourse, Long idProfessor);
+	public Boolean removeHolderProfessor(Long idCourse,Long idprofessor);
 
 	
 	

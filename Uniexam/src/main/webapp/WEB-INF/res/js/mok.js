@@ -138,6 +138,15 @@ function openPopUpWithAjaxContent(caseId,id){
 			$("#dialog").html(data);
 		});
 	}
+	else if(caseId.match("addCourse")){
+		var conte=$("#context").attr("value");
+		var ajax=sendAJAXmessage(conte+"/ajax/dialog/addCourse", "GET", "id", id);
+		ajax.done(function(data){
+			if($("#dialog").html()==undefined)
+				$("<div></div>").attr('id','dialog').appendTo('body');
+			$("#dialog").html(data);
+		});
+	}
 	else if(caseId.match("AssegnaCorso")){
 		var conte=$("#context").attr("value");
 		var ajax=sendAJAXmessage(conte+"/ajax/dialog/AssegnaCorso", "GET", "id", id);
@@ -299,6 +308,30 @@ function dialogAddAppeal(){
 
 function dialogAddSession(){
 	$("#dialog").attr("title","Aggiungi Sessione");
+	$("#dialog").dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			$( this ).dialog( "close" );
+			$("div").remove("#dialog");
+			commands=undefined;
+		}
+	});
+	$("#dialog").attr("title","");
+}
+
+
+function dialogAddCourse(){
+	$("#dialog").attr("title","Aggiungi Corso");
 	$("#dialog").dialog({
 		autoOpen : true,
 		modal: true,
@@ -538,6 +571,7 @@ function dialogModifyCourse(){
 		});
 	});
 }
+
 
 
 function dialogAssegnaCorso_Professore(){
