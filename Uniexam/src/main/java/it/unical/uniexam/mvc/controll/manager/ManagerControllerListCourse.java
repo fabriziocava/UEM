@@ -50,7 +50,7 @@ public class ManagerControllerListCourse {
 		model.addAttribute("courses", courses);
 		
 		
-		return ManagerService.MANAGER_COURSE;
+		return ManagerService.MANAGER_ORDINAMENTO;
 	}
 	
 	
