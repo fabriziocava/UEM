@@ -1,6 +1,8 @@
 package it.unical.uniexam.mvc.controll.professor;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -62,6 +64,9 @@ public class ProfessorController {
 		model.addAttribute("I",p);
 		updateNotification(model, p);
 		updatePersonalizzation(model, p);
+		
+		updateNews(model,p);
+		
 		// aggiungere altre cose
 		/**
 		 * qui all'ingresso io metterei un calendario con le lezioni che il professore ha
@@ -71,6 +76,32 @@ public class ProfessorController {
 		 */
 
 		return ProfessorService.PROFESSOR_HOME;
+	}
+
+	private void updateNews(Model model, Professor p) {
+		//news sulle firme come commissione
+		ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForSignAdCommission(p.getId());
+		
+		ArrayList<Object> reg = appealStudents.get(0);
+		ArrayList<Object> noreg = appealStudents.get(1);
+		Integer ntot=reg.size()+noreg.size();
+		String message="Attenzione! Hai "+ntot+" esami che devi firmare come commissario"
+				+ "di questi fanno parte "+reg.size()+" studenti regolari e "+noreg.size()+" studenti non regolari";
+		String link="/uniexam/professor/sign/signAsCommissionar";
+		
+		// e qua posso inserire altre notizie
+		
+		
+		News news=new News(message, link);
+		
+		
+		
+		
+		ArrayList<News>newss=new ArrayList<News>();
+		newss.add(news);
+		model.addAttribute("newss", newss);
+		
+		
 	}
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_COURSE)

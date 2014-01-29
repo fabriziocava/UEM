@@ -15,8 +15,8 @@
 <%-- <script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js"></script> --%>
 <script src="${pageContext.request.contextPath}/res/js/ticker/jquery.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/res/js/ticker/jquery.ticker.js" type="text/javascript"></script>
-<link href="${pageContext.request.contextPath}/res/js/ticker/styles/ticker-style.css" rel="stylesheet" type="text/css" />
-<script src="${pageContext.request.contextPath}/res/js/ticker/siteticker.js" type="text/javascript"></script>
+
+<%-- <script src="${pageContext.request.contextPath}/res/js/ticker/siteticker.js" type="text/javascript"></script> --%>
 
 <script
 	src="${pageContext.request.contextPath}/res/js/jquery-ui-1.10.3.custom.js">

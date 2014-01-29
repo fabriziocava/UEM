@@ -9,6 +9,8 @@ function go(url){
 	window.location=conte+url;
 }
 
+
+
 function actionAppealStudents(list,path){
 	var conte=$("#context").attr("value");
 		var ing = $.ajax({
