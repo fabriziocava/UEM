@@ -4,8 +4,8 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 	<definition name="professor/home" extends="professor.base">
-<!-- 		<put-attribute name="draggable-notify-box" value="/WEB-INF/views/professor/draggable_notify_box.jsp" /> -->
-	<put-attribute name="news" value="/WEB-INF/views/professor/home/news.jsp" />
+	    <put-attribute name="container-center" value="/WEB-INF/views/professor/home/container_center.jsp" />
+		<put-attribute name="news" value="/WEB-INF/views/professor/home/news.jsp" />
 	</definition>
 	
 </tiles-definitions>

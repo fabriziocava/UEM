@@ -71,8 +71,8 @@
 	<div class="container">
 		<tiles:insertAttribute name="container-up" />
 		<tiles:insertAttribute name="container-left" />
-		<tiles:insertAttribute name="container-center" />
 		<tiles:insertAttribute name="news" />
+		<tiles:insertAttribute name="container-center" />
 		<tiles:insertAttribute name="container-down" />
 	</div>
 	<div class="container-footer">

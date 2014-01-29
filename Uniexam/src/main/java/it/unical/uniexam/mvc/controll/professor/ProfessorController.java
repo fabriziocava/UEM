@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.ComparatorUtils;
+import org.apache.log4j.nt.NTEventLogAppender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,7 @@ public class ProfessorController {
 
 	@Autowired
 	ProfessorService professorService;
-	
+
 	@RequestMapping(value=ProfessorService.PROFESSOR_HOME , method=RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model){
 		Professor p=null;
@@ -64,9 +65,9 @@ public class ProfessorController {
 		model.addAttribute("I",p);
 		updateNotification(model, p);
 		updatePersonalizzation(model, p);
-		
+
 		updateNews(model,p);
-		
+
 		// aggiungere altre cose
 		/**
 		 * qui all'ingresso io metterei un calendario con le lezioni che il professore ha
@@ -80,28 +81,28 @@ public class ProfessorController {
 
 	private void updateNews(Model model, Professor p) {
 		//news sulle firme come commissione
+		ArrayList<News>newss=new ArrayList<News>();
+
 		ArrayList<ArrayList<Object>> appealStudents=professorService.getAppealStudentsForSignAdCommission(p.getId());
-		
+
 		ArrayList<Object> reg = appealStudents.get(0);
 		ArrayList<Object> noreg = appealStudents.get(1);
 		Integer ntot=reg.size()+noreg.size();
-		String message="Attenzione! Hai "+ntot+" esami che devi firmare come commissario"
-				+ "di questi fanno parte "+reg.size()+" studenti regolari e "+noreg.size()+" studenti non regolari";
-		String link="/uniexam/professor/sign/signAsCommissionar";
-		
-		// e qua posso inserire altre notizie
-		
-		
-		News news=new News(message, link);
-		
-		
-		
-		
-		ArrayList<News>newss=new ArrayList<News>();
-		newss.add(news);
+		if(ntot>0){
+			String message="Attenzione! Hai "+ntot+" esami che devi firmare come commissario"
+					+ "di questi fanno parte "+reg.size()+" studenti regolari e "+noreg.size()+" studenti non regolari";
+			String link="/uniexam/professor/sign/signAsCommissionar";
+			// e qua posso inserire altre notizie
+			News news=new News(message, link);
+			newss.add(news);
+		}
+
+
+
+
 		model.addAttribute("newss", newss);
-		
-		
+
+
 	}
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_COURSE)
@@ -157,28 +158,28 @@ public class ProfessorController {
 		return ProfessorService.PROFESSOR_ACCOUNT;
 	}
 
-//	@RequestMapping(value="professor/addRequestedCourseAction", method=RequestMethod.POST)
-//	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
-//			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
-//		Professor p=null;
-//		String redirect=null;
-//		ArrayList<Professor>plist=new ArrayList<Professor>();
-//		redirect=setProfessorOrRedirect(request,model,plist);
-//		if(redirect!=null)
-//			return new ModelAndView(redirect);
-//		p=plist.get(0);
-//		
-//		String idCours=request.getParameter("idCourse");
-//		
-//		Long idCourse=Long.valueOf(idCours);
-//		
-//		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
-//		
-////		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
-//		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
-//	}
+	//	@RequestMapping(value="professor/addRequestedCourseAction", method=RequestMethod.POST)
+	//	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
+	//			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+	//		Professor p=null;
+	//		String redirect=null;
+	//		ArrayList<Professor>plist=new ArrayList<Professor>();
+	//		redirect=setProfessorOrRedirect(request,model,plist);
+	//		if(redirect!=null)
+	//			return new ModelAndView(redirect);
+	//		p=plist.get(0);
+	//		
+	//		String idCours=request.getParameter("idCourse");
+	//		
+	//		Long idCourse=Long.valueOf(idCours);
+	//		
+	//		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
+	//		
+	////		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
+	//		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
+	//	}
 
-	
+
 	//Pagine Secondarie
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_PERSONALIZZATION , method=RequestMethod.POST)
