@@ -73,5 +73,7 @@ public interface CourseDAO {
 	public Collection<? extends Course> getCoursesFromDepartment(Long idDepartment);
 
 	public Long getDepartmentFromCourse(Long idCourse);
+
+	public ArrayList<Professor> getListCommissaryCourse(Long idCourse);
 	
 }

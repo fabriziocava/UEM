@@ -30,7 +30,7 @@ function actionAppealStudents(list,path){
 		});
 }
 
-function applySign(name){
+function applySign(name,path){
 	$("#passwdDIV").dialog({
 		modal:true,
 		buttons:{
@@ -42,7 +42,7 @@ function applySign(name){
 					}
 				});
 				listSign.append('passwd',$("#passwd").val());
-				actionAppealStudents(listSign,'sign/sign_appealstudents');
+				actionAppealStudents(listSign,'sign/sign_appealstudents'+path);
 				count=0;
 			}
 		}
@@ -345,7 +345,7 @@ function openDialogWithAjaxContent(path,type,names,values,title){
 				$("div").remove("#dialog"+dialogCount);
 			}
 		});
-		$("#dialog").attr("title","");
+		$("#dialog"+dialogCount).attr("title","");
 		arrObj.push($("#dialog"+dialogCount));
 	});
 	arrObj=new Array();

@@ -28,9 +28,9 @@ public class DBTestUserDAO {
 	public static void prepareDB() throws MalformedURLException {
 		Address address = new Address("Cosenza", "Italy", "87100", "Piazza segreteria, 13");
 		HashSet<Email> emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE_UFFICIAL, "segreteria@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "segreteria@unical.it"));
 		HashSet<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "0984123456"));
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "0984123456"));
 		Long idUser = userDAO.addUser("Marco", "Polo", "1234", address, emails, phoneNumbers);
 	}
 	

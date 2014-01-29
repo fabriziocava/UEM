@@ -12,5 +12,6 @@ public interface DegreeCourseDAO {
 	public Set<DegreeCourse> getDegreeCourses(Long idDepartment);
 	public Set<DegreeCourse> getDegreeCourses(Department department);
 	public Set<DegreeCourse> getDegreeCourses();
+	public DegreeCourse getDegreeCourse(Long idDegreeCourse);
 	
 }

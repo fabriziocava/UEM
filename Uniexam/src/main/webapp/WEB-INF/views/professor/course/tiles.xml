@@ -14,4 +14,6 @@
 	<definition name="professor/course/course_details" template="/WEB-INF/views/professor/course/course_details.jsp">
 	</definition>
 
+	<definition name="professor/course/list_commissionary" template="/WEB-INF/views/professor/course/list_commissionary.jsp">
+	</definition>
 </tiles-definitions>

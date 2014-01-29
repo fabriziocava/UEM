@@ -5,6 +5,7 @@
 <tiles-definitions>
 	<definition name="professor/home" extends="professor.base">
 <!-- 		<put-attribute name="draggable-notify-box" value="/WEB-INF/views/professor/draggable_notify_box.jsp" /> -->
+		<put-attribute name="news" value="/WEB-INF/views/professor/home/news.jsp" />
 	</definition>
 	
 	

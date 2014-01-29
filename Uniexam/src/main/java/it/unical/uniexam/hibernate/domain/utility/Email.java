@@ -2,7 +2,6 @@ package it.unical.uniexam.hibernate.domain.utility;
 
 import it.unical.uniexam.hibernate.domain.User;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,14 +18,17 @@ import javax.persistence.Table;
 @Table(name="EMAIL")
 public class Email {
 
-	public static final String TYPE_UFFICIAL="uffical";
-	public static final String TYPE_UNUFFICIAL="unuffical";
-	public static final String TYPE_HOME="home";
+//	public static final String TYPE_UFFICIAL="uffical";
+//	public static final String TYPE_UNUFFICIAL="unuffical";
+//	public static final String TYPE_HOME="home";
 	
+	public enum TYPE{
+		UFFICIAL,UNUFFICIAL,HOME
+	}
 	
 	public Email(){}
 	
-	public Email(String type, String email) {
+	public Email(TYPE type, String email) {
 		super();
 		this.type = type;
 		this.email = email;
@@ -43,7 +45,7 @@ public class Email {
 	User user;
 	
 	@Column(name="EMAIL_TYPE")
-	private String type;
+	private TYPE  type;
 	
 	@Column(name="EMAIL" , unique=true)
 	private String email;
@@ -58,11 +60,11 @@ public class Email {
 		this.id = id;
 	}
 
-	public String getType() {
+	public TYPE getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(TYPE type) {
 		this.type = type;
 	}
 

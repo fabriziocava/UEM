@@ -19,6 +19,20 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class DegreeCourseDAOImpl implements DegreeCourseDAO {
 
 	@Override
+	public DegreeCourse getDegreeCourse(Long idDegreeCourse) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		DegreeCourse degreeCourse = null;
+		try {
+			degreeCourse  = (DegreeCourse) session.get(DegreeCourse.class,idDegreeCourse);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return degreeCourse;
+	}
+	
+	@Override
 	public Long addDegreeCourse(String name, Department department_associated) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;

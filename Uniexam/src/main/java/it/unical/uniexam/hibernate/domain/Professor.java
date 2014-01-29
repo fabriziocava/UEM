@@ -179,4 +179,27 @@ public class Professor extends User{
 		this.asCommission = asCommission;
 	}
 	
+	public PhoneNumber getPhoneNumber(it.unical.uniexam.hibernate.domain.utility.PhoneNumber.TYPE type){
+		if(getPhoneNumbers()!=null && getPhoneNumbers().size()>0){
+			for(PhoneNumber ph:getPhoneNumbers()){
+				if(ph.getType()==type){
+					return ph;
+				}
+			}
+			return getPhoneNumbers().iterator().next();
+		}else
+			return null;
+	}
+	
+	public Email getEmail(it.unical.uniexam.hibernate.domain.utility.Email.TYPE type){
+		if(getEmails()!=null && getEmails().size()>0){
+			for(Email ph:getEmails()){
+				if(ph.getType()==type){
+					return ph;
+				}
+			}
+			return getEmails().iterator().next();
+		}else
+			return null;
+	}
 }

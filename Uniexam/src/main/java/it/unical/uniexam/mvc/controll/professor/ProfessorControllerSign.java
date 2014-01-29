@@ -58,7 +58,7 @@ public class ProfessorControllerSign {
 	
 	
 	@RequestMapping("/signAsCommissionar")
-	public ModelAndView signAsCommissionar(HttpServletRequest request, Model model,BindingResult result){
+	public ModelAndView signAsCommissionar(HttpServletRequest request, Model model){
 		Professor p=null;
 		String redirect=null;
 		ArrayList<Professor>plist=new ArrayList<Professor>();

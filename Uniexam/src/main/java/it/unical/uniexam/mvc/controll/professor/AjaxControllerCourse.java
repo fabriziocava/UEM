@@ -32,6 +32,23 @@ public class AjaxControllerCourse {
 
 	ArrayList<Course>courseAlreadyRequested;
 	
+	@RequestMapping("/dialog/course/list_commissionary")
+	public String list_commissionary(HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+		String idCours=request.getParameter("id");
+		Long idCourse=Long.valueOf(idCours);
+		
+		ArrayList<Professor>commissionary=professorService.getListCommissionary(idCourse);
+		model.addAttribute("commissionary", commissionary);
+		return "professor/course/list_commissionary";
+	}
+	
 	@RequestMapping("/course/course_details")
 	public String course_details(HttpServletRequest request, Model model){
 		Professor p=null;

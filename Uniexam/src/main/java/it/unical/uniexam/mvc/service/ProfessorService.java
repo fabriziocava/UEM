@@ -93,8 +93,7 @@ public interface ProfessorService extends UserService{
 
 	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents, Long idProfessor);
 
-	public Boolean signAppealStudentsList(
-			ArrayList<Long> listSignAppealStudents, Long id);
+	public Boolean signAppealStudentsList(ArrayList<Long> listSignAppealStudents, Long id);
 
 	public Boolean addPrepareSign(AppealStudent appealStudent,Long idProfessor);
 
@@ -102,6 +101,11 @@ public interface ProfessorService extends UserService{
 
 	public ArrayList<ArrayList<Object>> getAppealStudentsForSignAdCommission(
 			Long id);
+
+	public ArrayList<Professor> getListCommissionary(Long idCourse);
+
+	public boolean signAppealStudentsListByCommissionary(
+			ArrayList<Long> listSignAppealStudents, Long id);
 
 //	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
 //			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);

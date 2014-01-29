@@ -21,6 +21,7 @@ import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber.TYPE;
 
 /**
  * 
@@ -43,10 +44,10 @@ public class DBTestStudentDAO {
 		Long idDegreeCourse = degreeCourseDAO.addDegreeCourse(degreeCourse);
 			
 		HashSet<Email> emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE_UFFICIAL, "studente@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "studente@unical.it"));
 		Address address = new Address("Cosenza", "Italy", "87100", "Viale degli studenti, 30");
 		HashSet<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		phoneNumbers.add(new PhoneNumber("HOME", "0984404040"));
+		phoneNumbers.add(new PhoneNumber(TYPE.HOME, "0984404040"));
 		Long idStudent = studentDAO.addStundent("Fabrizio", "Cava", "CVAFRZ88D14D086G", "1234", address, emails, phoneNumbers, degreeCourse, "158658");
 	}
 	

@@ -23,5 +23,7 @@ public interface AppealStudentDAO {
 			Long idProfessor, STATE notSignedByProfessor);
 	ArrayList<ArrayList<Object>> getListStudentFromProfessorRegularAndNotForCommissionar(
 			Long idProfessor, STATE state);
+	Boolean signAppealStudentsByCommissary(ArrayList<Long> signStudents,
+			Long idProfessor);
 }
 

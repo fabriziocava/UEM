@@ -72,7 +72,7 @@ public interface ProfessorDAO {
 	public Long addEmail(Long idProfessor,Email email);
 	public Email removeEmail(Long idProfessor,Long idEmail);
 	public Set<Email> getEmails(Long idProfessor);
-	public Email getEmail(Long idProfessor,String type);
+	public Email getEmail(Long idProfessor,it.unical.uniexam.hibernate.domain.utility.Email.TYPE type);
 
 	public Boolean streamImage(Long idProfessor,OutputStream outputStream);
 	public void storeImage(Long idProfessor,InputStream is,int length);

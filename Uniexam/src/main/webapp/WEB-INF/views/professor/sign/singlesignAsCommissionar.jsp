@@ -144,7 +144,7 @@ function dialogRemoveStudent(id){
 					</fieldset>
 				</div>
 			</div>
-			<buttonmok onclick="applySign('selctedStudent')"
+			<buttonmok onclick="applySign('selctedStudent','_by_commissary')"
 				style="margin-top:20px"><spring:message code='message.professor.applysign'/></buttonmok>
 			<br>
 			<input type="text" 

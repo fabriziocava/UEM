@@ -9,6 +9,7 @@
 		<put-attribute name="container-up" value="/WEB-INF/views/professor/share/container_up.jsp" />
 		<put-attribute name="container-left" value="" />
 		<put-attribute name="container-center" value="" />
+		<put-attribute name="news" value=""/>
 		<put-attribute name="container-down" value="" />
 		<put-attribute name="draggable-notify-box" value="/WEB-INF/views/professor/share/draggable_notify_box.jsp" />
 		<put-attribute name="draggable-groups-box" value=""/>

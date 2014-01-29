@@ -98,6 +98,56 @@ public class AjaxControllerSign {
 		return null;
 	}
 	
+	@RequestMapping("/sign_appealstudents_by_commissary")
+	public ModelAndView sign_appealstudents_by_commissary(HttpServletRequest request, Model model,HttpServletResponse response){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return new ModelAndView(redirect);
+		p=plist.get(0);
+
+		ArrayList<Long>listSignAppealStudents=new ArrayList<Long>();
+		Enumeration parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			String object = (String) parameterNames.nextElement();
+			if(object.contains("idAppealStudent")){
+				String idd=request.getParameter(object);
+				Long id=null;
+				try{
+					id=Long.valueOf(idd);
+					listSignAppealStudents.add(id);
+				}catch(Exception e){new MokException(e);}
+			}
+		}
+		String passwd=request.getParameter("passwd");
+		String res="no";
+		if(passwd!=null && passwd.equals(p.getPassword())){
+			if(professorService.signAppealStudentsListByCommissionary(listSignAppealStudents,p.getId()))
+				res="si";
+		}else
+			res="passwd";
+//				professorService.removeStudentsToAppeal(removeStudents);
+		
+		ServletOutputStream outputStream = null;
+		try {
+			outputStream = response.getOutputStream();
+			if(res.equals("si"))
+				outputStream.println("ok");
+			else
+				if(res.equals("no"))
+					outputStream.println("no");
+				else
+					outputStream.println("passwd");
+			outputStream.flush();
+			outputStream.close();
+		} catch (Exception e) {
+			new MokException(e);
+		}
+		return null;
+	}
+	
 	@RequestMapping("/sign_appealstudents")
 	public ModelAndView sign_appealstudents(HttpServletRequest request, Model model,HttpServletResponse response){
 		Professor p=null;

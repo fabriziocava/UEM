@@ -147,16 +147,14 @@ function dialogRemoveStudent(id){
 					</fieldset>
 				</div>
 			</div>
-			<buttonmok onclick="applySign('selctedStudent')"
+			<buttonmok onclick="applySign('selctedStudent','')"
 				style="margin-top:20px"><spring:message code='message.professor.applysign'/></buttonmok>
 			<br>
 			<input type="text" 
 			onkeyup="filterMok('#tableSortable tbody tr.table-item-space',this.value)"
 			placeholder="search"/>
 			<table class="tablemok" id="tableSortable">
-				<thead><div id="passwdDIV" title="Inserisci password">
-<input id="passwd" placeholder="password" type="password">
-</div>
+				<thead>
 					<tr style="text-align: center;" class="table-item-space">
 						<th ><spring:message code='message.professor.general.state'/></th>
 						<th ><spring:message code='message.professor.general.serialnumber'/></th>
@@ -277,6 +275,6 @@ function dialogRemoveStudent(id){
 %>
 Errore!
 <%}%>
-<div id="passwdDIV" title="Inserisci password" class="startHide">
+<div class="startHide" id="passwdDIV" title="Inserisci password">
 <input id="passwd" placeholder="password" type="password">
 </div>

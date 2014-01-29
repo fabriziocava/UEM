@@ -62,6 +62,17 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	StudentDAO studentDAO;
 	
 	@Override
+	public boolean signAppealStudentsListByCommissionary(
+			ArrayList<Long> listSignAppealStudents, Long idProfessor) {
+		return appealStudentDAO.signAppealStudentsByCommissary(listSignAppealStudents, idProfessor);
+	}
+	
+	@Override
+	public ArrayList<Professor> getListCommissionary(Long idCourse) {
+		return courseDAO.getListCommissaryCourse(idCourse);
+	}
+	
+	@Override
 	public ArrayList<ArrayList<Object>> getAppealStudentsForSignAdCommission(Long idProfessor) {
 		return appealStudentDAO.getListStudentFromProfessorRegularAndNotForCommissionar(idProfessor,STATE.NOT_SIGNED_BY_COMMISSARY);
 	}
@@ -77,8 +88,7 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	}
 	
 	@Override
-	public Boolean signAppealStudentsList(
-			ArrayList<Long> listSignAppealStudents, Long idProfessor) {
+	public Boolean signAppealStudentsList(ArrayList<Long> listSignAppealStudents, Long idProfessor) {
 		return appealStudentDAO.signAppealStudentsByProfessor(listSignAppealStudents, idProfessor);
 	}
 	

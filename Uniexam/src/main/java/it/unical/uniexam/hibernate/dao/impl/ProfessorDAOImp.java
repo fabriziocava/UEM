@@ -429,7 +429,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 	}
 
 	@Override
-	public Email getEmail(Long idProfessor, String type) {
+	public Email getEmail(Long idProfessor, it.unical.uniexam.hibernate.domain.utility.Email.TYPE type) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Email res=null;
 		try{

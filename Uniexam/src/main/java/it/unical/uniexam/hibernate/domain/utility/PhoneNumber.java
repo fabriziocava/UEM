@@ -15,13 +15,17 @@ import javax.persistence.Table;
 @Table(name="PHONE_NUMBER")
 public class PhoneNumber {
 
-	public static final String TYPE_UFFICIAL="uffical";
-	public static final String TYPE_UNUFFICIAL="unuffical";
-	public static final String TYPE_HOME="home";
+//	public static final String TYPE_UFFICIAL="uffical";
+//	public static final String TYPE_UNUFFICIAL="unuffical";
+//	public static final String TYPE_HOME="home";
+	
+	public enum TYPE{
+		UFFICIAL,UNUFFICIAL,HOME
+	}
 	
 	public PhoneNumber(){}
 	
-	public PhoneNumber(String type, String number) {
+	public PhoneNumber(TYPE type, String number) {
 		super();
 		this.type = type;
 		this.number = number;
@@ -33,7 +37,7 @@ public class PhoneNumber {
 	private Long id;
 	
 	@Column(name="PHONE_TYPE")
-	private String type;
+	private TYPE type;
 	
 	@Column(name="PHONE_NUMBER")
 	private String number;
@@ -46,11 +50,11 @@ public class PhoneNumber {
 		this.id = id;
 	}
 
-	public String getType() {
+	public TYPE getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(TYPE type) {
 		this.type = type;
 	}
 

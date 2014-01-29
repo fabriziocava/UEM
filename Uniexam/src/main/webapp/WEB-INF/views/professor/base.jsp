@@ -12,8 +12,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><spring:message code="label.welcome" /> ${I.getName()}</title>
 
-<script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js">
-</script>
+<%-- <script src="${pageContext.request.contextPath}/res/js/jquery-2.0.3.js"></script> --%>
+<script src="${pageContext.request.contextPath}/res/js/ticker/jquery.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/res/js/ticker/jquery.ticker.js" type="text/javascript"></script>
+<link href="${pageContext.request.contextPath}/res/js/ticker/styles/ticker-style.css" rel="stylesheet" type="text/css" />
+<script src="${pageContext.request.contextPath}/res/js/ticker/siteticker.js" type="text/javascript"></script>
+
 <script
 	src="${pageContext.request.contextPath}/res/js/jquery-ui-1.10.3.custom.js">
 </script>
@@ -68,6 +72,7 @@
 		<tiles:insertAttribute name="container-up" />
 		<tiles:insertAttribute name="container-left" />
 		<tiles:insertAttribute name="container-center" />
+		<tiles:insertAttribute name="news" />
 		<tiles:insertAttribute name="container-down" />
 	</div>
 	<div class="container-footer">

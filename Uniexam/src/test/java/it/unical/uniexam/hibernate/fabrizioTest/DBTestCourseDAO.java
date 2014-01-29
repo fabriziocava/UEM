@@ -23,6 +23,7 @@ import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber.TYPE;
 
 public class DBTestCourseDAO {
 	
@@ -38,10 +39,10 @@ public class DBTestCourseDAO {
 		DegreeCourse degreeCourse = new DegreeCourse("INFORMATICA", department);
 		degreeCourseDAO.addDegreeCourse(degreeCourse);
 		HashSet<Email> emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE_UFFICIAL, "ricca@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "ricca@unical.it"));
 		Address address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
 		HashSet<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		phoneNumbers.add(new PhoneNumber("OFFICE", "196123456"));
+		phoneNumbers.add(new PhoneNumber(TYPE.HOME, "196123456"));
 		Long idProfessor = professorDAO.addProfessor("FRANCESCO", "RICCA", null, "1234", address, emails, phoneNumbers, department);
 		Course course = new Course("1", "Enterprise Application", 5, professorDAO.getProfessor(idProfessor), degreeCourse);
 		Long idCourse = courseDAO.addCourse(course);

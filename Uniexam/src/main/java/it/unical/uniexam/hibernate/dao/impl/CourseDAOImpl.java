@@ -33,6 +33,27 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class CourseDAOImpl implements CourseDAO{
 
 	@Override
+	public ArrayList<Professor> getListCommissaryCourse(Long idCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<Professor> res=null;
+		try{
+			Course c=(Course)session.get(Course.class, idCourse);
+//			Hibernate.initialize(c);
+			for(Professor p:c.getCommissionProfessors()){
+				Hibernate.initialize(p);
+				Hibernate.initialize(p.getPhoneNumbers());
+				Hibernate.initialize(p.getEmails());
+			}
+			res=new ArrayList<Professor>(c.getCommissionProfessors());
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
 	public Long getDepartmentFromCourse(Long idCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Long res=null;

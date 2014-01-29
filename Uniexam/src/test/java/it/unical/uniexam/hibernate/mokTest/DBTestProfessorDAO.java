@@ -97,25 +97,25 @@ public class DBTestProfessorDAO {
 //		appealStudentDAO.addAppealStudent(null, 3l, 8l, "idem studente", 30.8);
 //		
 		HashSet< Email> emails=new HashSet<Email>();
-		emails.add(new Email(Email.TYPE_UFFICIAL, "mok.luigi@gmail.com"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "mok.luigi@gmail.com"));
 		HashSet<PhoneNumber>numbers=new HashSet<PhoneNumber>();
-		numbers.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "+393891535996"));
+		numbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
 		Long id=studentDAO.addStundent("Luigi", "Molinaro", "MLNLGU89P16B774U", "mok", 
 				new Address("Acri", "Italy", "87041", "via Europa, 284")
 		, emails, numbers, 1L, "158786");
 		
 		HashSet< Email> emails2=new HashSet<Email>();
-		emails2.add(new Email(Email.TYPE_UFFICIAL, "muk.maria@gmail.com"));
+		emails2.add(new Email(Email.TYPE.UFFICIAL, "muk.maria@gmail.com"));
 		HashSet<PhoneNumber>numbers2=new HashSet<PhoneNumber>();
-		numbers2.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "+393891535996"));
+		numbers2.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
 		Long id2=studentDAO.addStundent("Maria", "Gerace", "GRCMRAP16B774U", "muk", 
 				new Address("Acri", "Italy", "87041", "via Rosati, 1")
 		, emails2, numbers2, 1L, "158797");
 		
 		HashSet< Email> emails3=new HashSet<Email>();
-		emails3.add(new Email(Email.TYPE_UFFICIAL, "mik.angelo@gmail.com"));
+		emails3.add(new Email(Email.TYPE.UFFICIAL, "mik.angelo@gmail.com"));
 		HashSet<PhoneNumber>numbers3=new HashSet<PhoneNumber>();
-		numbers3.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "+393891535996"));
+		numbers3.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
 		Long id3=studentDAO.addStundent("Angelo", "Molinaro", "MLNANG89P16B774U", "mik", 
 				new Address("Acri", "Italy", "87041", "via Europa, 284")
 		, emails3, numbers3, 1L, "158978");

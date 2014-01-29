@@ -26,6 +26,7 @@ import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
+import it.unical.uniexam.hibernate.domain.utility.PhoneNumber.TYPE;
 
 public class DBTest {
 
@@ -47,20 +48,20 @@ public class DBTest {
 		 * PROFESSOR
 		 */
 		HashSet<Email> emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE_UFFICIAL, "professore@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "professore@unical.it"));
 		Address address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
 		HashSet<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		phoneNumbers.add(new PhoneNumber("OFFICE", "196123456"));
+		phoneNumbers.add(new PhoneNumber(TYPE.UFFICIAL, "196123456"));
 		Long idProfessor = professorDAO.addProfessor("Francesco", "Ricca", null, "1234", address, emails, phoneNumbers, department);
 		
 		/*
 		 * STUDENT
 		 */
 		emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE_UFFICIAL, "studente@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "studente@unical.it"));
 		address = new Address("Cosenza", "Italy", "87100", "Viale degli studenti, 30");
 		phoneNumbers = new HashSet<PhoneNumber>();
-		phoneNumbers.add(new PhoneNumber("HOME", "0984404040"));
+		phoneNumbers.add(new PhoneNumber(TYPE.HOME, "0984404040"));
 		Long idStudent = studentDAO.addStundent("Fabrizio", "Cava", "CVAFRZ88D14D086G", "1234", address, emails, phoneNumbers, degreeCourse, "158658");
 	
 		/*
@@ -68,9 +69,9 @@ public class DBTest {
 		 */
 		address = new Address("Cosenza", "Italy", "87100", "Piazza segreteria, 13");
 		emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE_UFFICIAL, "segreteria@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "segreteria@unical.it"));
 		phoneNumbers = new HashSet<PhoneNumber>();
-		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE_UFFICIAL, "0984123456"));
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "0984123456"));
 		Long idUser = userDAO.addUser("Marco", "Polo", "1234", address, emails, phoneNumbers);
 		
 		/*
