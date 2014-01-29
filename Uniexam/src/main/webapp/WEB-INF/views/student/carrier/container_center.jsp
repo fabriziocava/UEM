@@ -62,6 +62,8 @@
 				<br>
 				<%
 				Double avarage = weightedVote/nCredits;
+				if(weightedVote==0.0 || nCredits==0.0)
+					avarage = 0.0;
 				if(avarage>30.0)
 					avarage = 30.0;
 				%>

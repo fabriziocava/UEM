@@ -400,3 +400,25 @@ footer {
 	z-index: 1;
 	margin: 20px 0px 10px 0px;
 }
+
+#ticker {
+    overflow: hidden;
+    font-size:13px;
+    margin:0;
+    padding:0;
+    height:243px;
+    }
+#ticker li {
+    list-style:none;
+    padding:0;
+    margin:0;
+    height: 60px;
+    background:transparent;
+/*     color:rgb(57, 142, 209); */
+    color: black;
+    padding:10px;
+    border-bottom:1px solid #CCC;
+}
+#ticker li a {
+    color:#F90;
+    }

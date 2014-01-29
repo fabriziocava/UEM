@@ -2,6 +2,7 @@ package it.unical.uniexam.mvc.controll.student;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
+import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 import it.unical.uniexam.mvc.service.StudentService;
 import it.unical.uniexam.mvc.service.UtilsService;
 
@@ -41,7 +43,39 @@ public class StudentController {
 			return redirect;
 		s = slist.get(0);
 		model.addAttribute("I",s);
-				
+		
+		Long idStudent = s.getId();
+		Set<Group> groups = studentService.getGroups();
+		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudent(idStudent);
+		ArrayList<AppealStudent> appealStudentForVerbalToBeSigned = studentService.getAppealStudentForVerbalToBeSigned(idStudent);
+		
+		ArrayList<String> news = new ArrayList<String>();
+		List<PostOfGroup> postOfGroup = null;
+		try {
+			for(Group g : groups) {
+				postOfGroup = g.getPosts();
+				if(postOfGroup!=null && !postOfGroup.isEmpty())
+					news.add("Group "+g.getName()+": "+postOfGroup.get(0).getDate_of_post()+" "+postOfGroup.get(0).getPost());
+			}
+		} catch (Exception e) {
+			
+		}
+		try {
+			for(AppealStudent as : appealStudent) {
+				if(as.getTemporany_vote()!=null)
+					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+as.getAppeal().getExamDate()+": ha pubblicato un voto provvisorio.");
+			}
+		} catch (Exception e) {
+			
+		}
+		try {
+			for(AppealStudent asFVTB : appealStudentForVerbalToBeSigned) {
+				news.add(asFVTB.getAppeal().getCourse().getName().toUpperCase()+": è in attesa di essere firmato dallo studente.");
+			}
+			model.addAttribute("news", news);
+		} catch (Exception e) {
+			
+		}
 		return StudentService.STUDENT_HOME;
 	}
 	
