@@ -1,5 +1,7 @@
 package it.unical.uniexam.hibernate.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +32,20 @@ public class Carrier {
         
         @Column(name="VOTE")
         Integer vote;
+        
+        @Column(name="DATE")
+        Date date;
+        
+        public Carrier() {
+
+        }
+        
+        public Carrier(Course course, Student student, Integer vote, Date date) {
+        	this.course = course;
+        	this.student = student;
+        	this.vote = vote;
+        	this.date = date;
+        }
 
         public Long getId() {
                 return id;
@@ -62,5 +78,13 @@ public class Carrier {
         public void setVote(Integer vote) {
                 this.vote = vote;
         }
-        
+
+		public Date getDate() {
+			return date;
+		}
+
+		public void setDate(Date date) {
+			this.date = date;
+		}
+                
 }

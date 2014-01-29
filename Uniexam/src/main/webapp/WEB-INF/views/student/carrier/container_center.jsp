@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.hibernate.domain.Carrier"%>
 <%@page import="it.unical.uniexam.MokException"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Group"%>
@@ -20,10 +21,12 @@
 	<fieldset>
 		<legend><spring:message code='label.carrier'/></legend>
 		<%
+		ArrayList<Carrier> carrier = (ArrayList<Carrier>) request.getAttribute("carrier");
 		ArrayList<AppealStudent> appealStudent = (ArrayList<AppealStudent>) request.getAttribute("as");
 		Double weightedVote = 0.0;
 		Double nCredits = 0.0;
-		if(appealStudent!=null && !appealStudent.isEmpty()) {
+		Integer vote = 0;
+		if((carrier!=null && !carrier.isEmpty())||(appealStudent!=null && !appealStudent.isEmpty())) {
 			%>
 				<table border="1" style="width: 100%">
 					<thead>
@@ -37,6 +40,28 @@
 						</tr>
 					</thead>			
 			<%
+				for(Carrier c: carrier) {
+					try {
+						%>
+						<tr>
+							<td align="center"><%=c.getCourse().getCode()%></td>
+							<td align="center"><%=c.getCourse().getDegreeCourse().getId()%></td>
+							<td><%=c.getCourse().getName()%> (LOADED IN SECRETARY)</td>
+							<td align="center"><%=c.getCourse().getCredits()%></td>
+							<td align="center"><%=c.getVote()>30 ? "30 L" : c.getVote()%></td>
+							<td align="center"><%=c.getDate()%></td>
+						</tr>
+						<%
+						if(c.getVote()>30)
+							vote=30;
+						else
+							vote=c.getVote();
+						weightedVote += vote*c.getCourse().getCredits();
+						nCredits += c.getCourse().getCredits();
+					} catch (Exception e) {
+						new MokException(e);
+					}					
+				}
 				for(AppealStudent as : appealStudent) {
 					try {
 						%>
@@ -49,10 +74,6 @@
 							<td align="center"><%=as.getAppeal().getExamDate()%></td>
 						</tr>
 						<%
-						if(as.getState()==AppealStudent.STATE.LOADED_IN_SECRETERY) {
-							weightedVote += as.getTemporany_vote()*as.getAppeal().getCourse().getCredits();
-							nCredits += as.getAppeal().getCourse().getCredits();
-						}
 					} catch (Exception e) {
 						new MokException(e);
 					}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
+import it.unical.uniexam.hibernate.dao.CarrierDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.AppealStudent.STATE;
@@ -165,6 +166,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
             return ris;
     }
 
+    @Deprecated
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent) {
@@ -183,6 +185,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		return res;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(
 			Long idStudent) {
@@ -208,9 +211,15 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
         Boolean ris = false;
         try {
         	transaction=session.beginTransaction();
+        	Long idCarrier = null;
+        	CarrierDAO carrierDAO = new CarrierDAOImpl();
         	for (Long idAppeal : idAppealStudentList) {
         		AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
         		appealStudent.setState(STATE.LOADED_IN_SECRETERY);
+        		idCarrier = carrierDAO.addCarrier(appealStudent.getAppeal().getCourse().getId(), appealStudent.getStudent().getId(), appealStudent.getTemporany_vote().intValue(), appealStudent.getAppeal().getExamDate());
+        		if(idCarrier!=null) {
+        			removeAppealStudent(appealStudent.getId());
+        		}
         	}
         	transaction.commit();
         	ris=true;

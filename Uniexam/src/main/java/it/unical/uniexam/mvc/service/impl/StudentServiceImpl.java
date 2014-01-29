@@ -5,11 +5,13 @@ import java.util.Set;
 
 import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
+import it.unical.uniexam.hibernate.dao.CarrierDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
+import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -37,7 +39,8 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	AppealStudentDAO appealStudentDAO;
 	@Autowired
 	GroupDAO groupDAO;
-	
+	@Autowired
+	CarrierDAO carrierDAO;
 	
 	@Override
 	public Student getStudent(Long serialNumber) {
@@ -89,6 +92,7 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 		return appealStudentDAO.getAppealStudent(idStudent);
 	}
 	
+	@Deprecated
 	@Override
 	public ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent) {
 		return appealStudentDAO.getAppealStudentForCarrier(idStudent);
@@ -116,6 +120,11 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	@Override
 	public Set<Group> getGroups() {
 		return groupDAO.getGroups();
+	}
+
+	@Override
+	public ArrayList<Carrier> getCarrier(Long idStudent) {
+		return carrierDAO.getCarrierList(idStudent);
 	}
 	
 }

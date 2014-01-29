@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.AppealStudent;
+import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -63,7 +64,7 @@ public class StudentController {
 		try {
 			for(AppealStudent as : appealStudent) {
 				if(as.getTemporany_vote()!=null)
-					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+as.getAppeal().getExamDate()+": ha pubblicato un voto provvisorio.");
+					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+as.getAppeal().getExamDate()+": è presente un voto provvisorio.");
 			}
 		} catch (Exception e) {
 			
@@ -128,6 +129,8 @@ public class StudentController {
 		Long idStudent = s.getId();
 		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudentForCarrier(idStudent);
 		model.addAttribute("as", appealStudent);
+		ArrayList<Carrier> carrier = studentService.getCarrier(idStudent);
+		model.addAttribute("carrier", carrier);
 		
 		return StudentService.STUDENT_CARRIER;
 	}
@@ -150,23 +153,6 @@ public class StudentController {
 		
 		return StudentService.STUDENT_VERBALTOBESIGNED;
 	}
-	
-//	@RequestMapping(value=StudentService.STUDENT_VERBALTOBESIGNED)
-//	public ModelAndView verbalToBeSigned(HttpServletRequest request, Model model) {
-//		Student s = null;
-//		String redirect = null;
-//		ArrayList<Student> slist = new ArrayList<Student>();
-//		redirect = setStudentOrRedirect(request, model, slist);
-//		if(redirect!=null)
-//			return new ModelAndView(redirect);
-//		s = slist.get(0);
-//		model.addAttribute("I",s);
-//		
-//		Long idStudent = s.getId();
-//		Map<String, Object> modelMap = new HashMap<String, Object>();
-//		modelMap.put("appealStudent", studentService.getAppealStudentForVerbalToBeSigned(idStudent));
-//		return new ModelAndView(StudentService.STUDENT_VERBALTOBESIGNED, modelMap);
-//	}	
 	
 	@RequestMapping(value=StudentService.STUDENT_VERBALTOBESIGNED+"/sign", method=RequestMethod.POST)
 	String signVerbal(HttpServletRequest request, Model model) {

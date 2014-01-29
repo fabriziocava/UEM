@@ -5,6 +5,7 @@ import java.util.Set;
 
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
+import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -30,6 +31,6 @@ public interface StudentService extends UserService {
 	public ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent);
 	public ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(Long idStudent);
 	public boolean setStateAppealStudent(ArrayList<Long> idAppealStudentList);
-	
 	public Set<Group> getGroups();
+	public ArrayList<Carrier> getCarrier(Long idStudent);
 }
