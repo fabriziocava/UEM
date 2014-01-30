@@ -10,11 +10,14 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import it.unical.uniexam.MokException;
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
+import it.unical.uniexam.hibernate.domain.utility.Event;
+import it.unical.uniexam.hibernate.domain.utility.EventsCalendar;
 import it.unical.uniexam.hibernate.domain.utility.PostOfGroup;
 import it.unical.uniexam.mvc.service.ProfessorService;
 import it.unical.uniexam.mvc.service.UtilsService;
@@ -101,8 +104,28 @@ public class ProfessorController {
 
 
 		model.addAttribute("newss", newss);
-
-
+		ArrayList<Event>events=null;
+		boolean update=false;
+		try{
+			EventsCalendar eventsFromProfessor = professorService.getEventsFromProfessor(p.getId());
+			events=eventsFromProfessor.getEvents();
+			//aggiungere altri eventi!!
+			ArrayList<Appeal>appeals=professorService.getAppealFromProfessor(p.getId());
+			for (Appeal appeal : appeals) {
+				if(appeal.getCourse()!=null){
+					Event event=new Event("Esame del corso "+appeal.getCourse().getName(),
+							appeal.getExamDate().getTime()+"", null, null);
+					if(!events.contains(event)){
+						events.add(event);
+						update=true;
+					}
+				}
+			}
+			if(update){
+				professorService.setEventsByProfessor(p.getId(), eventsFromProfessor);
+			}
+		}catch(Exception e){}
+		model.addAttribute("events", events);
 	}
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_COURSE)

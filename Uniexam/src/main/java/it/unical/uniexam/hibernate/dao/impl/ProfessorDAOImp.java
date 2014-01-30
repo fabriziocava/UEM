@@ -1,13 +1,24 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.ObjectStreamClass;
 import java.io.OutputStream;
 import java.net.URL;
+import java.security.SecureRandom;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -21,6 +32,7 @@ import org.springframework.util.FileCopyUtils;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Professor;
@@ -28,6 +40,7 @@ import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.User.TYPE;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
+import it.unical.uniexam.hibernate.domain.utility.EventsCalendar;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
@@ -39,6 +52,93 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
  */
 @Repository
 public class ProfessorDAOImp implements ProfessorDAO {
+
+	@Override
+	public ArrayList<Appeal> getAppeals(Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ArrayList<Appeal> res=null;
+		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			res=new ArrayList<Appeal>(p.getAppeals());
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
+	public EventsCalendar getEvents(Long idProfessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		try{
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+			ObjectInputStream oj =new ObjectInputStream(p.getEventsCalendar().getBinaryStream());
+			EventsCalendar eventsCalendar=null;
+			try {
+				eventsCalendar=(EventsCalendar)oj.readObject();
+			}catch(Exception e){
+				new MokException(e);
+				return null;
+			}finally {
+				try{
+					oj.close();
+				}catch(Exception e){
+					new MokException(e);
+					return null;
+				}
+			}
+			return eventsCalendar;
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return null;
+	}
+	@Override
+	public Boolean setEvents(Long idProfessor,EventsCalendar eventsCalendar) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		try{
+			transaction = session.beginTransaction();
+
+			Professor p=(Professor)session.get(Professor.class, idProfessor);
+
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutput out = null;
+			try {
+				out = new ObjectOutputStream(bos);   
+				out.writeObject(eventsCalendar);
+				byte[] yourBytes = bos.toByteArray();
+				Blob b=session.getLobHelper().createBlob(yourBytes);
+				p.setEventsCalendar(b);
+			} finally {
+				try {
+					if (out != null) {
+						out.close();
+					}
+				} catch (Exception e) {
+					new MokException(e);
+					throw new Exception("Primo catch");
+				}
+				try {
+					bos.close();
+				} catch (Exception e) {
+					new MokException(e);
+					throw new Exception("Secondo catch");
+				}
+			}
+			transaction.commit();
+			return true;
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return false;
+	}
 
 	/**
 	 * Last modification is this!
@@ -489,39 +589,39 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		return res;
 	}
 
-	public void storeImage(Long idProfessor,InputStream is,int length){
-		Session session =HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction=null;
-		try{
-			transaction = session.beginTransaction();
-
-			Professor p=(Professor)session.get(Professor.class, idProfessor);
-			{
-				//			File resume = new File("D:\\Resume.doc");
-				byte[] fileContent = new byte[length];
-				try {
-					//				FileInputStream fileInputStream = new FileInputStream(resume);
-					//				//convert file into array of bytes
-					//				fileInputStream.read(fileContent);
-					//				fileInputStream.close();
-					is.read(fileContent);
-					is.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				//		     Blob blob = Hibernate.createBlob(fileContent,session);
-				Blob blob= session.getLobHelper().createBlob(fileContent);
-				p.setFileimage(blob);
-			}
-
-			transaction.commit();
-		}catch(Exception e){
-			transaction.rollback();
-			new MokException(e);
-		}finally{
-			session.close();
-		}
-	}
+	//	public void storeImage(Long idProfessor,InputStream is,int length){
+	//		Session session =HibernateUtil.getSessionFactory().openSession();
+	//		Transaction transaction=null;
+	//		try{
+	//			transaction = session.beginTransaction();
+	//
+	//			Professor p=(Professor)session.get(Professor.class, idProfessor);
+	//			{
+	//				//			File resume = new File("D:\\Resume.doc");
+	//				byte[] fileContent = new byte[length];
+	//				try {
+	//					//				FileInputStream fileInputStream = new FileInputStream(resume);
+	//					//				//convert file into array of bytes
+	//					//				fileInputStream.read(fileContent);
+	//					//				fileInputStream.close();
+	//					is.read(fileContent);
+	//					is.close();
+	//				} catch (Exception e) {
+	//					e.printStackTrace();
+	//				}
+	//				//		     Blob blob = Hibernate.createBlob(fileContent,session);
+	//				Blob blob= session.getLobHelper().createBlob(fileContent);
+	//				p.setFileimage(blob);
+	//			}
+	//
+	//			transaction.commit();
+	//		}catch(Exception e){
+	//			transaction.rollback();
+	//			new MokException(e);
+	//		}finally{
+	//			session.close();
+	//		}
+	//	}
 
 	public void storeImage2(Long idProfessor,InputStream is,int length){
 		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -530,10 +630,10 @@ public class ProfessorDAOImp implements ProfessorDAO {
 			transaction = session.beginTransaction();
 
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
-//			byte[] data=new byte[length];
+			//			byte[] data=new byte[length];
 			Blob b=session.getLobHelper().createBlob(is, length);
 			p.setFileimage(b);
-//			FileCopyUtils.copy(is, p.getFileimage().setBinaryStream(1));
+			//			FileCopyUtils.copy(is, p.getFileimage().setBinaryStream(1));
 
 			transaction.commit();
 		}catch(Exception e){

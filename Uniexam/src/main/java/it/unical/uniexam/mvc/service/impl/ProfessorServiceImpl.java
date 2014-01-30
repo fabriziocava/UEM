@@ -36,6 +36,7 @@ import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
+import it.unical.uniexam.hibernate.domain.utility.EventsCalendar;
 import it.unical.uniexam.mvc.service.ProfessorService;
 
 /**
@@ -60,6 +61,21 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	AppealStudentDAO appealStudentDAO;
 	@Autowired
 	StudentDAO studentDAO;
+	
+	@Override
+	public ArrayList<Appeal> getAppealFromProfessor(Long idProfessor) {
+		return professorDAO.getAppeals(idProfessor);
+	}
+	
+	@Override
+	public Boolean setEventsByProfessor(Long id, EventsCalendar events) {
+		return professorDAO.setEvents(id, events);
+	}
+	
+	 @Override
+	public EventsCalendar getEventsFromProfessor(Long id) {
+		return professorDAO.getEvents(id);
+	}
 	
 	@Override
 	public boolean signAppealStudentsListByCommissionary(

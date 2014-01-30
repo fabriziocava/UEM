@@ -1,21 +1,28 @@
 package it.unical.uniexam.hibernate.dao;
 
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User.TYPE;
 import it.unical.uniexam.hibernate.domain.utility.Address;
 import it.unical.uniexam.hibernate.domain.utility.Email;
+import it.unical.uniexam.hibernate.domain.utility.EventsCalendar;
 import it.unical.uniexam.hibernate.domain.utility.PhoneNumber;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 
 public interface ProfessorDAO {
+	
+	public EventsCalendar getEvents(Long idProfessor);
+	public Boolean setEvents(Long idProfessor,EventsCalendar eventsCalendar);
+	
 	/**
 	 * Standard method
 	 */
@@ -75,8 +82,9 @@ public interface ProfessorDAO {
 	public Email getEmail(Long idProfessor,it.unical.uniexam.hibernate.domain.utility.Email.TYPE type);
 
 	public Boolean streamImage(Long idProfessor,OutputStream outputStream);
-	public void storeImage(Long idProfessor,InputStream is,int length);
+//	public void storeImage(Long idProfessor,InputStream is,int length);
 	public void storeImage2(Long idProfessor,InputStream is,int length);
+	public ArrayList<Appeal> getAppeals(Long idProfessor);
 }
 
 

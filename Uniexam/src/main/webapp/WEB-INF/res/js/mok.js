@@ -9,7 +9,54 @@ function go(url){
 	window.location=conte+url;
 }
 
+function removeEvent(event){
+	if(prepareEventRemove.title==$("span[id='eventdialogtitle']").html()){
+		var dati=new FormData();
+		dati.append("title",prepareEventRemove.title);
+		dati.append("start",prepareEventRemove.start.getTime()+"");
+		if(prepareEventRemove.end!=null)
+			dati.append("end",prepareEventRemove.end.getTime()+"");
+		else
+			dati.append("end",prepareEventRemove.start.getTime()+"");
+//		var bo=$('#calendar').fullCalendar( 'removeEvents', {title:prepareEventRemove.title,
+//		                                              start:prepareEventRemove.start}); //non funziona :(
+//		alert(bo);
+		var aja=sendAJAXmessage3('/ajax/calendar/remove', "POST", dati);
+		aja.done(function(msg){
+			location.reload();
+		});
+		$("#eventdialog").dialog( "close" );
+	}
+}
 
+function openDialogEventWith(event){
+	var dial=$("#eventdialog");
+	dial.children().find("span[id='eventdialogtitle']").html(event.title)
+	dial.children().find("span[id='eventdialogstart']").html(event.start+"");
+	if(event.end==null)
+		dial.children().find("span[id='eventdialogend']").html("allday");
+	else
+		dial.children().find("span[id='eventdialogend']").html(event.end+"");
+	dial.children().find("buttonmok[id='eventdialogremove']").attr('onclick',"removeEvent(this)");
+	dial.attr("title",event.title);
+	dial.dialog({
+		autoOpen : true,
+		modal: true,
+		width:"auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close:function(){
+			dial.dialog( "close" );
+		}
+	});
+	dial.attr("title","");
+}
 
 function actionAppealStudents(list,path){
 	var conte=$("#context").attr("value");
@@ -835,6 +882,21 @@ function sendAJAXmessage2(url,type,data){
 	return ing;
 }
 
+function sendAJAXmessage3(url,type,data){
+	var conte=$("#context").attr("value");
+	var ing=$.ajax({
+		url: conte+url,
+		type: type,
+		data:data,
+		processData: false,
+		contentType: false
+	});
+	$(".processing").css("display","block");
+	ing.done(function(msg){
+		$(".processing").css("display","none");
+	});
+	return ing;
+}
 
 function changeNote(item,idCourse){
 	var idd=item.id;

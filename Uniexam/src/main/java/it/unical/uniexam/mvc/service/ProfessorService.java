@@ -17,6 +17,7 @@ import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.utility.CommentOfPost;
+import it.unical.uniexam.hibernate.domain.utility.EventsCalendar;
 
 public interface ProfessorService extends UserService{
 	public final static String PROFESSOR_HOME="professor/home";
@@ -107,6 +108,12 @@ public interface ProfessorService extends UserService{
 	public boolean signAppealStudentsListByCommissionary(
 			ArrayList<Long> listSignAppealStudents, Long id);
 
+	public EventsCalendar getEventsFromProfessor(Long id);
+
+	public Boolean setEventsByProfessor(Long id, EventsCalendar events);
+
+	public ArrayList<Appeal>getAppealFromProfessor(Long idProfessor);
+	
 //	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
 //			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);
 

@@ -62,6 +62,9 @@ public class Professor extends User{
 	public Professor() {
 	}
 
+	@Column( name = "EVENT_CALENDAR" )
+	@Lob
+	private Blob eventsCalendar;
 	
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -202,4 +205,14 @@ public class Professor extends User{
 		}else
 			return null;
 	}
+
+	public Blob getEventsCalendar() {
+		return eventsCalendar;
+	}
+
+	public void setEventsCalendar(Blob eventsCalendar) {
+		this.eventsCalendar = eventsCalendar;
+	}
+	
+	
 }
