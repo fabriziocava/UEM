@@ -115,6 +115,10 @@ public interface ProfessorService extends UserService{
 	public ArrayList<Appeal>getAppealFromProfessor(Long idProfessor);
 
 	public ArrayList<Professor> getProfessorsMatch(String id);
+
+	public Boolean addCommissaryAtCourse(Long idCourse, Long id);
+
+	public Boolean removeCommissaryAtCourse(Long idCourse, Long idProf);
 	
 //	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
 //			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);

@@ -44,12 +44,33 @@ public class AjaxControllerCourse {
 			return redirect;
 		p=plist.get(0);
 		String id=request.getParameter("idProf");
-		String idCourse=request.getParameter("idCourse");
-		Boolean ris=false;
+		Long idProf=Long.valueOf(id);
+		String idCours=request.getParameter("idCourse");
+		Long idCourse=Long.valueOf(idCours);
 		//se non c'è già lo inserisce...e se non sono più di 5!
+		Boolean ris=professorService.addCommissaryAtCourse(idCourse,idProf);
+		
 		return "redirect:/professor/ajax/course/dialog/list_commissionary?id="+idCourse+"&ris="+ris;
 	}
 	
+	@RequestMapping("/dialog/remove_commissionary")
+	public String remove_commissionary(HttpServletRequest request, Model model){
+		Professor p=null;
+		String redirect=null;
+		ArrayList<Professor>plist=new ArrayList<Professor>();
+		redirect=setProfessorOrRedirect(request,model,plist);
+		if(redirect!=null)
+			return redirect;
+		p=plist.get(0);
+		String id=request.getParameter("idProf");
+		Long idProf=Long.valueOf(id);
+		String idCours=request.getParameter("idCourse");
+		Long idCourse=Long.valueOf(idCours);
+		//se non c'è già lo inserisce...e se non sono più di 5!
+		Boolean ris=professorService.removeCommissaryAtCourse(idCourse,idProf);
+		
+		return "redirect:/professor/ajax/course/dialog/list_commissionary?id="+idCourse+"&ris="+ris;
+	}
 	
 	@RequestMapping("/list_professor")
 	public String list_professor(HttpServletRequest request, Model model){

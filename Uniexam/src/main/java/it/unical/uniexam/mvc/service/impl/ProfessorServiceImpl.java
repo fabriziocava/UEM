@@ -63,6 +63,16 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	StudentDAO studentDAO;
 	
 	@Override
+	public Boolean removeCommissaryAtCourse(Long idCourse, Long idProf) {
+		return courseDAO.removeProfessorFromCommission(idCourse, idProf)!=null;
+	}
+	
+	@Override
+	public Boolean addCommissaryAtCourse(Long idCourse, Long id) {
+		return courseDAO.addProfessorAtCommission(idCourse, id)!=null;
+	}
+	
+	@Override
 	public ArrayList<Professor> getProfessorsMatch(String id) {
 		return professorDAO.getProfessorsMatch(id);
 	}

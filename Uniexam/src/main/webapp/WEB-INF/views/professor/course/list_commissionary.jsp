@@ -20,14 +20,14 @@ if(coms!=null && coms.size()>0){
 		
 		
 	});
-	function actionAddCommissary(idCourse,idProf){
+	function actionCommissary(idCourse,idProf,action){
 		names=new Array();
 		names.push("idCourse");
 		values=new Array();
 		values.push(idCourse);
 		names.push("idProf");
 		values.push(idProf);
-		var path="/ajax/course/dialog/add_commissionary";
+		var path="/ajax/course/dialog/"+action+"_commissionary";
 		var type="POST";
 		var dati=new FormData();
 		for(var i=0; i<names.length;i++){
@@ -44,13 +44,29 @@ if(coms!=null && coms.size()>0){
 		buttons.Seleziona = function() {
 			var idProf=$("#professorID").attr('value');
 			if(idProf!=undefined){
-				actionAddCommissary('<%=idCourse%>',idProf);
+				actionCommissary('<%=idCourse%>',idProf,"add");
 				dial.dialog("close");
 			}
 		};
 		dial.dialog("option", "buttons", buttons);
 	}
+	function dialogForRemoveCommissary(idCommissary) {
+		var dial = openDialogFromDiv('remove_commissionary', "Remove Commissary");
+		var buttons = {};
+		buttons.Conferma = function() {
+			actionCommissary('<%=idCourse%>',idCommissary,"remove");
+			dial.dialog("close");
+		};
+		buttons.Annulla = function() {
+			dial.dialog("close");
+		};
+		dial.dialog("option", "buttons", buttons);
+	}
 </script>
+
+<div id="remove_commissionary" class="startHide">
+Conferma per rimuovere questo commissario
+</div>
 
 <div id="search_commissionary" class="startHide">
 		<input type="text" min="3" maxlength="8" id="idCompleteProfessor" placeholder="Name, Surname"
@@ -69,7 +85,7 @@ if(coms!=null && coms.size()>0){
 <div class="aligncenter">
 <table class="tablemok morespace">
 <tr>
-<th>Nome</th><th>web site</th><th>phone</th><th>email</th>
+<th>Nome</th><th>Web site</th><th>Phone</th><th>Email</th><th>Elimina</th>
 </tr>
 <%for(Professor c:coms){ %>
 <%
@@ -87,6 +103,7 @@ if(p!=null)
 <td><%=c.getWebSite() %></td>
 <td><%=number %></td>
 <td><%=email %></td>
+<td><a class="img-active icon icon-trash clickable" onclick="dialogForRemoveCommissary('<%=c.getId()%>')">re</a></td>
 <% %>
 <% %>
 </tr>
