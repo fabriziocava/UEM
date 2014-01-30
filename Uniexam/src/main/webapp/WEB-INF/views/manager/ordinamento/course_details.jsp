@@ -29,7 +29,7 @@
 		        	var ajax=sendAJAXmessagePino($("#context").attr("value")+"/ajax/course/remove_courseALL","GET","id",id,"id2",id2);
 		        	ajax.done(function(msg){
 		        		if(msg.match("no")){
-		        			alert("Errore! non ho potuto eliminare il corso");
+		        			alert("Errore! non ho potuto eliminare il corso, corso assegnato");
 		        		}else{
 		        			alert("Corso eliminato");
 		        			window.location=$("#context").attr("value")+"/course/list";

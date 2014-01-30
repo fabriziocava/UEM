@@ -26,7 +26,6 @@
 		
 		<li><spring:message code="label.secretary.degreeCourse" />
 			<ul>
-				<li><a href='#'><spring:message code="label.secretary.add" /></a></li>
 				<li><a href='${pageContext.request.contextPath}/manager/course/list'><spring:message code="label.secretary.list" /></a></li>
 				
 			</ul>
