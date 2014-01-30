@@ -128,7 +128,7 @@ if(!title.match("^[-.*]")){
 
 </div>
 <div id="eventdialog" class="startHide">
-	<table>
+	<table class="tablemok">
 		<tr>
 			<td>Title</td>
 			<td><span id="eventdialogtitle"></span></td>
