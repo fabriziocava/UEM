@@ -11,21 +11,25 @@ function go(url){
 
 function removeEvent(event){
 	if(prepareEventRemove.title==$("span[id='eventdialogtitle']").html()){
-		var dati=new FormData();
-		dati.append("title",prepareEventRemove.title);
-		dati.append("start",prepareEventRemove.start.getTime()+"");
-		if(prepareEventRemove.end!=null)
-			dati.append("end",prepareEventRemove.end.getTime()+"");
-		else
-			dati.append("end",prepareEventRemove.start.getTime()+"");
-//		var bo=$('#calendar').fullCalendar( 'removeEvents', {title:prepareEventRemove.title,
-//		                                              start:prepareEventRemove.start}); //non funziona :(
-//		alert(bo);
-		var aja=sendAJAXmessage3('/ajax/calendar/remove', "POST", dati);
-		aja.done(function(msg){
-			location.reload();
-		});
-		$("#eventdialog").dialog( "close" );
+		if(!prepareEventRemove.title.match("^[-]")){
+			var dati=new FormData();
+			dati.append("title",prepareEventRemove.title);
+			dati.append("start",prepareEventRemove.start.getTime()+"");
+			if(prepareEventRemove.end!=null)
+				dati.append("end",prepareEventRemove.end.getTime()+"");
+			else
+				dati.append("end",prepareEventRemove.start.getTime()+"");
+//			var bo=$('#calendar').fullCalendar( 'removeEvents', {title:prepareEventRemove.title,
+//			start:prepareEventRemove.start}); //non funziona :(
+//			alert(bo);
+			var aja=sendAJAXmessage3('/ajax/calendar/remove', "POST", dati);
+			aja.done(function(msg){
+				location.reload();
+			});
+			$("#eventdialog").dialog( "close" );
+		}else{
+			alert("Non puoi eliminare questa data");
+		}
 	}
 }
 
@@ -60,23 +64,23 @@ function openDialogEventWith(event){
 
 function actionAppealStudents(list,path){
 	var conte=$("#context").attr("value");
-		var ing = $.ajax({
-			url : conte + '/ajax/'+path,
-			type : "POST",
-			data : list,
-			processData : false,
-			contentType : false
-		});
-		ing.done(function(data) {
-			if(data.match("ok")){
-				alert(multilang['message.professor.modify.success']);
-			}else if(data.match("passwd")){
-				alert(multilang['message.professor.passwd.error']);
-			}else{
-				alert(multilang['message.professor.modify.error']);
-			}
-			location.reload();
-		});
+	var ing = $.ajax({
+		url : conte + '/ajax/'+path,
+		type : "POST",
+		data : list,
+		processData : false,
+		contentType : false
+	});
+	ing.done(function(data) {
+		if(data.match("ok")){
+			alert(multilang['message.professor.modify.success']);
+		}else if(data.match("passwd")){
+			alert(multilang['message.professor.passwd.error']);
+		}else{
+			alert(multilang['message.professor.modify.error']);
+		}
+		location.reload();
+	});
 }
 
 function applySign(name,path){
@@ -127,7 +131,7 @@ function filterMok(query,value){
 		}
 		if(si==0)
 			$(this).hide();
-		});
+	});
 }
 
 function removeNoSelected(name) {
@@ -200,23 +204,23 @@ function closeDiv(item){
 //<tr><td>
 //<table>
 //<tr onmouseout="deselemok(this)" onmouseover="selemok(this)" 
-//   onclick="selectmok(this,'inputIdInId','inputIdOutId','risTable')" 
-//   style="text-align: left;" id="<%=obj.getId() %>">
-//	<td style="padding: 0px 20px 0px 0px;"><%=obj.getSerialNumber() %></td>
+//onclick="selectmok(this,'inputIdInId','inputIdOutId','risTable')" 
+//style="text-align: left;" id="<%=obj.getId() %>">
+//<td style="padding: 0px 20px 0px 0px;"><%=obj.getSerialNumber() %></td>
 //</tr>
 //</table>
 //</td></tr>
 //**
 //<input type="text" min="3" maxlength="8" 
-//  name="matricola" id="inputIdInId" 
-//	onkeyup="ajaxAutoComplete('/ajax/appeal/auto_complete_student',this.value,'risTable')"/>
-//	<input id="inputIdOutId" name="studentID" type="hidden"/>
-//	<!-- <div id="complete" style="position: fixed"></div> -->
-//	<!-- <div style="position: fixed;"> -->
-//	<div>
-//	<table class="tablemok" style="background-color: white; display:table-row-group" id="risTable">
-//	</table>
-//	</div>
+//name="matricola" id="inputIdInId" 
+//onkeyup="ajaxAutoComplete('/ajax/appeal/auto_complete_student',this.value,'risTable')"/>
+//<input id="inputIdOutId" name="studentID" type="hidden"/>
+//<!-- <div id="complete" style="position: fixed"></div> -->
+//<!-- <div style="position: fixed;"> -->
+//<div>
+//<table class="tablemok" style="background-color: white; display:table-row-group" id="risTable">
+//</table>
+//</div>
 function selemok(item){
 	$(item).css('background-color','rgb(223, 207, 207)');
 }
@@ -232,14 +236,14 @@ function selectmok(item,inputIdInId,inputIdOutId,risTableId){
 
 //<div>
 //<input type="text" min="3" maxlength="8" id="RESPECT_TO_LIST_RESULTING"
-//	placeholder="Matricola, name"
-//	onkeyup="ajaxAutoComplete('/ajax/sign/autocomplete/students',this.value,'risTable')" />
+//placeholder="Matricola, name"
+//onkeyup="ajaxAutoComplete('/ajax/sign/autocomplete/students',this.value,'risTable')" />
 //<input id="RESPECT_TO_LIST_RESULTING" type="hidden" />
 //<div>
-//	<table class="table-list tablemok"
-//		style="background-color: white; display: table-row-group"
-//		id="risTable">
-//	</table>
+//<table class="table-list tablemok"
+//style="background-color: white; display: table-row-group"
+//id="risTable">
+//</table>
 //</div>
 //</div>
 
@@ -260,45 +264,45 @@ function titlemok(titleidOrClass,titledivid){
 //	var timer;
 //	var delay=50;
 //	$('.'+titleidOrClass).bind('click',function(event) {
-//		timer = setTimeout(function() {
-//			$("#"+titledivid).css("left",event.pageX);
-//			$("#"+titledivid).css("top",event.pageY);
-//			$("#"+titledivid).fadeIn();
-//			$("#"+titledivid).attr("display","block");
-//		}, delay);
-//
+//	timer = setTimeout(function() {
+//	$("#"+titledivid).css("left",event.pageX);
+//	$("#"+titledivid).css("top",event.pageY);
+//	$("#"+titledivid).fadeIn();
+//	$("#"+titledivid).attr("display","block");
+//	}, delay);
+
 //	});
 //	$('.'+titleidOrClass).bind('mouseenter',function(event) {
-//		timer = setTimeout(function() {
-//			$("#"+titledivid).css("left",event.pageX);
-//			$("#"+titledivid).css("top",event.pageY);
-//			$("#"+titledivid).fadeIn();
-//			$("#"+titledivid).attr("display","block");
-//		}, delay);
-//
+//	timer = setTimeout(function() {
+//	$("#"+titledivid).css("left",event.pageX);
+//	$("#"+titledivid).css("top",event.pageY);
+//	$("#"+titledivid).fadeIn();
+//	$("#"+titledivid).attr("display","block");
+//	}, delay);
+
 //	});
 //	$('#'+titleidOrClass).bind('mouseenter',function(event) {
-//		timer = setTimeout(function() {
-//			$("#"+titledivid).css("left",event.pageX);
-//			$("#"+titledivid).css("top",event.pageY);
-//			$("#"+titledivid).fadeIn();
-//			$("#"+titledivid).attr("display","block");
-//		}, delay);
-//
+//	timer = setTimeout(function() {
+//	$("#"+titledivid).css("left",event.pageX);
+//	$("#"+titledivid).css("top",event.pageY);
+//	$("#"+titledivid).fadeIn();
+//	$("#"+titledivid).attr("display","block");
+//	}, delay);
+
 //	});
 //	$('#'+titleidOrClass).bind('mouseleave',function(event) {
-//		timer = setTimeout(function() {
-//			$("#"+titledivid).fadeOut();
-//			clearTimeout(timer);
-//		}, delay);
-//
+//	timer = setTimeout(function() {
+//	$("#"+titledivid).fadeOut();
+//	clearTimeout(timer);
+//	}, delay);
+
 //	});
 //	$('.'+titleidOrClass).bind('mouseleave',function(event) {
-//		timer = setTimeout(function() {
-//			$("#"+titledivid).fadeOut();
-//			clearTimeout(timer);
-//		}, delay);
-//
+//	timer = setTimeout(function() {
+//	$("#"+titledivid).fadeOut();
+//	clearTimeout(timer);
+//	}, delay);
+
 //	});
 }
 
@@ -352,7 +356,7 @@ function openAddStudentToAppeal(idAppeal){
 			var chiudi=aggiungi();
 			if(chiudi)
 				dial.dialog("close");
-			};
+		};
 		dial.dialog("option", "buttons", buttons);
 	});
 }
@@ -582,70 +586,70 @@ function dialogModifyRequestedCourse(){
 	$("#dialog").attr("title","");
 
 //	$("li[id^='modifyRequest']").bind("click", function(event) {
-//		var ids=this.id;
-//		ids=ids.replace("modifyRequest","");
-//		var id=ids.split("$")[0];
-//		var degree=ids.split("$")[1];
-//		var idCourse=ids.split("$")[2];
-//		try{
-//			if(commands==undefined)
-//				commands=new Commands("sendRequestedCourse",idCourse);
-//		}catch(ERR){
-//			commands=new Commands("sendRequestedCourse",idCourse);
-//		}
-////		}
-////		creare il div che apparirà d'avanti al mouse
-//		$("<div></div>")
-//		.attr('id','divRequestCourseChange')
-//		.appendTo('body').html($("#radio"+degree).html());
-//		$("#divRequestCourseChange").attr("title",$(this).html());
-//		$("#divRequestCourseChange").dialog({
-//			resizable: false,
-//			modal: true,
-//			buttons: {
-//				"Save": function() {
-//					var newVal=$("input[name='choose']:radio:checked").val();
-//					commands.add(id, "change", newVal);
-//					$(".alertSomeModifyRequestCourse").each(function(){
-//						$(this).slideDown(); 
-//					});
-//					dirtingTheElement();
-////					requested_courseAddIfNotAddAlready ///strutturaaaa!!! classeEEEEE
-////					var comm="%requested"+id+"$change"+newVal+"%";
-//					$( this ).dialog( "close" );
-//					$("div").remove("#divRequestCourseChange");
-//				},
-//				Cancel: function() {
-//					$( this ).dialog( "close" );
-//					if($("#sendRequestCourseChange").val()==""){
-//						$("input").remove("#sendRequestCourseChange");
-//					}
-//					$("div").remove("#divRequestCourseChange");
-//				}
-//			},
-//			close:function(){
-//				$( this ).dialog( "close" );
-//				$("div").remove("#divRequestCourseChange");
-//			}
-//		});
-//		$("#divRequestCourseChange").attr("title","");
-//		$("#setRequestCourseChange").css('height',"auto");
+//	var ids=this.id;
+//	ids=ids.replace("modifyRequest","");
+//	var id=ids.split("$")[0];
+//	var degree=ids.split("$")[1];
+//	var idCourse=ids.split("$")[2];
+//	try{
+//	if(commands==undefined)
+//	commands=new Commands("sendRequestedCourse",idCourse);
+//	}catch(ERR){
+//	commands=new Commands("sendRequestedCourse",idCourse);
+//	}
+////	}
+////	creare il div che apparirà d'avanti al mouse
+//	$("<div></div>")
+//	.attr('id','divRequestCourseChange')
+//	.appendTo('body').html($("#radio"+degree).html());
+//	$("#divRequestCourseChange").attr("title",$(this).html());
+//	$("#divRequestCourseChange").dialog({
+//	resizable: false,
+//	modal: true,
+//	buttons: {
+//	"Save": function() {
+//	var newVal=$("input[name='choose']:radio:checked").val();
+//	commands.add(id, "change", newVal);
+//	$(".alertSomeModifyRequestCourse").each(function(){
+//	$(this).slideDown(); 
+//	});
+//	dirtingTheElement();
+////	requested_courseAddIfNotAddAlready ///strutturaaaa!!! classeEEEEE
+////	var comm="%requested"+id+"$change"+newVal+"%";
+//	$( this ).dialog( "close" );
+//	$("div").remove("#divRequestCourseChange");
+//	},
+//	Cancel: function() {
+//	$( this ).dialog( "close" );
+//	if($("#sendRequestCourseChange").val()==""){
+//	$("input").remove("#sendRequestCourseChange");
+//	}
+//	$("div").remove("#divRequestCourseChange");
+//	}
+//	},
+//	close:function(){
+//	$( this ).dialog( "close" );
+//	$("div").remove("#divRequestCourseChange");
+//	}
+//	});
+//	$("#divRequestCourseChange").attr("title","");
+//	$("#setRequestCourseChange").css('height',"auto");
 //	});
 //	$("li[id^='deleteRequest']").bind("click", function(event) {
-//		var ids=this.id;
-//		ids=ids.replace("deleteRequest","");
-//		var id=ids.split("$")[0];
-//		var idCourse=ids.split("$")[1];
-//		try{
-//			if(commands==null);
-//		}catch(ERR){
-//			commands=new Commands("sendRequestedCourse",idCourse);
-//		}
-//		commands.add(id, "remove", "no");
-//		$(".alertSomeModifyRequestCourse").each(function(){
-//			$(this).slideDown(); 
-//		});
-//		dirtingTheElement();
+//	var ids=this.id;
+//	ids=ids.replace("deleteRequest","");
+//	var id=ids.split("$")[0];
+//	var idCourse=ids.split("$")[1];
+//	try{
+//	if(commands==null);
+//	}catch(ERR){
+//	commands=new Commands("sendRequestedCourse",idCourse);
+//	}
+//	commands.add(id, "remove", "no");
+//	$(".alertSomeModifyRequestCourse").each(function(){
+//	$(this).slideDown(); 
+//	});
+//	dirtingTheElement();
 //	});
 }
 

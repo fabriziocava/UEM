@@ -107,14 +107,24 @@ public class ProfessorController {
 		ArrayList<Event>events=null;
 		boolean update=false;
 		try{
-			EventsCalendar eventsFromProfessor = professorService.getEventsFromProfessor(p.getId());
+			EventsCalendar eventsFromProfessor =professorService.getEventsFromProfessor(p.getId());
+
+//			EventsCalendar eventsFromProfessor =new EventsCalendar();
+//			eventsFromProfessor=professorService.getEventsFromProfessor(p.getId());
 			events=eventsFromProfessor.getEvents();
 			//aggiungere altri eventi!!
 			ArrayList<Appeal>appeals=professorService.getAppealFromProfessor(p.getId());
+			ArrayList<Event>remove=new ArrayList<Event>();
+			for (Event even : events) {
+				if(even.title.startsWith("-")){
+					remove.add(even);
+				}
+			}
+			events.removeAll(remove);
 			for (Appeal appeal : appeals) {
 				if(appeal.getCourse()!=null){
-					Event event=new Event("Esame del corso "+appeal.getCourse().getName(),
-							appeal.getExamDate().getTime()+"", null, null);
+					Event event=new Event("-Esame del corso "+appeal.getCourse().getName(),
+							appeal.getExamDate().getTime()+"", appeal.getExamDate().getTime()+"", "true");
 					if(!events.contains(event)){
 						events.add(event);
 						update=true;
