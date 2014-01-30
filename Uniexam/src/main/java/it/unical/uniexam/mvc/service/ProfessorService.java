@@ -113,6 +113,8 @@ public interface ProfessorService extends UserService{
 	public Boolean setEventsByProfessor(Long id, EventsCalendar events);
 
 	public ArrayList<Appeal>getAppealFromProfessor(Long idProfessor);
+
+	public ArrayList<Professor> getProfessorsMatch(String id);
 	
 //	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
 //			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);

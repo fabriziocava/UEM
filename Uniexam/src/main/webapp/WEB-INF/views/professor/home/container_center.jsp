@@ -69,7 +69,7 @@ if(!title.match("^[-.*]")){
 			        	title: '<%=event.title.replaceAll("\\'", "\\\\\\\'")%>',
 			        	start: new Date(<%=event.startDate%>),
 			        	end: new Date(<%=event.endDate%>),
-			        	allDay: '<%=event.allDay%>',
+			        	allDay: <%=event.allDay%>,
 			        },
 			        <%}%>
 			        <%}%>

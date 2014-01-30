@@ -124,7 +124,7 @@ public class ProfessorController {
 			for (Appeal appeal : appeals) {
 				if(appeal.getCourse()!=null){
 					Event event=new Event("-Esame del corso "+appeal.getCourse().getName(),
-							appeal.getExamDate().getTime()+"", appeal.getExamDate().getTime()+"", "true");
+							appeal.getExamDate().getTime()+"", (appeal.getExamDate().getTime()+10800000)+"", "false");
 					if(!events.contains(event)){
 						events.add(event);
 						update=true;

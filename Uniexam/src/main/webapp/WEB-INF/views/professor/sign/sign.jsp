@@ -17,29 +17,6 @@
 		$(document).ready(function() {
 			$(".container-center").attr('id', 'container-center');
 		});
-		function openDialogFromDiv(idDiv, title) {
-			var dial = $("#" + idDiv);
-			dial.attr("title", title);
-			dial.dialog({
-				autoOpen : true,
-				modal : true,
-				width : "auto",
-				show : {
-					effect : "blind",
-					duration : 500
-				},
-				hide : {
-					effect : "explode",
-					duration : 500
-				},
-				close : function() {
-					dial.dialog("close");
-				}
-			});
-			dial.attr("title", "");
-			return dial;
-		}
-
 		function dialogFromAppealPrepare() {
 			var dial = openDialogFromDiv('from_appeal', "<spring:message code='message.professor.fromappeal'/>");
 			var buttons = {};

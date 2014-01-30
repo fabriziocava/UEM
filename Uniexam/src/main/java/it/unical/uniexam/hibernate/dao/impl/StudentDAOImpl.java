@@ -74,6 +74,9 @@ public class StudentDAOImpl implements StudentDAO {
 //			or.add(Restrictions.like("serialNumber",idStud,MatchMode.ANYWHERE));
 //			c.add(Restrictions.like("name", idStud, MatchMode.ANYWHERE));
 //			c.add(Restrictions.like("surname", idStud, MatchMode.ANYWHERE));
+			//Se mi funzionava Criteria allora potevo scrivere una funzione 
+			// di auto cmplete comune a tutti gli utenti.
+			//dato che non funziona allora non la posso fare
 			@SuppressWarnings("unchecked")
 			List<Student> list = q.list();
 			res = new ArrayList<Student>(list);

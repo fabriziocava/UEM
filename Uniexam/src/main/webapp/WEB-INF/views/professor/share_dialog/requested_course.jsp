@@ -25,7 +25,7 @@
 	function addRequestedCourseF(id) {
 		var conte = $("#context").attr("value");
 		var idCourse = id;
-		var ajax = sendAJAXmessage(conte + "/ajax/dialog/addRequestedCourse",
+		var ajax = sendAJAXmessage(conte + "/ajax/course/dialog/addRequestedCourse",
 				"GET", "id", idCourse);
 		ajax.done(function(data) {
 			if ($("#dialogAddRequested").html() == undefined)
@@ -40,7 +40,7 @@
 		commands = undefined;
 		var conte = $("#context").attr("value");
 		var ajax = sendAJAXmessage(conte
-				+ "/ajax/dialog/requested_course/command", "POST", "data", data);
+				+ "/ajax/course/dialog/requested_course/command", "POST", "data", data);
 		ajax.done(function(data) {
 			if ($("#dialog").html() == undefined)
 				$("<div></div>").attr('id', 'dialog').appendTo('body');

@@ -8,7 +8,28 @@ function go(url){
 	var conte=$("#context").attr("value");
 	window.location=conte+url;
 }
-
+function openDialogFromDiv(idDiv, title) {
+	var dial = $("#" + idDiv);
+	dial.attr("title", title);
+	dial.dialog({
+		autoOpen : true,
+		modal : true,
+		width : "auto",
+		show : {
+			effect : "blind",
+			duration : 500
+		},
+		hide : {
+			effect : "explode",
+			duration : 500
+		},
+		close : function() {
+			dial.dialog("close");
+		}
+	});
+	dial.attr("title", "");
+	return dial;
+}
 function removeEvent(event){
 	if(prepareEventRemove.title==$("span[id='eventdialogtitle']").html()){
 		if(!prepareEventRemove.title.match("^[-]")){
@@ -413,7 +434,7 @@ function openDialogWithAjaxContent(path,type,names,values,title){
 function openPopUpWithAjaxContent(caseId,id){
 	if(caseId.match("requested_course")){
 		var conte=$("#context").attr("value");
-		var ajax=sendAJAXmessage(conte+"/ajax/dialog/requested_course", "GET", "id", id);
+		var ajax=sendAJAXmessage(conte+"/ajax/course/dialog/requested_course", "GET", "id", id);
 		ajax.done(function(data){
 			if($("#dialog").html()==undefined)
 				$("<div></div>").attr('id','dialog').appendTo('body');
@@ -651,6 +672,15 @@ function dialogModifyRequestedCourse(){
 //	});
 //	dirtingTheElement();
 //	});
+}
+
+function putDataFromAjax(pathRequ,type,data,idDest){
+	var conte=$("#context").attr("value");
+	var ajax=sendAJAXmessage3(conte+pathRequ,type,data);
+	ajax.done(function(data){
+		$("#"+idDest).html(data);
+	});
+	return ajax;
 }
 
 function getDataFromAjaxForce(pathRequ,id,idDest){

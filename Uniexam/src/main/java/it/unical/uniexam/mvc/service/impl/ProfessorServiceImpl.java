@@ -63,6 +63,11 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	StudentDAO studentDAO;
 	
 	@Override
+	public ArrayList<Professor> getProfessorsMatch(String id) {
+		return professorDAO.getProfessorsMatch(id);
+	}
+	
+	@Override
 	public ArrayList<Appeal> getAppealFromProfessor(Long idProfessor) {
 		return professorDAO.getAppeals(idProfessor);
 	}

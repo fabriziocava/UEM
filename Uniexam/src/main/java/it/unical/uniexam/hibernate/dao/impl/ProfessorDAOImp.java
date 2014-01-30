@@ -36,6 +36,7 @@ import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.hibernate.domain.User.TYPE;
 import it.unical.uniexam.hibernate.domain.utility.Address;
@@ -53,6 +54,29 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 @Repository
 public class ProfessorDAOImp implements ProfessorDAO {
 
+	@Override
+	public ArrayList<Professor> getProfessorsMatch(String id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		ArrayList<Professor> res = null;
+		try {
+			Query q = session.createQuery("from Professor where lower(name) like :id or lower(surname) like :id2");
+			q.setParameter("id", "%"+id.toLowerCase()+"%");
+			q.setParameter("id2", "%"+id.toLowerCase()+"%");
+			@SuppressWarnings("unchecked")
+			List<Professor> list = q.list();
+			for (Professor professor : list) {
+				Hibernate.initialize(professor);
+				Hibernate.initialize(professor.getEmails());
+			}
+			res = new ArrayList<Professor>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+	
 	@Override
 	public ArrayList<Appeal> getAppeals(Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();

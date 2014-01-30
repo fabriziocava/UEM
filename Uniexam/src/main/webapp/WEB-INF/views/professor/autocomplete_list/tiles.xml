@@ -10,4 +10,6 @@
 	<definition name="professor/autocomplete/appeals" template="/WEB-INF/views/professor/autocomplete_list/appeals.jsp">
 	</definition>	
 	
+	<definition name="professor/autocomplete/professors" template="/WEB-INF/views/professor/autocomplete_list/professors.jsp">
+	</definition>	
 </tiles-definitions>

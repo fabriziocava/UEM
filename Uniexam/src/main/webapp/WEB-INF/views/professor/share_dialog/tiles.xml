@@ -9,13 +9,13 @@
 		<put-attribute name="dialog_content" value="" />
 	</definition>
 
-	<definition name="professor/dialog/requested_course"
+	<definition name="professor/course/dialog/requested_course"
 		extends="professor.dialog">
 		<put-attribute name="dialog_content"
 			value="/WEB-INF/views/professor/share_dialog/requested_course.jsp" />
 	</definition>
 	
-	<definition name="professor/dialog/addRequestedCourse" extends="professor.dialog">
+	<definition name="professor/course/dialog/addRequestedCourse" extends="professor.dialog">
 		<put-attribute name="dialog_content"
 			value="/WEB-INF/views/professor/share_dialog/addRequestedCourse.jsp" />
 	</definition>
