@@ -3,12 +3,14 @@ package it.unical.uniexam.hibernate.mokTest;
 import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
+import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.dao.impl.AppealDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.DegreeCourseDAOImpl;
+import it.unical.uniexam.hibernate.dao.impl.DepartmentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
 import it.unical.uniexam.hibernate.dao.impl.UserDAOImpl;
@@ -52,6 +54,7 @@ public class DBTestGroup2DAO {
 	private static UserDAO userDAO=new UserDAOImpl();
 	private static AppealDAO appealDAO=new AppealDAOImpl();
 	private static DegreeCourseDAO degreeCourseDAO = new DegreeCourseDAOImpl();
+	private static DepartmentDAO departmentDAO=new DepartmentDAOImpl();
 	static Long []ids=null;
 	
 	
@@ -69,23 +72,23 @@ public class DBTestGroup2DAO {
 		ids[count++]=courseDAO.addCourse(new Course("INF", "SI", new URL("http:\\www.unical.it/SI"), 5, null, null, null,degreeCourseDAO.getDegreeCourse(1L)));
 		HashSet<Email> emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE.UFFICIAL, "ricca@gmail.com"));
-		/*2*/ids[count++]=professorDAO.addProfessor("Ciccio", "Ricca", new URL("http:\\www.ricca.com"), "12", new Address("Cs", "Italia", "87036", "Europa"),emails,new HashSet<PhoneNumber>(), null);
+		/*2*/ids[count++]=professorDAO.addProfessor("Ciccio", "Ricca", new URL("http:\\www.ricca.com"), "12", new Address("Cs", "Italia", "87036", "Europa"),emails,new HashSet<PhoneNumber>(), departmentDAO.getDepartment(1L));
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE.UFFICIAL, "cali@gmail.com"));
 		ids[count++]=professorDAO.addProfessor("Ciccio", "Calimeri", new URL("http:\\www.cali.com"),  
-				"mero", new Address("Cs", "Italia", "87036", "Asia"),emails,new HashSet<PhoneNumber>(), null);
+				"mero", new Address("Cs", "Italia", "87036", "Asia"),emails,new HashSet<PhoneNumber>(), departmentDAO.getDepartment(1L));
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE.UFFICIAL, "gibbi@gmail.com"));
 		/*4*/ids[count++]=professorDAO.addProfessor("Gibbi", "Ianni", new URL("http:\\www.ianni.com"),  
-				"ibbig", new Address("Cs", "Italia", "87036", "USA"),emails,new HashSet<PhoneNumber>(), null);
+				"ibbig", new Address("Cs", "Italia", "87036", "USA"),emails,new HashSet<PhoneNumber>(), departmentDAO.getDepartment(1L));
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE.UFFICIAL, "super@gmail.com"));
 		ids[count++]=professorDAO.addProfessor("Mario", "Alvian", new URL("http:\\www.superM.com"), 
-				"Mario", new Address("Cs", "Italia", "87036", "Swizzera"),emails,new HashSet<PhoneNumber>(), null);
+				"Mario", new Address("Cs", "Italia", "87036", "Swizzera"),emails,new HashSet<PhoneNumber>(), departmentDAO.getDepartment(1L));
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE.UFFICIAL, "febbraro@gmail.com"));
 		/*6*/ids[count++]=professorDAO.addProfessor("Onofr", "Febbr", new URL("http:\\www.febbre.com"),
-				"marzo", new Address("Cs", "Italia", "87036", "roma"),emails,new HashSet<PhoneNumber>(), null);
+				"marzo", new Address("Cs", "Italia", "87036", "roma"),emails,new HashSet<PhoneNumber>(), departmentDAO.getDepartment(1L));
 		courseDAO.setHolderProfessor(ids[0], ids[2]);
 
 		courseDAO.addProfessorAtCommission(ids[0], ids[2]);
@@ -107,7 +110,7 @@ public class DBTestGroup2DAO {
 		emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE.UFFICIAL, "faber@gmail.com"));
 		ids[count++]=professorDAO.addProfessor("Wolfgang", "Faber", new URL("http:\\www.faber.com"),
-				"color", new Address("Wien", "Austrie", "87036", "europe"),emails,new HashSet<PhoneNumber>(), null);
+				"color", new Address("Wien", "Austrie", "87036", "europe"),emails,new HashSet<PhoneNumber>(), departmentDAO.getDepartment(1L));
 		courseDAO.setHolderProfessor(ids[7], ids[8]);
 
 		courseDAO.addProfessorAtCommission(ids[7], ids[3]);

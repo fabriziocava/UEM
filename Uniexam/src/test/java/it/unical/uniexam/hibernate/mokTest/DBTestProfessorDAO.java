@@ -3,6 +3,8 @@ package it.unical.uniexam.hibernate.mokTest;
 import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
+import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
+import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
@@ -10,11 +12,14 @@ import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.dao.impl.AppealDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.AppealStudentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
+import it.unical.uniexam.hibernate.dao.impl.DegreeCourseDAOImpl;
+import it.unical.uniexam.hibernate.dao.impl.ExamSessionDAOimpl;
 import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
 import it.unical.uniexam.hibernate.dao.impl.StudentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.UserDAOImpl;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
@@ -30,6 +35,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +61,8 @@ public class DBTestProfessorDAO {
 	private static AppealDAO appealDAO=new AppealDAOImpl();
 	private static AppealStudentDAO appealStudentDAO=new AppealStudentDAOImpl();
 	private static StudentDAO studentDAO=new StudentDAOImpl();
+	private static DegreeCourseDAO degreeCourseDAO = new DegreeCourseDAOImpl();
+	private static ExamSessionDAO examSessionDAO=new ExamSessionDAOimpl();
 	static Long []ids=null;
 	
 	
@@ -119,6 +127,10 @@ public class DBTestProfessorDAO {
 		Long id3=studentDAO.addStundent("Angelo", "Molinaro", "MLNANG89P16B774U", "mik", 
 				new Address("Acri", "Italy", "87041", "via Europa, 284")
 		, emails3, numbers3, 1L, "158978");
+		
+		
+		ExamSession ex=new ExamSession("Sessione di Febbraio", new GregorianCalendar(2014, 02-1, 06).getTime(), new GregorianCalendar(2014, 02-2, 27).getTime(), degreeCourseDAO.getDegreeCourse(1L));
+		examSessionDAO.addExamSession(ex);
 		
 		
 		try{

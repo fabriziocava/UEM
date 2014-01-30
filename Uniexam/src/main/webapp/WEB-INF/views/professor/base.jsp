@@ -36,7 +36,10 @@
 	multilang['message.professor.modify.success'] = "<spring:message code='message.professor.modify.success'/>";
 	multilang['message.professor.passwd.error'] = "<spring:message code='message.professor.passwd.error'/>";
 	multilang['message.professor.modify.error'] = "<spring:message code='message.professor.modify.error'/>";
-	
+	multilang['message.professor.modify.error.session'] = "<spring:message code='message.professor.modify.error.session'/>";
+	multilang['message.professor.modify.error.course'] = "<spring:message code='message.professor.modify.error.course'/>";
+	multilang['message.professor.modify.error.appeal'] = "<spring:message code='message.professor.modify.error.appeal'/>";
+	multilang['message.professor.modify.error.hibernate'] = "<spring:message code='message.professor.modify.error.hibernate'/>";
 </script>
 <script src="${pageContext.request.contextPath}/res/js/mok.js">
 

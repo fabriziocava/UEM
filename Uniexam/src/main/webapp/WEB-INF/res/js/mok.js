@@ -93,12 +93,18 @@ function actionAppealStudents(list,path){
 		contentType : false
 	});
 	ing.done(function(data) {
-		if(data.match("ok")){
+		if(data.match("Success")){
 			alert(multilang['message.professor.modify.success']);
 		}else if(data.match("passwd")){
 			alert(multilang['message.professor.passwd.error']);
-		}else{
-			alert(multilang['message.professor.modify.error']);
+		}else if(data.match("ErrorSession")){
+			alert(multilang['message.professor.modify.error.session']);
+		}else if(data.match("ErrorHibernate")){
+			alert(multilang['message.professor.modify.error.hibernate']);
+		}else if(data.match("ErrorCourse")){
+			alert(multilang['message.professor.modify.error.course']);
+		}else if(data.match("ErrorAppeal")){
+			alert(multilang['message.professor.modify.error.appeal']);
 		}
 		location.reload();
 	});

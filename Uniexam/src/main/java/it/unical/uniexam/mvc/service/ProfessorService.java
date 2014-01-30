@@ -12,6 +12,7 @@ import javax.servlet.ServletOutputStream;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -94,7 +95,7 @@ public interface ProfessorService extends UserService{
 
 	public Boolean declassifyStudents(ArrayList<Long> listAppealStudents, Long idProfessor);
 
-	public Boolean signAppealStudentsList(ArrayList<Long> listSignAppealStudents, Long id);
+	public String signAppealStudentsList(ArrayList<Long> listSignAppealStudents, Long id);
 
 	public Boolean addPrepareSign(AppealStudent appealStudent,Long idProfessor);
 
@@ -119,6 +120,8 @@ public interface ProfessorService extends UserService{
 	public Boolean addCommissaryAtCourse(Long idCourse, Long id);
 
 	public Boolean removeCommissaryAtCourse(Long idCourse, Long idProf);
+
+	public ArrayList<ExamSession> getExamsSessions(Long id);
 	
 //	public ArrayList<ArrayList<RequestedCourse>> getListOfRequestedCourseFromListStudentAndAppeal(
 //			Long idAppeal, ArrayList<AppealStudent> appealStudentsNoRegular);

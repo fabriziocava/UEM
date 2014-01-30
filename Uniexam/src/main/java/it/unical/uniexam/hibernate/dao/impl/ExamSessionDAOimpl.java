@@ -1,5 +1,6 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -16,12 +17,31 @@ import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
+import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.util.HibernateUtil;
 
 
 @Repository
 public class ExamSessionDAOimpl implements ExamSessionDAO {
 
+	@Override
+	public ArrayList<ExamSession> getExamSessionsFromProfessor(Long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		ArrayList<ExamSession> res = null;
+		try {
+			Professor prof=(Professor)session.get(Professor.class, id);
+			Query q = session.createQuery("from ExamSession where degreecourse.id=:p");
+			q.setParameter("p", prof.getDepartment_associated().getId());
+			@SuppressWarnings("unchecked")
+			List<ExamSession> list = q.list();
+			res = new ArrayList<ExamSession>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
 	
 	@Override
 	public Long addExamSession(ExamSession examsession) {

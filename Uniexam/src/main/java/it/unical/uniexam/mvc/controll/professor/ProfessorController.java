@@ -12,6 +12,7 @@ import java.util.Map;
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
@@ -108,7 +109,9 @@ public class ProfessorController {
 		boolean update=false;
 		try{
 			EventsCalendar eventsFromProfessor =professorService.getEventsFromProfessor(p.getId());
-
+			
+			if(eventsFromProfessor==null)
+				eventsFromProfessor=new EventsCalendar();
 //			EventsCalendar eventsFromProfessor =new EventsCalendar();
 //			eventsFromProfessor=professorService.getEventsFromProfessor(p.getId());
 			events=eventsFromProfessor.getEvents();
@@ -131,6 +134,20 @@ public class ProfessorController {
 					}
 				}
 			}
+			
+			ArrayList<ExamSession>sessions=professorService.getExamsSessions(p.getId());
+			for (ExamSession examSession : sessions) {
+				String title="-Sessione d'esame apenta";
+				String startDate=""+examSession.getDataInizio().getTime();
+				String endDate=""+examSession.getDataFine().getTime();
+				String allDay="false";
+				Event event=new Event(title, startDate, endDate, allDay);
+				if(!events.contains(event)){
+					events.add(event);
+					update=true;
+				}
+			}
+			
 			if(update){
 				professorService.setEventsByProfessor(p.getId(), eventsFromProfessor);
 			}

@@ -23,6 +23,7 @@ import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.AppealDAO;
 import it.unical.uniexam.hibernate.dao.AppealStudentDAO;
 import it.unical.uniexam.hibernate.dao.CourseDAO;
+import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
@@ -31,6 +32,7 @@ import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.AppealStudent.STATE;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.Student;
@@ -61,6 +63,13 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	AppealStudentDAO appealStudentDAO;
 	@Autowired
 	StudentDAO studentDAO;
+	@Autowired
+	ExamSessionDAO examSessionDAO;
+	
+	@Override
+	public ArrayList<ExamSession> getExamsSessions(Long id) {
+		return examSessionDAO.getExamSessionsFromProfessor(id);
+	}
 	
 	@Override
 	public Boolean removeCommissaryAtCourse(Long idCourse, Long idProf) {
@@ -119,7 +128,7 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 	}
 	
 	@Override
-	public Boolean signAppealStudentsList(ArrayList<Long> listSignAppealStudents, Long idProfessor) {
+	public String signAppealStudentsList(ArrayList<Long> listSignAppealStudents, Long idProfessor) {
 		return appealStudentDAO.signAppealStudentsByProfessor(listSignAppealStudents, idProfessor);
 	}
 	

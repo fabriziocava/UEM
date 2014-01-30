@@ -1,6 +1,7 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -16,6 +17,7 @@ import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
+import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.AppealStudent.STATE;
@@ -44,12 +46,15 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
 				if(p.getSetAsCommission().contains(appealStudent.getAppeal().getCourse()) ||
 						p.getSetAsCommission().contains(appealStudent.getCourse())){
-					if((appealStudent.getAppeal()!=null 
-							&& appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)
-							|| 
-							(appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)
-							)
+					Course course=null;
+					if((appealStudent.getAppeal()!=null && appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)){
+						course=appealStudent.getAppeal().getCourse();
+					}else if((appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)){
+						course=appealStudent.getCourse();
+					}
+					if(course!=null){
 						appealStudent.setState(STATE.AWAITING_ACKNOWLEDGMENT);
+					}
 					else
 						throw new Exception("Don't have a course");
 					//invio email agli studenti
@@ -69,8 +74,8 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		}
 		return ris;
 	}
-	
-	
+
+
 	@Override
 	public ArrayList<ArrayList<Object>> getListStudentFromProfessorRegularAndNotForCommissionar(
 			Long idProfessor, STATE state) {
@@ -99,12 +104,12 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			 * 
 			 */
 			Professor comm=(Professor)session.get(Professor.class, idProfessor);
-//			List<AppealStudent> list1=session.createCriteria(AppealStudent.class)
-////					.add(Restrictions.eq("course", "is not null"))
-//					.add(Restrictions.eq("state", AppealStudent.STATE.NOT_SIGNED_BY_COMMISSARY)).list();
-//			List<AppealStudent> list2=session.createCriteria(AppealStudent.class)
-//					.add(Restrictions.eq("appeal", "is not null"))
-//					.add(Restrictions.eq("state", AppealStudent.STATE.NOT_SIGNED_BY_COMMISSARY)).list();
+			//			List<AppealStudent> list1=session.createCriteria(AppealStudent.class)
+			////					.add(Restrictions.eq("course", "is not null"))
+			//					.add(Restrictions.eq("state", AppealStudent.STATE.NOT_SIGNED_BY_COMMISSARY)).list();
+			//			List<AppealStudent> list2=session.createCriteria(AppealStudent.class)
+			//					.add(Restrictions.eq("appeal", "is not null"))
+			//					.add(Restrictions.eq("state", AppealStudent.STATE.NOT_SIGNED_BY_COMMISSARY)).list();
 			Query q=session.createQuery("from AppealStudent where state=:i");
 			q.setParameter("i", state);
 			List<AppealStudent> list1=q.list();
@@ -225,7 +230,9 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			if(p.getSetHoldersCourse().contains(appealStudent.getCourse())){
 				appealStudent.setState(STATE.NOT_SIGNED_BY_PROFESSOR);
 				appealStudent.setProfessor(p);
+				Student s=(Student) session.get(Student.class, appealStudent.getStudent().getId());
 				session.save(appealStudent);
+				s.getAppeal_student().add(appealStudent);
 			}else{
 				throw new Exception("This course isn't of the professor");
 			}
@@ -281,10 +288,10 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 	}
 
 	@Override
-	public Boolean signAppealStudentsByProfessor(ArrayList<Long> signStudents,Long idProfessor) {
+	public String signAppealStudentsByProfessor(ArrayList<Long> signStudents,Long idProfessor) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
-		Boolean ris=false;
+		String ris="Success";
 		try{
 			transaction=session.beginTransaction();
 
@@ -293,26 +300,42 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
 				if(p.getAppeals().contains(appealStudent.getAppeal()) ||
 						p.getSetHoldersCourse().contains(appealStudent.getCourse())){
-					if(
-							(appealStudent.getAppeal()!=null 
-							&& appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)
-							|| 
-							(appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)
-							)
-						appealStudent.setState(STATE.NOT_SIGNED_BY_COMMISSARY);
-					else
+					Course course=null;
+					if((appealStudent.getAppeal()!=null && appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)){
+						course=appealStudent.getAppeal().getCourse();
+					}else if((appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)){
+						course=appealStudent.getCourse();
+					}
+					if(course!=null){
+						Date now=new Date();
+						Query q=session.createQuery("from ExamSession where dataInizio <= :p1 and dataFine >= :p2 and degreecourse.id =:p3");
+						q.setParameter("p1", now);
+						q.setParameter("p2", now);
+						q.setParameter("p3", course.getId());
+						ExamSession examSession=(ExamSession) q.uniqueResult();
+						if(examSession!=null)
+							appealStudent.setState(STATE.NOT_SIGNED_BY_COMMISSARY);
+						else{
+							ris="ErrorSession";
+							throw new Exception("Non sei in sessione");
+						}
+					}
+					else{
+						ris="ErrorCourse";
 						throw new Exception("Don't have a course");
+					}
 					//invio email ai commissari
 				}else{
+					ris="ErrorAppeal";
 					throw new Exception("This appeal isn't of the professor");
 				}
 			}
 			transaction.commit();
 
-			ris=true;
 		}catch(Exception e){
 			new MokException(e);
-			ris=false;
+			if(ris.equals("Success"))
+				ris="ErrorHibernate";
 			transaction.rollback();
 		}finally{
 			session.close();
@@ -378,7 +401,12 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 					a.getAppeal_student().remove(appealStudent);
 					session.delete(appealStudent);
 				}else{
-					throw new Exception("This appeal isn't of the professor");
+					if(p.getSetHoldersCourse().contains(appealStudent.getCourse())){
+						Student s=appealStudent.getStudent();
+						s.getAppeal_student().remove(appealStudent);
+						session.delete(appealStudent);
+					}else
+						throw new Exception("This appeal isn't of the professor");
 				}
 			}
 

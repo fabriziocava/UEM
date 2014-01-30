@@ -174,8 +174,7 @@ public class AjaxControllerSign {
 		String passwd=request.getParameter("passwd");
 		String res="no";
 		if(passwd!=null && passwd.equals(p.getPassword())){
-			if(professorService.signAppealStudentsList(listSignAppealStudents,p.getId()))
-				res="si";
+			res=professorService.signAppealStudentsList(listSignAppealStudents,p.getId());
 		}else
 			res="passwd";
 //				professorService.removeStudentsToAppeal(removeStudents);
@@ -183,13 +182,7 @@ public class AjaxControllerSign {
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();
-			if(res.equals("si"))
-				outputStream.println("ok");
-			else
-				if(res.equals("no"))
-					outputStream.println("no");
-				else
-					outputStream.println("passwd");
+			outputStream.println(res);
 			outputStream.flush();
 			outputStream.close();
 		} catch (Exception e) {

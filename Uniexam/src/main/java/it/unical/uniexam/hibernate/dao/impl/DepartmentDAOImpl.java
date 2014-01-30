@@ -68,8 +68,16 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
 	@Override
 	public Department getDepartment(Long idDepartment) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Department res = null;
+		try {
+			res=(Department)session.get(Department.class, idDepartment);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
 	}
 
 	@Override

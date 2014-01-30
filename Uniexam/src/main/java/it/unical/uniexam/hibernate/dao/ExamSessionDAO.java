@@ -1,5 +1,6 @@
 package it.unical.uniexam.hibernate.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,6 +15,8 @@ public interface ExamSessionDAO {
 	public Long addExamSession(ExamSession examsession);
 	public boolean canRegisterCourse(Course c);
 	public Set<ExamSession> getExamsession();
+	
+	public ArrayList<ExamSession> getExamSessionsFromProfessor(Long id);
 	
 
 }

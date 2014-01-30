@@ -14,7 +14,7 @@ public interface AppealStudentDAO {
 	Boolean modifyNote(Long idAppeal, String value);
 	Boolean removeAppealStudents(ArrayList<Long> idAppealStudents, Long idProfessor);
 	Boolean prepareAppealStudentsForSign(ArrayList<Long> prepareStudents, Long idProfessor);
-	Boolean signAppealStudentsByProfessor(ArrayList<Long> signStudents,Long idProfessor);
+	String signAppealStudentsByProfessor(ArrayList<Long> signStudents,Long idProfessor);
 	Boolean declassifyStudents(ArrayList<Long> listAppealStudents,
 			Long idProfessor);
 	Boolean prepareForSignAppealStudent(AppealStudent appealStudent,
