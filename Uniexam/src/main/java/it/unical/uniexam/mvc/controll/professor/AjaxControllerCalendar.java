@@ -56,7 +56,7 @@ public class AjaxControllerCalendar {
 		
 		Event e=new Event(title, start, end, allDay);
 		EventsCalendar events=null;
-//				events=professorService.getEventsFromProfessor(p.getId());
+				events=professorService.getEventsFromProfessor(p.getId());
 		if(events==null)
 			events=new EventsCalendar();
 		events.getEvents().add(e);
