@@ -129,7 +129,7 @@ public class DBTestProfessorDAO {
 		, emails3, numbers3, 1L, "158978");
 		
 		
-		ExamSession ex=new ExamSession("Sessione di Febbraio", new GregorianCalendar(2014, 02-1, 06).getTime(), new GregorianCalendar(2014, 02-2, 27).getTime(), degreeCourseDAO.getDegreeCourse(1L));
+		ExamSession ex=new ExamSession("Sessione di Febbraio", new GregorianCalendar(2014, 02-1, 06).getTime(), new GregorianCalendar(2014, 02-1, 27).getTime(), degreeCourseDAO.getDegreeCourse(1L));
 		examSessionDAO.addExamSession(ex);
 		
 		

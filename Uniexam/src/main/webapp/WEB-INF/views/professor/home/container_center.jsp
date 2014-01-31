@@ -28,7 +28,7 @@
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
-			aspectRatio: 3,
+			aspectRatio: 2.5,
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end, allDay) {
