@@ -32,7 +32,7 @@ public interface CourseDAO {
 	public ArrayList<Course> getCoursesFromDegreeCourse(Long idDegreeCourse);
 	public Course getCourse(Long idCourse);
 	public Course getCourseAll(Long idCourse);
-	public Course removeCourse(Long idCourse);
+//	public Course removeCourse(Long idCourse);
 
 	/**
 	 * Advanced method 
@@ -77,5 +77,13 @@ public interface CourseDAO {
 	public ArrayList<Professor> getListCommissaryCourse(Long idCourse);
 	
 	public ArrayList<Course> getCoursesFromStudent(Long idStudent);
-	
+
+	public Course getCourseDetailforManager(Long idCourse);
+//
+	public Boolean removeHolderProfessor(Long idCourse, Long professor);
+//
+	public Course removeCourse(Long idCourse, Long idDegreeCourse);
+//
+	public Long addCourseforManager(String code, String name,
+			Integer credits, DegreeCourse degreeCourse);
 }

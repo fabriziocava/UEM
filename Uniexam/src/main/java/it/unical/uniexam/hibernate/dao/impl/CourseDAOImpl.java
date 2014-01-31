@@ -34,6 +34,96 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 public class CourseDAOImpl implements CourseDAO{
 
 	@Override
+	public Course getCourseDetailforManager(Long idCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Course res=null;
+		try{
+			Course c1=(Course) session.get(Course.class, idCourse);
+			Hibernate.initialize(c1);
+		//	Hibernate.initialize(c1.getCommissionProfessors());
+			Hibernate.initialize(c1.getRequestedCourses());
+			Hibernate.initialize(c1.getDegreeCourse());
+			res=c1;
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
+	public Long addCourseforManager(String code, String name, Integer credits,
+			DegreeCourse degreeCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Long id=null;
+		try{
+			transaction=session.beginTransaction();
+			Course c=new Course();
+			c.setCode(code);
+			c.setCredits(credits);
+			c.setName(name);
+
+			degreeCourse=(DegreeCourse)session.get(DegreeCourse.class, degreeCourse.getId());
+			c.setDegreeCourse(degreeCourse);
+			degreeCourse.getCourses().add(c);
+			id=(Long) session.save(c);
+			transaction.commit();
+		}catch(Exception e){
+			new MokException(e);
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return id;
+	}
+	
+	@Override
+	public Boolean removeHolderProfessor(Long idCourse, Long idprofessor) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		boolean ok=false;
+		try{
+			transaction = session.beginTransaction();
+			Course c1=(Course) session.get(Course.class, idCourse);
+			Professor p=(Professor) session.get(Professor.class, idprofessor);
+			if(c1!=null){
+				c1.setHolder(null);
+				p.getSetHoldersCourse().remove(c1);
+				transaction.commit();
+				ok=true;			
+			}
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		if(!ok) return false;
+		else return true;
+	}
+	
+//	@Override
+//	public Course getCourseDetailforManager(Long idCourse) {
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		Course res=null;
+//		try{
+//			Course c1=(Course) session.get(Course.class, idCourse);
+//			Hibernate.initialize(c1);
+//		//	Hibernate.initialize(c1.getCommissionProfessors());
+//			Hibernate.initialize(c1.getRequestedCourses());
+//			Hibernate.initialize(c1.getDegreeCourse());
+//			res=c1;
+//		}catch(Exception e){
+//			new MokException(e);
+//		}finally{
+//			session.close();
+//		}
+//		return res;
+//	}
+	
+	@Override
 	public ArrayList<Professor> getListCommissaryCourse(Long idCourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		ArrayList<Professor> res=null;
@@ -220,13 +310,16 @@ public class CourseDAOImpl implements CourseDAO{
 	}
 
 	@Override
-	public Course removeCourse(Long idCourse) {
+	public Course removeCourse(Long idCourse, Long idDegreecourse) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction=null;
 		Course res=null;
 		try{
 			transaction = session.beginTransaction();
 			Course c1=(Course) session.get(Course.class, idCourse);
+			DegreeCourse dg=(DegreeCourse) session.get(DegreeCourse.class,idDegreecourse);
+			dg.getCourses().remove(c1);
+
 			session.delete(c1);
 			transaction.commit();
 			res=c1;
@@ -238,6 +331,26 @@ public class CourseDAOImpl implements CourseDAO{
 		}
 		return res;
 	}
+	
+//	@Override
+//	public Course removeCourse(Long idCourse) {
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		Transaction transaction=null;
+//		Course res=null;
+//		try{
+//			transaction = session.beginTransaction();
+//			Course c1=(Course) session.get(Course.class, idCourse);
+//			session.delete(c1);
+//			transaction.commit();
+//			res=c1;
+//		}catch(Exception e){
+//			transaction.rollback();
+//			new MokException(e);
+//		}finally{
+//			session.close();
+//		}
+//		return res;
+//	}
 
 	@Override
 	public boolean addRequestedCourse(Long idCourse, Long idCourseRequested,String degree) {

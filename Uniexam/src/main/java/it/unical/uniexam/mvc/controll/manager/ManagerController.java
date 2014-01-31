@@ -2,15 +2,18 @@ package it.unical.uniexam.mvc.controll.manager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import it.unical.uniexam.MokException;
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.ManagerService;
 import it.unical.uniexam.mvc.service.ProfessorService;
@@ -22,10 +25,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ManagerController {
@@ -90,10 +95,41 @@ public class ManagerController {
 		updatePersonalizzation(model, m);
 		// aggiungere altre cose
 		
+		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
+		model.addAttribute("courses", courses);
+		
 		Set<ExamSession> es=managerService.getExamSession();
 		model.addAttribute("examsession", es);
 
+		
 		return ManagerService.MANAGER_EXAM;
+	}
+	
+	@RequestMapping(value=ManagerService.MANAGER_ORDINAMENTO , method=RequestMethod.GET)
+	public String ordinamento(HttpServletRequest request, Model model){
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+		}
+		if(user.getClass()!=Manager.class){
+			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+		}
+		Manager m=(Manager)user;
+
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		// aggiungere altre cose
+		
+		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
+		model.addAttribute("courses", courses);
+
+		ArrayList<Course> c=managerService.getCourses();
+		model.addAttribute("c", c);
+		
+		
+
+		
+		return ManagerService.MANAGER_ORDINAMENTO;
 	}
 	
 	
@@ -134,9 +170,87 @@ public class ManagerController {
 		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
 		model.addAttribute("courses", courses);
 
+		ArrayList<Course> c=managerService.getCourses();
+		model.addAttribute("c", c);
+		
 		return ManagerService.MANAGER_COURSELIST;
 	}
 	
+	@RequestMapping(value=ManagerService.MANAGER_ASSIGNCOURSE , method=RequestMethod.GET)
+	public String assigncourse(HttpServletRequest request, Model model){
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+		}
+		if(user.getClass()!=Manager.class){
+			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+		}
+		Manager m=(Manager)user;
+
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		// aggiungere altre cose
+		Set<DegreeCourse> courses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
+		model.addAttribute("courses", courses);
+
+		ArrayList<Course> c=managerService.getCourses();
+		model.addAttribute("c", c);
+		
+		return ManagerService.MANAGER_ASSIGNCOURSE;
+	}
+	
+	@RequestMapping(value="manager/addRequestedCourseAction", method=RequestMethod.POST)
+	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
+			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+		}
+		if(user.getClass()!=Manager.class){
+			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+		}
+		Manager m=(Manager)user;
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		
+		String idCours=request.getParameter("idCourse");
+		
+		Long idCourse=Long.valueOf(idCours);
+		
+		Boolean ris=managerService.addRequestedCourse(idCourse, requestedCourse);
+		
+//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
+		return new ModelAndView("redirect:/manager/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
+	}
+	
+	
+	@RequestMapping(value="manager/assegnaCorsoAction", method=RequestMethod.POST)
+	public String assegnaCorsoaction(
+			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+		User user=managerService.getSession(request.getSession().getId());
+		if(user==null){
+			return (UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+		}
+		if(user.getClass()!=Manager.class){
+			return (UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+		}
+		Manager m=(Manager)user;
+		model.addAttribute("M",m);
+		updatePersonalizzation(model, m);
+		
+		String idCours=request.getParameter("idCourse");
+		
+		Long idCourse=Long.valueOf(idCours);
+		
+
+		
+		String idprofessor=request.getParameter("idprofessor");
+		Long idprof=Long.valueOf(idprofessor);
+		
+		Boolean ris=managerService.setHolderProfessor(idCourse, idprof);
+		
+		return managerService.MANAGER_COURSE;
+	}
 	
 	
 	
@@ -160,7 +274,7 @@ public class ManagerController {
 		} else {
 			//            return "You failed to upload because the file was empty.";
 		}
-		return "redirect:"+ManagerService.MANAGER_ACCOUNT;
+		return ManagerService.MANAGER_ACCOUNT;
 	}
 	
 	

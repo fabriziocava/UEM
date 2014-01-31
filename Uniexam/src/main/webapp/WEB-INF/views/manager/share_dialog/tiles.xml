@@ -15,9 +15,34 @@
 			value="/WEB-INF/views/manager/share_dialog/requested_course.jsp" />
 	</definition>
 	
+	<definition name="manager/dialog/addRequestedCourse" extends="manager.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/manager/share_dialog/addRequestedCourse.jsp" />
+	</definition>
+	
 	<definition name="manager/dialog/addSession" extends="manager.dialog">
 		<put-attribute name="dialog_content"
 			value="/WEB-INF/views/manager/share_dialog/addSession.jsp" />
+	</definition>
+	
+	<definition name="manager/dialog/view_examsession" extends="manager.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/manager/share_dialog/view_examsession.jsp" />
+	</definition>
+	
+	<definition name="manager/dialog/AssegnaCorso" extends="manager.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/manager/share_dialog/AssegnaCorso.jsp" />
+	</definition>
+	
+	<definition name="manager/dialog/AssegnaCorso_Professore" extends="manager.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/manager/share_dialog/AssegnaCorso_Professore.jsp" />
+	</definition>
+	
+	<definition name="manager/dialog/addCourse" extends="manager.dialog">
+		<put-attribute name="dialog_content"
+			value="/WEB-INF/views/manager/share_dialog/addCourse.jsp" />
 	</definition>
 
 </tiles-definitions>

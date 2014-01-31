@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
+import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
@@ -125,6 +126,116 @@ public class ExamSessionDAOimpl implements ExamSessionDAO {
 		}
 		return res;
 	}
+
+
+
+	@Override
+	public ExamSession removeExamSession(Long idexamsession) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		ExamSession res=null;
+		try{
+			transaction=session.beginTransaction();
+			ExamSession es=(ExamSession)session.get(ExamSession.class, idexamsession);
+			session.delete(es);
+			res=es;
+
+			transaction.commit();
+		}catch(Exception e){
+			new MokException(e);
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+
+
+	@Override
+	public ExamSession getExamsession(Long id) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		ExamSession res=null;
+		try{
+			res=(ExamSession)session.get(ExamSession.class, id);
+		}catch(Exception e){
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+
+
+	@Override
+	public ExamSession modifyExamSession(Long id, ExamSession newexamsession) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		ExamSession res=null;
+		try{
+			transaction=session.beginTransaction();
+			ExamSession oldexamsession=(ExamSession) session.get(ExamSession.class, id);
+			if(newexamsession.getDescription()!=null && newexamsession.getDescription().compareTo(oldexamsession.getDescription())!=0)
+				oldexamsession.setDescription(newexamsession.getDescription());
+			if(newexamsession.getDataInizio()!=null && newexamsession.getDataInizio().compareTo(oldexamsession.getDataInizio())!=0)
+				oldexamsession.setDataInizio(newexamsession.getDataInizio());
+			if(newexamsession.getDataFine()!=null && newexamsession.getDataFine().compareTo(oldexamsession.getDataFine())!=0)
+				oldexamsession.setDataFine(newexamsession.getDataFine());
+			res=oldexamsession;
+			transaction.commit();
+		}catch(Exception e){
+			new MokException(e);
+			transaction.rollback();
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+
+
+
+	@Override
+	public Set<ExamSession> getExamsessionfromdepartment(Department department) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Set<ExamSession> res = null;
+		try {
+			Query q= session.createQuery("from ExamSession where department_department_id=:par");
+			q.setParameter("par", department.getId());
+			@SuppressWarnings("unchecked")
+			List<ExamSession> list = q.list();
+			res = new HashSet<ExamSession>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+
+
+	@Override
+	public Set<ExamSession> getExamsessionfromDegreeCourse(
+			DegreeCourse degreecourse) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Set<ExamSession> res = null;
+		try {
+			Query q= session.createQuery("from ExamSession where degreecourse_degree_course_id=:par");
+			q.setParameter("par", degreecourse.getId());
+			@SuppressWarnings("unchecked")
+			List<ExamSession> list = q.list();
+			res = new HashSet<ExamSession>(list);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+
+
 
 
 

@@ -2,22 +2,31 @@ package it.unical.uniexam.mvc.service.impl;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.uniexam.MokException;
+import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
 import it.unical.uniexam.hibernate.dao.ExamSessionDAO;
 import it.unical.uniexam.hibernate.dao.ManagerDao;
+import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
+import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.ExamSession;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.mvc.service.ManagerService;
 
 @Service
@@ -34,6 +43,12 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 	
 	@Autowired
 	ExamSessionDAO examsessionDAO;
+	
+	@Autowired
+	CourseDAO courseDAO;
+	
+	@Autowired
+	ProfessorDAO professorDAO;
 	
 	@Override
 	public Manager getManager(Long idUser) {
@@ -78,6 +93,140 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 		return examsessionDAO.getExamsession();
 	}
 
+
+	@Override
+	public ExamSession getExamsession(Long id) {
+		return examsessionDAO.getExamsession(id);
+	}
+
+
+	@Override
+	public Boolean addExamsession(ExamSession es) {
+		return examsessionDAO.addExamSession(es.getDescription(), es.getDataInizio(), es.getDataFine(), es.getDegreecourse()) != null;
+	}
+
+
+	@Override
+	public Boolean removeExamsession(Long id) {
+		return examsessionDAO.removeExamSession(id)!=null;
+	}
+
+
+	@Override
+	public Boolean changeExamSessionField(Long idexamsession, String variable,
+			String value, String clazz) {
+
+		ExamSession examsession=new ExamSession(null, null, null, null);
+		try{
+			Object valuee=null;
+			value=value.replaceAll("\n", "");
+			if(clazz.equals("Integer")){
+				valuee=Integer.valueOf(value);
+			}else if(clazz.equals("String")){
+				valuee=String.valueOf(value);
+			}else if(clazz.equals("Date")){
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+				Date result =  df.parse(value);
+				valuee=result;
+			}
+			Class<ExamSession> loadClass=ExamSession.class;
+			Field declaredField = loadClass.getDeclaredField(variable);
+			declaredField.setAccessible(true);
+			declaredField.set(examsession, valuee);
+		}catch (Exception e) {
+			new MokException(e);
+			return false;
+		}
+		
+		examsessionDAO.modifyExamSession(idexamsession, examsession);
+		return true;
+	}
+
+
+	@Override
+	public Set<ExamSession> getExamsessionfromdepartment(Department department) {
+		return examsessionDAO.getExamsessionfromdepartment(department);
+	}
+
+
+	@Override
+	public Set<ExamSession> getExamSessionfromDegreeCourse(
+			DegreeCourse degreecourse) {
+		return examsessionDAO.getExamsessionfromDegreeCourse(degreecourse);
+	}
+
+
+	@Override
+	public ArrayList<Course> getCourses() {
+		return courseDAO.getCourses();
+	}
+
+
+	@Override
+	public Course getCourseDetails(Long idCourse) {
+
+		return courseDAO.getCourseDetailforManager(idCourse);
+	
+	}
+
+
+	@Override
+	public Boolean addRequestedCourse(Long idCourse,
+			RequestedCourse requestedCourse) {
+		return courseDAO.addRequestedCourse(idCourse, requestedCourse.getCourse().getId(), requestedCourse.getPolicyOfRequested());
+	}
+
+
+	@Override
+	public Boolean removeRequestedCourse(Long idcourse,Long idcourserequested) {
+		return courseDAO.removeRequestedCourse(idcourse, idcourserequested)!=null;
+	}
+
+
+	@Override
+	public Set<Professor> getProfessorfromDepartment(Long idDep) {
+		return professorDAO.getProfessorsFromDepartment(idDep);
+	}
+
+
+	@Override
+	public Boolean setHolderProfessor(Long idCourse, Long idProfessor) {
+		return courseDAO.setHolderProfessor(idCourse, idProfessor);
+	}
+
+
+	@Override
+	public Set<Professor> getProfessors() {
+		return professorDAO.getProfessors();
+	}
+
+
+	@Override
+	public Boolean removeHolderProfessor(Long idCourse, Long professor) {
+		return courseDAO.removeHolderProfessor(idCourse, professor);
+	}
+
+
+	@Override
+	public Boolean removeCourse(Long idCourse,Long idDegreeCourse) {
+		return courseDAO.removeCourse(idCourse,idDegreeCourse)!=null;
+	}
+
+
+	@Override
+	public Boolean addCourse(Course course) {
+		return courseDAO.addCourseforManager(course.getCode(), course.getName(),course.getCredits(),course.getDegreeCourse())!=null;
+	}
+
+
+	@Override
+	public ArrayList<Course> getCoursesFromDegreeCourse(Long idDegreeCourse) {
+		return courseDAO.getCoursesFromDegreeCourse(idDegreeCourse);
+	}
+
+
+
+	
 	
 
 }

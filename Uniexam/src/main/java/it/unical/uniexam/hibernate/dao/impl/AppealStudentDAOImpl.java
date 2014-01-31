@@ -424,6 +424,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		return ris;
 	}
 
+
 	@Override
 	public Boolean modifyNote(Long idAppeal, String value) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -431,12 +432,12 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		Boolean ris=false;
 		try{
 			transaction=session.beginTransaction();
-
+			
 			AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
 			appealStudent.setNote(value);
-
+			
 			transaction.commit();
-
+			
 			ris=true;
 		}catch(Exception e){
 			new MokException(e);
@@ -447,7 +448,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		}
 		return ris;
 	}
-
+	
 	@Override
 	public Boolean modifyVote(Long idAppeal, String valu) {
 		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -471,7 +472,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		}
 		return ris;
 	}
-
+	
 	@Override
 	public Long addAppealStudent(AppealStudent appealStudent) {
 		Session session =HibernateUtil.getSessionFactory().openSession();

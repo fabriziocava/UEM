@@ -13,7 +13,8 @@
 	<definition name="manager/course/list" extends="manager.base" >
 		<put-attribute name="container-center"
 			value="/WEB-INF/views/manager/course/container_center.jsp" />
-			<put-attribute name="container-left"
+			
+		<put-attribute name="container-left"
 			value="/WEB-INF/views/manager/course/container_left.jsp" />
 	</definition>
 	

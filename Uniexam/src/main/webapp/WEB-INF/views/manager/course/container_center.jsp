@@ -1,6 +1,7 @@
 <%@page import="javassist.expr.NewArray"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Group"%>
 <%@page import="it.unical.uniexam.hibernate.domain.DegreeCourse"%>
+<%@page import="it.unical.uniexam.hibernate.domain.Course"%>
 <%@page import="java.util.Set" %>
 
 <%@page import="java.util.ArrayList"%>
@@ -8,77 +9,81 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+
+
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document).ready(function () {
 		selectingFromDashBoard(document.getElementById("courseButton"));
-		$("#sorting").tablesorter();
 	});
 </script>
+
 <div class="container-center">
-	<script type="text/javascript">
-		var oldString = "";
-		function aler() {
-			// 					alert("ciao");
-		}
-		function storeOld(item) {
-// 			alert("ciao");
-			// 			oldString = $("#" + item.id).children().html();
-			// 			$("#" + item.id).children().html().select();
-			oldString = $("#" + item.id).children().html();
-			$("#" + item.id).children().select();
-			// 			oldString.parent().select();
-		}
-		function beforeChangeNote(item, idCourse) {
-			var newString = $("#" + item.id).children().html();
-			if (newString == oldString || newString == "") {
-				// 						alert("sono Uguali");
-				return;
-			}
-			// 					alert("sono Diversi");
-			changeNote(item, idCourse);
-		}
-		// 				$(document).ready(function(){
-		// 					$("#clearH").click(function(){
-		// 						clear(this);
-		// 					});
-		// 				});
-	</script>
+
+
 	<fieldset>
-		<legend><spring:message
-								code="message.manager.course.container.center.legendCourses" /></legend>
-		<ol id="#sorting">
+	
+		<legend><spring:message 	code="message.manager.course.container.center.legendCourses" /></legend>
+		<table id="#sorting" class="tablemok">
 			<%
-// 				ArrayList<ArrayList<Object>> struct = new ArrayList<ArrayList<Object>>();
+				ArrayList<Course> Courses=(ArrayList<Course>) request.getAttribute("c");
 				Set<DegreeCourse> courses = (Set<DegreeCourse>) request.getAttribute("courses");
-// 				int count = 0;
 				if (courses != null && courses.size() > 0) {
 					for (DegreeCourse c : courses) {
-// 						System.out.print(count+" ");
-// 						struct.add(new ArrayList<Object>());
-// 						struct.get(count).add(c);
-// 						struct.get(count).addAll(c.getGroups());
 			%>
-			<li class="list_course">
-				<article>
-					<section id="<%="course" + c.getId()%>">
-						<a id="<%="acourse" + c.getId()%>" href="#" onclick="getDataFromAjax(this);"><h1><%=c.getName()%></h1></a>
-					</section>
+			
+			<tr>
+				<td><span class="span_expandible" onclick="collapseMok(this)"
+					id="collapseSessions<%= (c.getId()) %>">+</span> <%= c.getName()%></td>
+			</tr>
+			
+			<tr style="display: none;"
+			id="Sessions<%=( c.getId()) %>">
+		
+			<td>	
+			
+			
+			<%
+				if (Courses !=null && Courses.size()!=0) {
 					
-				</article>
-<%-- 				<a href="${pageContext.request.contextPath}/professor/ajax/course/course_details">LINK TO TRY</a> --%>
-			</li>
-			<%
-				}
-				} else {
-			%>
-			<spring:message
-				code="message.professor.course.container.center.nocourse" />
-			<%
-				}
-			%>
-		</ol>
-	</fieldset>
+					for(Course C: Courses){
+						
+						if(C.getDegreeCourse().getId()!=null && c.getId() != null && C.getDegreeCourse().getId()==c.getId()){
+					
+					%>
+			
+			
+				<ol id="#sorting"   >
+				
+				<li class="list-item" style="border-radius: 4px; ">
+						<article>
+							<section id="<%="course" + C.getId()%>">
+								<span class="span_expandible" id="collapsedivrse<%=C.getId()%>" onclick="collapseMok(this); getDataFromAjax('course/course_details','<%=C.getId()%>','divrse<%=C.getId()%>');">+</span><%=C.getName()%>
+								<div id="divrse<%=C.getId()%>" style="display: none;"></div>
+							</section>
+						</article>
+					</li>
+				
+				
+				</ol>
+			<% } %>
+		<%} }  else { %>
+					
+				Non ci sono corsi
+				
+				<%} %>
+
+		</td>
+		<%
+					}
+					} 
+				%>
+		
+		
+		</table>
+		
+		</fieldset>
+					
+
+
+	
 </div>
-<%-- 						<input id="<%="noteInput" + (count)%>" type="text" --%>
-<!-- 							style="border: none; background: inherit; dispay: none;" -->
-<%-- 							placeholder="<spring:message code='message.professor.course.container.center.nonote' />" /> --%>

@@ -244,7 +244,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Set<Professor>res=null;
 		try{
-			Query q= session.createQuery("from Professor where department_associated=:par");
+			Query q= session.createQuery("from Professor where department_associated.id=:par");   //modificata da pino perchè era sbagliata
 			q.setParameter("par", idDepartment);
 			@SuppressWarnings("unchecked")
 			List<Professor> list = q.list();

@@ -3,7 +3,6 @@ package it.unical.uniexam.mvc.controll.professor;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
-import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.ProfessorService;
 import it.unical.uniexam.mvc.service.UtilsService;
@@ -25,92 +24,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("professor/ajax/course")
+@RequestMapping("professor/ajax")
 public class AjaxControllerCourse {
 
 	@Autowired
 	ProfessorService professorService;
 
-	ArrayList<Course>courseAlreadyRequested;
-//	add_commissionary mi deve dare il redirect to list commissionary
-	
-	@RequestMapping("/dialog/add_commissionary")
-	public String add_commissionary(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
-		String id=request.getParameter("idProf");
-		Long idProf=Long.valueOf(id);
-		String idCours=request.getParameter("idCourse");
-		Long idCourse=Long.valueOf(idCours);
-		//se non c'è già lo inserisce...e se non sono più di 5!
-		Boolean ris=professorService.addCommissaryAtCourse(idCourse,idProf);
-		
-		return "redirect:/professor/ajax/course/dialog/list_commissionary?id="+idCourse+"&ris="+ris;
-	}
-	
-	@RequestMapping("/dialog/remove_commissionary")
-	public String remove_commissionary(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
-		String id=request.getParameter("idProf");
-		Long idProf=Long.valueOf(id);
-		String idCours=request.getParameter("idCourse");
-		Long idCourse=Long.valueOf(idCours);
-		//se non c'è già lo inserisce...e se non sono più di 5!
-		Boolean ris=professorService.removeCommissaryAtCourse(idCourse,idProf);
-		
-		return "redirect:/professor/ajax/course/dialog/list_commissionary?id="+idCourse+"&ris="+ris;
-	}
-	
-	@RequestMapping("/list_professor")
-	public String list_professor(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
-		String id=request.getParameter("id");
-		
-		if(id!=null && !id.equals("")){
-			ArrayList<Professor>match=professorService.getProfessorsMatch(id);
-			model.addAttribute("list", match);
-//			System.out.println(studentsMatch.size());
-			return "professor/autocomplete/professors";
-		}
-		return null;
-	}
-	
-	@RequestMapping("/dialog/list_commissionary")
-	public String list_commissionary(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
-		String idCours=request.getParameter("id");
-		Long idCourse=Long.valueOf(idCours);
-		
-		ArrayList<Professor>commissionary=professorService.getListCommissionary(idCourse);
-		model.addAttribute("commissionary", commissionary);
-		model.addAttribute("idCourse", idCourse);
-		return "professor/course/list_commissionary";
-	}
-	
-	@RequestMapping("/course_details")
+	@RequestMapping("/course/course_details")
 	public String course_details(HttpServletRequest request, Model model){
 		Professor p=null;
 		String redirect=null;
@@ -139,14 +59,6 @@ public class AjaxControllerCourse {
 		String idCours=request.getParameter("id");
 		Long idCourse=Long.valueOf(idCours);
 		Course c=professorService.getCourseDetails(p,idCourse);
-		
-		ArrayList<Course>requested=new ArrayList<Course>();
-		for(RequestedCourse r:c.getRequestedCourses()){
-			requested.add(r.getCourse());
-		}
-		requested.add(c);
-		courseAlreadyRequested=requested;
-		
 		model.addAttribute("course", c);
 		
 		String ris=request.getParameter("ris");
@@ -156,7 +68,7 @@ public class AjaxControllerCourse {
 			else
 				model.addAttribute("result","error");
 		}
-		return "professor/course/dialog/requested_course";
+		return "professor/dialog/requested_course";
 	}
 	
 	@RequestMapping("/dialog/addRequestedCourse")
@@ -179,8 +91,6 @@ public class AjaxControllerCourse {
 			degree.add(RequestedCourse.POLICY_STRONG);
 			model.addAttribute("degree", degree);
 			Set<Course> courses=professorService.getCoursesForRequestedCourseFromDepartment(idCourse);
-			if(courseAlreadyRequested!=null && courseAlreadyRequested.size()>0)
-				courses.removeAll(courseAlreadyRequested);
 			model.addAttribute("courses", courses);
 			
 			model.addAttribute("idCourse", idCourse);
@@ -190,27 +100,7 @@ public class AjaxControllerCourse {
 		}
 //		Course c=professorService.getCourseDetails(p,idCourse);
 //		model.addAttribute("course", c);
-		return new ModelAndView("professor/course/dialog/addRequestedCourse", "model", model);
-	}
-	
-	@RequestMapping(value="/addRequestedCourseAction", method=RequestMethod.POST)
-	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
-			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
-		Boolean ris=false;
-		String idCours=request.getParameter("idCourse");
-		if(idCours!= null && !idCours.equals("")){
-			Long idCourse=Long.valueOf(idCours);
-			ris=professorService.addRequestedCourse(idCourse,requestedCourse);
-		}
-//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
-		return new ModelAndView("redirect:/professor/ajax/course/dialog/requested_course?id="+idCours+"&ris="+ris, "model", model);
+		return new ModelAndView("professor/dialog/addRequestedCourse", "model", model);
 	}
 	
 	@RequestMapping(value="/dialog/requested_course/command", method=RequestMethod.POST)
@@ -243,7 +133,7 @@ public class AjaxControllerCourse {
 			model.addAttribute("course", c);
 		}
 //		System.out.println(commands);
-		return "professor/course/dialog/requested_course";
+		return "professor/dialog/requested_course";
 	}
 	
 	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {

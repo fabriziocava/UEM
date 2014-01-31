@@ -39,6 +39,9 @@ public class ExamSession {
 	 
 	
 	
+	
+	
+
 	public ExamSession(){
 		
 	}
@@ -48,7 +51,6 @@ public class ExamSession {
 		this.dataInizio=dataInizio;
 		this.dataFine=dataFine;
 		this.degreecourse=degreecourseAssociated;
-		
 	}
 	
 	
@@ -98,6 +100,5 @@ public class ExamSession {
 		this.degreecourse = degreecourse;
 	}
 
-	
 	
 }

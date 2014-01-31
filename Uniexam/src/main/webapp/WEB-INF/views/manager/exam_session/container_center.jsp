@@ -1,4 +1,6 @@
+
 <%@page import="it.unical.uniexam.hibernate.domain.ExamSession "%>
+<%@page import="it.unical.uniexam.hibernate.domain.DegreeCourse "%>
 <%@page import="java.util.Set"%>
 
 
@@ -10,39 +12,60 @@
 	media="all" rel="stylesheet" type="text/css" />
 
 
-<%
-	Set<ExamSession> examsession=(Set<ExamSession>)request.getAttribute("examsession");
-
-%>
-
 
 <script type="text/javascript">
 	$(document).ready(function () {
+		selectingFromDashBoard(document.getElementById("examButton"));
+		$("#sorting").tablesorter();
 		$("#nav li:has(ul)").click(function(event) {
 			if (this == event.target) {
 				$(this).toggleClass('clicked').children('ul').slideToggle();
 				$(this).find('li:has(ul)').removeClass('clicked').find("ul").slideUp();
 				$(this).siblings().removeClass('clicked').find("ul").slideUp();
 				alineamentoContainer();
+				
 			}
 		}).addClass('has_ul');
 	});
 </script>
 
+<%
+	Set<ExamSession> examsession=(Set<ExamSession>)request.getAttribute("examsession");
+	Set<DegreeCourse> degreecourse=(Set<DegreeCourse>)request.getAttribute("courses");
+%>
 <div class="container-center">
 
-		<div class="bottonmok" onclick="">Crea Sessione d'Esame</div>
+		<div class="bottonmok" onclick="openPopUpWithAjaxContent('addSession','')">Crea Sessione d'Esame</div>
 		<fieldset>
 		<legend>
 			<spring:message
 				code="message.manager.examsession.container.center.legendExamSession" />
 		</legend>
 		
+		
+		
 		<table id="#sorting" class="tablemok">
+		
+		<% 
+			if(degreecourse.size()!=0){
+				
+				for(DegreeCourse dg: degreecourse){
+					
+		%>
+		<tr>
+				<td><span class="span_expandible" onclick="collapseMok(this)"
+					id="collapseSessions<%= (dg.getId()) %>">+</span> <%= dg.getName()%></td>
+		</tr>
+		<tr style="display: none;"
+		id="Sessions<%=( dg.getId()) %>">
+		
+		<td>		
 		<%
 				if (examsession.size()!=0) {
 					
 					for(ExamSession es: examsession){
+						
+						if(es.getDegreecourse().getId()==dg.getId()){
 					
 					%>
 		
@@ -65,7 +88,7 @@
 								<td
 									title="<spring:message code='message.manager.examsession.description.description'/>"
 									class="bottonmok"
-									onclick="openPopUpWithAjaxContent('viewAppeal','<%=es.getId()%>')"><%=es.getDescription()%></td>
+									onclick="openPopUpWithAjaxContent('view_examsession','<%=es.getId()%>')"><%=es.getDescription()%></td>
 								<td
 									title="<spring:message code='message.manager.examsession.startdate.description'/>"><%=es.getDataInizio()%></td>
 								<td
@@ -76,20 +99,24 @@
 							<tr>
 								<td><div class="line-top"></div></td>
 							</tr>
+						
 						</tbody>
+						
 					</table>
-		
-		<% } %>
-	
-					
-				Ci sono sessioni
+					<% } %>
 				
-				<%} else { %>
+				<%} }  else { %>
 					
 				Non ci sono sessioni
 				
 				<%} %>
 
+		</td>
+		<%
+					}
+					} 
+				%>
+		
 		
 		</table>
 		
