@@ -1,3 +1,5 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
+<%@page import="java.util.Set"%>
 <%@page import="it.unical.uniexam.MokException"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Student"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
@@ -85,7 +87,7 @@ function removeInscription(id) {
 }
 </script>
 
-<div id="dialog_content">
+<div id="dialog_content" align="center">
 	<%
 	Student student = (Student) request.getAttribute("I");
 	ArrayList<Appeal> appeal = (ArrayList<Appeal>) request.getAttribute("appeal");
@@ -93,6 +95,7 @@ function removeInscription(id) {
 	boolean isInscribed = false;
 	Long idAppealStudent = null;
 	String vote = null;
+	Set<RequestedCourse> requestCourses = (Set<RequestedCourse>) request.getAttribute("rc");
 	if(appeal!=null && !appeal.isEmpty()) {
 		%>
 		<label><%=appeal.get(0).getCourse().getName()%></label>
@@ -118,9 +121,9 @@ function removeInscription(id) {
 					%>
 					<tr>
 						<td rowspan="2"><%=a.getName()%></td>
-						<td align="center"><%=a.getExamDate()%></td>
+						<td align="center"><%=DateFormat.getDayMonthYear(a.getExamDate())%> <%=DateFormat.getHourString(a.getExamDate())%>:<%=DateFormat.getMinuteString(a.getExamDate())%></td>
 						<td rowspan="2" align="center"><%=a.getCurrNumberOfInscribed()%>/<%=a.getMaxNumberOfInscribed()%></td>
-						<td align="center"><%=a.getOpenDate()%></td>
+						<td align="center"><%=DateFormat.getDayMonthYear(a.getOpenDate())%> <%=DateFormat.getHourString(a.getOpenDate())%>:<%=DateFormat.getMinuteString(a.getOpenDate())%></td>
 						<%
 						if(appealStudent!=null && !appealStudent.isEmpty()) {
 							for(AppealStudent as : appealStudent) {
@@ -140,27 +143,36 @@ function removeInscription(id) {
 								}
 							}					
 						}
-						if(isInscribed) {
-							isInscribed = false;
-						%>
-							<td rowspan="2" align="center">SI</td>
-							<td rowspan="2" align="center"><%=vote!=null ? vote : "-"%></td>
-							<td rowspan="3"><div class="bottonmok color_red" onclick="removeInscription('<%=idAppealStudent%>')">Cancella</div></td>
-						<%
-							idAppealStudent = null;
-							vote = null;
-						} else {
+						if(requestCourses!=null && !requestCourses.isEmpty()) {
 							%>
-							<td rowspan="2" align="center">NO</td>
 							<td rowspan="2" align="center">-</td>
-							<td rowspan="3"><div class="bottonmok" onclick="inscription('<%=a.getId()%>')">Iscrivi</div></td>
-						<%							
+							<td rowspan="2" align="center">-</td>
+							<td rowspan="3"><img src="${pageContext.request.contextPath}/res/img/stop.png" style="height: 60px; width: 60px"></td>							
+							<%
 						}
-						%>
+						else {
+							if(isInscribed) {
+								isInscribed = false;
+							%>
+								<td rowspan="2" align="center">SI</td>
+								<td rowspan="2" align="center"><%=vote!=null ? vote : "-"%></td>
+								<td rowspan="3"><div class="bottonmok color_red" onclick="removeInscription('<%=idAppealStudent%>')">Cancella</div></td>
+							<%
+								idAppealStudent = null;
+								vote = null;
+							} else {
+								%>
+								<td rowspan="2" align="center">NO</td>
+								<td rowspan="2" align="center">-</td>
+								<td rowspan="3"><div class="bottonmok" onclick="inscription('<%=a.getId()%>')">Iscrivi</div></td>
+							<%							
+							}
+						}
+							%>
 					</tr>
 					<tr>
 						<td><%=a.getLocation()%></td>
-						<td align="center"><%=a.getCloseDate()%></td>
+						<td align="center"><%=DateFormat.getDayMonthYear(a.getCloseDate())%> <%=DateFormat.getHourString(a.getCloseDate())%>:<%=DateFormat.getMinuteString(a.getCloseDate())%></td>
 					</tr>					
 					<tr>
 						<td colspan="6"><%=a.getDescription()%></td>
@@ -176,6 +188,14 @@ function removeInscription(id) {
 			} else {
 				%>
 				<label>Non ci sono appelli</label>
+				<%
+			}
+			%>
+			<%
+			if(requestCourses!=null && !requestCourses.isEmpty()) {
+				%>
+				<br><br>
+				<label>Sono presenti delle propedeuticita'. Contattare il docente per maggiori informazioni</label><br>
 				<%
 			}
 			%>

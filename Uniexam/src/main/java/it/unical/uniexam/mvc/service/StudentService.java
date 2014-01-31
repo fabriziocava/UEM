@@ -8,6 +8,7 @@ import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.Student;
 
 public interface StudentService extends UserService {
@@ -24,13 +25,16 @@ public interface StudentService extends UserService {
 	public ArrayList<Course> getCourses(Long idStudent);
 	
 	public Course getCourseDetails(Long idCourse);
-	public ArrayList<Appeal> getAppeal(Long idCourse);
+	public ArrayList<Appeal> getAppeals(Long idCourse);
 	public Boolean inscriptionToAppeal(Long idAppeal, Long idStudent);
 	public Boolean removeInscriptionToAppeal(Long idAppealStudent);
-	public ArrayList<AppealStudent> getAppealStudent(Long idStudent);
+	public ArrayList<AppealStudent> getAppealStudentList(Long idStudent);
 	public ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent);
 	public ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(Long idStudent);
 	public boolean setStateAppealStudent(ArrayList<Long> idAppealStudentList);
 	public Set<Group> getGroups();
 	public ArrayList<Carrier> getCarrier(Long idStudent);
+	public Set<RequestedCourse> getRequestCourse(Long idCourse);
+	public Appeal getAppeal(Long idAppeal);
+	public AppealStudent getAppealStudent(Long idAppealStudent);
 }

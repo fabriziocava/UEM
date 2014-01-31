@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
 <%@page import="it.unical.uniexam.MokException"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Group"%>
@@ -79,7 +80,7 @@
 									<td align="center"><%=course.getCredits()%></td>
 									<td align="center"><%=as.getTemporany_vote()>30.0 ? "30 L" : as.getTemporany_vote().intValue()%></td>
 								<!-- INSERIRE DATA IN APPEAL-STUDENT -->
-									<td align="center"><%=as.getAppeal().getExamDate()%></td>
+									<td align="center"><%=DateFormat.getDayMonthYear(as.getAppeal().getExamDate())%></td>
 								</tr>
 							<%
 							}

@@ -47,7 +47,7 @@ public class StudentController {
 		
 		Long idStudent = s.getId();
 		Set<Group> groups = studentService.getGroups();
-		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudent(idStudent);
+		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudentList(idStudent);
 		ArrayList<AppealStudent> appealStudentForVerbalToBeSigned = studentService.getAppealStudentForVerbalToBeSigned(idStudent);
 		
 		ArrayList<String> news = new ArrayList<String>();
@@ -64,7 +64,7 @@ public class StudentController {
 		try {
 			for(AppealStudent as : appealStudent) {
 				if(as.getTemporany_vote()!=null)
-					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+as.getAppeal().getExamDate()+": � presente un voto provvisorio.");
+					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+as.getAppeal().getExamDate()+": e' presente un voto provvisorio.");
 			}
 		} catch (Exception e) {
 			

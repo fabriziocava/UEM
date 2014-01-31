@@ -13,6 +13,7 @@ import it.unical.uniexam.hibernate.dao.CourseDAO;
 import it.unical.uniexam.hibernate.dao.DegreeCourseDAO;
 import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
+import it.unical.uniexam.hibernate.dao.ManagerDao;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
@@ -20,6 +21,7 @@ import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.DegreeCourseDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.DepartmentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
+import it.unical.uniexam.hibernate.dao.impl.ManagerDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
 import it.unical.uniexam.hibernate.dao.impl.StudentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.UserDAOImpl;
@@ -40,6 +42,7 @@ public class DBTest {
 	private static ProfessorDAO professorDAO = new ProfessorDAOImp();
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static GroupDAO groupDAO = new GroupDAOImpl();
+	private static ManagerDao managerDAO = new ManagerDAOImpl();
 	
 	@BeforeClass
 	public static void prepareDB() throws MalformedURLException {
@@ -56,7 +59,6 @@ public class DBTest {
 		/*
 		 * PROFESSORS
 		 */
-		
 		HashSet<Email> emails = new HashSet<Email>();
 		emails.add(new Email(Email.TYPE.UFFICIAL, "professore1@unical.it"));
 		Address address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
@@ -84,6 +86,16 @@ public class DBTest {
 		phoneNumbers = new HashSet<PhoneNumber>();
 		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "255823456"));
 		idProfessors.add(professorDAO.addProfessor("Don Pasquale", "Rullo", null, "1234", address, emails, phoneNumbers, department));
+		
+		/*
+		 * MANAGER
+		 */
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE.UFFICIAL, "manager@unical.it"));
+		address = new Address("Cosenza", "Italy", "87100", "Piazza Sdao, 30");
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "12348888"));
+		Long idManager = managerDAO.addManager("Paola", "Sdao", null, "1234", address, emails, phoneNumbers, department);
 		
 		/*
 		 * STUDENT
@@ -120,6 +132,7 @@ public class DBTest {
 		/*
 		 * GROUP
 		 */
+		/*
 		groups.add(new Group("EA_2013", "Gruppo per informazioni", "Iscriversi per essere sempre aggiornati", Group.POLICY_1, professorDAO.getProfessor(idProfessors.get(0)), courses.get(0)));
 		groups.add(new Group("Artificial Intelligence_2013", "Gruppo per informazioni", "Iscriversi per essere sempre aggiornati", Group.POLICY_1, professorDAO.getProfessor(idProfessors.get(1)), courses.get(1)));
 		groups.add(new Group("KM_2013", "Gruppo per informazioni", "Iscriversi per essere sempre aggiornati", Group.POLICY_1, professorDAO.getProfessor(idProfessors.get(2)), courses.get(2)));
@@ -128,7 +141,7 @@ public class DBTest {
 		for(Group g : groups) {
 			idGroup = groupDAO.addGruop(g);
 		}
-		
+		*/
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -163,9 +176,15 @@ public class DBTest {
 		assertTrue(!courseDAO.getCourses().isEmpty());
 	}
 	
+	/*
 	@Test
 	public void checkGroup() {
 		assertTrue(!groupDAO.getGroups().isEmpty());
 	}
+	*/
 	
+	@Test
+	public void checkManager() {
+		assertTrue(!managerDAO.getManagers().isEmpty());
+	}
 }

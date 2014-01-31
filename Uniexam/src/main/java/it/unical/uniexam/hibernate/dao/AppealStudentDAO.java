@@ -31,5 +31,6 @@ public interface AppealStudentDAO {
     ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent);
     ArrayList<AppealStudent> getAppealStudentForVerbalToBeSigned(Long idStudent);
     boolean setState(ArrayList<Long> idAppealStudentList);
+    AppealStudent getThisAppealStudent(Long idAppealStudent);
 }
 
