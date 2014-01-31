@@ -87,7 +87,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 		res.add(reg);
 		res.add(noreg);
 		try{
-			Professor p=(Professor)session.get(Professor.class, idProfessor);
+//			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			/**
 			 * non posso fare una query unica poichè: essendo che uno dei due
 			 * appello o corso è null, quando vado a mettere nella query che bisigna fare
