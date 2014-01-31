@@ -63,18 +63,26 @@
 							</tr>
 						</thead>			
 				<%
+					Course course = null;
 					for(AppealStudent as : appealStudent) {
 						try {
-						%>
-							<tr>
-								<td align="center"><input class="checkbox" name="appealStudent<%=as.getId()%>" type="checkbox" value="<%=as.getId()%>" title="<%=as.getAppeal().getCourse().getName()%>" />
-								<td align="center"><%=as.getAppeal().getCourse().getCode()%></td>
-								<td><%=as.getAppeal().getCourse().getName()%></td>
-								<td align="center"><%=as.getAppeal().getCourse().getCredits()%></td>
-								<td align="center"><%=as.getTemporany_vote()>30.0 ? "30 L" : as.getTemporany_vote().intValue()%></td>
-								<td align="center"><%=as.getAppeal().getExamDate()%></td>
-							</tr>
-						<%
+							if(as.getAppeal()!=null)
+								course = as.getAppeal().getCourse();
+							else if(as.getCourse()!=null)
+								course = as.getCourse();
+							if(course!=null) {
+							%>
+								<tr>
+									<td align="center"><input class="checkbox" name="appealStudent<%=as.getId()%>" type="checkbox" value="<%=as.getId()%>" title="<%=as.getAppeal().getCourse().getName()%>" />
+									<td align="center"><%=course.getCode()%></td>
+									<td><%=course.getName()%></td>
+									<td align="center"><%=course.getCredits()%></td>
+									<td align="center"><%=as.getTemporany_vote()>30.0 ? "30 L" : as.getTemporany_vote().intValue()%></td>
+								<!-- INSERIRE DATA IN APPEAL-STUDENT -->
+									<td align="center"><%=as.getAppeal().getExamDate()%></td>
+								</tr>
+							<%
+							}
 						} catch (Exception e) {
 							new MokException(e);
 						}
