@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="student/group" extends="student.base">
+		<put-attribute name="container-center"
+			value="/WEB-INF/views/student/group/container_center.jsp" />
+	</definition>
+	
+	<definition name="student/group/group_details" template="/WEB-INF/views/student/course/group_details.jsp">
+	</definition>
+	
+</tiles-definitions>
