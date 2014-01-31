@@ -71,7 +71,7 @@ public class StudentController {
 		}
 		try {
 			for(AppealStudent asFVTB : appealStudentForVerbalToBeSigned) {
-				news.add(asFVTB.getAppeal().getCourse().getName().toUpperCase()+": � in attesa di essere firmato dallo studente.");
+				news.add(asFVTB.getAppeal().getCourse().getName().toUpperCase()+": e' in attesa di essere firmato dallo studente.");
 			}
 			model.addAttribute("news", news);
 		} catch (Exception e) {
