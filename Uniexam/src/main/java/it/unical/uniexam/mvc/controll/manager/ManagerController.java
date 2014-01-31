@@ -38,12 +38,6 @@ public class ManagerController {
 	@Autowired
 	ManagerService managerService;
 	
-//	@RequestMapping(value="/manager/home", method=RequestMethod.GET)
-//	public String homeManager(HttpServletRequest request,Model model){
-//			
-//		
-//		return "/manager/home";
-//	}
 	
 	@RequestMapping(value=ManagerService.MANAGER_HOME, method=RequestMethod.GET)
 	public String home(HttpServletRequest request,Model model){
@@ -219,7 +213,6 @@ public class ManagerController {
 		
 		Boolean ris=managerService.addRequestedCourse(idCourse, requestedCourse);
 		
-//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
 		return new ModelAndView("redirect:/manager/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
 	}
 	
@@ -241,9 +234,7 @@ public class ManagerController {
 		String idCours=request.getParameter("idCourse");
 		
 		Long idCourse=Long.valueOf(idCours);
-		
 
-		
 		String idprofessor=request.getParameter("idprofessor");
 		Long idprof=Long.valueOf(idprofessor);
 		

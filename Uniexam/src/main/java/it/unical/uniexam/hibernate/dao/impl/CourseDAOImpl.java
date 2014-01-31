@@ -262,7 +262,7 @@ public class CourseDAOImpl implements CourseDAO{
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		ArrayList<Course>res=null;
 		try{
-			Query q= session.createQuery("from Course where degreeCourse=:par");
+			Query q= session.createQuery("from Course where degreeCourse.id=:par");
 			q.setParameter("par", idDegreeCourse);
 			@SuppressWarnings("unchecked")
 			List<Course> list = q.list();

@@ -25,7 +25,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/res/css/jquery-ui.css">
 	
-<script src="${pageContext.request.contextPath}/res/js/mok.js">
+<script src="${pageContext.request.contextPath}/res/js/pino.js">
 
 </script>
 
