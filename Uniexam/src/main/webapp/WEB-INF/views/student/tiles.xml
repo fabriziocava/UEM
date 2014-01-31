@@ -7,9 +7,9 @@
 		<put-attribute name="footer" value="/WEB-INF/views/student/shared/footer.jsp" />
 		<put-attribute name="container-header" value="/WEB-INF/views/student/shared/container_header.jsp" />
 		<put-attribute name="container-up" value="/WEB-INF/views/student/shared/container_up.jsp" />
-		<put-attribute name="container-left" value="/WEB-INF/views/student/shared/container_left.jsp" />
+		<put-attribute name="container-left" value="" />
 		<put-attribute name="container-center" value="" />
-		<put-attribute name="container-right" value="/WEB-INF/views/student/shared/container_right.jsp" />
+		<put-attribute name="container-right" value="" />
 		<put-attribute name="container-down" value="" />
 	</definition>
 </tiles-definitions>

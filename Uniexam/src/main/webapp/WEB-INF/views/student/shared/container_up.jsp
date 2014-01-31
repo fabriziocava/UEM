@@ -9,10 +9,10 @@
 			<li><a class="button" href="#" id="carrierButton" title="<spring:message code='label.carrier'/>"
 				onclick="selectDashBoard(this)"><spring:message
 						code="label.carrier" /></a></li>
-			<li><a class="button" href="#" id="verbalSignButton" title="<spring:message code='label.verbalSign'/>"
+			<li><a class="button" href="#" id="verbalToBeSignedButton" title="<spring:message code='label.verbalToBeSigned'/>"
 				onclick="selectDashBoard(this)"><spring:message
-						code="label.verbalSign" /></a></li>
-			<li><a class="button" href="#" id="groupsButton" title="<spring:message code='label.groups'/>"
+						code="label.verbalToBeSigned" /></a></li>
+			<li><a class="button" href="#" id="groupButton" title="<spring:message code='label.groups'/>"
 				onclick="selectDashBoard(this)"><spring:message
 						code="label.groups" /></a></li>
 		</ul>
