@@ -53,39 +53,67 @@ public class DBTest {
 		
 		Department department = new Department("A1", "MATEMATICA E INFORMATICA", new Address("COSENZA", "ITALY", "87100", "VIA PIETRO BUCCI, 56"));
 		Long idDepartment = departmentDAO.addDepartment(department);
-		DegreeCourse degreeCourse = new DegreeCourse("INFORMATICA", department);
+		DegreeCourse degreeCourse = new DegreeCourse("INFORMATICA SPECIALISTICA", department);
 		Long idDegreeCourse = degreeCourseDAO.addDegreeCourse(degreeCourse);
 		
 		/*
 		 * PROFESSORS
 		 */
 		HashSet<Email> emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE.UFFICIAL, "professore1@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "ricca@unical.it"));
 		Address address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
 		HashSet<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
 		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "196123456"));
 		idProfessors.add(professorDAO.addProfessor("Francesco", "Ricca", null, "1234", address, emails, phoneNumbers, department));
 
 		emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE.UFFICIAL, "professore2@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "calimeri@unical.it"));
 		address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
 		phoneNumbers = new HashSet<PhoneNumber>();
 		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "365823456"));
 		idProfessors.add(professorDAO.addProfessor("Francesco", "Calimeri", null, "1234", address, emails, phoneNumbers, department));
 		
 		emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE.UFFICIAL, "professore3@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "alviano@unical.it"));
 		address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
 		phoneNumbers = new HashSet<PhoneNumber>();
 		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "998523456"));
 		idProfessors.add(professorDAO.addProfessor("Mario", "Alviano", null, "1234", address, emails, phoneNumbers, department));
 
 		emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE.UFFICIAL, "professore4@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "rullo@unical.it"));
 		address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
 		phoneNumbers = new HashSet<PhoneNumber>();
 		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "255823456"));
 		idProfessors.add(professorDAO.addProfessor("Don Pasquale", "Rullo", null, "1234", address, emails, phoneNumbers, department));
+
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE.UFFICIAL, "terracina@unical.it"));
+		address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "255823456"));
+		idProfessors.add(professorDAO.addProfessor("Giorgio", "Terracina", null, "1234", address, emails, phoneNumbers, department));
+		
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE.UFFICIAL, "spataro@unical.it"));
+		address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "255823456"));
+		idProfessors.add(professorDAO.addProfessor("William", "Spataro", null, "1234", address, emails, phoneNumbers, department));
+		
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE.UFFICIAL, "ianni@unical.it"));
+		address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "255823456"));
+		idProfessors.add(professorDAO.addProfessor("Giambattista", "Ianni", null, "1234", address, emails, phoneNumbers, department));
+		
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE.UFFICIAL, "leone@unical.it"));
+		address = new Address("Cosenza", "Italy", "87100", "Via dei Ricchi, 58");
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "255823456"));
+		idProfessors.add(professorDAO.addProfessor("Nicola", "Leone", null, "1234", address, emails, phoneNumbers, department));
 		
 		/*
 		 * MANAGER
@@ -101,29 +129,47 @@ public class DBTest {
 		 * STUDENT
 		 */
 		emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE.UFFICIAL, "studente@unical.it"));
+		emails.add(new Email(Email.TYPE.UFFICIAL, "cava@unical.it"));
 		address = new Address("Cosenza", "Italy", "87100", "Viale degli studenti, 30");
 		phoneNumbers = new HashSet<PhoneNumber>();
 		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.HOME, "0984404040"));
 		Long idStudent = studentDAO.addStundent("Fabrizio", "Cava", "CVAFRZ88D14D086G", "1234", address, emails, phoneNumbers, degreeCourse, "158658");
-	
+		
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE.UFFICIAL, "molinaro@unical.it"));
+		address = new Address("Cosenza", "Italy", "87100", "Viale degli studenti, 30");
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.HOME, "0984404040"));
+		idStudent = studentDAO.addStundent("Luigi", "Molinaro", "XXXXXX88X14X888G", "1234", address, emails, phoneNumbers, degreeCourse, "160585");
+
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE.UFFICIAL, "lombardo@unical.it"));
+		address = new Address("Cosenza", "Italy", "87100", "Viale degli studenti, 30");
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.HOME, "0984404040"));
+		idStudent = studentDAO.addStundent("Giuseppe", "Lombardo", "XXXXXX88X14X888G", "1234", address, emails, phoneNumbers, degreeCourse, "165858");
+		
 		/*
 		 * SECRETARY
 		 */
-		address = new Address("Cosenza", "Italy", "87100", "Piazza segreteria, 13");
-		emails = new HashSet<Email>();
-		emails.add(new Email(Email.TYPE.UFFICIAL, "segreteria@unical.it"));
-		phoneNumbers = new HashSet<PhoneNumber>();
-		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "0984123456"));
-		Long idUser = userDAO.addUser("Marco", "Polo", "1234", address, emails, phoneNumbers);
+//		address = new Address("Cosenza", "Italy", "87100", "Piazza segreteria, 13");
+//		emails = new HashSet<Email>();
+//		emails.add(new Email(Email.TYPE.UFFICIAL, "segreteria@unical.it"));
+//		phoneNumbers = new HashSet<PhoneNumber>();
+//		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "0984123456"));
+//		Long idUser = userDAO.addUser("Marco", "Polo", "1234", address, emails, phoneNumbers);
 		
 		/*
 		 * COURSE		
 		 */
 		courses.add(new Course("773", "Enterprise Application", 5, professorDAO.getProfessor(idProfessors.get(0)), degreeCourse));
 		courses.add(new Course("774", "Agent Intelligence", 5, professorDAO.getProfessor(idProfessors.get(1)), degreeCourse));
-		courses.add(new Course("776", "Knowledge Management", 10, professorDAO.getProfessor(idProfessors.get(2)), degreeCourse));
-		courses.add(new Course("775", "Database", 10, professorDAO.getProfessor(idProfessors.get(3)), degreeCourse));
+		courses.add(new Course("775", "Knowledge Management", 10, professorDAO.getProfessor(idProfessors.get(2)), degreeCourse));
+		courses.add(new Course("776", "Data Mining", 5, professorDAO.getProfessor(idProfessors.get(3)), degreeCourse));
+		courses.add(new Course("777", "Data Warehouse", 5, professorDAO.getProfessor(idProfessors.get(4)), degreeCourse));
+		courses.add(new Course("778", "Algoritmi paralleli e sistemi distribuiti", 5, professorDAO.getProfessor(idProfessors.get(5)), degreeCourse));
+		courses.add(new Course("779", "Reti e sicurezza informatica", 10, professorDAO.getProfessor(idProfessors.get(6)), degreeCourse));
+		courses.add(new Course("780", "Informatica teorica", 10, professorDAO.getProfessor(idProfessors.get(7)), degreeCourse));
 		Long idCourse;
 		for(Course c : courses) {
 			idCourse = courseDAO.addCourse(c);

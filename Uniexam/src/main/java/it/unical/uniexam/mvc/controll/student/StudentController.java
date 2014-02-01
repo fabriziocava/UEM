@@ -1,6 +1,8 @@
 package it.unical.uniexam.mvc.controll.student;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +65,21 @@ public class StudentController {
 			
 		}
 		try {
+			Date dateNow = new Date();
+			GregorianCalendar gcNow = new GregorianCalendar(DateFormat.getYear(dateNow),
+					 										DateFormat.getMonth(dateNow),
+															DateFormat.getDay(dateNow),
+															DateFormat.getHour(dateNow),
+															DateFormat.getMinute(dateNow));
+			GregorianCalendar gcExam = null;
 			for(AppealStudent as : appealStudent) {
+				gcExam = new GregorianCalendar(DateFormat.getYear(as.getAppeal().getExamDate()),
+						 					   DateFormat.getMonth(as.getAppeal().getExamDate()),
+						 					   DateFormat.getDay(as.getAppeal().getExamDate()),
+						 					   DateFormat.getHour(as.getAppeal().getExamDate()),
+						 					   DateFormat.getMinute(as.getAppeal().getExamDate()));
+				if(gcNow.before(gcExam))
+					news.add(as.getAppeal().getCourse().getName().toUpperCase()+": l'esame e' il "+DateFormat.getDayMonthYear(as.getAppeal().getExamDate())+" ore "+DateFormat.getHourString(as.getAppeal().getExamDate())+":"+DateFormat.getMinuteString(as.getAppeal().getExamDate()));
 				if(as.getTemporany_vote()!=null)
 					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+DateFormat.getDayMonthYear(as.getAppeal().getExamDate())+": e' presente un voto provvisorio.");
 			}
