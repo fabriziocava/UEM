@@ -128,9 +128,11 @@ public class AjaxControllerStudentAppeal {
 															  DateFormat.getMinute(appeal.getCloseDate()));
 		
 		Boolean res = false;
-		if(gcOpenDate.before(gcNow) && gcNow.before(gcCloseDate)) {
-			if(requestedCourses==null || requestedCourses.isEmpty())
-				res = studentService.inscriptionToAppeal(idAppeal, s.getId());
+		if(appeal.getCurrNumberOfInscribed()+1<=appeal.getMaxNumberOfInscribed()) {
+			if(gcOpenDate.before(gcNow) && gcNow.before(gcCloseDate)) {
+				if(requestedCourses==null || requestedCourses.isEmpty())
+					res = studentService.inscriptionToAppeal(idAppeal, s.getId());
+			}
 		}
 		
 		ServletOutputStream outputStream = null;

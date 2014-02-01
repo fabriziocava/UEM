@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import it.unical.uniexam.DateFormat;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
@@ -64,7 +65,7 @@ public class StudentController {
 		try {
 			for(AppealStudent as : appealStudent) {
 				if(as.getTemporany_vote()!=null)
-					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+as.getAppeal().getExamDate()+": e' presente un voto provvisorio.");
+					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+DateFormat.getDayMonthYear(as.getAppeal().getExamDate())+": e' presente un voto provvisorio.");
 			}
 		} catch (Exception e) {
 			
