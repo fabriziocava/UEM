@@ -54,7 +54,7 @@
 					
 					for(Course C: Courses){
 						
-						if(C.getDegreeCourse().getId()!=null && c.getId() != null && C.getDegreeCourse().getId()==c.getId()){
+						if(C.getDegreeCourse()!=null && C.getDegreeCourse().getId()!=null && c.getId() != null && C.getDegreeCourse().getId()==c.getId()){
 					
 					%>
 			

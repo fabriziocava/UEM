@@ -101,8 +101,12 @@ public class LoginController {
 		default:
 			break;
 		}
+		
 		HttpSession session = request.getSession();
 		homeService.registerSession(session.getId(),user.getId());
+		
+		
+		
 		if(user.getType()==User.TYPE.PROFESSOR){
 			return "redirect:"+ProfessorService.PROFESSOR_HOME;
 		}else if(user.getType()==User.TYPE.STUDENT){
