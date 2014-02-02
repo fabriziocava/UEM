@@ -138,7 +138,7 @@
 				<td style="padding-left: 1.5em;" ><label style="text-align: justify; font-size: 10pt">lo studente deve apporre la propria password mediante la funzione di "VERBALI DA FIRMARE" per permettere il passaggio dell'esame nella carriera ufficiale della Segreteria Studenti.</label></td>
 			</tr>
 			<tr>
-				<td><label style="color: green;">ESAME CARICATO IN SEGRETERIA</label></td>
+				<td><label style="color: green;">CARICATO IN SEGRETERIA</label></td>
 			</tr>
 			<tr>
 				<td style="padding-left: 1.5em;" ><label style="text-align: justify; font-size: 10pt">l'esame è stato caricato nella propria carriera ufficiale in Segreteria Studenti.</label></td>

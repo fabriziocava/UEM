@@ -830,7 +830,7 @@ public class CourseDAOImpl implements CourseDAO{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		ArrayList<Course> res = null;
 		try {
-			Query q= session.createQuery("from Course where degreeCourse.id=:par");
+			Query q= session.createQuery("from Course where degreeCourse.id=:par ORDER BY name");
 			Student student = (Student) session.get(Student.class, idStudent);
 			q.setParameter("par", student.getDegreeCourse_registered().getId());
 			res = new ArrayList<Course>(q.list());
