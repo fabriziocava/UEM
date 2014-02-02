@@ -1,5 +1,7 @@
 package it.unical.uniexam.mvc.service.impl;
 
+import java.util.Set;
+
 import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.dao.ManagerDao;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
@@ -50,6 +52,11 @@ public class SecretaryServiceImpl extends UserServiceImpl implements SecretarySe
 	@Override
 	public Long addStudent(Student student) {
 		return studentDAO.addStudent(student);
+	}
+
+	@Override
+	public Set<Department> getDepartment() {
+		return departmentDAO.getDepartments();
 	}
 
 }

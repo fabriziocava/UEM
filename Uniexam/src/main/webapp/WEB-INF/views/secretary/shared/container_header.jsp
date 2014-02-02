@@ -15,10 +15,8 @@
 	</span>
 	<div>
 		<ul class="links-user">
-			<li><img src="imageUser" />${user}</li>
-			<li><a href="${pageContext.request.contextPath}/logout"> <img
-					class="logout-header"
-					src="${pageContext.request.contextPath}/res/img/pixel.png" />
+			<li><label>${I.getName()} ${I.getSurname()}</label></li>
+			<li><a class="logout-header" href="${pageContext.request.contextPath}/logout"> 
 			</a></li>
 		</ul>
 	</div>
