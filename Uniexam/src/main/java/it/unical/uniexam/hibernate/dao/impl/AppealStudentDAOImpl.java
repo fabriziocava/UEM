@@ -685,4 +685,19 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
         return ris;
 	}
 
+
+	@Override
+	public AppealStudent getThisAppealStudent(Long idAppealStudent) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		AppealStudent appealStudent = null;
+		try {
+			appealStudent = (AppealStudent) session.get(AppealStudent.class, idAppealStudent);
+		} catch (Exception e) {
+			new MokException(e);
+		} finally {
+			session.close();
+		}
+		return appealStudent;
+	}
+
 }

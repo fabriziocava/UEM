@@ -1,11 +1,14 @@
 package it.unical.uniexam.mvc.controll.student;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import it.unical.uniexam.DateFormat;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
@@ -47,7 +50,7 @@ public class StudentController {
 		
 		Long idStudent = s.getId();
 		Set<Group> groups = studentService.getGroups();
-		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudent(idStudent);
+		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudentList(idStudent);
 		ArrayList<AppealStudent> appealStudentForVerbalToBeSigned = studentService.getAppealStudentForVerbalToBeSigned(idStudent);
 		
 		ArrayList<String> news = new ArrayList<String>();
@@ -62,16 +65,30 @@ public class StudentController {
 			
 		}
 		try {
+			Date dateNow = new Date();
+			GregorianCalendar gcNow = new GregorianCalendar(DateFormat.getYear(dateNow),
+					 										DateFormat.getMonth(dateNow),
+															DateFormat.getDay(dateNow),
+															DateFormat.getHour(dateNow),
+															DateFormat.getMinute(dateNow));
+			GregorianCalendar gcExam = null;
 			for(AppealStudent as : appealStudent) {
+				gcExam = new GregorianCalendar(DateFormat.getYear(as.getAppeal().getExamDate()),
+						 					   DateFormat.getMonth(as.getAppeal().getExamDate()),
+						 					   DateFormat.getDay(as.getAppeal().getExamDate()),
+						 					   DateFormat.getHour(as.getAppeal().getExamDate()),
+						 					   DateFormat.getMinute(as.getAppeal().getExamDate()));
+				if(gcNow.before(gcExam))
+					news.add(as.getAppeal().getCourse().getName().toUpperCase()+": l'esame e' il "+DateFormat.getDayMonthYear(as.getAppeal().getExamDate())+" ore "+DateFormat.getHourString(as.getAppeal().getExamDate())+":"+DateFormat.getMinuteString(as.getAppeal().getExamDate()));
 				if(as.getTemporany_vote()!=null)
-					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+as.getAppeal().getExamDate()+": � presente un voto provvisorio.");
+					news.add(as.getAppeal().getCourse().getName().toUpperCase()+" - Appello del "+DateFormat.getDayMonthYear(as.getAppeal().getExamDate())+": e' presente un voto provvisorio.");
 			}
 		} catch (Exception e) {
 			
 		}
 		try {
 			for(AppealStudent asFVTB : appealStudentForVerbalToBeSigned) {
-				news.add(asFVTB.getAppeal().getCourse().getName().toUpperCase()+": � in attesa di essere firmato dallo studente.");
+				news.add(asFVTB.getAppeal().getCourse().getName().toUpperCase()+": e' in attesa di essere firmato dallo studente.");
 			}
 			model.addAttribute("news", news);
 		} catch (Exception e) {
