@@ -25,10 +25,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
+@SessionAttributes("user")
 @RequestMapping("manager/ajax")
 public class AjaxControllerExamsession {
 	
@@ -38,14 +40,16 @@ public class AjaxControllerExamsession {
 	@RequestMapping("/dialog/view_examsession")
 	public ModelAndView dialog_view_appeal(HttpServletRequest request, Model model){
 
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
-		}
-		if(user.getClass()!=Manager.class){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idexamsession=request.getParameter("id");
@@ -59,14 +63,16 @@ public class AjaxControllerExamsession {
 	
 	@RequestMapping("/dialog/addSession")
 	public ModelAndView dialog_add_session(@ModelAttribute("addsession") ExamSession examsession,HttpServletRequest request, Model model){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
-		}
-		if(user.getClass()!=Manager.class){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		Set<DegreeCourse> degreecourses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());
@@ -88,14 +94,16 @@ public class AjaxControllerExamsession {
 	@RequestMapping("exam_session/sessionDetails")
 	public String sessionDetails(HttpServletRequest request, Model model){
 		
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
-		}
-		if(user.getClass()!=Manager.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idexamsession=request.getParameter("id");
@@ -108,14 +116,16 @@ public class AjaxControllerExamsession {
 	
 	@RequestMapping("/exam_session/remove_session")
 	public String remove_session(HttpServletRequest request, Model model,HttpServletResponse response){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
-		}
-		if(user.getClass()!=Manager.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idsession=request.getParameter("id");
@@ -141,14 +151,16 @@ public class AjaxControllerExamsession {
 	
 	@RequestMapping("/exam_session/modify_session")
 	public String modify_session(HttpServletRequest request, Model model,HttpServletResponse response){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
-		}
-		if(user.getClass()!=Manager.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idsession=request.getParameter("id");
