@@ -193,9 +193,9 @@ public class AjaxControllerStudentAppeal {
 					  											  DateFormat.getHour(appealStudent.getAppeal().getCloseDate()),
 					  											  DateFormat.getMinute(appealStudent.getAppeal().getCloseDate()));
 		
-			//if(appealStudent.getTemporany_vote()==null)
-			if(gcNow.before(gcCloseDate))	
-				res = studentService.removeInscriptionToAppeal(idAppealStudent);
+			if(gcNow.before(gcCloseDate))
+				if(appealStudent.getTemporany_vote()==null)
+					res = studentService.removeInscriptionToAppeal(idAppealStudent);
 		} catch (Exception e) {
 			new MokException(e);
 		}
