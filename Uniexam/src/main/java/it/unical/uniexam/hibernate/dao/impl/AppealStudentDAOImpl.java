@@ -300,16 +300,18 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			for (Long idAppeal : signStudents) {
 				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
+				Date now=new Date();
 				if(p.getAppeals().contains(appealStudent.getAppeal()) ||
 						p.getSetHoldersCourse().contains(appealStudent.getCourse())){
 					Course course=null;
 					if((appealStudent.getAppeal()!=null && appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)){
 						course=appealStudent.getAppeal().getCourse();
+						now=appealStudent.getAppeal().getExamDate();
 					}else if((appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)){
 						course=appealStudent.getCourse();
+						now=appealStudent.getDate();
 					}
 					if(course!=null){
-						Date now=new Date();
 						Query q=session.createQuery("from ExamSession where dataInizio <= :p1 and dataFine >= :p2 and degreecourse.id =:p3");
 						q.setParameter("p1", now);
 						q.setParameter("p2", now);
