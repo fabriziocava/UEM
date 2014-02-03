@@ -91,6 +91,8 @@ public class CourseDAOImpl implements CourseDAO{
 			if(c1!=null){
 				c1.setHolder(null);
 				p.getSetHoldersCourse().remove(c1);
+				p.getAppeals().remove(c1);
+				p.getSetAsCommission().remove(c1);
 				transaction.commit();
 				ok=true;			
 			}
