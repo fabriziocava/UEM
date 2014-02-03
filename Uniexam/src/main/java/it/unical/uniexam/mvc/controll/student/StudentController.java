@@ -29,10 +29,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * 
+ * @author fabrizio
+ *
+ */
 
 @Controller
+@SessionAttributes("user")
 public class StudentController {
 	
 	@Autowired 
@@ -40,13 +47,18 @@ public class StudentController {
 	
 	@RequestMapping(value=StudentService.STUDENT_HOME, method=RequestMethod.GET)
 	public String homeStudent(HttpServletRequest request,Model model){			
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return UtilsService.LOGIN;
+		
 		model.addAttribute("I",s);
 		
 		Long idStudent = s.getId();
@@ -100,13 +112,18 @@ public class StudentController {
 	
 	@RequestMapping(value=StudentService.STUDENT_COURSE, method=RequestMethod.GET)
 	public String course(HttpServletRequest request, Model model) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return UtilsService.LOGIN;
+		
 		model.addAttribute("I",s);
 		
 		Long idStudent = s.getId();
@@ -118,13 +135,18 @@ public class StudentController {
 	
 	@RequestMapping(value=StudentService.STUDENT_GROUP, method=RequestMethod.GET)
 	public String group(HttpServletRequest request, Model model) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return UtilsService.LOGIN;
+		
 		model.addAttribute("I",s);
 		
 		Set<Group> groups = studentService.getGroups();
@@ -136,13 +158,18 @@ public class StudentController {
 	
 	@RequestMapping(value=StudentService.STUDENT_CARRIER, method=RequestMethod.GET)
 	public String carrier(HttpServletRequest request, Model model) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return UtilsService.LOGIN;
+		
 		model.addAttribute("I",s);
 		
 		Long idStudent = s.getId();
@@ -156,13 +183,17 @@ public class StudentController {
 
 	@RequestMapping(value=StudentService.STUDENT_VERBALTOBESIGNED, method=RequestMethod.GET)
 	public String verbalToBeSigned(HttpServletRequest request, Model model) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return UtilsService.LOGIN;
 		
 		model.addAttribute("I",s);
 		
@@ -175,13 +206,17 @@ public class StudentController {
 	
 	@RequestMapping(value=StudentService.STUDENT_VERBALTOBESIGNED+"/sign", method=RequestMethod.POST)
 	String signVerbal(HttpServletRequest request, Model model) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return UtilsService.LOGIN;
 	
 		model.addAttribute("I",s);
 		
