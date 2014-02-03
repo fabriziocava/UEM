@@ -25,9 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@SessionAttributes("user")
 @RequestMapping("student/ajax")
 public class AjaxControllerStudentAppeal {
 
@@ -36,13 +38,17 @@ public class AjaxControllerStudentAppeal {
 	
 	@RequestMapping("/dialog/view_appeal")
 	public ModelAndView dialogViewAppeal(HttpServletRequest request, Model model) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return null;
 		
 		model.addAttribute("I",s);
 				
@@ -78,13 +84,17 @@ public class AjaxControllerStudentAppeal {
 	
 	@RequestMapping("/appeal/inscriptionToAppeal")
 	public String inscribeToAppeal(HttpServletRequest request, Model model, HttpServletResponse response) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return null;
 		
 		model.addAttribute("I",s);
 
@@ -153,13 +163,17 @@ public class AjaxControllerStudentAppeal {
 	
 	@RequestMapping("/appeal/removeInscription")
 	public String removeInscription(HttpServletRequest request, Model model, HttpServletResponse response) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return null;
 		
 		model.addAttribute("I",s);
 

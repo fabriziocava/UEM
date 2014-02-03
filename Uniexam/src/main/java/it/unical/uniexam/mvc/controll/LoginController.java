@@ -129,7 +129,8 @@ public class LoginController {
 		try{
 			HttpSession session = request.getSession(false);
 			session.invalidate();
-			if(session!=null && !homeService.unRegisterSession(session.getId()))
+//			&& !homeService.unRegisterSession(session.getId())
+			if(session!=null)
 //				return UtilsService.redirectToErrorPageGeneral("Session non chiusa", "session",model);
 				return UtilsService.LOGIN;
 		}catch (Exception e){
