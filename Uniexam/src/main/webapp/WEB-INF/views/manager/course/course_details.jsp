@@ -20,7 +20,7 @@
 	
 	
 	function sendDeleteAppeal(id,id2){
-		$("<div>Sei sicuro di voler questo corso ?</div>").attr('id',"divDelete").appendTo('body');
+		$("<div>Sei sicuro di voler eliminare questo corso ?</div>").attr('id',"divDelete").appendTo('body');
 		$("#divDelete").attr("title",'Elimina Corso');
 		$("#divDelete").dialog({
 		      resizable: false,
@@ -30,7 +30,7 @@
 		        	var ajax=sendAJAXmessagePino($("#context").attr("value")+"/ajax/course/remove_courseALL","GET","id",id,"id2",id2);
 		        	ajax.done(function(msg){
 		        		if(msg.match("no")){
-		        			alert("Errore! non ho potuto eliminare il corso, corso assegnato o propedeutico ad altro corso");
+		        			alert("Errore! non ho potuto eliminare il corso propedeutico ad altro corso");
 		        		}else{
 		        			alert("Corso eliminato");
 		        			window.location=$("#context").attr("value")+"/course/list";

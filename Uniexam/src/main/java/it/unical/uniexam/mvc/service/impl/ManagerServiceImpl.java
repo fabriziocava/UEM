@@ -209,7 +209,7 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 
 	@Override
 	public Boolean removeCourse(Long idCourse,Long idDegreeCourse) {
-		return courseDAO.removeCourse(idCourse,idDegreeCourse)!=null;
+		return courseDAO.removeCourseforManager(idCourse,idDegreeCourse)!=null;
 	}
 
 
