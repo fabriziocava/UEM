@@ -61,7 +61,7 @@ public class AjaxControllerStudentAppeal {
 		if(requestedCourses!=null && !requestedCourses.isEmpty()) {
 			ArrayList<Carrier> carrier = studentService.getCarrier(idStudent);
 			for(RequestedCourse r : requestedCourses) {
-				if(r.getPolicyOfRequested().equals(RequestedCourse.POLICY_LIGHT))
+				if(!r.getPolicyOfRequested().equals(RequestedCourse.POLICY_STRONG))
 					requestedCourses.remove(r);
 				else {
 					for(Carrier c : carrier) {
@@ -99,7 +99,7 @@ public class AjaxControllerStudentAppeal {
 		if(requestedCourses!=null && !requestedCourses.isEmpty()) {
 			ArrayList<Carrier> carrier = studentService.getCarrier(idStudent);
 			for(RequestedCourse r : requestedCourses) {
-				if(r.getPolicyOfRequested().equals(RequestedCourse.POLICY_LIGHT))
+				if(!r.getPolicyOfRequested().equals(RequestedCourse.POLICY_STRONG))
 					requestedCourses.remove(r);
 				else {
 					for(Carrier c : carrier) {
