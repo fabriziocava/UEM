@@ -44,7 +44,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 
 		String id=request.getParameter("idProf");
@@ -66,7 +66,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 
 		String id=request.getParameter("idProf");
@@ -88,7 +88,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 
 		String id=request.getParameter("id");
@@ -111,7 +111,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 
 		String idCours=request.getParameter("id");
@@ -132,7 +132,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		
 		String idCours=request.getParameter("id");
@@ -152,7 +152,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		
 		String idCours=request.getParameter("id");
@@ -180,7 +180,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 		//riempire una mappa da dove posso sceliere i corsi che possono essere richiesti 
 		String idCours=request.getParameter("id");
@@ -214,7 +214,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 		
 		String idCours=request.getParameter("idCourse");
@@ -236,7 +236,7 @@ public class AjaxControllerCourse {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 //		Enumeration parameterNames = request.getParameterNames();
 //		while (parameterNames.hasMoreElements()) {

@@ -67,7 +67,7 @@ public class ProfessorControllerSign {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return new ModelAndView(UtilsService.LOGIN);
 		
 		model.addAttribute("I",p);
@@ -92,7 +92,7 @@ public class ProfessorControllerSign {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 		
 		model.addAttribute("I",p);
@@ -128,7 +128,7 @@ public class ProfessorControllerSign {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 		
 		model.addAttribute("I",p);
@@ -153,7 +153,7 @@ public class ProfessorControllerSign {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 		
 		model.addAttribute("I",p);
@@ -177,7 +177,7 @@ public class ProfessorControllerSign {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return UtilsService.LOGIN;
 		
 		model.addAttribute("I",p);
@@ -207,8 +207,9 @@ public class ProfessorControllerSign {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return UtilsService.LOGIN;
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
+		if(p==null) 
+			return UtilsService.LOGIN;
 		
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -237,7 +238,7 @@ public class ProfessorControllerSign {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return UtilsService.LOGIN;
 
 		model.addAttribute("I",p);

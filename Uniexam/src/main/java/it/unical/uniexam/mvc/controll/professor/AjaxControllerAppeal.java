@@ -51,7 +51,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		String idStud=request.getParameter("idStudent");
@@ -71,7 +71,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>removeStudents=new ArrayList<Long>();
@@ -102,7 +102,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return UtilsService.LOGIN;
 
 		String idStud=request.getParameter("id");
@@ -153,7 +153,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 
 		String idAppea=request.getParameter("id");
@@ -190,7 +190,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		
 		String idAppea=request.getParameter("id");
@@ -222,7 +222,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//UtilsService.LOGIN;
 		
 		String idAppea=request.getParameter("id");
@@ -241,7 +241,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 
 		//		Enumeration parameterNames = request.getParameterNames();
@@ -286,7 +286,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		List<Course> courses=professorService.getCourseAssociated(p.getId());
@@ -307,7 +307,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		String idApp=request.getParameter("id");
@@ -327,7 +327,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		String idAppea=(String)request.getParameter("id");
@@ -358,7 +358,7 @@ public class AjaxControllerAppeal {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 		
 		String idAppea=(String)request.getParameter("id");
