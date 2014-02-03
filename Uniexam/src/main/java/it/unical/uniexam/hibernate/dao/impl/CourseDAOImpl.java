@@ -262,7 +262,7 @@ public class CourseDAOImpl implements CourseDAO{
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		ArrayList<Course>res=null;
 		try{
-			Query q= session.createQuery("from Course where degreeCourse=:par");
+			Query q= session.createQuery("from Course where degreeCourse.id=:par");
 			q.setParameter("par", idDegreeCourse);
 			@SuppressWarnings("unchecked")
 			List<Course> list = q.list();
@@ -837,6 +837,36 @@ public class CourseDAOImpl implements CourseDAO{
 		} catch (Exception e) {
 			new MokException(e);
 		} finally {
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public RequestedCourse RemoveReqCourseForManager(Long idCourse,
+			Long idCoursereq) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		RequestedCourse res=null;
+		try{
+			transaction = session.beginTransaction();
+			Course c1=(Course) session.get(Course.class, idCourse);
+			if(c1!=null){
+				for(RequestedCourse r : c1.getRequestedCourses()){
+					if(r.getId()==idCoursereq){
+						res=r;
+						break;
+					}
+				}
+				c1.getRequestedCourses().remove(res);
+				session.delete(res);
+				transaction.commit();
+			}
+		}catch(Exception e){
+			System.err.println("idCourse = "+idCourse+" idCorR = "+idCoursereq);
+			transaction.rollback();
+			new MokException(e);
+		}finally{
 			session.close();
 		}
 		return res;
