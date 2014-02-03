@@ -24,10 +24,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
+@SessionAttributes("user")
 @RequestMapping("manager/ajax")
 
 public class AjaxControllerListCourse {
@@ -38,14 +40,16 @@ public class AjaxControllerListCourse {
 	
 	@RequestMapping("/course/course_details")
 	public String course_details(HttpServletRequest request, Model model){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return (UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
-		}
-		if(user.getClass()!=Manager.class){
-			return (UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return (UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return (UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idCours=request.getParameter("id");
@@ -61,14 +65,16 @@ public class AjaxControllerListCourse {
 	
 	@RequestMapping("/dialog/requested_course")
 	public String dialog_requested_course(HttpServletRequest request, Model model){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return (UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
-		}
-		if(user.getClass()!=Manager.class){
-			return (UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return (UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return (UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idCours=request.getParameter("id");
@@ -88,14 +94,16 @@ public class AjaxControllerListCourse {
 	
 	@RequestMapping("/dialog/AssegnaCorso")
 	public String dialog_assegnaCorso(HttpServletRequest request, Model model){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return (UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
-		}
-		if(user.getClass()!=Manager.class){
-			return (UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return (UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return (UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idCours=request.getParameter("id");
@@ -117,14 +125,16 @@ public class AjaxControllerListCourse {
 	@RequestMapping("/dialog/AssegnaCorso_Professore")
 	public ModelAndView dialog_AssegnaCorso(@ModelAttribute("assegnaCorso") Course course,
 			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
-		}
-		if(user.getClass()!=Manager.class){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idcourse=request.getParameter("id");
@@ -149,14 +159,16 @@ public class AjaxControllerListCourse {
 	@RequestMapping("/dialog/addRequestedCourse")
 	public ModelAndView dialog_add_requested_course(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
 			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
-		}
-		if(user.getClass()!=Manager.class){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		String idCours=request.getParameter("id");
 		if(idCours!=null){
@@ -186,14 +198,16 @@ public class AjaxControllerListCourse {
 	
 	@RequestMapping("/course/remove_course")
 	public String remove_course(HttpServletRequest request, Model model,HttpServletResponse response){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
-		}
-		if(user.getClass()!=Manager.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idcourse=request.getParameter("id");
@@ -220,14 +234,16 @@ public class AjaxControllerListCourse {
 	
 	@RequestMapping("/course/remove_courseALL")
 	public String remove_courseALL(HttpServletRequest request, Model model,HttpServletResponse response){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
-		}
-		if(user.getClass()!=Manager.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idcourse=request.getParameter("id");
@@ -255,14 +271,16 @@ public class AjaxControllerListCourse {
 	
 	@RequestMapping("/course/remove_courseAsHolder")
 	public String remove_courseasHolder(HttpServletRequest request, Model model,HttpServletResponse response){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
-		}
-		if(user.getClass()!=Manager.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		String idcourse=request.getParameter("id");
@@ -289,14 +307,16 @@ public class AjaxControllerListCourse {
 	
 	@RequestMapping("/dialog/addCourse")
 	public ModelAndView dialog_add_session(@ModelAttribute("addcourse") Course course,HttpServletRequest request, Model model){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
-		}
-		if(user.getClass()!=Manager.class){
-			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model));
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return new ModelAndView(UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model));
+//		}
+//		Manager m=(Manager)user;
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return null;
 		model.addAttribute("M",m);
 		
 		Set<DegreeCourse> degreecourses=managerService.getAssociatedCourseWithDepartment(m.getDepartmentAssociated());

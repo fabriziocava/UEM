@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes("user")
 @RequestMapping("student/ajax")
 public class AjaxControllerStudentCourse {
 
@@ -25,13 +27,17 @@ public class AjaxControllerStudentCourse {
 	
 	@RequestMapping("/course/course_details")
 	public String appeal_list(HttpServletRequest request, Model model) {
-		Student s = null;
-		String redirect = null;
-		ArrayList<Student> slist = new ArrayList<Student>();
-		redirect = setStudentOrRedirect(request, model, slist);
-		if(redirect!=null)
-			return redirect;
-		s = slist.get(0);
+//		Student s = null;
+//		String redirect = null;
+//		ArrayList<Student> slist = new ArrayList<Student>();
+//		redirect = setStudentOrRedirect(request, model, slist);
+//		if(redirect!=null)
+//			return redirect;
+//		s = slist.get(0);
+		
+		Student s = (Student) request.getSession().getAttribute("user");
+		if(s==null)
+			return null;
 		
 		model.addAttribute("I",s);
 		

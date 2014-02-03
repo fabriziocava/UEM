@@ -19,9 +19,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 
 @Controller
+@SessionAttributes("user")
 @RequestMapping(value=ManagerService.MANAGER_COURSE)
 public class ManagerControllerListCourse {
 	
@@ -30,15 +32,17 @@ public class ManagerControllerListCourse {
 	
 	@RequestMapping(value="/add" , method=RequestMethod.POST)
 	public String add(@ModelAttribute("addcourse") Course course,HttpServletRequest request, Model model){
-		User user=managerService.getSession(request.getSession().getId());
-		if(user==null){
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
-		}
-		if(user.getClass()!=Manager.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
-		}
-		Manager m=(Manager)user;
+//		User user=managerService.getSession(request.getSession().getId());
+//		if(user==null){
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta", "sessione", model);
+//		}
+//		if(user.getClass()!=Manager.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		Manager m=(Manager)user;
 
+		Manager m=(Manager)request.getSession().getAttribute("user");
+		if(m==null) return UtilsService.LOGIN;
 		model.addAttribute("M",m);
 		updatePersonalizzation(model, m);
 
