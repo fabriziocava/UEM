@@ -265,8 +265,13 @@ public class CourseDAOImpl implements CourseDAO{
 			Query q= session.createQuery("from Course where degreeCourse.id=:par");
 			q.setParameter("par", idDegreeCourse);
 			@SuppressWarnings("unchecked")
+			
 			List<Course> list = q.list();
 			res=new ArrayList<Course>(list);
+			for(Course c : res){
+				Hibernate.initialize(c);
+				Hibernate.initialize(c.getRequestedCourses());
+			}
 		}catch(Exception e){
 			new MokException(e);
 		}finally{
@@ -319,7 +324,35 @@ public class CourseDAOImpl implements CourseDAO{
 			Course c1=(Course) session.get(Course.class, idCourse);
 			DegreeCourse dg=(DegreeCourse) session.get(DegreeCourse.class,idDegreecourse);
 			dg.getCourses().remove(c1);
-
+			
+			session.delete(c1);
+			transaction.commit();
+			res=c1;
+		}catch(Exception e){
+			transaction.rollback();
+			new MokException(e);
+		}finally{
+			session.close();
+		}
+		return res;
+	}
+	
+	@Override
+	public Course removeCourseforManager(Long idCourse, Long idDegreeCourse) {
+		Session session =HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction=null;
+		Course res=null;
+		try{
+			transaction = session.beginTransaction();
+			Course c1=(Course) session.get(Course.class, idCourse);
+			DegreeCourse dg=(DegreeCourse) session.get(DegreeCourse.class,idDegreeCourse);
+			dg.getCourses().remove(c1);
+			Professor p=c1.getHolder();
+			if(p!=null){
+			p.getSetHoldersCourse().remove(c1);
+			}
+			
+			
 			session.delete(c1);
 			transaction.commit();
 			res=c1;
@@ -871,6 +904,8 @@ public class CourseDAOImpl implements CourseDAO{
 		}
 		return res;
 	}
+
+	
 	
 }
 

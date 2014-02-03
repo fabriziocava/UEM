@@ -84,6 +84,7 @@ public interface CourseDAO {
 	public Boolean removeHolderProfessor(Long idCourse, Long professor);
 //
 	public Course removeCourse(Long idCourse, Long idDegreeCourse);
+	public Course removeCourseforManager(Long idCourse,Long idDegreeCourse);
 //
 	public Long addCourseforManager(String code, String name,
 			Integer credits, DegreeCourse degreeCourse);

@@ -20,7 +20,7 @@
 	
 	
 	function sendDeleteAppeal(id,id2){
-		$("<div>Sei sicuro di voler questo corso ?</div>").attr('id',"divDelete").appendTo('body');
+		$("<div>Sei sicuro di voler eliminare questo corso ?</div>").attr('id',"divDelete").appendTo('body');
 		$("#divDelete").attr("title",'Elimina Corso');
 		$("#divDelete").dialog({
 		      resizable: false,
