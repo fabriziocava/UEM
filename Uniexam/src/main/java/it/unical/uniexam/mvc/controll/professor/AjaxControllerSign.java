@@ -27,10 +27,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("professor/ajax/sign")
+@SessionAttributes("user")
 public class AjaxControllerSign {
 
 	@Autowired
@@ -38,13 +40,15 @@ public class AjaxControllerSign {
 
 	@RequestMapping("/autocomplete/students")
 	public String autocomplete_student(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		String idStud=request.getParameter("id");
 
@@ -59,13 +63,15 @@ public class AjaxControllerSign {
 	
 	@RequestMapping("/declassify_students")
 	public ModelAndView declassify_students(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>listAppealStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -100,13 +106,15 @@ public class AjaxControllerSign {
 	
 	@RequestMapping("/sign_appealstudents_by_commissary")
 	public ModelAndView sign_appealstudents_by_commissary(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>listSignAppealStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -150,13 +158,15 @@ public class AjaxControllerSign {
 	
 	@RequestMapping("/sign_appealstudents")
 	public ModelAndView sign_appealstudents(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>listSignAppealStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -194,13 +204,15 @@ public class AjaxControllerSign {
 	
 	@RequestMapping("/prepare_students")
 	public String prepare_students(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 		
 		ArrayList<Long>prepareStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -235,13 +247,15 @@ public class AjaxControllerSign {
 	
 	@RequestMapping("/remove_students")
 	public ModelAndView remove_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>removeStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -276,13 +290,16 @@ public class AjaxControllerSign {
 	
 	@RequestMapping("/list_appeals")
 	public String list_appeals(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		
 		String appealString=request.getParameter("id");
 		if(appealString!=null && appealString.length()>0){
 			ArrayList<Appeal>appeanls=professorService.getAppealsMatch(p.getId(),appealString);
@@ -293,19 +310,19 @@ public class AjaxControllerSign {
 	}
 
 	
-	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
-		User user=professorService.getSession(request.getSession().getId());
-		if(user==null){
-			HttpSession session = request.getSession(false);
-			if(session!=null){
-				session.invalidate();
-			}
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
-		}
-		if(user.getClass()!=Professor.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
-		}
-		plist.add((Professor)user);
-		return null;
-	}
+//	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
+//		User user=professorService.getSession(request.getSession().getId());
+//		if(user==null){
+//			HttpSession session = request.getSession(false);
+//			if(session!=null){
+//				session.invalidate();
+//			}
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+//		}
+//		if(user.getClass()!=Professor.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		plist.add((Professor)user);
+//		return null;
+//	}
 }

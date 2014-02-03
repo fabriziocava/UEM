@@ -28,10 +28,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("professor/ajax")
+@SessionAttributes("user")
 public class AjaxControllerAppeal {
 
 	@Autowired
@@ -42,13 +44,15 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/appeal/add_student")
 	public ModelAndView add_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		String idStud=request.getParameter("idStudent");
 		Long idStudent=Long.valueOf(idStud);
@@ -60,13 +64,15 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/appeal/remove_student")
 	public ModelAndView remove_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>removeStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -89,13 +95,15 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/appeal/auto_complete_student")
 	public String autocomplete_student(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		String idStud=request.getParameter("id");
 
@@ -138,13 +146,15 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/appeal/modify_appeal_student")
 	public String modify_appeal_student(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		String idAppea=request.getParameter("id");
 		Long idAppeal=Long.valueOf(idAppea);
@@ -173,13 +183,16 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/appeal/remove_appeal")
 	public String remove_appeal(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		
 		String idAppea=request.getParameter("id");
 		Long idAppeal=Long.valueOf(idAppea);
 
@@ -202,13 +215,16 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/appeal/appeal_details")
 	public String appeal_details(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		
 		String idAppea=request.getParameter("id");
 		Long idAppeal=Long.valueOf(idAppea);
 		Appeal appeal=professorService.getAppealDetails(idAppeal);
@@ -218,13 +234,15 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/appeal/modify_appeal")
 	public String modify_appeal(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		//		Enumeration parameterNames = request.getParameterNames();
 		//		while (parameterNames.hasMoreElements()) {
@@ -261,13 +279,15 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/dialog/add_appeal")
 	public ModelAndView dialog_add_appeal(@ModelAttribute("appeal") Appeal appeal,HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		List<Course> courses=professorService.getCourseAssociated(p.getId());
 		Course course = new Course(null, "NO", null, null, null, null, null,null);
@@ -280,13 +300,15 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/dialog/view_appeal")
 	public ModelAndView dialog_view_appeal(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		String idApp=request.getParameter("id");
 		Long idAppeal=Long.valueOf(idApp);
@@ -298,13 +320,15 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/dialog/list_student")
 	public ModelAndView dialog_list_student(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		String idAppea=(String)request.getParameter("id");
 		if(idAppea!=null){
@@ -327,31 +351,34 @@ public class AjaxControllerAppeal {
 
 	@RequestMapping("/dialog/appeal/add_student")
 	public ModelAndView dialog_add_student(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
+		
 		String idAppea=(String)request.getParameter("id");
 		model.addAttribute("idAppeal", idAppea);
 		return new ModelAndView("professor/dialog/appeal/add_student", "model", model);
 	}
 
-	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
-		User user=professorService.getSession(request.getSession().getId());
-		if(user==null){
-			HttpSession session = request.getSession(false);
-			if(session!=null){
-				session.invalidate();
-			}
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
-		}
-		if(user.getClass()!=Professor.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
-		}
-		plist.add((Professor)user);
-		return null;
-	}
+//	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
+//		User user=professorService.getSession(request.getSession().getId());
+//		if(user==null){
+//			HttpSession session = request.getSession(false);
+//			if(session!=null){
+//				session.invalidate();
+//			}
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+//		}
+//		if(user.getClass()!=Professor.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		plist.add((Professor)user);
+//		return null;
+//	}
 }

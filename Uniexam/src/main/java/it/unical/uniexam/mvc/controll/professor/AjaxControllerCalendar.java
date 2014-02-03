@@ -29,10 +29,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("professor/ajax/calendar")
+@SessionAttributes("user")
 public class AjaxControllerCalendar {
 
 	@Autowired
@@ -40,13 +42,15 @@ public class AjaxControllerCalendar {
 
 	@RequestMapping("/save")
 	public String autocomplete_student(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		
 		String title=request.getParameter("title");
@@ -79,13 +83,15 @@ public class AjaxControllerCalendar {
 	
 	@RequestMapping("/remove")
 	public ModelAndView declassify_students(HttpServletRequest request, Model model,HttpServletResponse response){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		Boolean res=false;
 		EventsCalendar events=professorService.getEventsFromProfessor(p.getId());
@@ -117,19 +123,19 @@ public class AjaxControllerCalendar {
 		return null;
 	}
 	
-	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
-		User user=professorService.getSession(request.getSession().getId());
-		if(user==null){
-			HttpSession session = request.getSession(false);
-			if(session!=null){
-				session.invalidate();
-			}
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
-		}
-		if(user.getClass()!=Professor.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
-		}
-		plist.add((Professor)user);
-		return null;
-	}
+//	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
+//		User user=professorService.getSession(request.getSession().getId());
+//		if(user==null){
+//			HttpSession session = request.getSession(false);
+//			if(session!=null){
+//				session.invalidate();
+//			}
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+//		}
+//		if(user.getClass()!=Professor.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		plist.add((Professor)user);
+//		return null;
+//	}
 }

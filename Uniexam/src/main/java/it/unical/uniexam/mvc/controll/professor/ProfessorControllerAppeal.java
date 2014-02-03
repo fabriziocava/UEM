@@ -50,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping(value=ProfessorService.PROFESSOR_APPEAL)
+@SessionAttributes("user")
 public class ProfessorControllerAppeal {
 
 	@Autowired
@@ -58,13 +59,15 @@ public class ProfessorControllerAppeal {
 	
 	@RequestMapping(value="" , method=RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -81,13 +84,15 @@ public class ProfessorControllerAppeal {
 	
 	@RequestMapping(value="/add" , method=RequestMethod.POST)
 	public String add(@ModelAttribute("appeal") Appeal appeal,HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -168,20 +173,20 @@ public class ProfessorControllerAppeal {
 		model.addAttribute("personalizzationMap", personalizzationMap);
 	}
 
-	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
-		User user=professorService.getSession(request.getSession().getId());
-		if(user==null){
-			HttpSession session = request.getSession(false);
-			if(session!=null){
-				session.invalidate();
-			}
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
-		}
-		if(user.getClass()!=Professor.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
-		}
-		plist.add((Professor)user);
-		return null;
-	}
+//	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
+//		User user=professorService.getSession(request.getSession().getId());
+//		if(user==null){
+//			HttpSession session = request.getSession(false);
+//			if(session!=null){
+//				session.invalidate();
+//			}
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+//		}
+//		if(user.getClass()!=Professor.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		plist.add((Professor)user);
+//		return null;
+//	}
 
 }

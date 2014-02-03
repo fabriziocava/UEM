@@ -31,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.collections.ComparatorUtils;
 import org.apache.log4j.nt.NTEventLogAppender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
+@SessionAttributes("user")
 public class ProfessorController {
 
 	@Autowired
@@ -58,14 +60,19 @@ public class ProfessorController {
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_HOME , method=RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		if(p==null){
+//			String redirect=null;
+//			ArrayList<Professor>plist=new ArrayList<Professor>();
+//			redirect=setProfessorOrRedirect(request,model,plist);
+//			if(redirect!=null)
+//				return redirect;
+//			p=plist.get(0);
+//		}
 
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		
 		model.addAttribute("I",p);
 		updateNotification(model, p);
 		updatePersonalizzation(model, p);
@@ -157,13 +164,15 @@ public class ProfessorController {
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_COURSE)
 	public String course(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -194,13 +203,15 @@ public class ProfessorController {
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_ACCOUNT, method=RequestMethod.GET)
 	public String account(HttpServletRequest request,HttpServletResponse response,Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -208,39 +219,20 @@ public class ProfessorController {
 		return ProfessorService.PROFESSOR_ACCOUNT;
 	}
 
-	//	@RequestMapping(value="professor/addRequestedCourseAction", method=RequestMethod.POST)
-	//	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
-	//			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
-	//		Professor p=null;
-	//		String redirect=null;
-	//		ArrayList<Professor>plist=new ArrayList<Professor>();
-	//		redirect=setProfessorOrRedirect(request,model,plist);
-	//		if(redirect!=null)
-	//			return new ModelAndView(redirect);
-	//		p=plist.get(0);
-	//		
-	//		String idCours=request.getParameter("idCourse");
-	//		
-	//		Long idCourse=Long.valueOf(idCours);
-	//		
-	//		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
-	//		
-	////		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
-	//		return new ModelAndView("redirect:/professor/ajax/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
-	//	}
-
 
 	//Pagine Secondarie
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_PERSONALIZZATION , method=RequestMethod.POST)
 	public String personalizzation(HttpServletRequest request,HttpServletResponse response,Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 		////idTAG:name=cicio%surname=pasticcio$idTAG:id=125
 		//box-notify[left:10px,top:50px
 		String personalizzation=(String)request.getParameter("data");
@@ -263,13 +255,15 @@ public class ProfessorController {
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_CHANGE_NOTE , method=RequestMethod.POST)
 	public String changeNote(HttpServletRequest request,HttpServletResponse response,Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 		////idTAG:name=cicio%surname=pasticcio$idTAG:id=125
 		//box-notify[left:10px,top:50px
 		Enumeration<String> parameterNames = request.getParameterNames();
@@ -296,13 +290,15 @@ public class ProfessorController {
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_IMAGE , method=RequestMethod.GET)
 	public String getImage(HttpServletRequest request,HttpServletResponse response,Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 		//		String name=request.getParameter("idImage");
 		try {
 			//			response.setContentType("image/jpeg");
@@ -321,13 +317,15 @@ public class ProfessorController {
 
 	@RequestMapping(value=ProfessorService.PROFESSOR_UPLOAD, method=RequestMethod.POST)
 	public String uploadImageProfile(MultipartHttpServletRequest requestM,HttpServletRequest request,Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 		MultipartFile file=requestM.getFile("file");
 		if (!file.isEmpty()) {
 			try {
@@ -406,21 +404,21 @@ public class ProfessorController {
 		model.addAttribute("personalizzationMap", personalizzationMap);
 	}
 
-	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
-		User user=professorService.getSession(request.getSession().getId());
-		if(user==null){
-			HttpSession session = request.getSession(false);
-			if(session!=null){
-				session.invalidate();
-			}
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
-		}
-		if(user.getClass()!=Professor.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
-		}
-		plist.add((Professor)user);
-		return null;
-	}
+//	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
+//		User user=professorService.getSession(request.getSession().getId());
+//		if(user==null){
+//			HttpSession session = request.getSession(false);
+//			if(session!=null){
+//				session.invalidate();
+//			}
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+//		}
+//		if(user.getClass()!=Professor.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		plist.add((Professor)user);
+//		return null;
+//	}
 
 	///per interfacciarsi con il db bisogna utilizzare le service
 	// definire una service con una annotation @Autowired dentro il controller

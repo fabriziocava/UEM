@@ -21,24 +21,120 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+//@SessionAttributes("user")
 @Controller
-@RequestMapping("professor/ajax")
+@RequestMapping("professor/ajax/course")
 public class AjaxControllerCourse {
 
 	@Autowired
 	ProfessorService professorService;
 
-	@RequestMapping("/course/course_details")
+	ArrayList<Course>courseAlreadyRequested;
+//	add_commissionary mi deve dare il redirect to list commissionary
+
+	@RequestMapping("/dialog/add_commissionary")
+	public String add_commissionary(HttpServletRequest request, Model model){
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+
+		String id=request.getParameter("idProf");
+		Long idProf=Long.valueOf(id);
+		String idCours=request.getParameter("idCourse");
+		Long idCourse=Long.valueOf(idCours);
+		//se non c'è già lo inserisce...e se non sono più di 5!
+		Boolean ris=professorService.addCommissaryAtCourse(idCourse,idProf);
+
+		return "redirect:/professor/ajax/course/dialog/list_commissionary?id="+idCourse+"&ris="+ris;
+	}
+
+	@RequestMapping("/dialog/remove_commissionary")
+	public String remove_commissionary(HttpServletRequest request, Model model){
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+
+		String id=request.getParameter("idProf");
+		Long idProf=Long.valueOf(id);
+		String idCours=request.getParameter("idCourse");
+		Long idCourse=Long.valueOf(idCours);
+		//se non c'è già lo inserisce...e se non sono più di 5!
+		Boolean ris=professorService.removeCommissaryAtCourse(idCourse,idProf);
+
+		return "redirect:/professor/ajax/course/dialog/list_commissionary?id="+idCourse+"&ris="+ris;
+	}
+
+	@RequestMapping("/list_professor")
+	public String list_professor(HttpServletRequest request, Model model){
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+
+		String id=request.getParameter("id");
+
+		if(id!=null && !id.equals("")){
+			ArrayList<Professor>match=professorService.getProfessorsMatch(id);
+			model.addAttribute("list", match);
+//			System.out.println(studentsMatch.size());
+			return "professor/autocomplete/professors";
+		}
+		return null;
+	}
+
+	@RequestMapping("/dialog/list_commissionary")
+	public String list_commissionary(HttpServletRequest request, Model model){
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+
+		String idCours=request.getParameter("id");
+		Long idCourse=Long.valueOf(idCours);
+
+		ArrayList<Professor>commissionary=professorService.getListCommissionary(idCourse);
+		model.addAttribute("commissionary", commissionary);
+		model.addAttribute("idCourse", idCourse);
+		return "professor/course/list_commissionary";
+	}
+	
+	@RequestMapping("/course_details")
 	public String course_details(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		
 		String idCours=request.getParameter("id");
 		Long idCourse=Long.valueOf(idCours);
 		Course c=professorService.getCourseDetails(p,idCourse);
@@ -49,13 +145,16 @@ public class AjaxControllerCourse {
 	
 	@RequestMapping("/dialog/requested_course")
 	public String dialog_requested_course(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		
 		String idCours=request.getParameter("id");
 		Long idCourse=Long.valueOf(idCours);
 		Course c=professorService.getCourseDetails(p,idCourse);
@@ -68,19 +167,21 @@ public class AjaxControllerCourse {
 			else
 				model.addAttribute("result","error");
 		}
-		return "professor/dialog/requested_course";
+		return "professor/course/dialog/requested_course";
 	}
 	
 	@RequestMapping("/dialog/addRequestedCourse")
 	public ModelAndView dialog_add_requested_course(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
 			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return new ModelAndView(redirect);
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
 		//riempire una mappa da dove posso sceliere i corsi che possono essere richiesti 
 		String idCours=request.getParameter("id");
 		if(idCours!=null){
@@ -100,18 +201,43 @@ public class AjaxControllerCourse {
 		}
 //		Course c=professorService.getCourseDetails(p,idCourse);
 //		model.addAttribute("course", c);
-		return new ModelAndView("professor/dialog/addRequestedCourse", "model", model);
+		return new ModelAndView("professor/course/dialog/addRequestedCourse", "model", model);
+	}
+	
+	@RequestMapping(value="/addRequestedCourseAction", method=RequestMethod.POST)
+	public ModelAndView dialog_add_requested_course_action(@ModelAttribute("requestedCourse") RequestedCourse requestedCourse,
+			HttpServletRequest request, Model model,HttpServletResponse response) throws IOException{
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return new ModelAndView(redirect);
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
+		
+		String idCours=request.getParameter("idCourse");
+		
+		Long idCourse=Long.valueOf(idCours);
+		
+		Boolean ris=professorService.addRequestedCourse(idCourse,requestedCourse);
+		
+//		return new ModelAndView("redirect:/"+ProfessorService.PROFESSOR_COURSE, "model", model);
+		return new ModelAndView("redirect:/professor/ajax/course/dialog/requested_course?id="+idCourse+"&ris="+ris, "model", model);
 	}
 	
 	@RequestMapping(value="/dialog/requested_course/command", method=RequestMethod.POST)
 	public String dialog_requested_course_command(HttpServletRequest request, Model model){
-		Professor p=null;
-		String redirect=null;
-		ArrayList<Professor>plist=new ArrayList<Professor>();
-		redirect=setProfessorOrRedirect(request,model,plist);
-		if(redirect!=null)
-			return redirect;
-		p=plist.get(0);
+//		Professor p=null;
+//		String redirect=null;
+//		ArrayList<Professor>plist=new ArrayList<Professor>();
+//		redirect=setProfessorOrRedirect(request,model,plist);
+//		if(redirect!=null)
+//			return redirect;
+//		p=plist.get(0);
+		Professor p=(Professor)request.getSession().getAttribute("user");
+		if(p==null) return ProfessorService.PROFESSOR_HOME;
 //		Enumeration parameterNames = request.getParameterNames();
 //		while (parameterNames.hasMoreElements()) {
 //			String object = (String) parameterNames.nextElement();
@@ -133,22 +259,22 @@ public class AjaxControllerCourse {
 			model.addAttribute("course", c);
 		}
 //		System.out.println(commands);
-		return "professor/dialog/requested_course";
+		return "professor/course/dialog/requested_course";
 	}
 	
-	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
-		User user=professorService.getSession(request.getSession().getId());
-		if(user==null){
-			HttpSession session = request.getSession(false);
-			if(session!=null){
-				session.invalidate();
-			}
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
-		}
-		if(user.getClass()!=Professor.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
-		}
-		plist.add((Professor)user);
-		return null;
-	}
+//	String setProfessorOrRedirect(HttpServletRequest request,Model model, ArrayList<Professor> plist) {
+//		User user=professorService.getSession(request.getSession().getId());
+//		if(user==null){
+//			HttpSession session = request.getSession(false);
+//			if(session!=null){
+//				session.invalidate();
+//			}
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+//		}
+//		if(user.getClass()!=Professor.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		plist.add((Professor)user);
+//		return null;
+//	}
 }

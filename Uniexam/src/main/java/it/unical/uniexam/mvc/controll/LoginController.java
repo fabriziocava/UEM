@@ -24,6 +24,7 @@ import org.hibernate.transaction.synchronization.HibernateSynchronizationImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,6 +47,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
+	User user;
+	
 	@Autowired
 	HomeService homeService;
 	//	@Autowired
@@ -88,7 +91,7 @@ public class LoginController {
 			, Model model){
 
 		ArrayList<Object>error= homeService.loginUser(email, password);
-		User user=null;
+		user=null;
 		Integer err=(Integer) error.remove(0);
 		switch (err) {
 		case HomeService.NO_ERROR:
@@ -103,8 +106,9 @@ public class LoginController {
 		}
 		
 		HttpSession session = request.getSession();
-		homeService.registerSession(session.getId(),user.getId());
-		
+		session.setAttribute("user", user);
+//		homeService.registerSession(session.getId(),user.getId());
+//		model.addAttribute("user", user);
 		
 		
 		if(user.getType()==User.TYPE.PROFESSOR){
@@ -124,6 +128,7 @@ public class LoginController {
 	public String logout(HttpServletRequest request,Model model){
 		try{
 			HttpSession session = request.getSession(false);
+			session.invalidate();
 			if(session!=null && !homeService.unRegisterSession(session.getId()))
 //				return UtilsService.redirectToErrorPageGeneral("Session non chiusa", "session",model);
 				return UtilsService.LOGIN;
