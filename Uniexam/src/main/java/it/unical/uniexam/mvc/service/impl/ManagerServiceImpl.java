@@ -179,7 +179,7 @@ public class ManagerServiceImpl extends UserServiceImpl implements ManagerServic
 
 	@Override
 	public Boolean removeRequestedCourse(Long idcourse,Long idcourserequested) {
-		return courseDAO.removeRequestedCourse(idcourse, idcourserequested)!=null;
+		return courseDAO.RemoveReqCourseForManager(idcourse, idcourserequested)!=null;
 	}
 
 
