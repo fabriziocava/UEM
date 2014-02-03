@@ -71,7 +71,7 @@ public class ProfessorController {
 //		}
 
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return UtilsService.LOGIN;
 		
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -172,7 +172,7 @@ public class ProfessorController {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return UtilsService.LOGIN;
 
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -211,7 +211,7 @@ public class ProfessorController {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return UtilsService.LOGIN;
 
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -232,7 +232,7 @@ public class ProfessorController {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		////idTAG:name=cicio%surname=pasticcio$idTAG:id=125
 		//box-notify[left:10px,top:50px
 		String personalizzation=(String)request.getParameter("data");
@@ -263,7 +263,7 @@ public class ProfessorController {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		////idTAG:name=cicio%surname=pasticcio$idTAG:id=125
 		//box-notify[left:10px,top:50px
 		Enumeration<String> parameterNames = request.getParameterNames();
@@ -298,7 +298,7 @@ public class ProfessorController {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		//		String name=request.getParameter("idImage");
 		try {
 			//			response.setContentType("image/jpeg");
@@ -325,7 +325,7 @@ public class ProfessorController {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return "redirect:/"+UtilsService.LOGIN;//ProfessorService.PROFESSOR_HOME;
 		MultipartFile file=requestM.getFile("file");
 		if (!file.isEmpty()) {
 			try {

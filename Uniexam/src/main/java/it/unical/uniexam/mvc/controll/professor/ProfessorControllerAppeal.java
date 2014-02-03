@@ -67,7 +67,7 @@ public class ProfessorControllerAppeal {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return UtilsService.LOGIN;//ProfessorService.PROFESSOR_HOME;
 
 		model.addAttribute("I",p);
 		updateNotification(model, p);
@@ -92,7 +92,7 @@ public class ProfessorControllerAppeal {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return UtilsService.LOGIN;//ProfessorService.PROFESSOR_HOME;
 
 		model.addAttribute("I",p);
 		updateNotification(model, p);

@@ -48,7 +48,7 @@ public class AjaxControllerSign {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 
 		String idStud=request.getParameter("id");
 
@@ -71,7 +71,7 @@ public class AjaxControllerSign {
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
+		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>listAppealStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -114,7 +114,7 @@ public class AjaxControllerSign {
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
+		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>listSignAppealStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -166,7 +166,7 @@ public class AjaxControllerSign {
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
+		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>listSignAppealStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -212,7 +212,7 @@ public class AjaxControllerSign {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		
 		ArrayList<Long>prepareStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -255,7 +255,7 @@ public class AjaxControllerSign {
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return new ModelAndView(ProfessorService.PROFESSOR_HOME);
+		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		ArrayList<Long>removeStudents=new ArrayList<Long>();
 		Enumeration parameterNames = request.getParameterNames();
@@ -298,7 +298,7 @@ public class AjaxControllerSign {
 //			return redirect;
 //		p=plist.get(0);
 		Professor p=(Professor)request.getSession().getAttribute("user");
-		if(p==null) return ProfessorService.PROFESSOR_HOME;
+		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		
 		String appealString=request.getParameter("id");
 		if(appealString!=null && appealString.length()>0){
