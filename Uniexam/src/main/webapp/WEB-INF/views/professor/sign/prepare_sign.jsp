@@ -105,7 +105,11 @@ if(res!=null && res.hasErrors()){ %>
 </tr>
 <tr>
 <td><form:label path="temporany_vote">Vote</form:label></td>
-<td><input type="number" id="temporany_vote_realy" value="0.0" ></td>
+<td><input type="number" id="temporany_vote_realy" value="18" ></td>
+</tr>
+<tr>
+<td><form:label path="date">Date</form:label></td>
+<td><form:input path="date" type="date" id="date_realy" required="required"/></td>
 </tr>
 <tr>
 <td><form:label path="note">Note</form:label></td>

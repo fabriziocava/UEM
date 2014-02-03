@@ -1,5 +1,7 @@
 package it.unical.uniexam.hibernate.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,6 +56,8 @@ public class AppealStudent {
         @ManyToOne
         Appeal appeal;
 
+        @Column(name="DATE_EXAM")
+        Date date;
         
         @ManyToOne
         Student student;
@@ -178,6 +182,14 @@ public class AppealStudent {
                         return false;
                 return true;
         }
+
+		public Date getDate() {
+			return date;
+		}
+
+		public void setDate(Date date) {
+			this.date = date;
+		}
         
         
         

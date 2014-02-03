@@ -1,6 +1,8 @@
 package it.unical.uniexam.mvc.service;
 
 
+import it.unical.uniexam.MokException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,8 +23,18 @@ public class DateFormatter implements Formatter<Date> {
 
 	@Override
 	public Date parse(String data, Locale locale) throws ParseException {
+		Date result =null;
+		try{
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy kk:mm");
-		Date result =  df.parse(data);  
+		result =  df.parse(data);
+		}catch(Exception e){
+			try{
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				result =  df.parse(data);
+			}catch(Exception e2){
+				new MokException(e2);
+			}
+		}
 //		Date d=DateFormat.getInstance().parse(data);
 		return new Date(result.getTime());
 	}
