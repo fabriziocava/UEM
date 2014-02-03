@@ -1,3 +1,6 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="it.unical.uniexam.hibernate.domain.Course"%>
 <%@page import="it.unical.uniexam.hibernate.domain.RequestedCourse"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Appeal"%>
@@ -90,9 +93,12 @@ function dialogRemoveStudent(id){
 %>
 <div class="container-center">
 
-	<div class="aligncenter">
-		<h2 style="text-align: center;">Titolo</h2>
-	</div>
+<!-- 	<div class="aligncenter"> -->
+<%-- 		<h2 style="text-align: center; margin-bottom: 0px;"><%=appeal.getName()%></h2> --%>
+<!-- 	</div> -->
+<!-- 	<div class="aligncenter"> -->
+<%-- 		<h4 style="text-align: center;"><%=DateFormat.getDayMonthYear(appeal.getExamDate())%></h4> --%>
+<!-- 	</div> -->
 	<div class="aligncenter">
 		<%
 			ArrayList<ArrayList<Object>> appealStudentsRegAndNot = (ArrayList<ArrayList<Object>>) request
@@ -154,10 +160,12 @@ function dialogRemoveStudent(id){
 				<thead>
 					<tr style="text-align: center;" class="table-item-space">
 						<th ><spring:message code='message.professor.general.state'/></th>
+						<th ><spring:message code='label.course'/></th>
 						<th ><spring:message code='message.professor.general.serialnumber'/></th>
 						<th ><spring:message code='message.professor.general.name'/></th>
 						<th ><spring:message code='message.professor.general.vote'/></th>
 						<th ><spring:message code='message.professor.general.note'/></th>
+						<th ><spring:message code='label.date'/></th>
 						<th ><spring:message code='message.general.delete'/></th>
 						<th ><spring:message code='message.professor.general.select'/></th>
 					</tr>
@@ -167,9 +175,20 @@ function dialogRemoveStudent(id){
 						if (appealStudents != null && appealStudents.size() > 0) {
 								for (Object appObj : appealStudents) {
 									AppealStudent app = (AppealStudent) appObj;
+									Course c=null;
+									Date date=null;
+									if(app.getCourse()!=null){
+										c=app.getCourse();
+										date=app.getDate();
+									}
+									else if(app.getAppeal()!=null && app.getAppeal().getCourse()!=null){
+										c=app.getAppeal().getCourse();
+										date=app.getAppeal().getExamDate();
+									}
 					%>
 					<tr class="line-top table-item-space" style="text-align: center;">
 						<td></td>
+						<td><%=c.getName() %></td>
 						<td ><%=app.getStudent().getSerialNumber()%></td>
 						<td ><%=app.getStudent().getName()%>
 							<%=app.getStudent().getSurname()%></td>
@@ -177,6 +196,7 @@ function dialogRemoveStudent(id){
 							<%=app.getTemporany_vote()%></td>
 						<td  >
 							<%=app.getNote()%></td>
+							<td><%=DateFormat.getDayMonthYear(date) %></td>
 						<td ><a
 							class="img-active icon icon-trash clickable"
 							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td>
@@ -204,7 +224,16 @@ function dialogRemoveStudent(id){
 									AppealStudent app = (AppealStudent) appO.get(0);
 									ArrayList<RequestedCourse> requestedCourses = (ArrayList<RequestedCourse>) appO
 											.get(1);
-
+									Course c=null;
+									Date date=null;
+									if(app.getCourse()!=null){
+										c=app.getCourse();
+										date=app.getDate();
+									}
+									else if(app.getAppeal()!=null && app.getAppeal().getCourse()!=null){
+										c=app.getAppeal().getCourse();
+										date=app.getAppeal().getExamDate();
+									}
 									String policy = RequestedCourse.POLICY_LIGHT;
 									for (RequestedCourse req : requestedCourses) {
 										if (req.getPolicyOfRequested().equals(
@@ -241,6 +270,7 @@ function dialogRemoveStudent(id){
 								</table>
 							</div>
 						</td>
+						<td><%=c.getName() %></td>
 						<td ><%=app.getStudent().getSerialNumber()%></td>
 						<td ><%=app.getStudent().getName()%>
 							<%=app.getStudent().getSurname()%></td>
@@ -248,6 +278,7 @@ function dialogRemoveStudent(id){
 							<%=app.getTemporany_vote()%></td>
 						<td  >
 							<%=app.getNote()%></td>
+							<td><%=DateFormat.getDayMonthYear(date) %></td>
 						<td ><a
 							class="img-active icon icon-trash clickable"
 							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td>

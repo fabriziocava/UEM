@@ -532,7 +532,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 				appealStudent.setState(AppealStudent.STATE.NO_STATE);
 			app.getAppeal_student().add(appealStudent);
 			stud.getAppeal_student().add(appealStudent);
-
+			appealStudent.setDatePrenotation(new Date());
 			app.setCurrNumberOfInscribed(app.getCurrNumberOfInscribed()+1);
 			
 			id=(Long)session.save(appealStudent);	

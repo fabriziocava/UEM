@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Appeal"%>
 <%@page import="javassist.expr.NewArray"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Group"%>
@@ -99,7 +100,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 contenteditable="true" 
 onfocus="storeOld(this)" 
 onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()%>','openDate','Date')">
-<%=appeal.getOpenDate() %></div></td>
+<%=DateFormat.getDayMonthYear_HOUR_MINUTE(appeal.getOpenDate()) %></div></td>
 </tr>
 
 <tr title="<spring:message code='message.professor.appeal.add_appeal.closeDate.description'/>">
@@ -108,7 +109,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 contenteditable="true" 
 onfocus="storeOld(this)" 
 onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()%>','closeDate','Date')">
-<%=appeal.getCloseDate() %></div></td>
+<%=DateFormat.getDayMonthYear_HOUR_MINUTE(appeal.getCloseDate()) %></div></td>
 </tr>
 
 <tr title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>">
@@ -117,7 +118,7 @@ onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()
 contenteditable="true" 
 onfocus="storeOld(this)" 
 onblur="checkBeforeChangeEditable(this,'appeal/modify_appeal','<%=appeal.getId()%>','examDate','Date')">
-<%=appeal.getExamDate() %></div></td>
+<%=DateFormat.getDayMonthYear_HOUR_MINUTE(appeal.getExamDate()) %></div></td>
 </tr>
 
 <tr>

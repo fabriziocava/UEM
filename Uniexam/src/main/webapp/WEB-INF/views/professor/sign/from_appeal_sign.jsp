@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
 <%@page import="it.unical.uniexam.hibernate.domain.RequestedCourse"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Appeal"%>
@@ -26,65 +27,70 @@ $(document).ready(function(){
 	
 	listSign=new FormData();
 	count=1;
-	listSign.append("idAppeal",'<%=appeal.getId()%>');
-});
-function dialogRemoveStudent(id){
-	$('<div></div>')
-	.attr('id','flashDialog')
-	.attr('title',"<spring:message code='message.professor.remove.student'/>")
-	.appendTo('body');
-	$('#flashDialog').dialog({
-		autoOpen : true,
-		modal: true,
-		width:"auto",
-		show : {
-			effect : "blind",
-			duration : 500
-		},
-		hide : {
-			effect : "explode",
-			duration : 500
-		},
-		close:function(){
-			$( this ).dialog( "close" );
-			$("div").remove("#flashDialog");
-		},
-		buttons:{
-			"<spring:message code='message.general.confirm'/>":function(){
-					listRemove.append((count++)+"idAppealStudent",id);
-					actionAppealStudents(listRemove,'sign/remove_students');
-					count=0;
-					$(this).dialog("close");
-					$("div").remove("#flashDialog");
-				},
-				"<spring:message code='message.general.cancel'/>" : function() {
-					$(this).dialog("close");
-					$("div").remove("#flashDialog");
-				}
-			}
-		});
+	listSign.append("idAppeal",'<%=appeal.getId()%>
+	');
+	});
+	function dialogRemoveStudent(id) {
+		$('<div></div>').attr('id', 'flashDialog').attr('title',
+				"<spring:message code='message.professor.remove.student'/>")
+				.appendTo('body');
+		$('#flashDialog')
+				.dialog(
+						{
+							autoOpen : true,
+							modal : true,
+							width : "auto",
+							show : {
+								effect : "blind",
+								duration : 500
+							},
+							hide : {
+								effect : "explode",
+								duration : 500
+							},
+							close : function() {
+								$(this).dialog("close");
+								$("div").remove("#flashDialog");
+							},
+							buttons : {
+								"<spring:message code='message.general.confirm'/>" : function() {
+									listRemove.append((count++)
+											+ "idAppealStudent", id);
+									actionAppealStudents(listRemove,
+											'sign/remove_students');
+									count = 0;
+									$(this).dialog("close");
+									$("div").remove("#flashDialog");
+								},
+								"<spring:message code='message.general.cancel'/>" : function() {
+									$(this).dialog("close");
+									$("div").remove("#flashDialog");
+								}
+							}
+						});
 	}
 	function declassifyNoSelect(name) {
 		$("input[name='" + name + "']:checkbox").each(function() {
-			if (this.checked);
+			if (this.checked)
+				;
 			else {
 				$(this).parent().parent().remove();
-				listRemove.append((count++)+'idAppealStudent',this.value);
-				
+				listRemove.append((count++) + 'idAppealStudent', this.value);
+
 			}
 		});
-		actionAppealStudents(listRemove,'sign/declassify_students');
-		count=0;
+		actionAppealStudents(listRemove, 'sign/declassify_students');
+		count = 0;
 	}
 	function declassifySelected(name) {
 		$("input[name='" + name + "']:checkbox").each(function() {
-			if (this.checked){
+			if (this.checked) {
 				$(this).parent().parent().remove();
-				listRemove.append((count++)+'idAppealStudent',this.value);
+				listRemove.append((count++) + 'idAppealStudent', this.value);
 			}
 		});
-		actionAppealStudents(listRemove,'sign/declassify_students');
-		count=0;
+		actionAppealStudents(listRemove, 'sign/declassify_students');
+		count = 0;
 	}
 </script>
 
@@ -94,7 +100,10 @@ function dialogRemoveStudent(id){
 <div class="container-center">
 
 	<div class="aligncenter">
-		<h2 style="text-align: center;"><%=appeal.getName()%></h2>
+		<h2 style="text-align: center; margin-bottom: 0px;"><%=appeal.getName()%></h2>
+	</div>
+	<div class="aligncenter">
+		<h4 style="text-align: center;"><%=DateFormat.getDayMonthYear(appeal.getExamDate())%></h4>
 	</div>
 	<div class="aligncenter">
 		<%
@@ -110,59 +119,71 @@ function dialogRemoveStudent(id){
 				<spring:message
 					code="message.professor.course.container.center.legendCourses" />
 			</legend>
-			<div id="dragButton1"  class="box">
+			<div id="dragButton1" class="box">
 				<div>
-					<span style="margin-top: 10px;margin-left: -20px" 
-					class="lock-draggable-close" id="draggabledragButton1">lock/unlock</span>
+					<span style="margin-top: 10px; margin-left: -20px"
+						class="lock-draggable-close" id="draggabledragButton1">lock/unlock</span>
 					<fieldset class="aligncenter linkNoMNoP trasparent030">
-						<legend><spring:message code='message.professor.localmodification'/></legend>
+						<legend>
+							<spring:message code='message.professor.localmodification' />
+						</legend>
 						<ul style="padding: 10px" class="linkNoMNoP">
 							<li class="aligncenter" style="float: left; margin-right: 60px;"><buttonmok
-								onclick="removeNoSelected('selctedStudent')"><spring:message code='message.professor.removeunselected'/></buttonmok></li>
+									onclick="removeNoSelected('selctedStudent')">
+								<spring:message code='message.professor.removeunselected' /></buttonmok></li>
 							<li class="alignend"><buttonmok
-									onclick="removeSelected('selctedStudent')"><spring:message code='message.professor.removeselected'/></buttonmok></li>
-								<li class="alignend" style="float: left;margin-top: 10px;margin-right: 60px;">
-								<buttonmok
-									onclick="selectAll('selctedStudent')"><spring:message code='message.professor.selectall'/></buttonmok></li>
-								<li class="alignend" style="margin-top: 10px;"><buttonmok
-									onclick="deselectAll('selctedStudent')"><spring:message code='message.professor.deselectall'/></buttonmok></li>
+									onclick="removeSelected('selctedStudent')">
+								<spring:message code='message.professor.removeselected' /></buttonmok></li>
+							<li class="alignend"
+								style="float: left; margin-top: 10px; margin-right: 60px;">
+								<buttonmok onclick="selectAll('selctedStudent')">
+								<spring:message code='message.professor.selectall' /></buttonmok>
+							</li>
+							<li class="alignend" style="margin-top: 10px;"><buttonmok
+									onclick="deselectAll('selctedStudent')">
+								<spring:message code='message.professor.deselectall' /></buttonmok></li>
 						</ul>
 						<br>
 					</fieldset>
 				</div>
 			</div>
-			<div id="dragButton2"  class="box">
+			<div id="dragButton2" class="box">
 				<div>
-					<span style="margin-top: 10px;margin-left: -20px"
-					 class="lock-draggable-close" id="draggabledragButton2">lock/unlock</span>
+					<span style="margin-top: 10px; margin-left: -20px"
+						class="lock-draggable-close" id="draggabledragButton2">lock/unlock</span>
 					<fieldset class="aligncenter linkNoMNoP trasparent030">
-						<legend><spring:message code='message.professor.persistentmodification'/></legend>
+						<legend>
+							<spring:message code='message.professor.persistentmodification' />
+						</legend>
 						<ul style="padding: 10px" class="linkNoMNoP">
 							<li class="aligncenter" style="float: left; margin-right: 60px;"><buttonmok
-									onclick="declassifyNoSelect('selctedStudent')"><spring:message code='message.professor.declassifyunselect'/></buttonmok></li>
+									onclick="declassifyNoSelect('selctedStudent')">
+								<spring:message code='message.professor.declassifyunselect' /></buttonmok></li>
 							<li class="alignend"><buttonmok
-									onclick="declassifySelected('selctedStudent')"><spring:message code='message.professor.declassifyselect'/></buttonmok></li>
+									onclick="declassifySelected('selctedStudent')">
+								<spring:message code='message.professor.declassifyselect' /></buttonmok></li>
 						</ul>
 						<br>
 					</fieldset>
 				</div>
 			</div>
 			<buttonmok onclick="applySign('selctedStudent','')"
-				style="margin-top:20px"><spring:message code='message.professor.applysign'/></buttonmok>
-			<br>
-			<input type="text" 
-			onkeyup="filterMok('#tableSortable tbody tr.table-item-space',this.value)"
-			placeholder="search"/>
+				style="margin-top:20px">
+			<spring:message code='message.professor.applysign' /></buttonmok>
+			<br> <input type="text"
+				onkeyup="filterMok('#tableSortable tbody tr.table-item-space',this.value)"
+				placeholder="search" />
 			<table class="tablemok" id="tableSortable">
 				<thead>
 					<tr style="text-align: center;" class="table-item-space">
-						<th ><spring:message code='message.professor.general.state'/></th>
-						<th ><spring:message code='message.professor.general.serialnumber'/></th>
-						<th ><spring:message code='message.professor.general.name'/></th>
-						<th ><spring:message code='message.professor.general.vote'/></th>
-						<th ><spring:message code='message.professor.general.note'/></th>
-						<th ><spring:message code='message.general.delete'/></th>
-						<th ><spring:message code='message.professor.general.select'/></th>
+						<th><spring:message code='message.professor.general.state' /></th>
+						<th><spring:message
+								code='message.professor.general.serialnumber' /></th>
+						<th><spring:message code='message.professor.general.name' /></th>
+						<th><spring:message code='message.professor.general.vote' /></th>
+						<th><spring:message code='message.professor.general.note' /></th>
+						<th><spring:message code='message.general.delete' /></th>
+						<th><spring:message code='message.professor.general.select' /></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -173,18 +194,14 @@ function dialogRemoveStudent(id){
 					%>
 					<tr class="line-top table-item-space" style="text-align: center;">
 						<td></td>
-						<td ><%=app.getStudent().getSerialNumber()%></td>
-						<td ><%=app.getStudent().getName()%>
-							<%=app.getStudent().getSurname()%></td>
-						<td  >
-							<%=app.getTemporany_vote()%></td>
-						<td  >
-							<%=app.getNote()%></td>
-						<td ><a
-							class="img-active icon icon-trash clickable"
+						<td><%=app.getStudent().getSerialNumber()%></td>
+						<td><%=app.getStudent().getName()%> <%=app.getStudent().getSurname()%></td>
+						<td><%=app.getTemporany_vote()%></td>
+						<td><%=app.getNote()%></td>
+						<td><a class="img-active icon icon-trash clickable"
 							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td>
-						<td ><input
-							type="checkbox" name="selctedStudent" value="<%=app.getId()%>" /></td>
+						<td><input type="checkbox" name="selctedStudent"
+							value="<%=app.getId()%>" /></td>
 					</tr>
 					<%
 						}
@@ -230,7 +247,8 @@ function dialogRemoveStudent(id){
 								<buttonmok onclick="closeDiv(this)" class="closeButton">X</buttonmok>
 								<table class="tablemok">
 									<tr>
-										<th><spring:message code='message.professor.requestedcoursealert'/></th>
+										<th><spring:message
+												code='message.professor.requestedcoursealert' /></th>
 									</tr>
 									<%
 										for (RequestedCourse r : requestedCourses) {
@@ -244,18 +262,14 @@ function dialogRemoveStudent(id){
 								</table>
 							</div>
 						</td>
-						<td ><%=app.getStudent().getSerialNumber()%></td>
-						<td ><%=app.getStudent().getName()%>
-							<%=app.getStudent().getSurname()%></td>
-						<td  >
-							<%=app.getTemporany_vote()%></td>
-						<td  >
-							<%=app.getNote()%></td>
-						<td ><a
-							class="img-active icon icon-trash clickable"
+						<td><%=app.getStudent().getSerialNumber()%></td>
+						<td><%=app.getStudent().getName()%> <%=app.getStudent().getSurname()%></td>
+						<td><%=app.getTemporany_vote()%></td>
+						<td><%=app.getNote()%></td>
+						<td><a class="img-active icon icon-trash clickable"
 							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td>
-						<td ><input
-							type="checkbox" name="selctedStudent" value="<%=app.getId()%>"/></td>
+						<td><input type="checkbox" name="selctedStudent"
+							value="<%=app.getId()%>" /></td>
 					</tr>
 					<%
 						}
@@ -274,7 +288,9 @@ function dialogRemoveStudent(id){
 	} else {
 %>
 Errore!
-<%}%>
+<%
+	}
+%>
 <div class="startHide" id="passwdDIV" title="Inserisci password">
-<input id="passwd" placeholder="password" type="password">
+	<input id="passwd" placeholder="password" type="password">
 </div>

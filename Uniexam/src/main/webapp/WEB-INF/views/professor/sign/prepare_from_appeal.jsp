@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
 <%@page import="it.unical.uniexam.hibernate.domain.RequestedCourse"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Appeal"%>
@@ -142,7 +143,10 @@ function dialogRemoveStudent(id){
 <div class="container-center">
 
 	<div class="aligncenter">
-		<h2 style="text-align: center;"><%=appeal.getName()%></h2>
+		<h2 style="text-align: center; margin-bottom: 0px;"><%=appeal.getName()%></h2>
+	</div>
+	<div class="aligncenter">
+		<h4 style="text-align: center;"><%=DateFormat.getDayMonthYear(appeal.getExamDate())%></h4>
 	</div>
 	<div class="aligncenter">
 		<%

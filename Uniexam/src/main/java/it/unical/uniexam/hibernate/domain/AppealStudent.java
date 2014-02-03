@@ -56,6 +56,9 @@ public class AppealStudent {
         @ManyToOne
         Appeal appeal;
 
+        @Column(name="DATE_PRENOTATION")
+        Date datePrenotation;
+        
         @Column(name="DATE_EXAM")
         Date date;
         
@@ -189,6 +192,14 @@ public class AppealStudent {
 
 		public void setDate(Date date) {
 			this.date = date;
+		}
+
+		public Date getDatePrenotation() {
+			return datePrenotation;
+		}
+
+		public void setDatePrenotation(Date datePrenotation) {
+			this.datePrenotation = datePrenotation;
 		}
         
         

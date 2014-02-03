@@ -214,7 +214,7 @@ public class ProfessorServiceImpl extends UserServiceImpl implements ProfessorSe
 			}else if(clazz.equals("String")){
 				valuee=String.valueOf(value);
 			}else if(clazz.equals("Date")){
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy kk:mm"); //yyyy-MM-dd kk:mm
 				Date result =  df.parse(value);
 				valuee=result;
 			}

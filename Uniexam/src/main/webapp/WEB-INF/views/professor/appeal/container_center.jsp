@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Appeal"%>
 <%@page import="javassist.expr.NewArray"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Group"%>
@@ -80,7 +81,7 @@
 								<td
 									title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>"><%=appeal.getMaxNumberOfInscribed()%></td>
 								<td
-									title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>"><%=appeal.getExamDate()%></td>
+									title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>"><%=DateFormat.getDayMonthYear(appeal.getExamDate())%></td>
 								<td
 									title="<spring:message code='message.professor.appeal.add_appeal.description.description'/>"><%=appeal.getDescription()%></td>
 							</tr>
@@ -151,7 +152,7 @@
 								<td
 									title="<spring:message code='message.professor.appeal.add_appeal.maxNumberOfInscribed.description'/>"><%=appeal.getMaxNumberOfInscribed()%></td>
 								<td
-									title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>"><%=appeal.getExamDate()%></td>
+									title="<spring:message code='message.professor.appeal.add_appeal.examDate.description'/>"><%=DateFormat.getDayMonthYear(appeal.getExamDate())%></td>
 								<td
 									title="<spring:message code='message.professor.appeal.add_appeal.description.description'/>"><%=appeal.getDescription()%></td>
 								</tr>
