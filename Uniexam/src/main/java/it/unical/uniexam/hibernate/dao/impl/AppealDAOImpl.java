@@ -85,7 +85,7 @@ public class AppealDAOImpl implements AppealDAO {
 						}
 					}else{
 						for (AppealStudent appealStudent : list) {
-							reg.add(appealStudent);
+							if(appealStudent.getState()==state) reg.add(appealStudent);
 						}
 					}
 				}else{
