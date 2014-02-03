@@ -3,17 +3,14 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 	<div class="container-up">
 		<ul class="dashboard">
-			<li><a class="button" href="#" id="courseButton" title="<spring:message code='label.secretary.appeals'/>"
+			<li><a class="button" href="#" id="departmentButton" title="<spring:message code='label.department'/>"
 				onclick="selectDashBoard(this)"><spring:message
-						code="label.secretary.appeals" /></a></li>
-			<li><a class="button" href="#" id="appealButton" title="<spring:message code='label.secretary.appeals'/>"
+						code="label.department" /></a></li>
+			<li><a class="button" href="#" id="professorButton" title="<spring:message code='label.professor'/>"
 				onclick="selectDashBoard(this)"><spring:message
-						code="label.secretary.appeals" /></a></li>
-			<li><a class="button" href="#" id="groupsButton" title="<spring:message code='label.secretary.appeals'/>"
+						code="label.professor" /></a></li>
+			<li><a class="button" href="#" id="studentButton" title="<spring:message code='label.student'/>"
 				onclick="selectDashBoard(this)"><spring:message
-						code="label.secretary.appeals" /></a></li>
-			<li><a class="button" href="#" id="signButton" title="<spring:message code='label.secretary.appeals'/>"
-				onclick="selectDashBoard(this)"><spring:message
-						code="label.secretary.appeals" /></a></li>
+						code="label.student" /></a></li>
 		</ul>
 	</div>

@@ -35,7 +35,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class StudentController {
 	
-	@Autowired StudentService studentService;
+	@Autowired 
+	StudentService studentService;
 	
 	@RequestMapping(value=StudentService.STUDENT_HOME, method=RequestMethod.GET)
 	public String homeStudent(HttpServletRequest request,Model model){			

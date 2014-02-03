@@ -152,12 +152,12 @@ public class DBTest {
 		/*
 		 * SECRETARY
 		 */
-//		address = new Address("Cosenza", "Italy", "87100", "Piazza segreteria, 13");
-//		emails = new HashSet<Email>();
-//		emails.add(new Email(Email.TYPE.UFFICIAL, "segreteria@unical.it"));
-//		phoneNumbers = new HashSet<PhoneNumber>();
-//		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "0984123456"));
-//		Long idUser = userDAO.addUser("Marco", "Polo", "1234", address, emails, phoneNumbers);
+		address = new Address("Cosenza", "Italy", "87100", "Piazza segreteria, 13");
+		emails = new HashSet<Email>();
+		emails.add(new Email(Email.TYPE.UFFICIAL, "segreteria@unical.it"));
+		phoneNumbers = new HashSet<PhoneNumber>();
+		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "0984123456"));
+		Long idUser = userDAO.addUser("Marco", "Polo", "1234", address, emails, phoneNumbers);
 		
 		/*
 		 * COURSE		

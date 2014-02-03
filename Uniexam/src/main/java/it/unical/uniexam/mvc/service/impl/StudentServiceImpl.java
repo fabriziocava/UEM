@@ -97,7 +97,7 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 		return appealStudentDAO.getAppealStudent(idStudent);
 	}
 	
-	@Deprecated
+	
 	@Override
 	public ArrayList<AppealStudent> getAppealStudentForCarrier(Long idStudent) {
 		return appealStudentDAO.getAppealStudentForCarrier(idStudent);
