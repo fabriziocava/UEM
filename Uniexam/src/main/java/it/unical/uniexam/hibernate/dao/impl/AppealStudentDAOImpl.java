@@ -1,5 +1,6 @@
 package it.unical.uniexam.hibernate.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -308,11 +309,15 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 					}else if((appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)){
 						course=appealStudent.getCourse();
 					}
-					if(course!=null){
+					if(course!=null && course.getId()!=null){
+//						course =(Course)session.get(Course.class, course.getId());
+//						
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						Date now=new Date();
+						Date ndate = df.parse(now.toString());
 						Query q=session.createQuery("from ExamSession where dataInizio <= :p1 and dataFine >= :p2 and degreecourse.id =:p3");
-						q.setParameter("p1", now);
-						q.setParameter("p2", now);
+						q.setParameter("p1", ndate);
+						q.setParameter("p2", ndate);
 						q.setParameter("p3", course.getId());
 						ExamSession examSession=(ExamSession) q.uniqueResult();
 						if(examSession!=null)
