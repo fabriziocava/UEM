@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Carrier"%>
 <%@page import="it.unical.uniexam.MokException"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
@@ -49,7 +50,7 @@
 							<td><%=c.getCourse().getName()%> (LOADED IN SECRETARY)</td>
 							<td align="center"><%=c.getCourse().getCredits()%></td>
 							<td align="center"><%=c.getVote()>30 ? "30 L" : c.getVote()%></td>
-							<td align="center"><%=c.getDate()%></td>
+							<td align="center"><%=DateFormat.getDayMonthYear(c.getDate())%></td>
 						</tr>
 						<%
 						if(c.getVote()>30)
@@ -78,7 +79,7 @@
 								<td align="center"><%=course.getCredits()%></td>
 								<td align="center"><%=as.getTemporany_vote()>30.0 ? "30 L" : as.getTemporany_vote().intValue()%></td>
 <!-- INSERIRE DATA IN APPEAL-STUDENT -->
-								<td align="center"><%=as.getAppeal().getExamDate()%></td>
+								<td align="center"><%=DateFormat.getDayMonthYear(as.getAppeal().getExamDate())%></td>
 							</tr>
 							<%
 						}
@@ -137,7 +138,7 @@
 				<td style="padding-left: 1.5em;" ><label style="text-align: justify; font-size: 10pt">lo studente deve apporre la propria password mediante la funzione di "VERBALI DA FIRMARE" per permettere il passaggio dell'esame nella carriera ufficiale della Segreteria Studenti.</label></td>
 			</tr>
 			<tr>
-				<td><label style="color: green;">ESAME CARICATO IN SEGRETERIA</label></td>
+				<td><label style="color: green;">CARICATO IN SEGRETERIA</label></td>
 			</tr>
 			<tr>
 				<td style="padding-left: 1.5em;" ><label style="text-align: justify; font-size: 10pt">l'esame è stato caricato nella propria carriera ufficiale in Segreteria Studenti.</label></td>

@@ -1,15 +1,21 @@
 package it.unical.uniexam.mvc.controll.student;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.unical.uniexam.DateFormat;
 import it.unical.uniexam.MokException;
 import it.unical.uniexam.hibernate.domain.Appeal;
 import it.unical.uniexam.hibernate.domain.AppealStudent;
+import it.unical.uniexam.hibernate.domain.Carrier;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.StudentService;
@@ -39,14 +45,33 @@ public class AjaxControllerStudentAppeal {
 		s = slist.get(0);
 		
 		model.addAttribute("I",s);
-		
+				
 		Long idCourse = Long.valueOf(request.getParameter("id"));
-		ArrayList<Appeal> appeal = studentService.getAppeal(idCourse);
+		ArrayList<Appeal> appeal = studentService.getAppeals(idCourse);
 		model.addAttribute("appeal", appeal);
 		
 		Long idStudent = s.getId();
-		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudent(idStudent);
+		ArrayList<AppealStudent> appealStudent = studentService.getAppealStudentList(idStudent);
 		model.addAttribute("as", appealStudent);
+				
+		/*
+		 * Request Courses
+		 */
+		Set<RequestedCourse> requestedCourses = studentService.getRequestCourse(idCourse);
+		if(requestedCourses!=null && !requestedCourses.isEmpty()) {
+			ArrayList<Carrier> carrier = studentService.getCarrier(idStudent);
+			for(RequestedCourse r : requestedCourses) {
+				if(r.getPolicyOfRequested().equals(RequestedCourse.POLICY_LIGHT))
+					requestedCourses.remove(r);
+				else {
+					for(Carrier c : carrier) {
+						if(c.getCourse().getId()==r.getCourse().getId())
+							requestedCourses.remove(r);
+					}
+				}
+			}
+		}
+		model.addAttribute("rc", requestedCourses);
 		
 		return new ModelAndView("student/dialog/view_appeal", "model", model);
 	}
@@ -64,7 +89,52 @@ public class AjaxControllerStudentAppeal {
 		model.addAttribute("I",s);
 
 		Long idAppeal = Long.valueOf(request.getParameter("id"));
-		Boolean res = studentService.inscriptionToAppeal(idAppeal, s.getId());
+		Long idStudent = s.getId();
+		Appeal appeal = studentService.getAppeal(idAppeal);
+		
+		/*
+		 * Request Courses
+		 */
+		Set<RequestedCourse> requestedCourses = studentService.getRequestCourse(appeal.getCourse().getId());
+		if(requestedCourses!=null && !requestedCourses.isEmpty()) {
+			ArrayList<Carrier> carrier = studentService.getCarrier(idStudent);
+			for(RequestedCourse r : requestedCourses) {
+				if(r.getPolicyOfRequested().equals(RequestedCourse.POLICY_LIGHT))
+					requestedCourses.remove(r);
+				else {
+					for(Carrier c : carrier) {
+						if(c.getCourse().getId()==r.getCourse().getId())
+							requestedCourses.remove(r);
+					}
+				}
+			}
+		}
+		
+		Date dateNow = new Date();
+		GregorianCalendar gcNow = new GregorianCalendar(DateFormat.getYear(dateNow),
+				 										DateFormat.getMonth(dateNow),
+														DateFormat.getDay(dateNow),
+														DateFormat.getHour(dateNow),
+														DateFormat.getMinute(dateNow));
+		GregorianCalendar gcOpenDate = new GregorianCalendar(DateFormat.getYear(appeal.getOpenDate()),
+															 DateFormat.getMonth(appeal.getOpenDate()),
+															 DateFormat.getDay(appeal.getOpenDate()),
+															 DateFormat.getHour(appeal.getOpenDate()),
+															 DateFormat.getMinute(appeal.getOpenDate()));
+		GregorianCalendar gcCloseDate = new GregorianCalendar(DateFormat.getYear(appeal.getCloseDate()),
+															  DateFormat.getMonth(appeal.getCloseDate()),
+															  DateFormat.getDay(appeal.getCloseDate()),
+															  DateFormat.getHour(appeal.getCloseDate()),
+															  DateFormat.getMinute(appeal.getCloseDate()));
+		
+		Boolean res = false;
+		if(appeal.getCurrNumberOfInscribed()+1<=appeal.getMaxNumberOfInscribed()) {
+			if(gcOpenDate.before(gcNow) && gcNow.before(gcCloseDate)) {
+				if(requestedCourses==null || requestedCourses.isEmpty())
+					res = studentService.inscriptionToAppeal(idAppeal, s.getId());
+			}
+		}
+		
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();
@@ -94,7 +164,10 @@ public class AjaxControllerStudentAppeal {
 		model.addAttribute("I",s);
 
 		Long idAppealStudent = Long.valueOf(request.getParameter("id"));
-		Boolean res = studentService.removeInscriptionToAppeal(idAppealStudent);
+		AppealStudent appealStudent = studentService.getAppealStudent(idAppealStudent);
+		Boolean res = false;
+		if(appealStudent.getTemporany_vote()==null)
+			res = studentService.removeInscriptionToAppeal(idAppealStudent);
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();

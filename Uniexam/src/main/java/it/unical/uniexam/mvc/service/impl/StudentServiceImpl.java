@@ -14,6 +14,7 @@ import it.unical.uniexam.hibernate.domain.AppealStudent;
 import it.unical.uniexam.hibernate.domain.Carrier;
 import it.unical.uniexam.hibernate.domain.Course;
 import it.unical.uniexam.hibernate.domain.Group;
+import it.unical.uniexam.hibernate.domain.RequestedCourse;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.mvc.service.StudentService;
 
@@ -62,7 +63,7 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	}
 
 	@Override
-	public ArrayList<Appeal> getAppeal(Long idCourse) {
+	public ArrayList<Appeal> getAppeals(Long idCourse) {
 		ArrayList<Appeal>app = new ArrayList<Appeal>(appealDAO.getAppeals(idCourse));
 //		ArrayList<Appeal>removable = new ArrayList<Appeal>();
 //		for (Appeal appeal : app) {
@@ -92,7 +93,7 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	}
 
 	@Override
-	public ArrayList<AppealStudent> getAppealStudent(Long idStudent) {
+	public ArrayList<AppealStudent> getAppealStudentList(Long idStudent) {
 		return appealStudentDAO.getAppealStudent(idStudent);
 	}
 	
@@ -129,6 +130,21 @@ public class StudentServiceImpl extends UserServiceImpl implements StudentServic
 	@Override
 	public ArrayList<Carrier> getCarrier(Long idStudent) {
 		return carrierDAO.getCarrierList(idStudent);
+	}
+
+	@Override
+	public Set<RequestedCourse> getRequestCourse(Long idCourse) {
+		return courseDAO.getRequestedCourses(idCourse);
+	}
+
+	@Override
+	public Appeal getAppeal(Long idAppeal) {
+		return appealDAO.getAppealDetails(idAppeal);
+	}
+
+	@Override
+	public AppealStudent getAppealStudent(Long idAppealStudent) {
+		return appealStudentDAO.getThisAppealStudent(idAppealStudent);
 	}
 	
 }
