@@ -180,8 +180,25 @@ public class AjaxControllerStudentAppeal {
 		Long idAppealStudent = Long.valueOf(request.getParameter("id"));
 		AppealStudent appealStudent = studentService.getAppealStudent(idAppealStudent);
 		Boolean res = false;
-		if(appealStudent.getTemporany_vote()==null)
-			res = studentService.removeInscriptionToAppeal(idAppealStudent);
+		try {
+			Date dateNow = new Date();
+			GregorianCalendar gcNow = new GregorianCalendar(DateFormat.getYear(dateNow),
+					 										DateFormat.getMonth(dateNow),
+															DateFormat.getDay(dateNow),
+															DateFormat.getHour(dateNow),
+															DateFormat.getMinute(dateNow));
+			GregorianCalendar gcCloseDate = new GregorianCalendar(DateFormat.getYear(appealStudent.getAppeal().getCloseDate()),
+					  											  DateFormat.getMonth(appealStudent.getAppeal().getCloseDate()),
+					  											  DateFormat.getDay(appealStudent.getAppeal().getCloseDate()),
+					  											  DateFormat.getHour(appealStudent.getAppeal().getCloseDate()),
+					  											  DateFormat.getMinute(appealStudent.getAppeal().getCloseDate()));
+		
+			//if(appealStudent.getTemporany_vote()==null)
+			if(gcNow.before(gcCloseDate))	
+				res = studentService.removeInscriptionToAppeal(idAppealStudent);
+		} catch (Exception e) {
+			new MokException(e);
+		}
 		ServletOutputStream outputStream = null;
 		try {
 			outputStream = response.getOutputStream();
