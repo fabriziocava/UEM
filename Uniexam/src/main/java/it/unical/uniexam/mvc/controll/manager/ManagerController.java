@@ -261,7 +261,7 @@ public class ManagerController {
 		
 		Boolean ris=managerService.setHolderProfessor(idCourse, idprof);
 		
-		return managerService.MANAGER_COURSE;
+		return managerService.MANAGER_ASSIGNCOURSE;
 	}
 	
 	
