@@ -1,3 +1,7 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
+<%@page import="org.hsqldb.DatabaseURL"%>
+<%@page import="java.util.Date"%>
+<%@page import="it.unical.uniexam.hibernate.domain.Course"%>
 <%@page import="it.unical.uniexam.hibernate.domain.RequestedCourse"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Appeal"%>
@@ -25,42 +29,42 @@ $(document).ready(function(){
 	listSign=new FormData();
 	count=1;
 });
-function dialogRemoveStudent(id){
-	$('<div></div>')
-	.attr('id','flashDialog')
-	.attr('title',"<spring:message code='message.professor.remove.student'/>")
-	.appendTo('body');
-	$('#flashDialog').dialog({
-		autoOpen : true,
-		modal: true,
-		width:"auto",
-		show : {
-			effect : "blind",
-			duration : 500
-		},
-		hide : {
-			effect : "explode",
-			duration : 500
-		},
-		close:function(){
-			$( this ).dialog( "close" );
-			$("div").remove("#flashDialog");
-		},
-		buttons:{
-			"<spring:message code='message.general.confirm'/>":function(){
-					listRemove.append((count++)+"idAppealStudent",id);
-					actionAppealStudents(listRemove,'sign/remove_students');
-					count=0;
-					$(this).dialog("close");
-					$("div").remove("#flashDialog");
-				},
-				"<spring:message code='message.general.cancel'/>" : function() {
-					$(this).dialog("close");
-					$("div").remove("#flashDialog");
-				}
-			}
-		});
-	}
+// function dialogRemoveStudent(id){
+// 	$('<div></div>')
+// 	.attr('id','flashDialog')
+// 	.attr('title',"<spring:message code='message.professor.remove.student'/>")
+// 	.appendTo('body');
+// 	$('#flashDialog').dialog({
+// 		autoOpen : true,
+// 		modal: true,
+// 		width:"auto",
+// 		show : {
+// 			effect : "blind",
+// 			duration : 500
+// 		},
+// 		hide : {
+// 			effect : "explode",
+// 			duration : 500
+// 		},
+// 		close:function(){
+// 			$( this ).dialog( "close" );
+// 			$("div").remove("#flashDialog");
+// 		},
+// 		buttons:{
+// 			"<spring:message code='message.general.confirm'/>":function(){
+// 					listRemove.append((count++)+"idAppealStudent",id);
+// 					actionAppealStudents(listRemove,'sign/remove_students');
+// 					count=0;
+// 					$(this).dialog("close");
+// 					$("div").remove("#flashDialog");
+// 				},
+// 				"<spring:message code='message.general.cancel'/>" : function() {
+// 					$(this).dialog("close");
+// 					$("div").remove("#flashDialog");
+// 				}
+// 			}
+// 		});
+// 	}
 	function declassifyNoSelect(name) {
 		$("input[name='" + name + "']:checkbox").each(function() {
 			if (this.checked);
@@ -154,11 +158,13 @@ function dialogRemoveStudent(id){
 				<thead>
 					<tr style="text-align: center;" class="table-item-space">
 						<th ><spring:message code='message.professor.general.state'/></th>
+						<th ><spring:message code='label.course'/></th>
 						<th ><spring:message code='message.professor.general.serialnumber'/></th>
 						<th ><spring:message code='message.professor.general.name'/></th>
 						<th ><spring:message code='message.professor.general.vote'/></th>
 						<th ><spring:message code='message.professor.general.note'/></th>
-						<th ><spring:message code='message.general.delete'/></th>
+						<th ><spring:message code='label.date'/></th>
+<%-- 						<th ><spring:message code='message.general.delete'/></th> --%>
 						<th ><spring:message code='message.professor.general.select'/></th>
 					</tr>
 				</thead>
@@ -167,9 +173,21 @@ function dialogRemoveStudent(id){
 						if (appealStudents != null && appealStudents.size() > 0) {
 								for (Object appObj : appealStudents) {
 									AppealStudent app = (AppealStudent) appObj;
+									Course c=null;
+									Date date=null;
+									if(app.getCourse()!=null){
+										c=app.getCourse();
+										date=app.getDate();
+									}
+									else if(app.getAppeal()!=null && app.getAppeal().getCourse()!=null){
+										c=app.getAppeal().getCourse();
+										date=app.getAppeal().getExamDate();
+									}
+										
 					%>
 					<tr class="line-top table-item-space" style="text-align: center;">
 						<td></td>
+						<td><%=c.getName() %></td>
 						<td ><%=app.getStudent().getSerialNumber()%></td>
 						<td ><%=app.getStudent().getName()%>
 							<%=app.getStudent().getSurname()%></td>
@@ -177,9 +195,10 @@ function dialogRemoveStudent(id){
 							<%=app.getTemporany_vote()%></td>
 						<td  >
 							<%=app.getNote()%></td>
-						<td ><a
-							class="img-active icon icon-trash clickable"
-							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td>
+							<td><%=DateFormat.getDayMonthYear(date) %></td>
+<!-- 						<td ><a -->
+<!-- 							class="img-active icon icon-trash clickable" -->
+<%-- 							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td> --%>
 						<td ><input
 							type="checkbox" name="selctedStudent" value="<%=app.getId()%>" /></td>
 					</tr>
@@ -204,7 +223,16 @@ function dialogRemoveStudent(id){
 									AppealStudent app = (AppealStudent) appO.get(0);
 									ArrayList<RequestedCourse> requestedCourses = (ArrayList<RequestedCourse>) appO
 											.get(1);
-
+									Course c=null;
+									Date date=null;
+									if(app.getCourse()!=null){
+										c=app.getCourse();
+										date=app.getDate();
+									}
+									else if(app.getAppeal()!=null && app.getAppeal().getCourse()!=null){
+										c=app.getAppeal().getCourse();
+										date=app.getAppeal().getExamDate();
+									}
 									String policy = RequestedCourse.POLICY_LIGHT;
 									for (RequestedCourse req : requestedCourses) {
 										if (req.getPolicyOfRequested().equals(
@@ -241,6 +269,7 @@ function dialogRemoveStudent(id){
 								</table>
 							</div>
 						</td>
+						<td><%=c.getName() %></td>
 						<td ><%=app.getStudent().getSerialNumber()%></td>
 						<td ><%=app.getStudent().getName()%>
 							<%=app.getStudent().getSurname()%></td>
@@ -248,9 +277,10 @@ function dialogRemoveStudent(id){
 							<%=app.getTemporany_vote()%></td>
 						<td  >
 							<%=app.getNote()%></td>
-						<td ><a
-							class="img-active icon icon-trash clickable"
-							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td>
+							<td><%=DateFormat.getDayMonthYear(date) %></td>
+<!-- 						<td ><a -->
+<!-- 							class="img-active icon icon-trash clickable" -->
+<%-- 							onclick="dialogRemoveStudent('<%=app.getId()%>')">re</a></td> --%>
 						<td ><input
 							type="checkbox" name="selctedStudent" value="<%=app.getId()%>"/></td>
 					</tr>

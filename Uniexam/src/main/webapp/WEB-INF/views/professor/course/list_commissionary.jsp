@@ -11,8 +11,6 @@
 
 <%
 Long idCourse=(Long)request.getAttribute("idCourse");
-ArrayList<Professor>coms=(ArrayList<Professor>)request.getAttribute("commissionary");
-if(coms!=null && coms.size()>0){
 %>
 
 <script type="text/javascript">
@@ -82,6 +80,10 @@ Conferma per rimuovere questo commissario
 	</div>
 	
 <div id="dialog_content">
+<%
+ArrayList<Professor>coms=(ArrayList<Professor>)request.getAttribute("commissionary");
+if(coms!=null && coms.size()>0){
+%>
 <div class="aligncenter">
 <table class="tablemok morespace">
 <tr>

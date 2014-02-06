@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="it.unical.uniexam.DateFormat"%>
 <%@page import="it.unical.uniexam.MokException"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
@@ -67,20 +68,25 @@
 					Course course = null;
 					for(AppealStudent as : appealStudent) {
 						try {
-							if(as.getAppeal()!=null)
+							Date date=null;
+							if(as.getAppeal()!=null){
 								course = as.getAppeal().getCourse();
-							else if(as.getCourse()!=null)
+								date=as.getAppeal().getExamDate();
+							}
+							else if(as.getCourse()!=null){
 								course = as.getCourse();
+								date=as.getDate();
+							}
 							if(course!=null) {
 							%>
 								<tr>
-									<td align="center" rowspan="2"><input class="checkbox" name="appealStudent<%=as.getId()%>" type="checkbox" value="<%=as.getId()%>" title="<%=as.getAppeal().getCourse().getName()%>" />
+									<td align="center" rowspan="2"><input class="checkbox" name="appealStudent<%=as.getId()%>" type="checkbox" value="<%=as.getId()%>" title="<%=course.getName()%>" />
 									<td align="center"><%=course.getCode()%></td>
 									<td><%=course.getName()%></td>
 									<td align="center"><%=course.getCredits()%></td>
 									<td align="center"><%=as.getTemporany_vote()>30.0 ? "30 L" : as.getTemporany_vote().intValue()%></td>
 								<!-- INSERIRE DATA IN APPEAL-STUDENT -->
-									<td align="center"><%=DateFormat.getDayMonthYear(as.getAppeal().getExamDate())%></td>
+									<td align="center"><%=DateFormat.getDayMonthYear(date)%></td>
 								</tr>
 								<tr>
 									<td align="left" colspan="5"><%=as.getNote()%></td>

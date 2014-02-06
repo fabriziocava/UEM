@@ -29,6 +29,7 @@ public class CarrierDAOImpl implements CarrierDAO {
 			Student student = (Student) session.get(Student.class, idStudent);
 			Carrier carrier = new Carrier(course, student, vote, date);
 			id = (Long)session.save(carrier);
+			student.getCarrier().add(carrier);
 			transaction.commit();
 		} catch (Exception e) {
 			new MokException(e);

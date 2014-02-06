@@ -49,7 +49,7 @@ public class AjaxControllerCalendar {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 
 		
@@ -90,7 +90,7 @@ public class AjaxControllerCalendar {
 //		if(redirect!=null)
 //			return new ModelAndView(redirect);
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//new ModelAndView(ProfessorService.PROFESSOR_HOME);
 
 		Boolean res=false;

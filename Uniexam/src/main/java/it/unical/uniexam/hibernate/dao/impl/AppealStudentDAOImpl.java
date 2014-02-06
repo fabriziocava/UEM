@@ -46,14 +46,13 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 			Professor p=(Professor)session.get(Professor.class, idProfessor);
 			for (Long idAppeal : signStudents) {
 				AppealStudent appealStudent=(AppealStudent)session.get(AppealStudent.class, idAppeal);
-				if(p.getSetAsCommission().contains(appealStudent.getAppeal().getCourse()) ||
-						p.getSetAsCommission().contains(appealStudent.getCourse())){
-					Course course=null;
-					if((appealStudent.getAppeal()!=null && appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)){
-						course=appealStudent.getAppeal().getCourse();
-					}else if((appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)){
-						course=appealStudent.getCourse();
-					}
+				Course course=null;
+				if((appealStudent.getAppeal()!=null && appealStudent.getAppeal().getCourse()!=null && appealStudent.getAppeal().getCourse().getId()!=null)){
+					course=appealStudent.getAppeal().getCourse();
+				}else if((appealStudent.getCourse()!=null && appealStudent.getCourse().getId()!=null)){
+					course=appealStudent.getCourse();
+				}
+				if(p.getSetAsCommission().contains(course)){
 					if(course!=null){
 						appealStudent.setState(STATE.AWAITING_ACKNOWLEDGMENT);
 					}
@@ -533,7 +532,7 @@ public class AppealStudentDAOImpl implements AppealStudentDAO {
 				appealStudent.setState(AppealStudent.STATE.NO_STATE);
 			app.getAppeal_student().add(appealStudent);
 			stud.getAppeal_student().add(appealStudent);
-
+			appealStudent.setDatePrenotation(new Date());
 			app.setCurrNumberOfInscribed(app.getCurrNumberOfInscribed()+1);
 			
 			id=(Long)session.save(appealStudent);	

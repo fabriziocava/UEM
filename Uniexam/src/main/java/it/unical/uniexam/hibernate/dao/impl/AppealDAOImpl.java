@@ -56,38 +56,44 @@ public class AppealDAOImpl implements AppealDAO {
 				if(appeal.getCourse()!=null){
 					Course c1=(Course) session.get(Course.class, appeal.getCourse().getId());
 					ArrayList<RequestedCourse>requested=new ArrayList<RequestedCourse>(c1.getRequestedCourses());
-					for (AppealStudent appealStudent : list) {
-						if(appealStudent.getState()==state){
-							ArrayList<Carrier> carrier=new ArrayList<Carrier>(appealStudent.getStudent().getCarrier());
-							ArrayList<RequestedCourse>miss=new ArrayList<RequestedCourse>();
-							boolean good=false;
-							for (RequestedCourse requestedCourse : requested) {
-								good=false;
-								for (Carrier carrier2 : carrier) {
-									if(requestedCourse.getCourse().getId()==carrier2.getCourse().getId()){
-										good=true; break;
+					if(requested.size()>0){
+						for (AppealStudent appealStudent : list) {
+							if(appealStudent.getState()==state){
+								ArrayList<Carrier> carrier=new ArrayList<Carrier>(appealStudent.getStudent().getCarrier());
+								ArrayList<RequestedCourse>miss=new ArrayList<RequestedCourse>();
+								boolean good=false;
+								for (RequestedCourse requestedCourse : requested) {
+									good=false;
+									for (Carrier carrier2 : carrier) {
+										if(requestedCourse.getCourse().getId()==carrier2.getCourse().getId()){
+											good=true; break;
+										}
+									}
+									if(!good){
+										miss.add(requestedCourse);
 									}
 								}
-								if(!good){
-									miss.add(requestedCourse);
+								if(miss.size()==0)
+									reg.add(appealStudent);
+								else{
+									ArrayList<Object>tuple=new ArrayList<Object>();
+									tuple.add(appealStudent);
+									tuple.add(miss);
+									noreg.add(tuple);
 								}
 							}
-							if(miss.size()==0)
-								reg.add(appealStudent);
-							else{
-								ArrayList<Object>tuple=new ArrayList<Object>();
-								tuple.add(appealStudent);
-								tuple.add(miss);
-								noreg.add(tuple);
-							}
+						}
+					}else{
+						for (AppealStudent appealStudent : list) {
+							if(appealStudent.getState()==state) reg.add(appealStudent);
 						}
 					}
 				}else{
-//					for (AppealStudent appealStudent : list) {
-//						if(appealStudent.getState()==state){
-//							reg.add(appealStudent);
-//						}
-//					}
+					//					for (AppealStudent appealStudent : list) {
+					//						if(appealStudent.getState()==state){
+					//							reg.add(appealStudent);
+					//						}
+					//					}
 				}
 			}
 		}catch(Exception e){
@@ -176,6 +182,7 @@ public class AppealDAOImpl implements AppealDAO {
 					Course c1=(Course) session.get(Course.class, appeal.getCourse().getId());
 					ArrayList<RequestedCourse>requested=new ArrayList<RequestedCourse>(c1.getRequestedCourses());
 					ArrayList<AppealStudent> list=new ArrayList<AppealStudent>(appeal.getAppeal_student());
+					if(requested!=null && requested.size()>0){
 					for (AppealStudent appealStudent : list) {
 						ArrayList<Carrier> carrier=new ArrayList<Carrier>(appealStudent.getStudent().getCarrier());
 						ArrayList<RequestedCourse>miss=new ArrayList<RequestedCourse>();
@@ -199,6 +206,9 @@ public class AppealDAOImpl implements AppealDAO {
 							tuple.add(miss);
 							noreg.add(tuple);
 						}
+					}
+					}else{
+						reg.addAll(appeal.getAppeal_student());
 					}
 				}else{
 					reg.addAll(appeal.getAppeal_student());
@@ -516,35 +526,7 @@ public class AppealDAOImpl implements AppealDAO {
 	//		return res;
 	//	}
 
-//<<<<<<< HEAD
-//	@Override
-//	public Appeal addStudentAtAppeal(Long idAppeal, Long idStudent) {
-//		Session session =HibernateUtil.getSessionFactory().openSession();
-//		Transaction transaction=null;
-//		Appeal res=null;
-//		try{
-//			transaction=session.beginTransaction();
-//
-//			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
-//			Student s=(Student)session.get(Student.class, idStudent);
-//			//	a.getStudentsInscribed().add(s); CORREGGERE
-//			res=a;
-//			transaction.commit();
-//		}catch(Exception e){
-//			new MokException(e);
-//			transaction.rollback();
-//		}finally{
-//			session.close();
-//		}
-//		return res;
-//	}
-//
-//	@Deprecated
-//	@Override
-//	public Appeal addStudentAtAppeal(Long idAppeal, Student student) {
-//		return null;
-//	}
-//=======
+	//<<<<<<< HEAD
 	//	@Override
 	//	public Appeal addStudentAtAppeal(Long idAppeal, Long idStudent) {
 	//		Session session =HibernateUtil.getSessionFactory().openSession();
@@ -572,7 +554,35 @@ public class AppealDAOImpl implements AppealDAO {
 	//	public Appeal addStudentAtAppeal(Long idAppeal, Student student) {
 	//		return null;
 	//	}
-//>>>>>>> refs/heads/master
+	//=======
+	//	@Override
+	//	public Appeal addStudentAtAppeal(Long idAppeal, Long idStudent) {
+	//		Session session =HibernateUtil.getSessionFactory().openSession();
+	//		Transaction transaction=null;
+	//		Appeal res=null;
+	//		try{
+	//			transaction=session.beginTransaction();
+	//
+	//			Appeal a=(Appeal)session.get(Appeal.class, idAppeal);
+	//			Student s=(Student)session.get(Student.class, idStudent);
+	//			//	a.getStudentsInscribed().add(s); CORREGGERE
+	//			res=a;
+	//			transaction.commit();
+	//		}catch(Exception e){
+	//			new MokException(e);
+	//			transaction.rollback();
+	//		}finally{
+	//			session.close();
+	//		}
+	//		return res;
+	//	}
+	//
+	//	@Deprecated
+	//	@Override
+	//	public Appeal addStudentAtAppeal(Long idAppeal, Student student) {
+	//		return null;
+	//	}
+	//>>>>>>> refs/heads/master
 
 	@Override
 	public boolean removeStudentAtAppeal(Long idAppeal, Long idStudent) {

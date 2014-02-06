@@ -1,3 +1,4 @@
+<%@page import="it.unical.uniexam.DateFormat"%>
 <%@page import="it.unical.uniexam.hibernate.domain.AppealStudent"%>
 <%@page import="it.unical.uniexam.hibernate.domain.Appeal"%>
 <%@page import="it.unical.uniexam.hibernate.domain.RequestedCourse"%>
@@ -106,6 +107,7 @@
 				<th style="padding: 0px 20px 0px 20px;">Stato</th>
 				<th style="padding: 0px 20px 0px 20px;">Matricola</th>
 				<th style="padding: 0px 20px 0px 20px;">Nome</th>
+				<th style="padding: 0px 20px 0px 20px;">Prenotato</th>
 				<th style="padding: 0px 20px 0px 20px;">Voto</th>
 				<th style="padding: 0px 20px 0px 20px;">Nota</th>
 				<th style="padding: 0px 20px 0px 20px;">Elimina</th>
@@ -121,6 +123,7 @@
 				<td></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%> <%=app.getStudent().getSurname()%></td>
+				<td style="padding: 0px 20px 0px 20px;"><%=DateFormat.getDayMonthYear_HOUR_MINUTE(app.getDatePrenotation())%></td>
 				<td style="padding: 0px 20px 0px 20px;" 
 				contenteditable="true" 
 				onfocus="storeOld(this)" 
@@ -176,6 +179,7 @@
 				</td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getSerialNumber()%></td>
 				<td style="padding: 0px 20px 0px 20px;"><%=app.getStudent().getName()%> <%=app.getStudent().getSurname()%></td>
+				<td style="padding: 0px 20px 0px 20px;"><%=DateFormat.getDayMonthYear_HOUR_MINUTE(app.getDatePrenotation())%></td>
 				<td style="padding: 0px 20px 0px 20px;" 
 				contenteditable="true" 
 				onfocus="storeOld(this)" 

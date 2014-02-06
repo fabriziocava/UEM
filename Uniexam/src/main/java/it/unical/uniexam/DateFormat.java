@@ -10,6 +10,11 @@ public class DateFormat {
 		return dateFormat.format(data);
 	}
 	
+	public static String getDayMonthYear_HOUR_MINUTE(Date data) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy kk:mm");
+		return dateFormat.format(data);
+	}
+	
 	public static int getDay(Date data) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
 		return Integer.parseInt(dateFormat.format(data));

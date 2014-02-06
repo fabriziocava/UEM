@@ -5,7 +5,7 @@
 
 <%ArrayList<News>newss=(ArrayList<News>)request.getAttribute("newss"); %>
 <div class="aligncenter">
-	<div id="NewsDiv" class="startHide otherNewsMok">
+	<div id="NewsDiv" class="startHide otherNewsMok" style="z-index: 35;">
 		<ul id="newsmok">
 		<%if(newss!=null && newss.size()>0){ %>
 		<%for(News n:newss){ %>

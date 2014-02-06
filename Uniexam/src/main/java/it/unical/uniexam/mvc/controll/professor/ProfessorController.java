@@ -70,7 +70,7 @@ public class ProfessorController {
 //			p=plist.get(0);
 //		}
 
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return UtilsService.LOGIN;
 		
 		model.addAttribute("I",p);
@@ -171,7 +171,7 @@ public class ProfessorController {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return UtilsService.LOGIN;
 
 		model.addAttribute("I",p);
@@ -210,7 +210,7 @@ public class ProfessorController {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return UtilsService.LOGIN;
 
 		model.addAttribute("I",p);
@@ -231,7 +231,7 @@ public class ProfessorController {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		////idTAG:name=cicio%surname=pasticcio$idTAG:id=125
 		//box-notify[left:10px,top:50px
@@ -262,7 +262,7 @@ public class ProfessorController {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		////idTAG:name=cicio%surname=pasticcio$idTAG:id=125
 		//box-notify[left:10px,top:50px
@@ -297,7 +297,7 @@ public class ProfessorController {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return null;//ProfessorService.PROFESSOR_HOME;
 		//		String name=request.getParameter("idImage");
 		try {
@@ -324,7 +324,7 @@ public class ProfessorController {
 //		if(redirect!=null)
 //			return redirect;
 //		p=plist.get(0);
-		Professor p=(Professor)request.getSession().getAttribute("user");
+		Professor p=(Professor)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
 		if(p==null) return "redirect:/"+UtilsService.LOGIN;//ProfessorService.PROFESSOR_HOME;
 		MultipartFile file=requestM.getFile("file");
 		if (!file.isEmpty()) {
