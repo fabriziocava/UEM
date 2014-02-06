@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-//@SessionAttributes("user")
 @Controller
 @RequestMapping("professor/ajax/course")
 public class AjaxControllerCourse {
@@ -44,7 +43,6 @@ public class AjaxControllerCourse {
 		Long idProf=Long.valueOf(id);
 		String idCours=request.getParameter("idCourse");
 		Long idCourse=Long.valueOf(idCours);
-		//se non c'è già lo inserisce...e se non sono più di 5!
 		Boolean ris=professorService.addCommissaryAtCourse(idCourse,idProf);
 
 		return "redirect:/professor/ajax/course/dialog/list_commissionary?id="+idCourse+"&ris="+ris;
