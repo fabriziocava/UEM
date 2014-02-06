@@ -86,6 +86,8 @@ public interface ProfessorDAO {
 	public void storeImage2(Long idProfessor,InputStream is,int length);
 	public ArrayList<Appeal> getAppeals(Long idProfessor);
 	public ArrayList<Professor> getProfessorsMatch(String id);
+	
+//	public Boolean funcionTry(Professor p);
 }
 
 

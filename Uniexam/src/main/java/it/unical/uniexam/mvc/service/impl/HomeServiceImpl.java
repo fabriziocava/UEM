@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.uniexam.hibernate.dao.ProfessorDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
+import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.User;
 import it.unical.uniexam.mvc.service.HomeService;
 
@@ -21,6 +23,8 @@ public class HomeServiceImpl implements HomeService {
 	@Autowired
 	UserDAO userDAO;
 	
+	@Autowired
+	ProfessorDAO professorDAO;
 	
 	@Override
 	public ArrayList<Object> loginUser(String email, String password) {

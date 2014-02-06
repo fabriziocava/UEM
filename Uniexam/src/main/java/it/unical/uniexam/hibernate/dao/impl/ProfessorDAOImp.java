@@ -54,6 +54,23 @@ import it.unical.uniexam.hibernate.util.HibernateUtil;
 @Repository
 public class ProfessorDAOImp implements ProfessorDAO {
 
+//	@Override
+//	public Boolean funcionTry(Professor p){
+//		Session session =HibernateUtil.getSessionFactory().openSession();
+//		Boolean res=false;
+//		try{
+//			session.beginTransaction();
+//			p=(Professor)session.get(Professor.class, p.getId());
+//			p.setName("Francesco");
+//			session.getTransaction().commit();
+//		}catch(Exception e){
+//			new MokException(e);
+//		}finally{
+//			session.close();
+//		}
+//		return res;
+//	}
+	
 	@Override
 	public ArrayList<Professor> getProfessorsMatch(String id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -244,7 +261,7 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		Session session =HibernateUtil.getSessionFactory().openSession();
 		Set<Professor>res=null;
 		try{
-			Query q= session.createQuery("from Professor where department_associated.id=:par");   //modificata da pino perchè era sbagliata
+			Query q= session.createQuery("from Professor where department_associated.id=:par");   //modificata da pino perchï¿½ era sbagliata
 			q.setParameter("par", idDepartment);
 			@SuppressWarnings("unchecked")
 			List<Professor> list = q.list();

@@ -13,6 +13,7 @@ import it.unical.uniexam.hibernate.domain.Group;
 import it.unical.uniexam.hibernate.domain.Manager;
 import it.unical.uniexam.hibernate.domain.Professor;
 import it.unical.uniexam.hibernate.domain.RequestedCourse;
+import it.unical.uniexam.hibernate.domain.Secretary;
 //import it.unical.uniexam.hibernate.domain.Session;
 import it.unical.uniexam.hibernate.domain.Student;
 import it.unical.uniexam.hibernate.domain.User;
@@ -53,7 +54,8 @@ public class HibernateUtil {
                         .addAnnotatedClass(Student.class)
                         .addAnnotatedClass(ExamSession.class)
                         .addAnnotatedClass(AppealStudent.class)
-			.addAnnotatedClass(Carrier.class)
+                        .addAnnotatedClass(Secretary.class)
+                        .addAnnotatedClass(Carrier.class)
                         .buildSessionFactory();
                 }catch(Exception e){
                         new MokException(e);

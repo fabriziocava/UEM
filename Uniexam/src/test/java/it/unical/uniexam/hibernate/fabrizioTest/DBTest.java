@@ -15,6 +15,7 @@ import it.unical.uniexam.hibernate.dao.DepartmentDAO;
 import it.unical.uniexam.hibernate.dao.GroupDAO;
 import it.unical.uniexam.hibernate.dao.ManagerDao;
 import it.unical.uniexam.hibernate.dao.ProfessorDAO;
+import it.unical.uniexam.hibernate.dao.SecretaryDAO;
 import it.unical.uniexam.hibernate.dao.StudentDAO;
 import it.unical.uniexam.hibernate.dao.UserDAO;
 import it.unical.uniexam.hibernate.dao.impl.CourseDAOImpl;
@@ -23,6 +24,7 @@ import it.unical.uniexam.hibernate.dao.impl.DepartmentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.GroupDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ManagerDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.ProfessorDAOImp;
+import it.unical.uniexam.hibernate.dao.impl.SecretaryDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.StudentDAOImpl;
 import it.unical.uniexam.hibernate.dao.impl.UserDAOImpl;
 import it.unical.uniexam.hibernate.domain.Course;
@@ -43,6 +45,7 @@ public class DBTest {
 	private static UserDAO userDAO = new UserDAOImpl();
 	private static GroupDAO groupDAO = new GroupDAOImpl();
 	private static ManagerDao managerDAO = new ManagerDAOImpl();
+	private static SecretaryDAO secretaryDAO = new SecretaryDAOImpl();
 	
 	@BeforeClass
 	public static void prepareDB() throws MalformedURLException {
@@ -157,7 +160,7 @@ public class DBTest {
 		emails.add(new Email(Email.TYPE.UFFICIAL, "segreteria@unical.it"));
 		phoneNumbers = new HashSet<PhoneNumber>();
 		phoneNumbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "0984123456"));
-		Long idUser = userDAO.addUser("Marco", "Polo", "1234", address, emails, phoneNumbers);
+		Long idUser = secretaryDAO.addUserSecretary("Marco", "Polo", "1234", address, emails, phoneNumbers);
 		
 		/*
 		 * COURSE		

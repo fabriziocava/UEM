@@ -65,6 +65,7 @@ public class DBTestProfessorDAO {
 	private static ExamSessionDAO examSessionDAO=new ExamSessionDAOimpl();
 	static Long []ids=null;
 	
+//	private static ProfessorDAO professorDAO2=new ProfessorDAOImp();
 	
 	/**
 	 * Testing of the main function
@@ -104,35 +105,40 @@ public class DBTestProfessorDAO {
 //		appealStudentDAO.addAppealStudent(null, 2l, 8l, "sempre lo stesso studente", 30.8);
 //		appealStudentDAO.addAppealStudent(null, 3l, 8l, "idem studente", 30.8);
 //		
-		HashSet< Email> emails=new HashSet<Email>();
-		emails.add(new Email(Email.TYPE.UFFICIAL, "mok.luigi@gmail.com"));
-		HashSet<PhoneNumber>numbers=new HashSet<PhoneNumber>();
-		numbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
-		Long id=studentDAO.addStundent("Luigi", "Molinaro", "MLNLGU89P16B774U", "mok", 
-				new Address("Acri", "Italy", "87041", "via Europa, 284")
-		, emails, numbers, 1L, "158786");
+//		HashSet< Email> emails=new HashSet<Email>();
+//		emails.add(new Email(Email.TYPE.UFFICIAL, "mok.luigi@gmail.com"));
+//		HashSet<PhoneNumber>numbers=new HashSet<PhoneNumber>();
+//		numbers.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
+//		Long id=studentDAO.addStundent("Luigi", "Molinaro", "MLNLGU89P16B774U", "mok", 
+//				new Address("Acri", "Italy", "87041", "via Europa, 284")
+//		, emails, numbers, 1L, "158786");
+//		
+//		HashSet< Email> emails2=new HashSet<Email>();
+//		emails2.add(new Email(Email.TYPE.UFFICIAL, "muk.maria@gmail.com"));
+//		HashSet<PhoneNumber>numbers2=new HashSet<PhoneNumber>();
+//		numbers2.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
+//		Long id2=studentDAO.addStundent("Maria", "Gerace", "GRCMRAP16B774U", "muk", 
+//				new Address("Acri", "Italy", "87041", "via Rosati, 1")
+//		, emails2, numbers2, 1L, "158797");
+//		
+//		HashSet< Email> emails3=new HashSet<Email>();
+//		emails3.add(new Email(Email.TYPE.UFFICIAL, "mik.angelo@gmail.com"));
+//		HashSet<PhoneNumber>numbers3=new HashSet<PhoneNumber>();
+//		numbers3.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
+//		Long id3=studentDAO.addStundent("Angelo", "Molinaro", "MLNANG89P16B774U", "mik", 
+//				new Address("Acri", "Italy", "87041", "via Europa, 284")
+//		, emails3, numbers3, 1L, "158978");
+//		
+//		
+//		ExamSession ex=new ExamSession("Sessione di Febbraio", new GregorianCalendar(2014, 02-1, 06).getTime(), new GregorianCalendar(2014, 02-2, 27).getTime(), degreeCourseDAO.getDegreeCourse(1L));
+//		examSessionDAO.addExamSession(ex);
 		
-		HashSet< Email> emails2=new HashSet<Email>();
-		emails2.add(new Email(Email.TYPE.UFFICIAL, "muk.maria@gmail.com"));
-		HashSet<PhoneNumber>numbers2=new HashSet<PhoneNumber>();
-		numbers2.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
-		Long id2=studentDAO.addStundent("Maria", "Gerace", "GRCMRAP16B774U", "muk", 
-				new Address("Acri", "Italy", "87041", "via Rosati, 1")
-		, emails2, numbers2, 1L, "158797");
 		
-		HashSet< Email> emails3=new HashSet<Email>();
-		emails3.add(new Email(Email.TYPE.UFFICIAL, "mik.angelo@gmail.com"));
-		HashSet<PhoneNumber>numbers3=new HashSet<PhoneNumber>();
-		numbers3.add(new PhoneNumber(PhoneNumber.TYPE.UFFICIAL, "+393891535996"));
-		Long id3=studentDAO.addStundent("Angelo", "Molinaro", "MLNANG89P16B774U", "mik", 
-				new Address("Acri", "Italy", "87041", "via Europa, 284")
-		, emails3, numbers3, 1L, "158978");
-		
-		
-		ExamSession ex=new ExamSession("Sessione di Febbraio", new GregorianCalendar(2014, 02-1, 06).getTime(), new GregorianCalendar(2014, 02-2, 27).getTime(), degreeCourseDAO.getDegreeCourse(1L));
-		examSessionDAO.addExamSession(ex);
-		
-		
+//		Professor professor = professorDAO.getProfessor(1L);
+//		
+//		System.out.println(professor.getName());
+//		
+//		professorDAO2.funcionTry(professor);
 		try{
 			Thread.sleep(3000);
 		}catch(Exception e){}

@@ -1,6 +1,5 @@
 package it.unical.uniexam.mvc.controll.secretary;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -8,13 +7,11 @@ import java.util.Set;
 import it.unical.uniexam.hibernate.domain.DegreeCourse;
 import it.unical.uniexam.hibernate.domain.Department;
 import it.unical.uniexam.hibernate.domain.Manager;
-import it.unical.uniexam.hibernate.domain.Student;
-import it.unical.uniexam.hibernate.domain.User;
+import it.unical.uniexam.hibernate.domain.Secretary;
 import it.unical.uniexam.mvc.service.SecretaryService;
 import it.unical.uniexam.mvc.service.UtilsService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,13 +32,17 @@ public class SecretaryController {
 	
 	@RequestMapping(value=SecretaryService.SECRETARY_HOME, method=RequestMethod.GET)
 	public String home(HttpServletRequest request,Model model){
-		User u = null;
-		String redirect = null;
-		ArrayList<User> ulist = new ArrayList<User>();
-		redirect = setSecretaryOrRedirect(request, model, ulist);
-		if(redirect!=null)
-			return redirect;
-		u = ulist.get(0);
+//		Secretary u = null;
+//		String redirect = null;
+//		ArrayList<Secretary> ulist = new ArrayList<Secretary>();
+//		redirect = setSecretaryOrRedirect(request, model, ulist);
+//		if(redirect!=null)
+//			return redirect;
+//		u = ulist.get(0);
+		
+		Secretary u=(Secretary)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
+		if(u==null) return UtilsService.LOGIN;
+		
 		model.addAttribute("I",u);
 		
 		return SecretaryService.SECRETARY_HOME;
@@ -49,13 +50,10 @@ public class SecretaryController {
 	
 	@RequestMapping(value=SecretaryService.SECRETARY_DEPARTMENT, method=RequestMethod.GET)
 	public String department(HttpServletRequest request, Model model) {
-		User u = null;
-		String redirect = null;
-		ArrayList<User> ulist = new ArrayList<User>();
-		redirect = setSecretaryOrRedirect(request, model, ulist);
-		if(redirect!=null)
-			return redirect;
-		u = ulist.get(0);
+		Secretary u=(Secretary)(request.getSession().getAttribute("user")!=null?request.getSession().getAttribute("user"):null);
+		if(u==null) return UtilsService.LOGIN;
+		
+		
 		model.addAttribute("I",u);
 		
 		Set<Department> departments = secretaryService.getDepartment();
@@ -89,20 +87,20 @@ public class SecretaryController {
 	}
 	
 	
-	String setSecretaryOrRedirect(HttpServletRequest request,Model model, ArrayList<User> ulist) {
-		User user=secretaryService.getSession(request.getSession().getId());
-		if(user==null){
-			HttpSession session = request.getSession(false);
-			if(session!=null){
-				session.invalidate();
-			}
-			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
-		}
-		if(user.getClass()!=User.class){
-			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
-		}
-		ulist.add((User)user);
-		return null;
-	}
+//	String setSecretaryOrRedirect(HttpServletRequest request,Model model, ArrayList<Secretary> ulist) {
+//		Secretary user=secretaryService.getSession(request.getSession().getId());
+//		if(user==null){
+//			HttpSession session = Secretary.getSession(false);
+//			if(session!=null){
+//				session.invalidate();
+//			}
+//			return UtilsService.redirectToErrorPageGeneral("Sessione scaduta Error code 1", "sessione", model);
+//		}
+//		if(user.getClass()!=Secretary.class){
+//			return UtilsService.redirectToErrorPageGeneral("Errore, Utente non riconosciuto", "Classe Utente", model);
+//		}
+//		ulist.add((Secretary)user);
+//		return null;
+//	}
 	
 }

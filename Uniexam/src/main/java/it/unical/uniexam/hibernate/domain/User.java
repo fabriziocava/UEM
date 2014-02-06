@@ -36,7 +36,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="USER")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+public abstract class User {
 
 	public enum TYPE{
 		PROFESSOR,STUDENT,MANAGER,SECRETARY;
